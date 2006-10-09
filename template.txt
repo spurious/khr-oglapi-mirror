@@ -1,11 +1,11 @@
 * Template for specifying an OpenGL extension
 *
-* Last Modified Date: 2004/06/22
-* Author Revision: 5
+* Last Modified Date: 2006/10/09
+* Author Revision: 6
 *
 * Document Source: the OpenGL Extension Registry at
 *
-*   http://oss.sgi.com/projects/ogl-sample/registry/
+*   http://www.opengl.org/registry/
 *
 * Notes:
 *
@@ -600,6 +600,8 @@ Revision History
     *
     *	Example (and actual revision history of the template):
 
+*   Revision 6, 2006/10/09
+*     - Move registry URL to www.opengl.org.
 *   Revision 5, 2004/06/22
 *     - Update template to allow OpenGL Shading Language and EGL
 *	extensions. Add "Sample Code" section. Include more examples
