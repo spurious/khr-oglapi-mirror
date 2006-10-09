@@ -404,7 +404,7 @@
     <tt>
     #include &lt;GL/glext.h&gt;<br>
     #if GL_GLEXT_VERSION &lt; 42<br>
-    #error "I need a newer &lt;GL/glext.h&gt;. Please download it from http://oss.sgi.com/projects/ogl-sample/ABI/"<br>
+    #error "I need a newer &lt;GL/glext.h&gt;. Please download it from http://www.opengl.org/registry/ABI/"<br>
     #endif
     </tt>
 </blockquote>
@@ -458,8 +458,8 @@
 
 <p> <b>All</b> OpenGL and GLX extensions that are shipping should have a
     full extension specification in the master
-    <a href="http://oss.sgi.com/projects/ogl-sample/registry/">
-    extension registry</a> on oss.sgi.com. Vendors failing to document
+    <a href="http://www.opengl.org/registry">
+    extension registry</a> on www.opengl.org. Vendors failing to document
     and specify their on extensions will not be allowed to incorporate
     the resulting inadequate interfaces into the ABI. </p>
 
