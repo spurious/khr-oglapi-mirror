@@ -1,0 +1,950 @@
+Kurt Akeley
+10 September 2003
+Syntax Rules for OpenGL Extensions
+Updated based on existing ARB extensions and GL 1.4
+This is a preliminary document.
+
+
+
+ARB extensions scanned
+----------------------
+
+                                        Terms
+     1  GL_ARB_multitexture                                                    
+     2  GLX_ARB_get_proc_address         *                                     
+     3  GL_ARB_transpose_matrix          *                                     
+     4  WGL_ARB_buffer_region            *                                     
+     5  GL_ARB_multisample               *                                     
+     6  GL_ARB_texture_env_add           *                                     
+     7  GL_ARB_texture_cube_map          *                                     
+     8  WGL_ARB_extensions_string        *                                     
+     9  WGL_ARB_pixel_format             *                                     
+    10  WGL_ARB_make_current_read        *                                     
+    11  WGL_ARB_pbuffer                  *                                     
+    12  GL_ARB_texture_compression       *                                     
+    13  GL_ARB_texture_border_clamp      *                                     
+    14  GL_ARB_point_parameters          *                                     
+    15  GL_ARB_vertex_blend              *                                     
+    16  GL_ARB_matrix_palette            *                                     
+    17  GL_ARB_texture_env_combine       *                                     
+    18  GL_ARB_texture_env_crossbar      *                                     
+    19  GL_ARB_texture_env_dot3          *                                     
+    20  WGL_ARB_render_texture           *                                     
+    21  GL_ARB_texture_mirrored_repeat   *                                     
+    22  GL_ARB_depth_texture             *                                     
+    23  GL_ARB_shadow                    *                                     
+    24  GL_ARB_shadow_ambient            *                                     
+    25  GL_ARB_window_pos                *                                     
+    26  GL_ARB_vertex_program            *                                     
+    27  GL_ARB_fragment_program          *                                     
+    28  GL_ARB_vertex_buffer_object      *                                     
+
+
+
+Changes to OpenGL 1.5 (Agreed at the 10 September 2003 ARB meeting)
+-------------------------------------------------------------------
+
+    Previous				    New
+    --------				    ---
+    GL_FOG_COORDINATE_SOURCE		    GL_FOG_COORD_SRC
+    GL_FOG_COORDINATE			    GL_FOG_COORD
+    GL_CURRENT_FOG_COORDINATE		    GL_CURRENT_FOG_COORD
+    GL_FOG_COORDINATE_ARRAY_TYPE	    GL_FOG_COORD_ARRAY_TYPE
+    GL_FOG_COORDINATE_ARRAY_STRIDE	    GL_FOG_COORD_ARRAY_STRIDE
+    GL_FOG_COORDINATE_ARRAY_POINTER	    GL_FOG_COORD_ARRAY_POINTER
+    GL_FOG_COORDINATE_ARRAY		    GL_FOG_COORD_ARRAY
+    GL_FOG_COORDINATE_ARRAY_BUFFER_BINDING  GL_FOG_COORD_ARRAY_BUFFER_BINDING
+    GL_SOURCE0_RGB			    GL_SRC0_RGB
+    GL_SOURCE1_RGB			    GL_SRC1_RGB
+    GL_SOURCE2_RGB			    GL_SRC2_RGB
+    GL_SOURCE0_ALPHA			    GL_SRC0_ALPHA
+    GL_SOURCE1_ALPHA			    GL_SRC1_ALPHA
+    GL_SOURCE2_ALPHA			    GL_SRC2_ALPHA
+
+    Note: the group agreed that GL_FOG_COORDINATE_ARRAY_BUFFER_BINDING
+    should be included in GL 1.5, even though it was never in GL before
+    and is immediately replaced with GL_FOG_COORD_ARRAY_BUFFER_BINDING.
+    This will make porting from GL_ARB_vertex_buffer_object to GL 1.5
+    less error prone.
+
+
+
+GL Errors (and related ARB errors)
+----------------------------------
+
+
+    1.	GL uses "COORDINATE" in the token names:
+
+	    GL_FOG_COORDINATE_SOURCE          0x8450
+	    GL_FOG_COORDINATE                 0x8451
+	    GL_CURRENT_FOG_COORDINATE         0x8453
+	    GL_FOG_COORDINATE_ARRAY_TYPE      0x8454
+	    GL_FOG_COORDINATE_ARRAY_STRIDE    0x8455
+	    GL_FOG_COORDINATE_ARRAY_POINTER   0x8456
+	    GL_FOG_COORDINATE_ARRAY           0x8457
+
+	ARB extension 28, GL_ARB_vertex_buffer_object, uses "COORDINATE"
+	in the token name:
+
+            GL_FOG_COORDINATE_ARRAY_BUFFER_BINDING_ARB     0x889D
+
+	The rules require that "Coordinate" always be abbreviated
+	as "Coord".
+
+	Suggested action: Introduce corrected tokens with the same
+	numeric values, and correct documentation as possible.  List
+	grandfathered tokens in a special specification appendix, and
+	maintain in a special GL.H section.  ACCEPTED for GL 1.5,
+	including the promotion of GL_ARB_vertex_buffer_object.
+
+
+    2.	GL uses "SOURCE" in the token names:
+
+	    GL_FOG_COORDINATE_SOURCE          0x8450
+    	    GL_SOURCE0_RGB                    0x8580
+	    GL_SOURCE1_RGB                    0x8581
+	    GL_SOURCE2_RGB                    0x8582
+	    GL_SOURCE0_ALPHA                  0x8588
+	    GL_SOURCE1_ALPHA                  0x8589
+	    GL_SOURCE2_ALPHA                  0x858A
+
+	ARB extension 17, GL_ARB_texture_env_combine, uses "SOURCE" in
+	the token names:
+
+            GL_SOURCE0_RGB_ARB                             0x8580
+            GL_SOURCE1_RGB_ARB                             0x8581
+            GL_SOURCE2_RGB_ARB                             0x8582
+            GL_SOURCE0_ALPHA_ARB                           0x8588
+            GL_SOURCE1_ALPHA_ARB                           0x8589
+            GL_SOURCE2_ALPHA_ARB                           0x858A
+
+	The rules require that "SOURCE" always be abbreviated as "SRC".
+
+	Suggested action: Introduce corrected tokens with the same
+	numeric values, and correct documentation as possible.  List
+	grandfathered tokens in a special specification appendix, and
+	maintain in a special GL.H section.  ACCEPTED for GL 1.5.
+
+
+    3.  GL uses "NUM" in the token name:
+
+	    GL_NUM_COMPRESSED_TEXTURE_FORMATS
+
+	ARB extension 12, GL_ARB_texture_compression, uses "NUM" in the
+	token name:
+
+	    GL_NUM_COMPRESSED_TEXTURE_FORMATS_ARB.
+
+	WGL_ARB_pixel_format had already established a precedent for
+	the abbreviation "Number" meaning "Number of", with tokens
+	such as WGL_NUMBER_PIXEL_FORMATS_ARB, WGL_NUMBER_OVERLAYS_ARB,
+	and WGL_NUMBER_UNDERLAYS_ARB.
+
+	Suggested action: Introduce corrected tokens with the same
+	numeric values, and correct documentation as possible.  List
+	grandfathered tokens in a special specification appendix, and
+	maintain in a special GL.H section.  REJECTED.
+
+	Action: Let NUM be the GL abbreviation for NUMBER OF, and let
+	NUMBER be the accepted WGL abbreviation of NUMBER OF. 
+
+
+    4.	GL uses "Integer" in the function name:
+
+    	    glGetIntegerv
+
+	This is an original design error.  Integer was not
+	included in the list of abbreviated terms when OpenGL was
+	designed, but it was abbreviated everywhere except in the
+	query function GetIntegerv.
+
+	Suggested action: none.  ACCEPTED.
+
+
+    5.	GL uses "Op" for Operation in the term Logic Op.  Since Operation
+    	is spelled out fully in the term INVALID_OPERATION, it should
+	not have been abbreviated in the tokens
+
+	    GL_LOGIC_OP_MODE                  0x0BF0
+	    GL_INDEX_LOGIC_OP                 0x0BF1
+	    GL_COLOR_LOGIC_OP                 0x0BF2
+
+	We were effectively treating "Logic Op" as a compound word,
+	but capitalizing/underscoring it as though it were separate words.
+
+	Suggested action: Add "Logic Op" as an abbreviation for the
+	phrase "Logical Operation".  Remove "Op" as an abbreviation for
+	"Operation".  Remove "Logic" from list of terms, since it is
+	used only in combination with "Op".  AMENDED.
+
+	Action: Let OP be the GL abbreviation of OPERATION in phrases
+	that describe a specific operation, such as LOGIC OP and
+	STENCIL OP.  Do not abbreviate for generic operations, such as
+	INVALID_OPERATION.
+
+    6.	GL uses "REV" in the token names
+
+	    GL_UNSIGNED_BYTE_2_3_3_REV        0x8362
+	    GL_UNSIGNED_SHORT_5_6_5_REV       0x8364
+	    GL_UNSIGNED_SHORT_4_4_4_4_REV     0x8365
+	    GL_UNSIGNED_SHORT_1_5_5_5_REV     0x8366
+	    GL_UNSIGNED_INT_8_8_8_8_REV       0x8367
+	    GL_UNSIGNED_INT_2_10_10_10_REV    0x8368
+
+	The rules require that REVERSE not be abbreviated, and there are
+	several usages of REVERSE in token names.
+
+	Suggested action: none.  I've added an exception to the
+	abbreviation rules.  We could fix this, but it's been wrong
+	for a long time, and it feels a bit different from the other
+	unabbreviated usages of REVERSE.  There's clearly room for
+	debate here, though.  ACCEPTED.
+
+
+
+ARB Extension Errors
+--------------------
+
+    1.	ARB extension 9, WGL_ARB_pixel_format, uses "DOUBLE_BUFFER" in
+    	the token name:
+
+	    WGL_DOUBLE_BUFFER_ARB			0x2011
+
+	Doublebuffer is a compound word, so there should be no underscore
+	between the words "DOUBLE" and "BUFFER".  (As in the GL token
+	GL_DOUBLEBUFFER.)  Do Windows rules or considerations trump this
+	OpenGL rule?
+
+	Suggested action: Introduce corrected token with the same
+	numeric value, and correct documentation as possible.  List
+	grandfathered token in a special specification appendix, and
+	maintain in a special GL.H section.
+
+
+    2.	ARB extension 9, WGL_ARB_pixel_format, uses "COLORINDEX" in the
+    	token name:
+
+	    WGL_TYPE_COLORINDEX_ARB			0x202C
+
+	The required abbreviation for "Color Index" is "Index".  Do Windows
+	rules or consideration trump this OpenGL rule?
+
+	Suggested action: Introduce corrected token with the same
+	numeric value, and correct documentation as possible.  List
+	grandfathered token in a special specification appendix, and
+	maintain in a special GL.H section.
+
+
+    3.	ARB extension 20, WGL_ARB_render_texture, includes the word
+    	"Set" in the procedure:
+
+	    BOOL wglSetPbufferAttribARB (HPBUFFERARB hPbuffer,
+	  			         const int *piAttribList) 
+
+	"Set" is never to be used in OpenGL procedure names.  Do Windows
+	rules or considerations trump this OpenGL rule?
+
+	Suggested action: Introduce corrected procedure name, and
+	correct documentation as possible.  List grandfathered name
+       	in a special specification appendix, and maintain in a special
+	GL.H section.
+
+
+    4.	ARB extension 27,  GL_ARB_fragment_program, uses "TEX" in the
+    	token names:
+
+            GL_PROGRAM_TEX_INSTRUCTIONS_ARB                0x8806
+            GL_PROGRAM_TEX_INDIRECTIONS_ARB                0x8807
+            GL_PROGRAM_NATIVE_TEX_INSTRUCTIONS_ARB         0x8809
+            GL_PROGRAM_NATIVE_TEX_INDIRECTIONS_ARB         0x880A
+            GL_MAX_PROGRAM_TEX_INSTRUCTIONS_ARB            0x880C
+            GL_MAX_PROGRAM_TEX_INDIRECTIONS_ARB            0x880D
+
+	The rules require that Texture be abbreviated only in function
+	names, never in token names.
+
+	Suggested action: Introduce corrected tokens with the same
+	numeric values, and correct documentation as possible.  List
+	grandfathered tokens in a special specification appendix, and
+	maintain in a special GL.H section.
+
+
+
+Questionable practice
+---------------------
+
+
+    1.	ARB extension 16,  GL_ARB_matrix_palette, uses "Current" in
+    	a procedure name:
+
+	    glCurrentPaletteMatrixARB
+
+	There are no other instances of such usage in GL.  GL state values
+	that include CURRENT in their names, such as GL_CURRENT_COLOR or
+	GL_CURRENT_NORMAL, are specified using procedures that do not
+	include "Current" in their names.  (In these cases glColor* and
+	glNormal*).  And there is a rule prohibiting the use of "Set" in
+	procedure names, which indirectly suggests that "current" is
+	frowned on as well.  (Though "load" is used in matrix commands.)
+
+	Suggested action: Introduce corrected procedure name, and correct
+	documentation as possible.  List grandfathered procedure names in
+	a special specification appendix, and maintain in a special GL.H
+	section.  Add rule to avoid the use of "current" in command names.
+
+
+    2.	GL uses "OPERAND" in the token names:
+
+	    GL_OPERAND0_RGB                   0x8590
+	    GL_OPERAND1_RGB                   0x8591
+	    GL_OPERAND2_RGB                   0x8592
+	    GL_OPERAND0_ALPHA                 0x8598
+	    GL_OPERAND1_ALPHA                 0x8599
+	    GL_OPERAND2_ALPHA                 0x859A
+
+	ARB extension 17, GL_ARB_texture_env_combine, uses "OPERAND"
+	in the token names:
+
+            GL_OPERAND0_RGB_ARB                            0x8590
+            GL_OPERAND1_RGB_ARB                            0x8591
+            GL_OPERAND2_RGB_ARB                            0x8592
+            GL_OPERAND0_ALPHA_ARB                          0x8598
+            GL_OPERAND1_ALPHA_ARB                          0x8599
+            GL_OPERAND2_ALPHA_ARB                          0x859A
+
+	Since Source is always abbreviated as Src, and Destination is
+	always abbreviated as Dst, it might have made sense to abbreviate
+	Operand as Op as well.
+
+	Suggested action: Leave as is.  Leave "operand" in the list of
+	terms.
+
+
+
+Accepted terms
+--------------
+
+    Notes:
+
+	1.  Abbreviations are required for all usage unless otherwise noted.
+
+	2.  Compound words (e.g. Doublebuffer) must always be used as
+	    compounds.  Embedded words are not capitalized in function
+	    names, and are not separated by underscores in token names.
+	    (e.g. Doublebuffer, not DoubleBuffer.  DOUBLEBUFFER, not
+	    DOUBLE_BUFFER.)
+
+    Exceptions:
+
+    	(1) Abbreviation is used in function names, but not in token names.
+
+	(2) Abbreviation is used in token names, but not in function names.
+
+    	(3) Abbreviation is used for GL and GL extensions, but not for
+	    WGL abbreviations.
+
+	(4) Abbreviation is used only as the last characters of token names
+	    that identify packed data types.
+	    (E.g. GL_UNSIGNED_BYTE_2_3_3_REV)
+
+	(5) Abbreviation is used only in interleaved vertex array token names.
+	    (e.g. GL_T4F_C4F_N3F_V4F)
+
+	(6) Abbreviation is used only for specific operations, such as
+	    logical operations (Logic Op) or stencil operations (Stencil Op).
+	    Abbreviation is not used for generic operations (e.g. Invalid
+	    Operation).
+
+
+
+    Abbrev.	Term or phrase		Specification(s) used in
+    -------	--------------		------------------------
+		Access			28
+    Accum	Accumulation Buffer	GL, 9
+		Active			GL, 15
+		Add			GL, 6, 17
+		Address			2, 26
+		Aliased			GL
+		Alignment		GL
+		All			GL
+		Alpha			GL, 5, 9, 12, 17
+		Always			GL
+		Ambient			GL
+    ASCII	American Standard ...	26, 27
+		And			GL
+		Are			GL
+    ALU		Arithmetic Logic Unit   27
+		Array			GL, 15, 16, 26, 28
+		Attenuation		GL, 14
+    Attrib	Attribute		GL, 9, 20, 26, 27, 28
+    Auto	Automatic		GL
+    Aux		Auxiliary		GL, 9, 20
+		Back			GL, 20
+		Base			GL
+		Begin			GL
+    		Bias			GL
+		Bind			GL, 20, 26, 27, 28
+		Binding			GL, 7, 26, 27, 28
+		Bit			GL, 9
+		Bitfield		GL
+		Bitmap			GL, 9
+		Blend			GL, 15
+		Blue			GL, 9
+    BGR		Blue Green Red		GL
+    BGRA	Blue Green Red Alpha	GL
+		Boolean			GL
+		Border			GL, 13
+		Box			GL
+		Buffer			GL, 4, 5, 9, 11, 28
+		Byte			GL
+		Call			GL
+		Care			GL
+		Choose			9
+		Clamp			GL, 13
+		Clear			GL
+		Client			GL
+    Clip	Clipping		GL
+    CW		Clockwise		GL
+    Coeff	Coefficient		GL
+    C (5)	Color			GL, 3, 9, 17, 26, 28
+    Index	Color Index		GL, 9, 28
+		Combine			GL, 17
+		Compare			GL, 23, 24
+		Compile			GL
+		Component		GL, 22
+		Compressed		GL, 12
+		Compression		GL, 12
+		Constant		GL, 17
+		Control			GL
+		Convolution		GL
+		Context			10
+    Coord	Coordinate		GL, 27
+		Copy			GL, 9, 28
+		Correction		GL
+    CCW		Counter Clockwise	GL
+		Coverage		GL, 5
+		Cube			GL, 7, 20
+		Cube Map		7, 20
+		Cull			GL
+		Current			GL, 10, 15, 16, 26, 27
+		Cutoff			GL
+		Data			28
+		Decal			GL
+    Decr	Decrement		GL
+		Delete			GL, 4, 26, 27, 28
+		Density			GL
+		Depth			GL, 9, 16, 22, 26, 27
+    Dst		Destination		GL
+		Destroy			11
+		Diffuse			GL
+    Dim		Dimension		GL
+		Direction		GL
+		Disable			GL, 26
+    List	Display List
+		Distance		GL, 14
+		Dither			GL
+    Dont	Do Not			GL
+		Domain			GL
+		Dot			19
+		Dot3			GL, 19
+		Double			GL
+		Doublebuffer		GL
+		Draw			GL, 9, 11, 28
+		Dynamic			28
+		Edge			GL, 28
+		Element			GL, 28
+		Emission		GL
+		Enable			GL, 26
+		Enabled			GL
+		End			GL
+    Enum	Enumerant		GL
+    Env		Environment		GL, 26, 27
+		Equal			GL
+		Equation		GL
+    Equiv	Equivalent		GL
+		Error			GL, 10, 26, 27
+    Eval	Evaluate		GL
+    XOR		Exclusive OR		GL
+		Execute			GL
+		Exponent		GL
+    Exp		Exponential		GL
+    Exp2	Exponential Squared	GL
+		Extension		GL, 5
+		Eye			GL
+		Face			GL, 20
+		Factor			GL
+		Fade			GL, 14
+		Fail			GL, 24
+		False			GL
+		Fan			GL
+		Fastest			GL
+		Feedback		GL
+		Fill			GL
+		Filter			GL
+		Finish			GL
+		First			GL
+		Flag			GL
+		Flat			GL
+		Float			GL
+		Flush			GL
+		Fog			GL, 28
+		Format			GL, 9, 12, 20, 26, 27
+		Fragment		GL, 27
+		Framebuffer		(documentation only)
+		Front			GL, 20
+		Frustum			GL
+    Func	Function		GL, 23
+    Gen		Generate		GL, 26, 27, 28
+		Get			GL, 2, 5, 9, 10, 11, 26, 27, 28
+		Granularity		GL
+    GL		Graphics Library	GL
+		Greater			GL
+    Gequal	Greater than or equal to GL
+		Green			GL, 9
+		Grid			GL
+		Half			GL
+		Height			GL, 11
+		Hint			GL, 12
+		Histogram		GL
+		Identity		GL
+		Ignore			GL
+		Image			GL, 12, 20, 27
+    Incr	Increment		GL
+		Index			16
+		Indices			GL
+		Indirection		27
+    Init	Initial			GL
+    Init	Initialize		GL
+		Instruction		26, 27
+    Int (2)	Integer			GL
+		Intensity		GL, 12
+		Interleaved		GL
+		Internal		GL
+		Interpolate		GL, 17
+		Invalid			GL, 10
+		Invert			GL, 5
+		Inverted		GL
+		Is			GL, 26, 27, 28
+		Keep			GL
+    LSB		Least significant bit	GL
+		Left			GL, 20
+		Length			GL, 26, 27
+		Less			GL
+    Lequal	Less than or equal to	GL
+		Level			GL, 20
+    LOD		Level of Detail		GL
+		Light			GL
+    Light Model	Lighting Model
+		Line			GL
+		Linear			GL
+		List			GL
+		Limit			26, 27
+		Load			GL, 3
+		Local			GL, 26, 27
+    Logic Op	Logical Operation	GL
+		Loop			GL
+		Luminance		GL, 12
+    Mag		Magnify			GL
+		Make			10
+		Map			GL, 7, 20, 28
+		Mapped			3, 28
+		Mask			GL
+		Material		GL
+		Matrix, Matrices	GL, 16, 26, 27
+    Max		Maximum			GL, 7, 11, 14, 15, 16, 26, 27
+    		Memory			GL
+		Mesh			GL
+    Win		Microsoft Windows OS	GL
+    Min		Minimum			GL, 14
+    Minmax	Minimum Maximum		GL
+    Min		Minify			GL, 14
+		Minus			GL, 17
+		Mirrored		GL, 21
+		Mode			GL, 22, 23
+		Model			GL
+		Modelview		GL, 3, 15
+		Modulate		GL, 17
+    Mipmap	Multim in parvo map	GL, 20
+    Multi	Multiple		GL
+    Mult	Multiply		GL, 3
+		Multisample		GL, 5
+		Name			GL
+		Native			26, 27
+		Nearest			GL
+    NAND	Negated AND		GL
+    NOR		Negated OR		GL
+		Negative		GL, 7, 20
+		Nesting			GL
+		Never			GL
+		New			GL
+		Nicest			GL
+		No			GL, 9, 28
+    Noop	No Operation		GL
+		None			GL
+    N (5)	Normal			GL, 7, 28
+    		Normalize, Normalized	GL, 26
+		Notequal		GL
+    Num	(3)	Number Of		GL
+		Object			GL
+		Of			GL
+		Offset			GL
+		One			GL, 17
+		Only			28
+		Operand			GL, 17
+    Op (6)	Operation		GL
+		Or			GL
+		Order			GL
+    Ortho	Orthographic		GL
+		Out			GL
+		Overflow		GL
+		Pack			GL
+		Palette			9, 16
+		Parameter		GL, 14, 26, 27, 28
+    Pname	Parameter Name		GL
+		Pass			GL
+		Pattern			GL
+		Perspective		GL
+		Phong			GL
+		Pixel			GL, 9, 10, 11
+    Pbuffer	Pixel Buffer		11, 20
+		Plane			GL
+		Point			GL, 14, 26
+		Pointer			GL, 15, 16, 26, 28
+		Polygon			GL
+    		Pop			GL
+		Position		GL
+    Pos (1)	Position		GL, 25, 26, 27
+		Positive		GL, 7, 20
+		Post			GL
+		Previous		GL, 17
+		Primary			GL, 17
+		Prioritize, Priority	GL
+    Proc        Procedure		2
+		Program			26, 27
+		Projection		GL, 3
+		Proxy			GL, 7
+		Push			GL
+    Quad	Quadrilateral		GL
+		Quadratic		GL
+		Query			11
+		Range			GL
+		Raster			GL
+		Read			GL, 10, 28
+    Rect	Rectangle		GL
+		Red			GL, 9
+    RGB		Red Green Blue		GL, 12, 17, 19, 20
+    RGBA	Red Green Blue Alpha	GL, 9, 12, 19, 20
+		Reduce			GL
+    Ref		Reference		GL
+		Reflection		GL, 7
+		Region			GL, 4
+		Register		26
+		Render			GL
+		Renderer		GL
+		Repeat			GL, 21
+		Replace			GL, 17
+		Replicate		GL
+		Rescale			GL
+		Reset			GL
+		Resident		GL
+		Return			GL
+    Rev	(4)	Reverse			GL
+		Right			GL, 20
+		Rotate, Rotated		GL
+		Row			GL
+		Sample			GL, 5
+		Saturate		GL
+		Scale, Scaled		GL, 17
+		Scissor			GL
+		Secondary		GL, 28
+		Segment			GL
+		Select			GL
+		Selection		GL
+		Separable		GL
+		Separate		GL
+		Set (noun only!)	GL
+		Shade			GL
+    Shade Model	Shading Model
+		Shift			GL, 9
+		Shininess		GL
+		Short			GL
+		Side			GL, 26
+		Signed			GL, 17
+		Single			GL
+		Sink			GL
+		Size			GL, 7, 12, 14, 15, 16, 22, 26, 28
+		Skip			GL
+		Smooth			GL
+    Src		Source			GL, 17
+		Specular		GL
+		Sphere			GL
+		Spot			GL
+		Stack			GL, 16, 26, 27
+		Start			GL
+		State			GL
+		Static			28
+		Stencil			GL, 9
+		Stereo			GL, 9
+		Stipple			GL
+		Store			GL
+		Stream			28
+		Stride			GL, 15, 16, 26
+		String			GL, 5, 26, 27
+		Strip			GL
+		Sub			GL, 12
+		Subtract		17
+		Sub Image		12
+		Subpixel		GL
+		Sub Table		GL
+		Sum			GL, 15, 26
+		Swap			GL, 9
+		Table			GL
+		Target			20
+		Temporary		26, 27
+		Test			GL
+    Tex (1),	Texture			GL, 3, 7, 12, 17, 18, 20, 22, 23,
+    T(5)				24, 27, 28
+		Threshold		GL, 14
+		Through			GL
+		To			GL, 9, 11, 13, 20, 23
+		Token			GL
+		Transfer		GL
+		Transform		GL
+		Translate, Translated	GL
+		Transpose		GL, 3, 26, 27
+		Triangle		GL
+    		True			GL
+		Two			GL, 26
+		Type			GL, 9, 10, 15, 16, 26
+		Under			26, 27
+		Underflow		GL
+		Unit			GL, 15, 27
+		Unity			15
+		Unmap			28
+		Unpack			GL
+		Unsigned		GL
+    Ubyte	Unsigned Byte		GL
+    Uint	Unsigned Int		GL
+    Ushort	Unsigned Short		GL
+		Usage			28
+		Valid			GL
+		Value			GL, 5, 9, 24
+		Vendor			GL
+		Version			GL
+    V (5)	Vertex			GL, 15, 26, 28
+    		Vertices		GL
+		Viewer			GL
+		Viewport		GL
+		Weight			15, 28
+		Width			GL, 11
+		Window			GL, 25
+		Wrap			GL
+		Write			28
+		Writemask		GL
+		Zero			GL
+		Zoom			GL
+
+
+
+Abbreviations specifically not allowed
+--------------------------------------
+    Bgn		Begin
+    Mat		Matrix
+    Pnt		Point
+    Poly	Polygon
+    Tri		Triangle
+
+
+
+Used in WGL specs only (or differently)
+---------------------------------------
+
+    Abbrev.	Term or phrase		Specification(s) used in
+    -------	--------------		------------------------
+		Acceleration		9
+		Create			4, 11
+    DC		???			10
+		Declare			11
+		Device			10
+		Exchange		9
+		Full			9
+		Generic			9
+    GDI		???			9
+		Handle			11
+    HP		???			11
+		Incompatible		10
+		Largest			11
+		Layer			9
+		Lost			11
+		Method			9
+		Need			9
+    Number	Number Of		9
+		OpenGL			9
+		Overlay			9
+		Release			20
+		Restore			4
+		Save			4
+		Share			9
+		Support			9
+		System			9
+		Transparent		9
+		Undefined		9
+		Underlay		9
+
+
+
+Name rules (for all names)
+--------------------------
+
+    Always use the specified abbreviations.  Never abbreviate terms
+    that are already in the OpenGL API and are not abbreviated.  If you
+    add terms to your extensions, abbreviate consistently, maintaining
+    a local version of additions to the list of abbreviations.
+
+    Use Depth, never Z.
+
+
+
+Procedure name rules
+--------------------
+
+    Limit procedure names to 2 words, 3 for procedures that return state.
+	(This is really a recommendation, not a rule.)
+
+    Never use set, as in SetFeedbackBuffer.
+
+    Begin each word with a capital letter, except the second word of
+    compound words.
+
+    Use Verb-noun (DeleteList) and adjective-noun (EdgeFlag) formats.
+
+    Append a corporate-specific suffix to all procedures.  For example:
+    glNewCommandSGI.  All upper case is preferred for this suffix, but
+    is not required.  The suffix is always last, following OpenGL type
+    and count suffixes.  (e.g. glNewVertex3iSGI, not glNewVertexSGI3i.)
+
+
+
+Definition name rules
+---------------------
+
+    Use all capital letters.
+
+    Separate words with underbars, except words within compound words.
+
+    Append simple numeric suffixes directly to the end of definition
+    tokens (LIGHT0).  Begin these sequences with 0.
+
+    Use an underbar to separate complex suffixes from the token body
+    (MAP_3V).
+
+    Append a corporate-specific suffix to the token, after any other
+    suffixes.  For example: GL_NEW_TOKEN0_SGI.  All upper case is
+    required.
+
+
+
+Parameter name rules
+--------------------
+
+    <target> is reserved for the notion of "which is affected", and for
+    the corresponding "which is returned" get commands.
+
+    <params> is reserved for an array of parameters whose contents are
+    defined by a second enumerated argument, called <pname>.
+
+    Begin number sequences with 1, not 0.  (e.g. u1,u2, not u0,u1)
+
+
+
+Parameter order
+---------------
+
+    <X> precedes <Y> precedes <Z> precedes <W>.
+
+    <R> precedes <G> precedes <B> precedes <A>.
+
+    The array being passed is always the last argument.
+
+    If a passed array has a type, the type specification argument immediately
+    precedes the array.
+
+    <pname> always precedes <params>.
+
+    <x> and <y> precede <width> and <height>
+
+    <format> precedes <type>
+
+    <target> is first
+
+    <face> is first
+
+
+
+Parameter types
+---------------
+
+    All integer quantity parameters (widths, heights, array lengths, etc.)
+    should be typed GLsizei, not GLint or GLuint.  Note that GLsizei
+    generates an error only for negative values, so all integer quantity
+    parameters should accept the value zero.
+
+    Names (of display lists, textures, etc.) should be typed GLuint.
+    Generic masks that do not have explicitly defined bit values (e.g.
+    color index write masks and stencil write masks) should be typed
+    GLuint.  GLuint is also used for unsigned integer components, such as
+    color components and depth components.  
+
+    Masks that do have explicitly defined bit values (e.g. attribute mask,
+    clear mask) should be typed GLbitfield, not GLuint.
+
+    All floating point parameters that are clamped to the range [0,1] when
+    received should be typed GLclampf or GLclampd, not GLfloat or GLdouble.
+
+
+
+Extension name rules
+--------------------
+
+    An extension name is prefixed with the same string that suffixes its
+    procedures and definitions.  The prefix and the individual words are
+    separated with underbars, the prefix is all upper case, and the other
+    text is all lower case.  For example, extension SGI_cool_feature, which
+    specifies glCoolProcedureSGI() and defines GL_COOL_DEFINITION_SGI.
+
+
+
+Suffix codes
+------------
+
+    i		signed 32-bit integer
+    ui		unsigned 32-bit integer
+    s		signed 16-bit integer
+    us		unsigned 16-bit integer
+    b		signed 8-bit integer
+    ub		unsigned 8-bit integer
+    l		signed 64-bit integer
+    ul		unsigned 64-bit integer
+    f		32-bit float
+    d		64-bit float
+    v		vector format
+
+
+
+Shared extensions
+-----------------
+
+    An OpenGL extension may be deemed a shared extension if either:
+
+	1.  Two or more OpenGL licensees agree in good faith to implement
+	    and ship the extension, or
+
+	2.  The OpenGL ARB determines that it is in the best interest of
+	    the licensees that the extension be shared.
+
+    The procedures and definitions that are defined by a shared extension
+    are suffixed with EXT, rather than by a company-specific suffix.
+    Likewise, the extension name is prefixed by EXT.  To avoid name
+    conflicts Silicon Graphics will maintain a registry of EXT extensions,
+    including all their procedures and definitions, in a location that is
+    accessible to all licensees.
