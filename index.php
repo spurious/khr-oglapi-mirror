@@ -256,7 +256,7 @@
 	<tt>void (*glXGetProcAddressARB(const GLubyte *))();</tt>
     </blockquote>
 
-<p> The <a href="http://www.opengl.org/registry/specs/ARB/get_proc_address.spec">full specification</a>
+<p> The <a href="http://www.opengl.org/registry/specs/ARB/get_proc_address.txt">full specification</a>
     of this function is available separately. It takes the string name
     of a GL or GLX entry point and returns a pointer to a function
     implementing that entry point. It is functionally identical to the
@@ -367,10 +367,10 @@
     continuing basis as new extensions are added to the OpenGL <a
     href="http://www.opengl.org/registry/">extension registry</a> (which
     is similarly centrally maintained). The central point is in the
-    registry at <a href="http://www.opengl.org/registry/ABI">
-    http://www.opengl.org/registry/ABI</a>. </p>
+    registry at <a href="http://www.opengl.org/registry/">
+    http://www.opengl.org/registry/</a>. </p>
 
-<p> The <a href="glext.h">latest version of
+<p> The <a href="../api/glext.h">latest version of
     <tt>glext.h</tt></a> is available in the registry. It is
     automatically generated from the master OpenGL function and
     enumerant registries, and is updated as new extensions are
@@ -381,11 +381,11 @@
     generating glext.h are also available. </p>
 
 <p> Likewise for GLX, a single header defining
-    all GLX extensions, <a href="glxext.h"><tt>glxext.h</tt></a>,
+    all GLX extensions, <a href="../api/glxext.h"><tt>glxext.h</tt></a>,
     is required and is maintained centrally. </p>
 
 <p> The registry also contains a header defining WGL
-    extensions, <a href="wglext.h"><tt>wglext.h</tt></a>, but this is
+    extensions, <a href="../api/wglext.h"><tt>wglext.h</tt></a>, but this is
     only for use on Windows; <tt>wglext.h</tt> is <b>not</b> required by
     or useful for the Linux ABI. </p>
 
