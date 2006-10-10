@@ -1,5 +1,3 @@
-
-
 Name
 
     EXT_light_texture
@@ -23,8 +21,7 @@ Dependencies
     EXT_fragment_lighting is required.
     EXT_multitexture affects the definition of this extension.
     SGIX_shadow affects the definition of this extension.
-
-
+    SGIX_color_range affects the definition of this extension.
 
 Overview
 
@@ -68,7 +65,7 @@ Issues
 
     *  other parameters, spotlight fall off, ...
 
-
+    *  implications of extended range colors. (do we clamp to [0,1]?)
 
     *  TexturePath or DirectTexture rather than ApplyTexture?
 
@@ -330,6 +327,14 @@ Dependencies on EXT_fragment_lighting
     EXT_fragment_lighting is required since this extension pertains to how
     fragment lighting computations are performed and this extension makes no
     sense without fragment lighting.
+
+Dependencies on SGIX_color_range
+
+    <this is a note, not a true dependency -db>
+    The scale and bias of performed on colors when converting them
+    to fragment normals is done regardless of whether SGIX_color_range is
+    supported.
+
 Dependencies on EXT_multitexture
 
     If EXT_multitexture is not supported only the single

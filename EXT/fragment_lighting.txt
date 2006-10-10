@@ -1,5 +1,3 @@
-
-
 	INCOMPLETE - DO NOT RELEASE IMPLEMENTATIONS OF THIS EXTENSION
 
 Name
@@ -21,8 +19,7 @@ Number
 Dependencies
 
     OpenGL 1.1 is required.
-
-
+    SGIX_color_range affects the definition of this extension.
 
 Overview
 
@@ -539,6 +536,13 @@ Additions to Chapter 6 of the 1.1 Specification (State and State Requests)
 Additions to the GLX Specification
 
     TBD
+
+Dependencies on SGIX_color_range
+
+    If SGIX_color_range is implemented, then the components of lighting
+    parameters of type color, the result of evaluating the lighting
+    equation and the results of evaluating the lighting environment
+    are clamped to the extended color range rather than [0,1].
 
 Errors
     INVALID_ENUM is generated if FragmentMaterial{T}EXT,
