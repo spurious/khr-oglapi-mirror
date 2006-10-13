@@ -112,7 +112,8 @@ Extension Numbers
 314-315		NVIDIA
 316-317		ARB Superbuffers Working Group
 318		Mesa
-319		NVIDIA
+319-320		NVIDIA
+321		Apple
 
 GLU Enumerants
 ==============
