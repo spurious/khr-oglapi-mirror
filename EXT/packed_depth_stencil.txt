@@ -35,8 +35,8 @@ Status
 
 Version
     
-    Last Modified Date: September 20, 2005
-    Revision: #11
+    Last Modified Date: September 26, 2005
+    Revision: #12
 
 Number
 
@@ -48,7 +48,7 @@ Dependencies
 
     Written based on the wording of the OpenGL 2.0 specification.
 
-    Written based on the wording of EXT_framebuffer_object version 116.
+    Written based on the wording of EXT_framebuffer_object version 117.
 
     This extension interacts with EXT_framebuffer_object.
 
@@ -786,7 +786,8 @@ Usage ExampleS
         glBindTexture(GL_TEXTURE_2D, tex_depthstencil);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH24_STENCIL8_EXT,
-                     512, 512, 0, GL_RGBA, GL_INT, NULL);
+                     512, 512, 0, GL_DEPTH_STENCIL_EXT,
+                      GL_UNSIGNED_INT_24_8_EXT, NULL);
         glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT,
                                   GL_DEPTH_ATTACHMENT_EXT,
                                   GL_TEXTURE_2D, tex_depthstencil, 0);
@@ -988,6 +989,9 @@ Issues
         framebuffer.
 
 Revision History
+
+#12 September 26, 2005
+    - Fix copy/paste error in the example.
 
 #11 September 20, 2005
     - Assign enum values.
