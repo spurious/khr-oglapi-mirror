@@ -18,7 +18,7 @@ Contributors
 Contact
 
     Matt Craighead, NVIDIA Corporation (mcraighead 'at' nvidia.com)
-    Daniel Ginsburg, ATI Research (dginsbur 'at' ati.com)
+    Daniel Ginsburg, AMD (dan.ginsburg 'at' amd.com)
 
 Notice
 
@@ -37,8 +37,8 @@ Status
 
 Version
 
-    NVIDIA Date: June 24, 2003
-    $Id: //sw/main/docs/OpenGL/specs/GL_ARB_occlusion_query.txt#4 $
+    NVIDIA Date: November 4, 2006
+    $Id: //sw/main/docs/OpenGL/specs/GL_ARB_occlusion_query.txt#6 $
 
 Number
 
@@ -843,6 +843,10 @@ New Implementation Dependent State
                                                                             query counter
 
 Revision History
+
+   Date: 11/4/2006
+   Revision: 6 (Benj Lipchak, AMD)
+      - Updated contact info after ATI/AMD merger.
 
    Date: 10/27/2004
    Revision: 5? (James Jones, NVIDIA)

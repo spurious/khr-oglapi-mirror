@@ -8,7 +8,7 @@ Name Strings
 
 Contact
 
-    Affie Munshi, ATI (amunshi@ati.com)
+    Affie Munshi, AMD (aaftab.munshi 'at' amd.com)
 
 Notice
 
@@ -24,8 +24,8 @@ Status
 
 Version
 
-    Last Modifed Date: 09 July 2003
-    Author Revision: 0.4
+    Last Modifed Date: 04 November 2006
+    Author Revision: 0.5
 
 Number
 
@@ -253,4 +253,7 @@ Revision History
     07/09/2003    0.4    (David Blythe)
          - Note that [NUM_]COMPRESSED_TEXTURE_FORMAT queries include the
            new formats.
+
+    11/04/2006    0.5    (Benj Lipchak)
+         - Updated contact info after ATI/AMD merger.
 

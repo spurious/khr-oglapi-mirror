@@ -8,10 +8,10 @@ Name Strings
 
 Contact
 
-    Bimal Poddar, Intel, bimal.poddar@intel.com
-    Michael Gold (gold 'at' nvidia.com)
-    Tom Frisinger, ATI Technologies, Inc. (tfrising 'at' ati.com)
-    Rick Hammerstone, ATI Technologies, Inc. (rhammers 'at' ati.com)
+    Bimal Poddar, Intel (bimal.poddar 'at' intel.com)
+    Michael Gold, NVIDIA (gold 'at' nvidia.com)
+    Tom Frisinger, AMD (tom.frisinger 'at' amd.com)
+    Rick Hammerstone, AMD (rick.hammerstone 'at' amd.com)
 
 Status
 
@@ -19,7 +19,7 @@ Status
 
 Version
 
-    Last modified date: 2001/02/02
+    Last modified date: 2006/11/04
 
 Number
 
@@ -362,6 +362,8 @@ New Implementation Dependent State
     None
 
 Revision History
+    06/11/04  benj      Updated contact info after ATI/AMD merger.
+
     01/02/02  bpoddar   Added original EXT/ARB contributors to the contact
                         list
 

@@ -11,10 +11,13 @@ Name Strings
 
 Contact
 
-    Rick Hammerstone, ATI Research (rhammers 'at' ati.com)
+    Rick Hammerstone, AMD (rick.hammerstone 'at' amd.com)
 
 
 Version
+
+    1.11 - 11/04/06
+    Updated contact info after ATI/AMD merger.
 
     1.1 - 01/08/02
     Changed DeleteObjectBufferATI to FreeObjectBufferATI to match the

@@ -11,10 +11,13 @@ Name Strings
 
 Contact
 
-    Rick Hammerstone, ATI Research (rhammers 'at' ati.com)
+    Rick Hammerstone, AMD (rick.hammerstone 'at' amd.com)
 
 
 Version
+
+    0.3 - 11/04/06
+    Updated contact info after ATI/AMD merger.
 
     0.2 - 09/18/01
     Changed default behavior of draw commands when element array is

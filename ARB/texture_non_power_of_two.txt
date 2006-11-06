@@ -20,7 +20,7 @@ Contributors
 
 Contact
 
-    Jeremy Sandmel, ATI Research, Inc (jsandmel 'at' ati.com)
+    Jeremy Sandmel, Apple Computer (jsandmel 'at' apple.com)
     Mark J. Kilgard, NVIDIA Corporation (mjk 'at' nvidia.com)
 
 Notice
@@ -33,7 +33,7 @@ Status
 
 Version
 
-    Date: May 14, 2004
+    Date: November 4, 2006
     Revision: 1.0
 
 Number
@@ -542,6 +542,10 @@ New Implementation Dependent State
     None
 
 Revision History
+
+    Date 11/04/2006
+    Revision: 1.0
+       -  Updated contact info after ATI/AMD merger.
 
     Date 05/14/2004
     Revision: 1.0

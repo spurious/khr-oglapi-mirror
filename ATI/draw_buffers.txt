@@ -12,7 +12,7 @@ Contributors
 
 Contact
 
-    Rob Mace, ATI Research (mace 'at' ati.com)
+    Rob Mace, ATI Research (rob.mace 'at' amd.com)
 
 Status
 
@@ -20,8 +20,8 @@ Status
 
 Version
 
-    Last Modified Date: December 30, 2002
-    Revision: 8
+    Last Modified Date: November 4, 2006
+    Revision: 9
 
 Number
 
@@ -253,6 +253,10 @@ New Implementation Dependent State
 
 
 Revision History
+
+   Date: 11/4/2006
+   Revision: 9
+      - Updated contact info after ATI/AMD merger.
 
    Date: 12/30/2002
    Revision: 8

@@ -8,13 +8,14 @@ Name Strings
 
 Contact
 
-    Dave Gosselin, ATI Research (gosselin 'at' ati.com) and
-    Evan Hart, ATI Research (ehart 'at' ati.com)
+    Benj Lipchak, AMD (benj.lipchak 'at' amd.com)
+    Evan Hart, NVIDIA (ehart 'at' nvidia.com)
+    Dave Gosselin
 
 Version
 
-    Date: 8/20/2001
-    Revision: 1.00
+    Date: 11/04/2006
+    Revision: 1.01
 
 Number
 

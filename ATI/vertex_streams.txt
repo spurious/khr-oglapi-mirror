@@ -8,12 +8,13 @@ Name Strings
 
 Contact
 
-    Evan Hart, ATI Research (ehart 'at' ati.com)
+    Benj Lipchak, AMD (benj.lipchak 'at' amd.com)
+    Evan Hart, NVIDIA (ehart 'at' nvidia.com)
 
 Version
 
-    Date: 8/7/2001
-    Revision: 0.30
+    Date: 11/4/2006
+    Revision: 0.31
 
 Number
 

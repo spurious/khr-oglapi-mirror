@@ -8,8 +8,8 @@ Name Strings
 
 Contact
 
-    Dave Gosselin, ATI Technologies, Inc. (gosselin 'at' ati.com)
-    Dan Ginsburg, ATI Technologies, Inc. (dginsbur 'at' ati.com)
+    Dan Ginsburg, AMD (dan.ginsburg 'at' amd.com)
+    Dave Gosselin
 
 Notice
 
@@ -21,7 +21,7 @@ IP Status
 
 Version
 
-    Last Modified Date: 2000/09/28 13:54:17 Revision: 1.2
+    Last Modified Date: 2006/11/04 13:54:17 Revision: 1.3
 
 Number
 

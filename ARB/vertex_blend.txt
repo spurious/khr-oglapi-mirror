@@ -8,8 +8,8 @@ Name Strings
 
 Contact
 
-    Evan Hart, ATI Research (ehart 'at' ati.com)
-    Tom Frisinger, ATI Research (tfrisinger 'at' ati.com)
+    Evan Hart, NVIDIA (ehart 'at' nvidia.com)
+    Tom Frisinger, AMD (tom.frisinger 'at' amd.com)
 
 Status
 
@@ -17,8 +17,8 @@ Status
 
 Version
 
-    Last Modified Date: March 12, 2002
-    Revision: 1.1
+    Last Modified Date: November 4, 2006
+    Revision: 1.3
 
 Number
 
@@ -615,3 +615,5 @@ Revision History
   * 1.1 (March 12, 2002) - added GLX protocol for Weight[df]v
 
   * 1.2 (March 21, 2002) - correct Weightdv protocol
+
+  * 1.3 (November 4, 2006) - updated contact info after ATI/AMD merger

@@ -8,7 +8,7 @@ Name Strings
 
 Contact
 
-    Rob Mace, ATI Research (mace 'at' ati.com)
+    Rob Mace, AMD (rob.mace 'at' amd.com)
 
 Status
 
@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Date: December 4, 2002
-    Revision: 4
+    Last Modified Date: November 4, 2006
+    Revision: 5
 
 Number
 
@@ -162,6 +162,10 @@ New Implementation Dependent State
 
 
 Revision History
+
+   Date: 11/4/2006
+   Revision: 5
+      - Updated contact info after ATI/AMD merger.
 
    Date: 12/4/2002
    Revision: 4

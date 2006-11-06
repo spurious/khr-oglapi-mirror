@@ -9,11 +9,11 @@ Name Strings
 Contributors
 
     Bob Beretta, Apple Computer
-    Dan Ginsburg, ATI Research
-    Evan Hart, ATI Research
-    Benj Lipchak, ATI Research
+    Dan Ginsburg, AMD
+    Evan Hart, NVIDIA
+    Benj Lipchak, AMD
     James McCombe, Apple Computer
-    Jason Mitchell, ATI Research
+    Jason Mitchell
 
     and contributors to the ARB_vertex_program working group,
     the product of which provided the API for program specification
@@ -21,7 +21,8 @@ Contributors
 
 Contact
 
-    Jeremy Sandmel, ATI Research (jsandmel 'at' ati.com)
+    Benj Lipchak, AMD (benj.lipchak 'at' amd.com)
+    Jeremy Sandmel, Apple Computer (jsandmel 'at' apple.com)
 
 Status
 
@@ -29,8 +30,8 @@ Status
 
 Version
 
-    Last Modified Date: Sep 5, 2002
-    Author Revision: 1.0.10 (based on 1.5 of ATI_fragment_shader)
+    Last Modified Date: November 4, 2006
+    Author Revision: 1.0.11 (based on 1.5 of ATI_fragment_shader)
 
 Number
 
@@ -1176,6 +1177,10 @@ Sample Usage
 -----------------------------------------------------
 
 Revision History
+
+    Date: 11/4/2006
+    Revision: 1.0.11
+      - Updated contact info after ATI/AMD merger.
 
     Date: 9/5/2002
     Revision: 1.0.10

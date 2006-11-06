@@ -8,7 +8,7 @@ Name Strings
 
 Contact
 
-    Chuck Smith, ATI Research (chucks 'at' ati.com)
+    Chuck Smith, AMD (chuck.smith 'at' amd.com)
 
 Status
 
@@ -16,8 +16,8 @@ Status
 
 Version
   
-    Last Modified Date: September 10, 2002
-    Revision: 1.0
+    Last Modified Date: November 4, 2006
+    Revision: 1.1
 
 Number
 
@@ -157,6 +157,9 @@ New Implementation Dependent State
 
 
 Revision History
+
+    11/04/2006  1.1
+        - updated contact info after ATI/AMD merger.
 
     09/10/2002  1.0
         - initial version

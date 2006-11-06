@@ -18,7 +18,7 @@ Contributors
 
 Contact
 
-    Bill Licea-Kane, ATI Research (bill 'at' ati.com)
+    Bill Licea-Kane, AMD (bill.licea-kane 'at' amd.com)
 
 IP Status
 
@@ -32,8 +32,8 @@ Status
 
 Version
 
-    Last Modified Date: December 8, 2003
-    Revision: 5
+    Last Modified Date: November 4, 2006
+    Revision: 6
 
 Number
 

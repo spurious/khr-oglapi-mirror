@@ -8,13 +8,13 @@ Name Strings
 
 Contact
 
-    Dan Ginsburg, ATI Research (dginsbur 'at' ati.com)
+    Dan Ginsburg, AMD (dan.ginsburg 'at' amd.com)
 
 
 Version
 
-    Date: 1/09/2003
-    Revision: 1.01
+    Date: 11/04/2006
+    Revision: 1.02
 
 Number
 
@@ -285,6 +285,10 @@ New Implementation Dependent State
 
 
 Revision History
+
+   Date: 11/4/2006
+   Revision: 1.02
+      - Updated contact info after ATI/AMD merger.
 
    Date: 1/09/2003
    Revision: 1.01

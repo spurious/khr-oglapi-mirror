@@ -8,13 +8,13 @@ Name Strings
 
 Contact
 
-    Dan Ginsburg, ATI Research (dginsbur 'at' ati.com)
-    Alex Vlachos, ATI Research (avlachos 'at' ati.com)
+    Dan Ginsburg, AMD (dan.ginsburg 'at' amd.com)
+    Alex Vlachos
 
 Version
 
-    Last Modified Date: October 11, 2002
-    Revision: 1.1
+    Last Modified Date: November 4, 2006
+    Revision: 1.2
 
 Number
 
@@ -212,6 +212,10 @@ New Implementation Dependent State
     None
 
 Revision History
+
+    Date: 11/4/2006
+    Revision: 1.2
+      - Updated contact info after ATI/AMD merger.
 
     Date: 11/11/2002
     Revision: 1.1

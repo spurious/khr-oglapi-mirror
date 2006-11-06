@@ -8,11 +8,11 @@ Name Strings
 
 Contact
 
-    Dan Ginsburg, ATI Research (dginsbur 'at' ati.com)
+    Dan Ginsburg, AMD (dan.ginsburg 'at' amd.com)
 
 Version
 
-    Last Modified Date: 11/14/2000 Revision: 0.30
+    Last Modified Date: 11/4/2006 Revision: 0.31
 
 Number
 

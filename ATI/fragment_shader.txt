@@ -14,7 +14,7 @@ Contributors
     
 Contact
 
-    Benj Lipchak, ATI Research (blipchak 'at' ati.com)
+    Benj Lipchak, AMD (benj.lipchak 'at' amd.com)
 
 Status
 
@@ -22,8 +22,8 @@ Status
 
 Version
 
-    Last Modified Date: August 21, 2002
-    Author Revision: 1.7
+    Last Modified Date: November 4, 2006
+    Author Revision: 1.8
 
 Number
 
@@ -893,6 +893,10 @@ Sample Usage
 
 
 Revision History
+
+    Date: 11/4/2006
+    Revision: 1.8
+      - Updated contact info after ATI/AMD merger.
 
     Date: 8/21/2002
     Revision: 1.7

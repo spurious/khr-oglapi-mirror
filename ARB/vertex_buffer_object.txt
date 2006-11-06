@@ -28,7 +28,7 @@ Contributors
 
 Contact
 
-    Rick Hammerstone, ATI Research (rhammers 'at' ati.com)
+    Rick Hammerstone, AMD (rick.hammerstone 'at' amd.com)
     Matt Craighead, NVIDIA Corporation (mcraighead 'at' nvidia.com)
     Kurt Akeley, NVIDIA Corporation (kakeley 'at' nvidia.com)
 
@@ -42,8 +42,8 @@ Status
 
 Version
 
-    Last Modified Date: January 21, 2003
-    Revision: 0.91
+    Last Modified Date: November 4, 2006
+    Revision: 0.92
 
 Number
 

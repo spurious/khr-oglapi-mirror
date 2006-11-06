@@ -26,7 +26,7 @@ Contributors
 
 Contact
 
-    Benj Lipchak, ATI Research (blipchak 'at' ati.com)
+    Benj Lipchak, AMD (benj.lipchak 'at' amd.com)
 
 IP Status
 
@@ -39,8 +39,8 @@ Status
 
 Version
 
-    Last Modified Date: August 22, 2003
-    Revision: 26
+    Last Modified Date: November 4, 2006
+    Revision: 27
 
 Number
 
@@ -4852,6 +4852,10 @@ Sample Usage
 
 
 Revision History
+
+   Date: 11/04/2006
+   Revision: 27
+      - Updated contact info after ATI/AMD merger.
 
    Date: 8/22/2003
    Revision: 26
