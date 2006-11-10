@@ -1,4 +1,3 @@
-
 Name
 
     EXT_framebuffer_blit
@@ -32,8 +31,8 @@ Status
 
 Version
 
-    Last Modified Date: December 22, 2005
-    Author Revision: 12
+    Last Modified Date: September 29, 2006
+    Author Revision: 14
 
 Number
 
@@ -152,6 +151,21 @@ Operations and the Frame Buffer)
     "While an application-created framebuffer object is bound to
     DRAW_FRAMEBUFFER_EXT, the pixel ownership test always passes."
 
+    Modify the last sentence of the second to last paragraph of
+    section 4.2.4 as follows:
+
+    "If there is no accumulation buffer, or if the DRAW_FRAMEBUFFER_EXT
+    and READ_FRAMEBUFFER_EXT bindings (section 4.4.4.2) do not refer to
+    the same object, or if the GL is in color index mode, Accum
+    generates the error INVALID_OPERATION."
+
+    Add to 4.3.2 (Reading Pixels), right before the subsection titled
+    "Obtaining Pixels from the Framebuffer":
+
+    "Calling ReadPixels generates INVALID_FRAMEBUFFER_OPERATION_EXT if
+    the object bound to READ_FRAMEBUFFER_BINDING_EXT is not "framebuffer
+    complete" (section 4.4.4.2)."
+
     In section 4.3.2, modify the definition of ReadBuffer as follows:
 
     "The command
@@ -181,36 +195,24 @@ Operations and the Frame Buffer)
     ReadBuffer will set the read buffer for input colors other than 0
     to NONE.
 
-    In section 4.3.2, add the following paragraph to the end of
-    the subsection titled "Obtaining Pixels from the Framebuffer":
-
-    "Calling ReadPixels will cause an INVALID_FRAMEBUFFER_OPERATION_EXT
-    if the object bound to READ_FRAMEBUFFER_BINDING_EXT is not
-    "framebuffer complete" (section 4.4.4.2)."
-
-    Modify the last sentence of the second to last paragraph of
-    section 4.2.4 as follows:
-
-    "If there is no accumulation buffer, or if the
-    DRAW_FRAMEBUFFER_EXT and READ_FRAMEBUFFER_EXT bindings do not
-    refer to the same object, or if the GL is in color index mode,
-    Accum generates the error INVALID_OPERATION."
-
     Modify the first sentence of section 4.3.3 as follows:
 
     "CopyPixels transfers a rectangle of pixel values from one region
     of the read framebuffer to another in the draw framebuffer."
 
-    Delete the following text in section 4.3.3, page 194, inside the
+    Add the following text to section 4.3.3, page 194, inside the
     definition of CopyPixels:
 
-    "Furthermore, the behavior of several GL operations is specified "as
-    if the arguments were passed to CopyPixels."  These operations
-    include: CopyTex{Sub}Image*, CopyColor{Sub}Table, and
-    CopyConvolutionFilter*.  INVALID_FRAMEBUFFER_OPERATION_EXT will be
-    generated if an attempt is made to execute one of these operations,
-    or CopyPixels, while the object bound to FRAMEBUFFER_BINDING_EXT is
-    not "framebuffer complete" (as defined in section 4.4.4.2)."
+    "Finally, the behavior of several GL operations is specified "as if
+    the arguments were passed to CopyPixels."  These operations include:
+    CopyTex{Sub}Image*, CopyColor{Sub}Table, and CopyConvolutionFilter*.
+    INVALID_FRAMEBUFFER_OPERATION_EXT will be generated if an attempt is
+    made to execute one of these operations, or CopyPixels, while the
+    object bound to READ_FRAMEBUFFER_BINDING_EXT is not "framebuffer
+    complete" (as defined in section 4.4.4.2).  Furthermore, an attempt
+    to execute CopyPixels will generate
+    INVALID_FRAMEBUFFER_OPERATION_EXT while the object bound to
+    DRAW_FRAMEBUFFER_BINDING_EXT is not "framebuffer complete"."
 
     Append to section 4.3.3:
 
@@ -228,29 +230,28 @@ Operations and the Frame Buffer)
     DEPTH_BUFFER_BIT, and STENCIL_BUFFER_BIT, which are described in
     section 4.2.3.  The pixels corresponding to these buffers are
     copied from the source rectangle, bound by the locations (srcX0,
-    srcY0) and (srcX1, srcY1) inclusive, to the destination rectangle,
-    bound by the locations (dstX0, dstY0) and (dstX1, dstY1)
-    inclusive.
+    srcY0) and (srcX1, srcY1), to the destination rectangle, bound by
+    the locations (dstX0, dstY0) and (dstX1, dstY1).  The lower bounds
+    of the rectangle are inclusive, while the upper bounds are
+    exclusive.
 
     If the source and destination rectangle dimensions do not match,
     the source image is stretched to fit the destination
     rectangle. <filter> must be LINEAR or NEAREST and specifies the
     method of interpolation to be applied if the image is
     stretched. LINEAR filtering is allowed only for the color buffer;
-    if the source and destination dimensions are not identical, and
-    <mask> includes DEPTH_BUFFER_BIT or STENCIL_BUFFER_BIT, and filter
-    is not NEAREST, no copy is performed and an INVALID_OPERATION
-    error is generated.  If the source and destination dimensions are
-    identical, no filtering is applied.  If either the source or
-    destination rectangle specifies a negative dimension, the image is
-    reversed in the corresponding direction.  If both the source and
-    destination rectangles specify a negative dimension for the same
-    direction, no reversal is performed.
+    if <mask> includes DEPTH_BUFFER_BIT or STENCIL_BUFFER_BIT, and
+    filter is not NEAREST, no copy is performed and an
+    INVALID_OPERATION error is generated.  If the source and
+    destination dimensions are identical, no filtering is applied.  If
+    either the source or destination rectangle specifies a negative
+    dimension, the image is reversed in the corresponding direction.
+    If both the source and destination rectangles specify a negative
+    dimension for the same direction, no reversal is performed.
 
-    If the source and destination color buffers are the same buffer,
-    and the source and destination rectangle dimensions do not match
-    and the rectangles overlap, the result of the blit operation is
-    undefined.
+    If the source and destination buffers are identical, and the
+    source and destination rectangles overlap, the result of the blit
+    operation is undefined.
 
     The pixel copy bypasses the fragment pipeline.  The only fragment
     operations which affect the blit are the pixel ownership test and
@@ -410,8 +411,13 @@ Dependencies on ARB_color_buffer_float
 Errors
 
     The error INVALID_FRAMEBUFFER_OPERATION_EXT is generated if
-    BlitFramebufferEXT is called and either the draw or read
-    framebuffer is not framebuffer complete.
+    BlitFramebufferEXT, DrawPixels, or CopyPixels is called while the
+    draw framebuffer is not framebuffer complete.
+
+    The error INVALID_FRAMEBUFFER_OPERATION_EXT is generated if
+    BlitFramebufferEXT, ReadPixels, CopyPixels, CopyTex{Sub}Image*,
+    CopyColor{Sub}Table, or CopyConvolutionFilter* is called while the
+    read framebuffer is not framebuffer complete.
 
     The error INVALID_VALUE is generated by BlitFramebufferEXT if
     <mask> has any bits set other than those named by
@@ -459,7 +465,7 @@ Sample Code
     RenderScene();
 
     /* Blit contents of color buffer, depth buffer and stencil buffer
-     * from framebuffer object 2 to framebuffer object 1
+     * from framebuffer object 2 to framebuffer object 1.
      */
     BindFramebufferEXT(READ_FRAMEBUFFER_EXT, 2);
     BindFramebufferEXT(DRAW_FRAMEBUFFER_EXT, 1);
@@ -470,8 +476,18 @@ Sample Code
                        GL_STENCIL_BUFFER_BIT,
                        GL_NEAREST);
 
+    /* Blit contents of color buffer from framebuffer object 1 to
+     * framebuffer object 2, inverting the image in the X direction.
+     */
+    BindFramebufferEXT(READ_FRAMEBUFFER_EXT, 1);
+    BindFramebufferEXT(DRAW_FRAMEBUFFER_EXT, 2);
+    BlitFramebufferEXT(0, 0, 640, 480,
+                       640, 0, 0, 480,
+                       GL_COLOR_BUFFER_BIT,
+                       GL_NEAREST);
+
     /* Blit color buffer from framebuffer object 1 to framebuffer
-     * object 3 with a 2X zoom and linear filtering
+     * object 3 with a 2X zoom and linear filtering.
      */
     BindFramebufferEXT(READ_FRAMEBUFFER_EXT, 1);
     BindFramebufferEXT(DRAW_FRAMEBUFFER_EXT, 3);
@@ -553,7 +569,8 @@ Issues
         multiple color buffers may be copied with a single call to
         BlitFramebuffer?
 
-	Resolved: yes
+	Resolved: No, we considered this but the behavior is awkward
+	to define and the functionality is of limited use.
 
     13) How should BlitFramebuffer color space conversion be
         specified?  Do we allow context clamp state to affect the
@@ -566,45 +583,29 @@ Issues
     14) Should overlapped blits be allowed?  Should they be guaranteed
         to work?
 
-        Resolved: Allow blits within a buffer, guarantee correct
-        behavior for non-overlapping blits, and overlapping blits
-        which do not stretch or invert the image.
-
-    15) If ReadPixels is called and more than one read buffer is defined, what happens?
-
-        Resolved: INVALID_OPERATION
-
-	I would like to reconsider this decision.  I don't want the
-        runtime overhead of checking all read buffers or searching for
-        the first read buffer.  The current language says only the
-        first read buffer is considered for ReadPixels and similar
-        commands which read the color buffer; see section 4.3.2.
-
-    16) Should MAX_DRAW_BUFFERS be renamed MAX_BUFFERS or MAX_COLOR_BUFFERS,
-        since the constant is now shared for draw and read buffers?
-
-        Resolved: The constants should not be shared, MAX_READ_BUFFERS
-        should be separate from MAX_DRAW_BUFFERS.  Furthermore, we
-        need separate enums to query the various read bindings.
-
-    17) How should BlitFramebuffer behave with respect to read and
-        draw buffers?
-
-        Resolved: if only the first read buffer is not NONE, the color
-        buffer contents are copied to each enabled draw buffer.
-        Otherwise, all non-NONE read buffers are copied to all
-        non-NONE drawbuffers.  If the set of non-NONE read and draw
-        buffers do not match, INVALID_OPERATION is generated.
-
-        I would like to reconsider this decision.  Its difficult to
-        describe in spec language and the behavior is somewhat
-        confusing.  I would like to require that both READ and DRAW
-        buffers be non-NONE for a copy to occur, and any case in which
-        either is NONE is silently ignored.
+        Resolved: Overlapping blits are allowed but are undefined.
 
 
 Revision History
 
+    Revision 14, 2006/09/29
+      - Changed the resolution of issue 12 to reflect the working
+        group decision to abandon ReadBuffers.
+      - Eliminated issues 15, 16 and 17 as they are no longer relevent.
+      - Changed the resolution of issue 14 and the corresponding spec
+        language to indicate that the result of an overlapping blit is
+        undefined.
+      - Changed the spec language to clarify that the lower bound of a
+        blit rectangle is inclusive while the upper bound is
+        exclusive.
+      - Added a sample showing an inverted blit, to clarify the pixel
+        addressing rules.
+      - Clarified spec language and error behavior to indicate that
+        blitting DEPTH and STENCIL buffers with LINEAR filtering is
+        always disallowed, whether or not the blit is scaling.
+    Revision 13, 2006/06/01 (Jeff Juliano)
+      - Clarify errors generated when read and draw framebuffers are
+        incomplete.
     Revision 12, 2005/12/22 (Jon Leech)
       - Assigned enumerant values. Add return type to BlitFramebufferEXT.
 	Note INVALID_ENUM error if filter is not LINEAR or NEAREST.

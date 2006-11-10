@@ -32,8 +32,8 @@ Status
 
 Version
 
-    Last Modified Date: December 22, 2005
-    Revision: #5
+    Last Modified Date: November 6, 2006
+    Revision: #6c
 
 Number
 
@@ -143,6 +143,15 @@ New Tokens
 
         RENDERBUFFER_SAMPLES_EXT            0x8CAB
 
+    Returned by CheckFramebufferStatusEXT:
+
+	FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_EXT	0x8D56
+
+    Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
+    GetFloatv, and GetDoublev:
+
+	MAX_SAMPLES_EXT			    0x8D57
+
 Additions to Chapter 2 of the 1.5 Specification (OpenGL Operation)
 
 Additions to Chapter 3 of the OpenGL 1.5 Specification (Rasterization)
@@ -150,28 +159,35 @@ Additions to Chapter 3 of the OpenGL 1.5 Specification (Rasterization)
 Additions to Chapter 4 of the OpenGL 1.5 Specification (Per-Fragment
 Operations and the Framebuffer)
 
-Modification to 4.3.2 (Reading Pixels)
+Add to 4.3.2 (Reading Pixels), right before the subsection titled
+"Obtaining Pixels form the Framebuffer":
 
-    Add to top of the subsection titled "Obtaining Pixels form the
-    Framebuffer":
+    "ReadPixels generates INVALID_OPERATION if READ_FRAMEBUFFER_BINDING
+    (section 4.4) is non-zero, the read framebuffer is framebuffer
+    complete, and the value of SAMPLE_BUFFERS for the read framebuffer
+    is greater than zero."
 
-    "If READ_FRAMEBUFFER_BINDING (section 4.4) is non-zero and SAMPLES
-    is greater than zero, then an attempt to read from the framebuffer
-    using any method other than BlitFramebufferEXT (section 4.3.3)
-    generates INVALID_OPERATION."
+Modify the following text to section 4.3.3, page 194, that was added to
+the definition of CopyPixels by EXT_framebuffer_blit:
 
-    Add to the end of the first paragraph in the definition of
-    CopyPixels:
+    "Finally, the behavior of several GL operations is specified "as if
+    the arguments were passed to CopyPixels."  These operations include:
+    CopyTex{Sub}Image*, CopyColor{Sub}Table, and CopyConvolutionFilter*.
+    INVALID_FRAMEBUFFER_OPERATION_EXT will be generated if an attempt is
+    made to execute one of these operations, or CopyPixels, while the
+    object bound to READ_FRAMEBUFFER_BINDING_EXT (section 4.4) is not
+    "framebuffer complete" (as defined in section 4.4.4.2).
+    INVALID_OPERATION will be generated if the object bound to
+    READ_FRAMEBUFFER_BINDING_EXT is "framebuffer complete" and the value
+    of SAMPLE_BUFFERS is greater than zero.
 
-    "As with ReadPixels, if READ_FRAMEBUFFER_BINDING (section 4.4) is
-    non-zero and SAMPLES is greater than zero, then an attempt to read
-    from the framebuffer using any method other than BlitFramebufferEXT
-    (section 4.3.3) generates INVALID_OPERATION."
+    Furthermore, an attempt to execute CopyPixels will generate
+    INVALID_FRAMEBUFFER_OPERATION_EXT while the object bound to
+    DRAW_FRAMEBUFFER_BINDING_EXT (section 4.4) is not "framebuffer
+    complete".
 
-Append to 4.3.3 (Reading Pixels)
-
-    Append to the section describing BlitFramebuffer that was added by
-    EXT_framebuffer_blit.
+In 4.3.3 (Copying Pixels), add to the section describing BlitFramebuffer
+that was added by EXT_framebuffer_blit.
 
     "If SAMPLE_BUFFERS for the read framebuffer is greater than zero and
     SAMPLE_BUFFERS for the draw framebuffer is zero, the samples
@@ -190,12 +206,11 @@ Append to 4.3.3 (Reading Pixels)
     draw framebuffer.  Otherwise, no copy is performed and an
     INVALID_OPERATION error is generated.
 
-    Further, if SAMPLE_BUFFERS for either the read framebuffer or draw
-    framebuffer is greater than zero and the dimensions of the source
-    and destination rectangles provided to BlitFramebuffer are not
-    identical, no copy is performed and an INVALID_OPERATION error is
-    generated."
-
+    Furthermore, if SAMPLE_BUFFERS for either the read framebuffer or
+    draw framebuffer is greater than zero and the dimensions of the
+    source and destination rectangles provided to BlitFramebuffer are
+    not identical, no copy is performed and an INVALID_OPERATION error
+    is generated."
 
 Modification to 4.4.2.1 (Renderbuffer Objects)
 
@@ -215,9 +230,10 @@ Modification to 4.4.2.1 (Renderbuffer Objects)
     table 3.16 or table 2.nnn that has a base internal format of RGB,
     RGBA, DEPTH_COMPONENT, or STENCIL_INDEX.  <width> and <height> are
     the dimensions in pixels of the renderbuffer.  If either <width> or
-    <height> is greater than MAX_RENDERBUFFER_SIZE_EXT, the the error
-    INVALID_VALUE is generated.  If the GL is unable to create a data
-    store of the requested size, the error OUT_OF_MEMORY is generated.
+    <height> is greater than MAX_RENDERBUFFER_SIZE_EXT, or if <samples>
+    is greater than MAX_SAMPLES_EXT, then the error INVALID_VALUE is
+    generated. If the GL is unable to create a data store of the
+    requested size, the error OUT_OF_MEMORY is generated.
 
     Upon success, RenderbufferStorageMultisampleEXT deletes any existing
     data store for the renderbuffer image and the contents of the data
@@ -342,19 +358,32 @@ Dependencies on EXT_framebuffer_blit
 
 Errors
 
+    The error INVALID_OPERATION_EXT is generated if ReadPixels,
+    CopyPixels, CopyTex{Sub}Image*, CopyColor{Sub}Table, or
+    CopyConvolutionFilter* is called while READ_FRAMEBUFFER_BINDING_EXT
+    is non-zero, the read framebuffer is framebuffer complete, and the
+    value of SAMPLE_BUFFERS for the read framebuffer is greater than
+    zero.
+
     The error OUT_OF_MEMORY is generated when
     RenderbufferStorageMultisampleEXT cannot storage of the specified
     size.
 
-    If the value of SAMPLE_BUFFERS for either the draw or read
-    framebuffer is greater than zero, then the error INVALID_OPERATION
-    is generated if BlitFramebufferEXT is called and the values of
-    SAMPLES for the draw and read framebuffers do not match.
+    If both the draw and read framebuffers are framebuffer complete and
+    both have a value of SAMPLE_BUFFERS that is greater than zero, then
+    the error INVALID_OPERATION is generated if BlitFramebufferEXT is
+    called and the values of SAMPLES for the draw and read framebuffers
+    do not match.
 
-    If the value of SAMPLE_BUFFERS for either the draw or read
-    framebuffer is greater than zero, then the error INVALID_OPERATION
-    is generated if BlitFramebufferEXT is called and  the specified
-    source and destination rectangles do not match.
+    If either the draw or read framebuffer is framebuffer complete and
+    has a value of SAMPLE_BUFFERS that is greater than zero, then the
+    error INVALID_OPERATION is generated if BlitFramebufferEXT is called
+    and the specified source and destination dimensions are not
+    identical.
+
+    If RenderbufferStorageMultisampleEXT is called with a value of
+    <samples> that is greater than MAX_SAMPLES_EXT, then the error
+    INVALID_VALUE is generated.
 
 New State
 
@@ -363,6 +392,18 @@ New State
     Get Value                          Type    Get Command                    Initial Value  Description             Section       Attribute
     -------------------------------    ------  -------------                  -------------  --------------------    ------------  ---------
     RENDERBUFFER_SAMPLES_EXT           Z+      GetRenderbufferParameterivEXT  0              number of samples       4.4.2.1       -
+
+
+To the table added by EXT_framebuffer_object called "Framebuffer
+Dependent Values", table 9.nnn, add the following new framebuffer
+dependent state.
+
+    Get Value        Type  Get Command     Minimum Value    Description             Section  Attribute
+    ---------        ----  -----------     -------------    -------------------     -------  ---------
+    MAX_SAMPLES_EXT  Z+    GetIntegerv     1                Maximum number of       4.4.2.1  -
+                                                            samples supported
+                                                            for multisampling
+                                                            
 
 
 Usage Examples
@@ -489,6 +530,14 @@ Issues
          issue of resolution (4), it must give at least the number of
          samples requested or it must fail the
          RenderbufferStorageMultisampleEXT call.
+         
+             Update from June 2006 ARB meeting:
+             
+             The appropriate error for the case where the number of
+             samples is larger than the maximum supported by the
+             implementation is INVALID_VALUE.  To allow an application
+             to know the maximum legal value, we add a GetInteger query
+             MAX_SAMPLES.
 
     (7)  Is there a query for the maximum size of <samples>?
 
@@ -510,7 +559,7 @@ Issues
          copy extension, EXT_framebuffer_blit, or is it merely affected
          by the presence of that extension.
          
-         RESOLVED: EXT_framebuffer_blit is required.
+         RESOLVED, EXT_framebuffer_blit is required.
          
          EXT_framebuffer_multisample by itself enable the user to
          perform multisampled rendering.  However, you can't copy or
@@ -528,10 +577,35 @@ Issues
          So we decided to state that EXT_framebuffer_multisample
          requires EXT_framebuffer_blit instead of merely stating that
          that extension affects this one.
+
+    (9)  Is DrawPixels allowed when the draw framebuffer is multisample?
+
+         RESOLVED, yes
+
+         This is no different than DrawPixels to a multisample window
+         (framebuffer zero).  Note that ReadPixels and CopyPixels are
+         disallowed when the read framebuffer is multisample.
          
 Revision History
+    #6c, November 6, 2006: jjuliano
+        - changes from June #6 merged back in
+
+    #6b, October 13, 2006: Jon Leech
+	- added token values for MAX_SAMPLES_EXT and
+	  FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_EXT.
+
+    #6a, September 6, 2006: jsandmel
+        - added language describing MAX_SAMPLES query
+        - clarified that RenderbufferStorageMultisampleEXT can fail
+          with INVALID_VALUE if <samples> is greater than MAX_SAMPLES
+
+    #6, June 1, 2006: jjuliano
+        - add missing errors to Errors section
+        - clarify the modifications to 4.3.2 and 4.3.3.
+        - add issue 9 to document that multisample DrawPixels is allowed
+
     #5, December 22, 2005: Jon Leech
-	- added GLX protocol, assigned enumerant values
+        - added GLX protocol, assigned enumerant values
 
     #4, September 28, 2005: jsandmel, jjuliano
         - moved the multisample languge from GL_EXT_framebuffer_blit to 
