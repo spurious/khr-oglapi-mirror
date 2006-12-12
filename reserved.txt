@@ -237,6 +237,7 @@ GLX Vendor Private / Vendor Private with Reply opcodes (32-bits)
       4101		SGIS_texture_filter4
       4102    4104	SGIX_instruments
       4105		SGIX_flush_raster
+  5152	  5184	Mesa (unknown use)
   8192	  8207	HP
  16384	 16399	ADD
  65536	 66575	SGI (various GLX extensions)
