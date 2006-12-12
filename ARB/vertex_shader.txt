@@ -52,8 +52,8 @@ Status
 
 Version
 
-    Last Modified Date: March 30, 2004
-    Author Revision: 0.81
+    Last Modified Date: December 12, 2006
+    Author Revision: 0.82
 
 Number
 
@@ -1912,7 +1912,7 @@ Sample Usage
 	glGetObjectParameterivARB(VertexShaderObject,
 				  GL_OBJECT_COMPILE_STATUS_ARB, &compiled);
 
-	glGetObjectParamterivARB(VertexShaderObject,
+	glGetObjectParameterivARB(VertexShaderObject,
 				 GL_OBJECT_INFO_LOG_LENGTH_ARB, &maxLength);
 	pInfoLog = (GLcharARB *) malloc(maxLength * sizeof(GLcharARB));
 	glGetInfoLogARB(VertexShaderObject, maxLength, &length, pInfoLog);
@@ -1954,7 +1954,7 @@ Sample Usage
 	glGetObjectParameterivARB(ProgramObject, GL_OBJECT_LINK_STATUS_ARB,
 				  &linked);
 
-	glGetObjectParamterivARB(ProgramObject,
+	glGetObjectParameterivARB(ProgramObject,
 				 GL_OBJECT_INFO_LOG_LENGTH_ARB, &maxLength);
 	pInfoLog = (GLcharARB *) malloc(maxLength * sizeof(GLcharARB));
 	glGetInfoLogARB(ProgramObject, maxLength, &length, pInfoLog);
@@ -2348,3 +2348,5 @@ Revision History
       - Moved spec language related to texture operations not affected by a
 	vertex shader to issue 23.
       - ARB-GL2 workgroup approved version.
+    Revision 0.82, 12/12/2006
+      - Fixed spelling of glGetObjectParameterivARB in sample code.

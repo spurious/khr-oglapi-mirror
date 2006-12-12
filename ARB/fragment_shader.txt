@@ -46,8 +46,8 @@ Status
 
 Version
 
-    Last Modified Date: May 14, 2004
-    Author Revision: 0.79
+    Last Modified Date: December 12, 2006
+    Author Revision: 0.80
 
 Number
 
@@ -1086,7 +1086,7 @@ Sample Usage
 	glGetObjectParameterivARB(VertexShaderObject,
 				  GL_OBJECT_COMPILE_STATUS_ARB, &compiled);
 
-	glGetObjectParamterivARB(VertexShaderObject,
+	glGetObjectParameterivARB(VertexShaderObject,
 				 GL_OBJECT_INFO_LOG_LENGTH_ARB, &maxLength);
 	pInfoLog = (GLcharARB *) malloc(maxLength * sizeof(GLcharARB));
 	glGetInfoLogARB(VertexShaderObject, maxLength, &length, pInfoLog);
@@ -1102,7 +1102,7 @@ Sample Usage
 	glGetObjectParameterivARB(FragmentShaderObject,
 				  GL_OBJECT_COMPILE_STATUS_ARB, &compiled);
 
-	glGetObjectParamterivARB(FragmentShaderObject,
+	glGetObjectParameterivARB(FragmentShaderObject,
 				 GL_OBJECT_INFO_LOG_LENGTH_ARB, &maxLength);
 	pInfoLog = (GLcharARB *) malloc(maxLength * sizeof(GLcharARB));
 	glGetInfoLogARB(FragmentShaderObject, maxLength, NULL, pInfoLog);
@@ -1139,7 +1139,7 @@ Sample Usage
 	glGetObjectParameterivARB(ProgramObject,
 				  GL_OBJECT_LINK_STATUS_ARB, &linked);
 
-	glGetObjectParamterivARB(ProgramObject,
+	glGetObjectParameterivARB(ProgramObject,
 				 GL_OBJECT_INFO_LOG_LENGTH_ARB, &maxLength);
 	pInfoLog = (GLcharARB *) malloc(maxLength * sizeof(GLcharARB));
 	glGetInfoLogARB(ProgramObject, maxLength, NULL, pInfoLog);
@@ -1336,3 +1336,5 @@ Revision History
       - Listed that FRAGMENT_SHADER_DERIVATIVE_HINT is also accepted by the
 	Get* commands under the New Tokens section.
       - Updated issue 14. Punted most of it to the MRT extension document.
+    Revision 0.80, 12/12/2006
+      - Fixed spelling of glGetObjectParameterivARB in sample code.
