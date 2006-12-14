@@ -1,324 +1,95 @@
-Kurt Akeley
-10 September 2003
 Syntax Rules for OpenGL Extensions
-Updated based on existing ARB extensions and GL 1.4
-This is a preliminary document.
-
-
-
-ARB extensions scanned
-----------------------
-
-                                        Terms
-     1  GL_ARB_multitexture                                                    
-     2  GLX_ARB_get_proc_address         *                                     
-     3  GL_ARB_transpose_matrix          *                                     
-     4  WGL_ARB_buffer_region            *                                     
-     5  GL_ARB_multisample               *                                     
-     6  GL_ARB_texture_env_add           *                                     
-     7  GL_ARB_texture_cube_map          *                                     
-     8  WGL_ARB_extensions_string        *                                     
-     9  WGL_ARB_pixel_format             *                                     
-    10  WGL_ARB_make_current_read        *                                     
-    11  WGL_ARB_pbuffer                  *                                     
-    12  GL_ARB_texture_compression       *                                     
-    13  GL_ARB_texture_border_clamp      *                                     
-    14  GL_ARB_point_parameters          *                                     
-    15  GL_ARB_vertex_blend              *                                     
-    16  GL_ARB_matrix_palette            *                                     
-    17  GL_ARB_texture_env_combine       *                                     
-    18  GL_ARB_texture_env_crossbar      *                                     
-    19  GL_ARB_texture_env_dot3          *                                     
-    20  WGL_ARB_render_texture           *                                     
-    21  GL_ARB_texture_mirrored_repeat   *                                     
-    22  GL_ARB_depth_texture             *                                     
-    23  GL_ARB_shadow                    *                                     
-    24  GL_ARB_shadow_ambient            *                                     
-    25  GL_ARB_window_pos                *                                     
-    26  GL_ARB_vertex_program            *                                     
-    27  GL_ARB_fragment_program          *                                     
-    28  GL_ARB_vertex_buffer_object      *                                     
-
-
-
-Changes to OpenGL 1.5 (Agreed at the 10 September 2003 ARB meeting)
--------------------------------------------------------------------
-
-    Previous				    New
-    --------				    ---
-    GL_FOG_COORDINATE_SOURCE		    GL_FOG_COORD_SRC
-    GL_FOG_COORDINATE			    GL_FOG_COORD
-    GL_CURRENT_FOG_COORDINATE		    GL_CURRENT_FOG_COORD
-    GL_FOG_COORDINATE_ARRAY_TYPE	    GL_FOG_COORD_ARRAY_TYPE
-    GL_FOG_COORDINATE_ARRAY_STRIDE	    GL_FOG_COORD_ARRAY_STRIDE
-    GL_FOG_COORDINATE_ARRAY_POINTER	    GL_FOG_COORD_ARRAY_POINTER
-    GL_FOG_COORDINATE_ARRAY		    GL_FOG_COORD_ARRAY
-    GL_FOG_COORDINATE_ARRAY_BUFFER_BINDING  GL_FOG_COORD_ARRAY_BUFFER_BINDING
-    GL_SOURCE0_RGB			    GL_SRC0_RGB
-    GL_SOURCE1_RGB			    GL_SRC1_RGB
-    GL_SOURCE2_RGB			    GL_SRC2_RGB
-    GL_SOURCE0_ALPHA			    GL_SRC0_ALPHA
-    GL_SOURCE1_ALPHA			    GL_SRC1_ALPHA
-    GL_SOURCE2_ALPHA			    GL_SRC2_ALPHA
 
-    Note: the group agreed that GL_FOG_COORDINATE_ARRAY_BUFFER_BINDING
-    should be included in GL 1.5, even though it was never in GL before
-    and is immediately replaced with GL_FOG_COORD_ARRAY_BUFFER_BINDING.
-    This will make porting from GL_ARB_vertex_buffer_object to GL 1.5
-    less error prone.
+Based on a version edited by Kurt Akeley on September 10, 2003.
+Updates proposed by Eskil Steenberg, May 2006.
+Revised by Benj Lipchak under the direction of the Ecosystem TSG, December 2006.
 
 
+Reserved terms
+--------------
 
-GL Errors (and related ARB errors)
-----------------------------------
+    ** NOTE **
+    Whereas some of the other rules in subsequent sections of this document
+    are intended to be strictly adhered to, this section is intended as a
+    set of guidelines to assist in name decisions.  The guidelines should
+    be considered, and then accepted or rejected, on a case by case basis.
+    ** NOTE **
 
+    The terms used in OpenGL should have a consistent meaning.  Any time
+    new functionality is introduced it is desired to use terms that are 
+    previously established in GL.  If no term exists that fits with the
+    new functionality, a new term may be used.  Whenever a new term is used,
+    the precise meaning of that term should be specified and added to this
+    text so that future functionality has the option of reusing the term
+    with a consistent meaning.
 
-    1.	GL uses "COORDINATE" in the token names:
+    A term in GL should encompass more then the meaning of the word found
+    in a dictionary.  It should encompass limitations and usages and give the
+    reader a broader sense of the usage of the word in the context of OpenGL.
 
-	    GL_FOG_COORDINATE_SOURCE          0x8450
-	    GL_FOG_COORDINATE                 0x8451
-	    GL_CURRENT_FOG_COORDINATE         0x8453
-	    GL_FOG_COORDINATE_ARRAY_TYPE      0x8454
-	    GL_FOG_COORDINATE_ARRAY_STRIDE    0x8455
-	    GL_FOG_COORDINATE_ARRAY_POINTER   0x8456
-	    GL_FOG_COORDINATE_ARRAY           0x8457
+    When choosing new words one should always name it for what it does and
+    never name it for its intended usage.  In a general programmable
+    environment the naming should not suggest usage.
 
-	ARB extension 28, GL_ARB_vertex_buffer_object, uses "COORDINATE"
-	in the token name:
+    It is desired to keep data and the usage of data separated in the name
+    space.  "image" data can be used for "texturing."  The two should not be 
+    named the same.  This maintains consistency if in some future version 
+    something other than an image can be used for texturing, or if an image 
+    can be used for something other then texturing.  This is why it is 
+    strongly encouraged to name any storage class for what it stores, not the 
+    usage of the data.
 
-            GL_FOG_COORDINATE_ARRAY_BUFFER_BINDING_ARB     0x889D
+    Whenever a procedure sets the state that is directly associated with
+    something that can be found in the language grammar, it is preferred to 
+    use terms from the language like "attribute," "uniform" or "texture."
 
-	The rules require that "Coordinate" always be abbreviated
-	as "Coord".
-
-	Suggested action: Introduce corrected tokens with the same
-	numeric values, and correct documentation as possible.  List
-	grandfathered tokens in a special specification appendix, and
-	maintain in a special GL.H section.  ACCEPTED for GL 1.5,
-	including the promotion of GL_ARB_vertex_buffer_object.
 
+    1: Asking for information
+       
+    "Get" is used as a prefix whenever the procedure returns state from the GL.
 
-    2.	GL uses "SOURCE" in the token names:
-
-	    GL_FOG_COORDINATE_SOURCE          0x8450
-    	    GL_SOURCE0_RGB                    0x8580
-	    GL_SOURCE1_RGB                    0x8581
-	    GL_SOURCE2_RGB                    0x8582
-	    GL_SOURCE0_ALPHA                  0x8588
-	    GL_SOURCE1_ALPHA                  0x8589
-	    GL_SOURCE2_ALPHA                  0x858A
 
-	ARB extension 17, GL_ARB_texture_env_combine, uses "SOURCE" in
-	the token names:
+    2: Storage
 
-            GL_SOURCE0_RGB_ARB                             0x8580
-            GL_SOURCE1_RGB_ARB                             0x8581
-            GL_SOURCE2_RGB_ARB                             0x8582
-            GL_SOURCE0_ALPHA_ARB                           0x8588
-            GL_SOURCE1_ALPHA_ARB                           0x8589
-            GL_SOURCE2_ALPHA_ARB                           0x858A
+    "Create" is used for any procedure that creates an object.  No other
+    creations should be named "create."
 
-	The rules require that "SOURCE" always be abbreviated as "SRC".
+    "Delete" is used for any procedure that marks an object for 
+    destruction.  No other destructions should be named "delete."
 
-	Suggested action: Introduce corrected tokens with the same
-	numeric values, and correct documentation as possible.  List
-	grandfathered tokens in a special specification appendix, and
-	maintain in a special GL.H section.  ACCEPTED for GL 1.5.
 
+    4: Object content
 
-    3.  GL uses "NUM" in the token name:
+    TBD: Names must be chosen.
 
-	    GL_NUM_COMPRESSED_TEXTURE_FORMATS
 
-	ARB extension 12, GL_ARB_texture_compression, uses "NUM" in the
-	token name:
+    5: Types of state setting
 
-	    GL_NUM_COMPRESSED_TEXTURE_FORMATS_ARB.
+    "Pname" is used to define what a subsequent parameter refers to.  Pname
+    is always followed by a "param."
 
-	WGL_ARB_pixel_format had already established a precedent for
-	the abbreviation "Number" meaning "Number of", with tokens
-	such as WGL_NUMBER_PIXEL_FORMATS_ARB, WGL_NUMBER_OVERLAYS_ARB,
-	and WGL_NUMBER_UNDERLAYS_ARB.
+    "Param" is only used when a generic parameter or array of parameters is 
+    being passed in.
+       
+    "Count" always refers to the length of an array.
 
-	Suggested action: Introduce corrected tokens with the same
-	numeric values, and correct documentation as possible.  List
-	grandfathered tokens in a special specification appendix, and
-	maintain in a special GL.H section.  REJECTED.
+    "Size" always refers to size measured in units or number of bytes.
 
-	Action: Let NUM be the GL abbreviation for NUMBER OF, and let
-	NUMBER be the accepted WGL abbreviation of NUMBER OF. 
+    "Render" refers to the later parts of the pipeline that apply the 
+    resulting data of a computation to a storage container.  (Examples of
+    operations that can be refered to as rendering are sampling, depth test, 
+    blending, and resolve.)
 
+    "Draw" refers to the earlier part of the pipeline when results are
+    being computed.
 
-    4.	GL uses "Integer" in the function name:
 
-    	    glGetIntegerv
+    6: References
 
-	This is an original design error.  Integer was not
-	included in the list of abbreviated terms when OpenGL was
-	designed, but it was abbreviated everywhere except in the
-	query function GetIntegerv.
+    Any time an object is referenced by the context or another object the
+    following words should be used:
 
-	Suggested action: none.  ACCEPTED.
-
-
-    5.	GL uses "Op" for Operation in the term Logic Op.  Since Operation
-    	is spelled out fully in the term INVALID_OPERATION, it should
-	not have been abbreviated in the tokens
-
-	    GL_LOGIC_OP_MODE                  0x0BF0
-	    GL_INDEX_LOGIC_OP                 0x0BF1
-	    GL_COLOR_LOGIC_OP                 0x0BF2
-
-	We were effectively treating "Logic Op" as a compound word,
-	but capitalizing/underscoring it as though it were separate words.
-
-	Suggested action: Add "Logic Op" as an abbreviation for the
-	phrase "Logical Operation".  Remove "Op" as an abbreviation for
-	"Operation".  Remove "Logic" from list of terms, since it is
-	used only in combination with "Op".  AMENDED.
-
-	Action: Let OP be the GL abbreviation of OPERATION in phrases
-	that describe a specific operation, such as LOGIC OP and
-	STENCIL OP.  Do not abbreviate for generic operations, such as
-	INVALID_OPERATION.
-
-    6.	GL uses "REV" in the token names
-
-	    GL_UNSIGNED_BYTE_2_3_3_REV        0x8362
-	    GL_UNSIGNED_SHORT_5_6_5_REV       0x8364
-	    GL_UNSIGNED_SHORT_4_4_4_4_REV     0x8365
-	    GL_UNSIGNED_SHORT_1_5_5_5_REV     0x8366
-	    GL_UNSIGNED_INT_8_8_8_8_REV       0x8367
-	    GL_UNSIGNED_INT_2_10_10_10_REV    0x8368
-
-	The rules require that REVERSE not be abbreviated, and there are
-	several usages of REVERSE in token names.
-
-	Suggested action: none.  I've added an exception to the
-	abbreviation rules.  We could fix this, but it's been wrong
-	for a long time, and it feels a bit different from the other
-	unabbreviated usages of REVERSE.  There's clearly room for
-	debate here, though.  ACCEPTED.
-
-
-
-ARB Extension Errors
---------------------
-
-    1.	ARB extension 9, WGL_ARB_pixel_format, uses "DOUBLE_BUFFER" in
-    	the token name:
-
-	    WGL_DOUBLE_BUFFER_ARB			0x2011
-
-	Doublebuffer is a compound word, so there should be no underscore
-	between the words "DOUBLE" and "BUFFER".  (As in the GL token
-	GL_DOUBLEBUFFER.)  Do Windows rules or considerations trump this
-	OpenGL rule?
-
-	Suggested action: Introduce corrected token with the same
-	numeric value, and correct documentation as possible.  List
-	grandfathered token in a special specification appendix, and
-	maintain in a special GL.H section.
-
-
-    2.	ARB extension 9, WGL_ARB_pixel_format, uses "COLORINDEX" in the
-    	token name:
-
-	    WGL_TYPE_COLORINDEX_ARB			0x202C
-
-	The required abbreviation for "Color Index" is "Index".  Do Windows
-	rules or consideration trump this OpenGL rule?
-
-	Suggested action: Introduce corrected token with the same
-	numeric value, and correct documentation as possible.  List
-	grandfathered token in a special specification appendix, and
-	maintain in a special GL.H section.
-
-
-    3.	ARB extension 20, WGL_ARB_render_texture, includes the word
-    	"Set" in the procedure:
-
-	    BOOL wglSetPbufferAttribARB (HPBUFFERARB hPbuffer,
-	  			         const int *piAttribList) 
-
-	"Set" is never to be used in OpenGL procedure names.  Do Windows
-	rules or considerations trump this OpenGL rule?
-
-	Suggested action: Introduce corrected procedure name, and
-	correct documentation as possible.  List grandfathered name
-       	in a special specification appendix, and maintain in a special
-	GL.H section.
-
-
-    4.	ARB extension 27,  GL_ARB_fragment_program, uses "TEX" in the
-    	token names:
-
-            GL_PROGRAM_TEX_INSTRUCTIONS_ARB                0x8806
-            GL_PROGRAM_TEX_INDIRECTIONS_ARB                0x8807
-            GL_PROGRAM_NATIVE_TEX_INSTRUCTIONS_ARB         0x8809
-            GL_PROGRAM_NATIVE_TEX_INDIRECTIONS_ARB         0x880A
-            GL_MAX_PROGRAM_TEX_INSTRUCTIONS_ARB            0x880C
-            GL_MAX_PROGRAM_TEX_INDIRECTIONS_ARB            0x880D
-
-	The rules require that Texture be abbreviated only in function
-	names, never in token names.
-
-	Suggested action: Introduce corrected tokens with the same
-	numeric values, and correct documentation as possible.  List
-	grandfathered tokens in a special specification appendix, and
-	maintain in a special GL.H section.
-
-
-
-Questionable practice
----------------------
-
-
-    1.	ARB extension 16,  GL_ARB_matrix_palette, uses "Current" in
-    	a procedure name:
-
-	    glCurrentPaletteMatrixARB
-
-	There are no other instances of such usage in GL.  GL state values
-	that include CURRENT in their names, such as GL_CURRENT_COLOR or
-	GL_CURRENT_NORMAL, are specified using procedures that do not
-	include "Current" in their names.  (In these cases glColor* and
-	glNormal*).  And there is a rule prohibiting the use of "Set" in
-	procedure names, which indirectly suggests that "current" is
-	frowned on as well.  (Though "load" is used in matrix commands.)
-
-	Suggested action: Introduce corrected procedure name, and correct
-	documentation as possible.  List grandfathered procedure names in
-	a special specification appendix, and maintain in a special GL.H
-	section.  Add rule to avoid the use of "current" in command names.
-
-
-    2.	GL uses "OPERAND" in the token names:
-
-	    GL_OPERAND0_RGB                   0x8590
-	    GL_OPERAND1_RGB                   0x8591
-	    GL_OPERAND2_RGB                   0x8592
-	    GL_OPERAND0_ALPHA                 0x8598
-	    GL_OPERAND1_ALPHA                 0x8599
-	    GL_OPERAND2_ALPHA                 0x859A
-
-	ARB extension 17, GL_ARB_texture_env_combine, uses "OPERAND"
-	in the token names:
-
-            GL_OPERAND0_RGB_ARB                            0x8590
-            GL_OPERAND1_RGB_ARB                            0x8591
-            GL_OPERAND2_RGB_ARB                            0x8592
-            GL_OPERAND0_ALPHA_ARB                          0x8598
-            GL_OPERAND1_ALPHA_ARB                          0x8599
-            GL_OPERAND2_ALPHA_ARB                          0x859A
-
-	Since Source is always abbreviated as Src, and Destination is
-	always abbreviated as Dst, it might have made sense to abbreviate
-	Operand as Op as well.
-
-	Suggested action: Leave as is.  Leave "operand" in the list of
-	terms.
-
+    TBD: Names must be chosen.
 
 
 Accepted terms
@@ -599,7 +370,7 @@ Accepted terms
 		Overflow		GL
 		Pack			GL
 		Palette			9, 16
-		Parameter		GL, 14, 26, 27, 28
+    Param	Parameter		GL, 14, 26, 27, 28
     Pname	Parameter Name		GL
 		Pass			GL
 		Pattern			GL
@@ -796,33 +567,41 @@ Used in WGL specs only (or differently)
 Name rules (for all names)
 --------------------------
 
-    Always use the specified abbreviations.  Never abbreviate terms
-    that are already in the OpenGL API and are not abbreviated.  If you
-    add terms to your extensions, abbreviate consistently, maintaining
+    Always use the specified abbreviations.  Never abbreviate terms 
+    that are already in the OpenGL API and are not abbreviated.  If you 
+    add terms to your extensions, abbreviate consistently, maintaining 
     a local version of additions to the list of abbreviations.
 
-    Use Depth, never Z.
+        Use Depth, never Z.
 
+    The word "object" should not be used in a function name unless it 
+    operates on all object types.
 
+    Longer descriptive names are desired if they are believed to help
+    developers identify the purpose of a name.  
+
+    The opposite of "create" is "destroy."  "delete" marks an object for
+    later destruction.
+
+    All names should describe what functionality does, never its expected
+    usage.
+
+    Begin each word with a capital letter, except the second word of
+    compound words.
+   
 
 Procedure name rules
 --------------------
 
-    Limit procedure names to 2 words, 3 for procedures that return state.
-	(This is really a recommendation, not a rule.)
-
-    Never use set, as in SetFeedbackBuffer.
-
-    Begin each word with a capital letter, except the second word of
-    compound words.
+    Never use set, as in SetFeedbackBuffer.  Set is implicit, unless
+    otherwise specified.
 
     Use Verb-noun (DeleteList) and adjective-noun (EdgeFlag) formats.
 
     Append a corporate-specific suffix to all procedures.  For example:
-    glNewCommandSGI.  All upper case is preferred for this suffix, but
-    is not required.  The suffix is always last, following OpenGL type
+    glNewCommandSGI.  All upper case is preferred for this suffix, but 
+    is not required.  The suffix is always last, following OpenGL type 
     and count suffixes.  (e.g. glNewVertex3iSGI, not glNewVertexSGI3i.)
-
 
 
 Definition name rules
@@ -830,18 +609,20 @@ Definition name rules
 
     Use all capital letters.
 
-    Separate words with underbars, except words within compound words.
+    Separate words with underscores, except words within compound words.
 
     Append simple numeric suffixes directly to the end of definition
     tokens (LIGHT0).  Begin these sequences with 0.
 
-    Use an underbar to separate complex suffixes from the token body
+    Use an underscore to separate complex suffixes from the token body 
     (MAP_3V).
 
     Append a corporate-specific suffix to the token, after any other
-    suffixes.  For example: GL_NEW_TOKEN0_SGI.  All upper case is
+    suffixes.  For example: GL_NEW_TOKEN0_SGI.  All upper case is 
     required.
 
+    All tokens that are used only for a single use should be grouped
+    together using enum types.
 
 
 Parameter name rules
@@ -855,6 +636,10 @@ Parameter name rules
 
     Begin number sequences with 1, not 0.  (e.g. u1,u2, not u0,u1)
 
+    Any parameters that contain more then one word should have the
+    second and subsequent words capitalized.
+
+    Long descriptive parameters are encouraged.
 
 
 Parameter order
@@ -864,21 +649,40 @@ Parameter order
 
     <R> precedes <G> precedes <B> precedes <A>.
 
+    <S> precedes <T> precedes <R> precedes <Q>.
+
+    <U> precedes <V>.
+
     The array being passed is always the last argument.
 
-    If a passed array has a type, the type specification argument immediately
+    If a passed array has a type, the type specification argument immediately 
     precedes the array.
 
     <pname> always precedes <params>.
 
-    <x> and <y> precede <width> and <height>
+    <x> and <y> precede <width> and <height>.
 
-    <format> precedes <type>
+    <format> precedes <type>.
 
-    <target> is first
+    <target> is first.
 
-    <face> is first
+    <face> is first.
 
+    <object> is first.
+
+    <count> always precedes the thing that it counts.
+
+    Any time the function parameters contain an address of what they
+    operate on, the address is last.
+
+    Arrays are never terminated by NULL or any other termination but are 
+    always specified by length.
+
+    For variable length arrays passed into the GL, the parameter list should 
+    end with: "sizei count, const void* data"  
+
+    For variable length arrays passed back from the GL, the parameter list 
+    should end with: "sizei maxCount, sizei* count, void* data"
 
 
 Parameter types
@@ -889,46 +693,50 @@ Parameter types
     generates an error only for negative values, so all integer quantity
     parameters should accept the value zero.
 
-    Names (of display lists, textures, etc.) should be typed GLuint.
+    Handles to specific object types are typed as pointers to the corresponding 
+    abstract structs.  Generic objects are passed around as void pointers.
+
     Generic masks that do not have explicitly defined bit values (e.g.
     color index write masks and stencil write masks) should be typed
     GLuint.  GLuint is also used for unsigned integer components, such as
-    color components and depth components.  
+    color components and depth components.
 
-    Masks that do have explicitly defined bit values (e.g. attribute mask,
+    Masks that do have explicitly defined bit values (e.g. attribute mask, 
     clear mask) should be typed GLbitfield, not GLuint.
 
-    All floating point parameters that are clamped to the range [0,1] when
+    All floating point parameters that are clamped to the range [0,1] when 
     received should be typed GLclampf or GLclampd, not GLfloat or GLdouble.
-
 
 
 Extension name rules
 --------------------
 
-    An extension name is prefixed with the same string that suffixes its
-    procedures and definitions.  The prefix and the individual words are
-    separated with underbars, the prefix is all upper case, and the other
-    text is all lower case.  For example, extension SGI_cool_feature, which
-    specifies glCoolProcedureSGI() and defines GL_COOL_DEFINITION_SGI.
-
+    An extension name is prefixed with the same string that suffixes its 
+    procedures and definitions.  The prefix and the individual words are 
+    separated with underscores, the prefix is all upper case, and the other 
+    text is all lower case.  For example, extension ARB_cool_feature, which 
+    specifies glCoolProcedureARB() and defines GL_COOL_DEFINITION_ARB.
 
 
 Suffix codes
 ------------
 
-    i		signed 32-bit integer
-    ui		unsigned 32-bit integer
-    s		signed 16-bit integer
-    us		unsigned 16-bit integer
-    b		signed 8-bit integer
-    ub		unsigned 8-bit integer
-    l		signed 64-bit integer
-    ul		unsigned 64-bit integer
-    f		32-bit float
-    d		64-bit float
-    v		vector format
+    i       signed 32-bit integer
+    ui      unsigned 32-bit integer
+    s       signed 16-bit integer
+    us      unsigned 16-bit integer
+    b       signed 8-bit integer
+    ub      unsigned 8-bit integer
+    l       signed 64-bit integer
+    ul      unsigned 64-bit integer
+    f       32-bit float
+    d       64-bit float
+    t       token enum
+    v       vector format
+    N       normalize values
 
+    #       number of components (e.g. 3)
+    #x#     matrix dimensions (e.g. 2x4)
 
 
 Shared extensions
@@ -936,15 +744,15 @@ Shared extensions
 
     An OpenGL extension may be deemed a shared extension if either:
 
-	1.  Two or more OpenGL licensees agree in good faith to implement
-	    and ship the extension, or
+        1.  Two or more OpenGL licensees agree in good faith to implement
+            and ship the extension, or
 
-	2.  The OpenGL ARB determines that it is in the best interest of
-	    the licensees that the extension be shared.
+        2.  The OpenGL ARB determines that it is in the best interest of
+            the licensees that the extension be shared.
 
     The procedures and definitions that are defined by a shared extension
-    are suffixed with EXT, rather than by a company-specific suffix.
-    Likewise, the extension name is prefixed by EXT.  To avoid name
-    conflicts Silicon Graphics will maintain a registry of EXT extensions,
-    including all their procedures and definitions, in a location that is
+    are suffixed with EXT, rather than by a company-specific suffix.  
+    Likewise, the extension name is prefixed by EXT.  To avoid name 
+    conflicts Silicon Graphics will maintain a registry of EXT extensions, 
+    including all their procedures and definitions, in a location that is 
     accessible to all licensees.
