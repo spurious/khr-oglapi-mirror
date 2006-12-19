@@ -1,7 +1,7 @@
 OpenGL(R) Shading Language Extension Conventions
 
-Last Modified Date: 2006/10/09
-Author Revision: 10
+Last Modified Date: 2006/12/18
+Author Revision: 11
 
 Document Source: the OpenGL Extension Registry at
 
@@ -11,7 +11,7 @@ Contributors:
 
     Pat Brown, NVIDIA
     John Kessenich, 3Dlabs
-    Jon Leech, SGI
+    Jon Leech
     Barthold Lichtenbelt, 3Dlabs
     Bill Licea-Kane, ATI
     Kent Lin, Intel
@@ -37,7 +37,7 @@ Section #1:  Conventions to avoid name-space collision
   naming and syntax rules document for the non-shader parts of
   OpenGL:
 
-    http://oss.sgi.com/projects/ogl-sample/registry/doc/rules.html#spec_naming
+    http://www.opengl.org/registry/doc/rules.html#spec_naming
 
   We expect that we will need to affix new names with vendor tags
   where appropriate, and  change and/or remove these tags as
@@ -353,7 +353,8 @@ Section #2:  Protocol for accessing extension features in the
     This request is made using the following syntax:
       #extension <name> : <behavior>
     where
-      <name> = the GL extension name string
+      <name> = the GL extension name string (as defined in section 2a,
+	       starting with "GL_").
     and
       <behavior> can be one of the following:
       require, enable, warn, or disable
@@ -364,6 +365,10 @@ Section #2:  Protocol for accessing extension features in the
 -----------------------------------
 
 Revision history:
+
+ #11 - 12/18/2006 - Jon Leech
+    - Clarify that #extension name must be the extension name string
+      starting with "GL_", update a URL.
 
  #10 - 10/09/2006 - Jon Leech
     - Move registry URL to www.opengl.org.
