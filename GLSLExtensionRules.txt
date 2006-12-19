@@ -359,8 +359,14 @@ Section #2:  Protocol for accessing extension features in the
       <behavior> can be one of the following:
       require, enable, warn, or disable
 
-    See section 3.3 of the 1.10 version of the OpenGL Shading
-    Language specification for details about using this mechanism.
+    Example:
+      To use an extension which adds the extension string
+      "GL_ARB_shading_extension_1", a shader should include a line like:
+
+      #extension GL_ARB_shading_extension_1: enable
+
+    See section 3.3 of the OpenGL Shading Language specification
+    (Language Version 1.20) for details about using this mechanism.
 
 -----------------------------------
 
@@ -368,7 +374,7 @@ Revision history:
 
  #11 - 12/18/2006 - Jon Leech
     - Clarify that #extension name must be the extension name string
-      starting with "GL_", update a URL.
+      starting with "GL_", give an example, fix an old URL.
 
  #10 - 10/09/2006 - Jon Leech
     - Move registry URL to www.opengl.org.
