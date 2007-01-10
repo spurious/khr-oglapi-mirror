@@ -32,8 +32,8 @@ Status
 
 Version
 
-    Last Modified Date: November 6, 2006
-    Revision: #6c
+    Last Modified Date: January 10, 2007
+    Revision: #7
 
 Number
 
@@ -200,17 +200,18 @@ that was added by EXT_framebuffer_blit.
     samples.
 
     If SAMPLE_BUFFERS for both the read and draw framebuffers are
-    greater than zero, and the value of SAMPLES for the read framebuffer
-    matches the value of SAMPLES for the draw framebuffer, the samples
-    are copied without modification from the read framebuffer to the
-    draw framebuffer.  Otherwise, no copy is performed and an
-    INVALID_OPERATION error is generated.
+    greater than zero, and the values of SAMPLES for the read and draw
+    framebuffers are identical, the samples are copied without
+    modification from the read framebuffer to the draw framebuffer.
+    Otherwise, no copy is performed and an INVALID_OPERATION error is
+    generated.
 
     Furthermore, if SAMPLE_BUFFERS for either the read framebuffer or
-    draw framebuffer is greater than zero and the dimensions of the
-    source and destination rectangles provided to BlitFramebuffer are
-    not identical, no copy is performed and an INVALID_OPERATION error
-    is generated."
+    draw framebuffer is greater than zero, no copy is performed and an
+    INVALID_OPERATION error is generated if the dimensions of the source
+    and destination rectangles provided to BlitFramebuffer are not
+    identical, or if the formats of the read and draw framebuffers are
+    not identical."
 
 Modification to 4.4.2.1 (Renderbuffer Objects)
 
@@ -366,14 +367,20 @@ Errors
     zero.
 
     The error OUT_OF_MEMORY is generated when
-    RenderbufferStorageMultisampleEXT cannot storage of the specified
-    size.
+    RenderbufferStorageMultisampleEXT cannot create storage of the
+    specified size.
 
     If both the draw and read framebuffers are framebuffer complete and
     both have a value of SAMPLE_BUFFERS that is greater than zero, then
     the error INVALID_OPERATION is generated if BlitFramebufferEXT is
     called and the values of SAMPLES for the draw and read framebuffers
     do not match.
+
+    If both the draw and read framebuffers are framebuffer complete and
+    either has a value of SAMPLE_BUFFERS that is greater than zero, then
+    the error INVALID_OPERATION is generated if BlitFramebufferEXT is
+    called and the formats of the draw and read framebuffers are not
+    identical.
 
     If either the draw or read framebuffer is framebuffer complete and
     has a value of SAMPLE_BUFFERS that is greater than zero, then the
@@ -541,19 +548,14 @@ Issues
 
     (7)  Is there a query for the maximum size of <samples>?
 
-         RESOLVED, no
+         RESOLVED, Yes
 
-             Resolved by consensus, May 23, 2005
-             
          There was some discussion about whether it was useful to return
          a maximum sample count supported by the implementation as a
          convenenience to the developer so that the developer doesn't
          need to try increasingly smaller counts until it finds one that
-         succeeds.  However, in the end we decided that this was
-         essentially the same problem already faced by the pixel format
-         selection code in the glX/wgl/agl layer and so we decided not
-         to add any special solution to this problem for multisampling
-         with the framebuffer object API.
+         succeeds.  Originally this query was ommitted, but later it was
+         added (MAX_SAMPLES_EXT).
 
     (8)  Does this extension require our new framebuffer-to-framebuffer
          copy extension, EXT_framebuffer_blit, or is it merely affected
@@ -587,6 +589,12 @@ Issues
          disallowed when the read framebuffer is multisample.
          
 Revision History
+    #7, Jan 10, 2007: jjuliano
+        - add missing constraint that a multisample blit requires
+          identical formats for the read and draw framebuffers
+        - correct the resolution of issue 7 (MAX_SAMPLES_EXT)
+        - fix typos
+
     #6c, November 6, 2006: jjuliano
         - changes from June #6 merged back in
 
