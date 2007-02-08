@@ -19,14 +19,14 @@ Contact
 
 Status
 
-    Complete. Appprove by the ARB on October 22, 2004.
+    Complete. Approved by the ARB on October 22, 2004.
 
 Version
 
     Based on the ATI_texture_float extension, verion 4
 
-    Last Modified Date:  October 1, 2004
-    Version:             5
+    Last Modified Date:  February 8, 2007
+    Version:             6
 
 Number
 
@@ -315,14 +315,15 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
     and component resolutions are set to zero, and the component types are
     set to NONE. If the image...
 
-Additions to Chapter 4 of the OpenGL 2.0 Specification (Per-Fragment
-Operations and the Frame Buffer)
-
     Modify Section 3.8.13 (Texture Environments and Functions), p.182
 
     (replace the sixth paragraph of p. 183) All of these color values
     are clamped to the range [0, 1].  The texture functions are
     specified in tables 3.22, 3.23, and 3.24.
+
+Additions to Chapter 4 of the OpenGL 2.0 Specification (Per-Fragment
+Operations and the Frame Buffer)
+
     None
 
 Additions to Chapter 5 of the OpenGL 2.0 Specification (Special
@@ -409,3 +410,5 @@ Revision History
       5   10/1/04  Kirkland   Updated IP section.
                               Reviewed by the ARB and closed all
                               UNRESOLVED issues.
+
+      6   2/8/07   Jon Leech  Move 3.8.13 changes to appropriate section.
