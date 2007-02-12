@@ -3,13 +3,13 @@ reserved to different vendors.
 
     Changes to extension numbers in this file must be synced with
 
-	doc/registry/extensions/registry
-	doc/registry/extensions/registry.tcl
+	ogl/trunk/doc/registry/extensions/registry
+	ogl/trunk/doc/registry/extensions/registry.tcl
 
     which lists the name and status of each extension. Changes to
     enumerants must be synced with changes to
 
-	doc/registry/specs/enum.spec
+	ogl/trunk/doc/registry/specs/enum.spec
 
     which is the source from which header files are generated.
 
@@ -18,9 +18,10 @@ reserved to different vendors.
     document as well as the registry and, if appropriate, Sample
     Implementation gl.spec and glx.spec files, in directories
 
-	doc/registry/specs/
-    and
-	gfx/include/gl/spec/
+	ogl/trunk/doc/registry/specs/
+
+   [and gfx/include/gl/spec/ - the OpenGL SI is not checked into Khronos
+    Subversion at present, however]
 
     Both reserved opcode ranges assigned to vendors and opcodes actually
     assigned within that range are tracked here. Not all opcodes used by
@@ -114,6 +115,7 @@ Extension Numbers
 318		Mesa
 319-320		NVIDIA
 321		Apple
+322-343		NVIDIA
 
 GLU Enumerants
 ==============
@@ -187,11 +189,21 @@ Enumerateds (32 Bits)
 0x8BC0	0x8BFF	ATI
 0x8C00	0x8C0F	Imagination Technologies
 0x8C10	0x8C8F	NVIDIA
+0x8C90	0x8C9F	ATI (OpenGL ES)
+0x8CA0	0x8CAF	OpenGL ARB
+0x8CB0	0x8CCF	3Dlabs
+0x8CD0	0x8D5F	OpenGL ARB
+0x8D60	0x8D6F	Khronos (OpenGL ES)
+0x8D70	0x8DEF	NVIDIA
+0x8DF0	0x8E0F	Khronos (OpenGL ES)
+0x8E10	0x8E8F	NVIDIA
+0x8E90	0x8E9F	QNX
+0x8EA0	0x8EAF	Imagination Technologies
 100000	100999	GLU Library
 101000	101999	OpenGL ARB	Conformance Tests
 103000	103999	IBM
 104000	104999	NEC
-105000	105999	HP		(originall DEC, acquired by Compaq, then HP)
+105000	105999	HP		(originally DEC, acquired by Compaq, then HP)
 106000	106999	KPC		Out of business
 107000	107999	PGI		Acquired by Template Graphics Systems
 108000	108999	E&S
@@ -392,7 +404,7 @@ Control
 OpenGL ARB	Jon Leech	    jon 'at' alumni.caltech.edu
 Khronos		Jon Leech	    jon 'at' alumni.caltech.edu (OpenML, OpenGL ES)
 3Dfx - same as NVIDIA (acquired)
-3Dlabs		???
+3Dlabs - no longer in the desktop graphics business. Mobile contact needed.
 ADD		Bruce Campbell	    baruch 'at' teckla.scuba.net - probably out of business
 ATI		Allen Gallotta	    alleng 'at' atitech.com
 ATI/NVIDIA	Bill Licea-Kane     bill 'at' ati.com
@@ -413,7 +425,7 @@ NEC		Seiji Uchida	    uchida 'at' hpc.bs1.fc.nec.co.jp
 NVIDIA		Michael Gold	    gold 'at' nvidia.com
 Pixelfusion - no longer in the graphics business
 Rendition - same as Micron (acquired)
-S3		Newton Cheung	    ncheung 'at' s3.com
-SGI		???
+S3		Yanjun Zhang	    YanjunZhang@s3graphics.com
+SGI - no longer in the graphics business
 SUN		Daniel Petersen     daniel.petersen 'at' sun.com
-XGI		???
+XGI - unknown
