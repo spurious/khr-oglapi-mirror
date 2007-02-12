@@ -6,6 +6,7 @@ Name Strings
 
     GL_NV_float_buffer
     WGL_NV_float_buffer
+    GLX_NV_float_buffer
 
 Contact
 
@@ -24,10 +25,16 @@ Status
     Implemented in CineFX (NV30) Emulation driver, August 2002.
     Shipping in Release 40 NVIDIA driver for CineFX hardware, January 2003.
 
+    Superseded by the more general ARB_texture_float and
+    ARB_color_buffer_float extensions.  However, NV3x-based GPUs are not
+    capable enough to support the generality of the ARB extensions so
+    the NV_float_buffer extension remains available for NV3x development
+    and backward compatibility.
+
 Version
 
-    Last Modified:      2005/04/04
-    NVIDIA Revision:    17
+    Last Modified:      2006/11/03
+    NVIDIA Revision:    20
 
 Number
 
@@ -58,6 +65,8 @@ Dependencies
 
     ARB_texture_float and ATI_texture_float affect the definition of this
     extension.
+
+    This extension modifies EXT_framebuffer_object.
 
 Overview
 
@@ -95,7 +104,8 @@ Overview
 
     A floating-point color buffer can also be used as a texture map, either by
     reading back the contents and then using conventional TexImage calls, or
-    by using the buffer directly via the ARB_render_texture extension.
+    by using the buffer directly via the ARB_render_texture extension or
+    the EXT_framebuffer_object extension.
 
     This extension has many uses.  Some possible uses include:
 
@@ -125,11 +135,6 @@ Overview
     mipmapping or any texture filtering other than NEAREST.  Third,
     floating-point texture maps must be 2D, and must use the
     NV_texture_rectangle extension.
-
-IP Status
-
-    NVIDIA Proprietary.
-    NVIDIA Confidential.
 
 Issues
 
@@ -479,6 +484,11 @@ New Tokens
         WGL_TEXTURE_FLOAT_RGB_NV                        0x20B7
         WGL_TEXTURE_FLOAT_RGBA_NV                       0x20B8
 
+    Accepted in the <value> array of glXGetFBConfigAttrib (and
+    glXGetFBConfigAttribSGIX):
+
+        GLX_FLOAT_COMPONENTS_NV                         0x20B0
+
 Additions to Chapter 2 of the OpenGL 1.3 Specification (OpenGL Operation)
 
     None.
@@ -793,6 +803,16 @@ Operations and the Frame Buffer)
     component is clamped to [0,1] if <type> is unsigned or [-1,1] if <type> is
     signed and then converted according to Table 4.7.
 
+    Modify section 4.4.4, as defined by EXT_framebuffer_object,
+    definition of color-renderable:
+
+        * An internal format is "color-renderable" if it is RGB, RGBA,
+          FLOAT_R_NV, FLOAT_RG_NV, FLOAT_RGB_NV, FLOAT_RGBA_NV, or one
+          of the formats from table 3.16 whose base internal format is
+          RGB, RGBA, FLOAT_R_NV, FLOAT_RG_NV, FLOAT_RGB_NV, or
+          FLOAT_RGBA_NV.  No other formats, including compressed
+          internal formats, are color-renderable.
+
 Additions to Chapter 5 of the OpenGL 1.3 Specification (Special Functions)
 
     None.
@@ -944,9 +964,17 @@ Additions to the WGL Specification
                                                  FLOAT_RGB, FLOAT_RGBA
 
 
-Additions to the AGL/GLX Specification
+Additions to the AGL Specification
 
-    None.
+    None
+
+Additions to the GLX Specification
+
+    <very incomplete>
+
+    The GLX_FLOAT_COMPONENTS_NV framebuffer config attribute is a
+    boolean (or GLX_DONT_CARE) indicating if floating-point components
+    are requested.
 
 Dependencies on EXT_paletted_texture, SGIX_depth_texture, and NV_texture_shader
 
@@ -1060,6 +1088,10 @@ Dependencies on ARB_texture_float and ATI_texture_float
       Specifying an floating-point texture with any other target will produce
       an INVALID_OPERATION error.
 
+Dependencies on EXT_framebuffer_object
+
+    If EXT_framebuffer_object is not supported, then ignore any
+    reference to EXT_framebuffer_object.
 
 GLX Protocol
 
@@ -1184,6 +1216,14 @@ Revision History
 
     Rev.    Date    Author   Changes
     ----  -------- --------  --------------------------------------------
+     20   11/03/06  mjk      Update Status
+
+     19   01/10/05  mjk      Add very minimal GLX discussion
+
+     18   09/12/05  jjuliano Describe interaction with EXT_framebuffer_object.
+                             The GL_FLOAT_*_NV texture formats are
+                             color-renderable.
+
      17   04/04/05  pbrown   Describe interactions with ARB_texture_float and
                              ARB_color_buffer_float (as well as the ATI
                              equivalents), which remove some of the

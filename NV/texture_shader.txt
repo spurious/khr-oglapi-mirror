@@ -18,11 +18,14 @@ IP Status
 
     NVIDIA Proprietary.
 
+Status
+
+    Shipping (since GeForce3)
+
 Version
 
-    NVIDIA Date: May 13, 2004
-    $Date$ $Revision$
-    $Id: //sw/main/docs/OpenGL/specs/GL_NV_texture_shader.txt#24 $
+    NVIDIA Date: February 8, 2007
+    $Id: //sw/main/docs/OpenGL/specs/GL_NV_texture_shader.txt#29 $
 
 Number
 
@@ -52,6 +55,8 @@ Dependencies
     NV_texture_rectangle affects the definition of this extension.
 
     NV_texture_shader2 depends on the definition of this extension.
+
+    ARB_color_buffer_float affects the definiton of this extension.
 
 Overview
 
@@ -1003,7 +1008,14 @@ New Tokens
     TEXTURE_SHADER_NV, then the value of <pname> may be:
 
         SHADER_CONSISTENT_NV                      0x86DD
-   
+
+    When the <target> and <pname> parameters of TexEnvf, TexEnvfv,
+    TexEnvi, and TexEnviv are TEXTURE_ENV and TEXTURE_ENV_MODE
+    respectively, then the value of <param> or the value pointed to by
+    <params> may be:
+
+        NONE 
+
     When the <target> and <pname> parameters of TexEnvf, TexEnvfv,
     TexEnvi, and TexEnviv are TEXTURE_SHADER_NV and SHADER_OPERATION_NV
     respectively, then the value of <param> or the value pointed to by
@@ -2038,7 +2050,7 @@ DOT_PRODUCT_REFLECT_CUBE_MAP_NV.
 
 texture shader operation i         shader stage result type       shader stage result                  texture unit RGBA color result
 =================================  =============================  ===================================  ======================================
-NONE                               RGBA                           invalid                              (0,0,0,0)
+NONE                               unsigned RGBA                  invalid                              (0,0,0,0)
 ---------------------------------  -----------------------------  -----------------------------------  --------------------------------------
 TEXTURE_1D                         matches 1D target type         filtered 1D target texel             if 1D target texture type is RGBA,
                                                                                                         filtered 1D target texel,
@@ -2053,18 +2065,18 @@ TEXTURE_CUBE_MAP_ARB               matches cube map target type   filtered cube 
                                                                                                         RGBA,  filtered cube map target
                                                                                                         texel, else (0,0,0,0)
 ---------------------------------  -----------------------------  -----------------------------------  --------------------------------------
-PASS_THROUGH_NV                    RGBA                           (max(0,min(1,s)), max(0,min(1,t)),   (max(0,min(1,s)), max(0,min(1,t)),
+PASS_THROUGH_NV                    unsigned RGBA                  (max(0,min(1,s)), max(0,min(1,t)),   (max(0,min(1,s)), max(0,min(1,t)),
                                                                    max(0,min(1,r)), max(0,min(1,q)))    max(0,min(1,r)), max(0,min(1,q))) 
-CULL_FRAGMENT_NV                   RGBA                           invalid                              (0,0,0,0)
+CULL_FRAGMENT_NV                   unsigned RGBA                  invalid                              (0,0,0,0)
 ---------------------------------  -----------------------------  -----------------------------------  --------------------------------------
 OFFSET_TEXTURE_2D_NV               matches 2D target type         filtered 2D target texel             if 2D target texture type is RGBA,
                                                                                                         filtered 2D target texel,
                                                                                                         else (0,0,0,0) 
-OFFSET_TEXTURE_2D_SCALE_NV         RGBA                           filtered 2D target texel             scaled filtered 2D target texel
+OFFSET_TEXTURE_2D_SCALE_NV         unsigned RGBA                  filtered 2D target texel             scaled filtered 2D target texel
 OFFSET_TEXTURE_RECTANGLE_NV        matches rectangle target type  filtered rectangle target texel      if rectangle target texture type is
                                                                                                         RGBA, filtered rectangle target
                                                                                                         texel, else (0,0,0,0) 
-OFFSET_TEXTURE_RECTANGLE_SCALE_NV  RGBA                           filtered rectangle target texel      scaled filtered rectangle target texel
+OFFSET_TEXTURE_RECTANGLE_SCALE_NV  unsigned RGBA                  filtered rectangle target texel      scaled filtered rectangle target texel
 ---------------------------------  -----------------------------  -----------------------------------  --------------------------------------
 DEPENDENT_AR_TEXTURE_2D_NV         matches 2D target type         filtered 2D target texel             if 2D target texture type is RGBA,
                                                                                                         filtered 2D target texel,
@@ -2093,7 +2105,7 @@ DOT_PRODUCT_DIFFUSE_CUBE_MAP_NV    matches cube map target type   filtered cube 
                                                                                                         RGBA,  filtered cube map target
                                                                                                         texel, else (0,0,0,0) 
 -------------------------------    -----------------------------  -----------------------------------  --------------------------------------
-DOT_PRODUCT_DEPTH_REPLACE_NV       RGBA                           invalid                              (0,0,0,0)
+DOT_PRODUCT_DEPTH_REPLACE_NV       unsigned RGBA                  invalid                              (0,0,0,0)
 -------------------------------    -----------------------------  -----------------------------------  --------------------------------------
 
 Table 3.D:  Texture shader stage results for each operation.
@@ -2966,6 +2978,16 @@ Additions to Chapter 6 of the 1.2 Specification (State and State Requests)
      "For GetTexEnv, when the target is TEXTURE_SHADER_NV, the texture
      shader stage consistency can be queried with SHADER_CONSISTENT_NV."
 
+     Change the following sentence in the fouth paragraph to include
+     sizes for the newly introduced component:
+
+     "Queries of TEXTURE_RED_SIZE, TEXTURE_GREEN_SIZE, TEXTURE_BLUE_SIZE,
+     TEXTURE_ALPHA_SIZE, TEXTURE_LUMINANCE_SIZE, TEXTURE_DS_SIZE_EXT,
+     TEXTURE_DT_SIZE_EXT, TEXTURE_HI_SIZE_EXT, TEXTURE_LO_SIZE_EXT,
+     TEXTURE_MAG_SIZE_EXT, and TEXTURE_INTENSITY_SIZE return the actual
+     resolutions of the stored image array components, not the resolutions
+     specified when the image array was defined."
+
      Add the following to the end of the fourth paragraph:
 
      "Queries of TEXTURE_BORDER_COLOR return the same values as the
@@ -3024,6 +3046,22 @@ Dependencies on NV_texture_rectangle
      to TEXTURE_RECTANGLE_NV, OFFSET_TEXTURE_RECTANGLE_NV,
      OFFSET_TEXTURE_RECTANGLE_SCALE_NV, and
      DOT_PRODUCT_TEXTURE_RECTANGLE_NV are invalid and should be ignored.
+
+Dependencies on ARB_color_buffer_float
+
+     If ARB_color_buffer_float is also implemented, then the "max(0,x)",
+     "max(-1,x)" and "min(1,x)" functions for clamping in tables 3.18
+     and 3.19 simply return "x" without applying the maximum or minimum
+     function when CLAMP_FRAGMENT_COLOR_ARB is either FIXED_ONLY_ARB
+     when rendering to a floating-point color framebuffer or FALSE.
+
+     However clamping operations for texture shader operations
+     (specifically PASS_THROUGH_NV and OFFSET_TEXTURE_2D_SCALE_NV)
+     are performed independent of the CLAMP_FRAGMENT_COLOR_ARB state.
+
+     The intent of these interactions is to eliminate the specified
+     clamping behavior of texture environment functions when
+     CLAMP_FRAGMENT_COLOR_ARB indicates clamping should not be performed.
 
 Errors
 
@@ -3258,3 +3296,9 @@ Revision History
      OFFSET_TEXTURE_2D_MATRIX_NV, and CONST_EYE_NV should not be specified
      to work with glTexEnvi & glTexEnvf (they can only be used with
      glTexEnviv & glTexEnvfv).
+
+     October 19, 2006 - Add interaction with ARB_color_buffer_float to
+     document how ths extension behaves when ARB_color_buffer_float is
+     also supported and when its CLAMP_FRAGMENT_COLOR_ARB state is either
+     FIXED_ONLY_ARB when rendering to a floating-point color framebuffer
+     or FALSE.

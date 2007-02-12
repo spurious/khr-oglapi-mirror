@@ -6,6 +6,14 @@ Name Strings
 
      GL_NV_register_combiners2
 
+Contact
+
+    Mark J. Kilgard, NVIDIA Corporation (mjk 'at' nvidia.com)
+
+Contributors
+
+    Thomas Roell
+
 Notice
 
      Copyright NVIDIA Corporation, 2000, 2001, 2004.
@@ -20,10 +28,10 @@ Status
 
 Version
 
-    NVIDIA Date: February 11, 2004
+    NVIDIA Date: December 13, 2004
     Version 1.2
     $Date$ $Revision$
-    $Id: //sw/main/docs/OpenGL/specs/GL_NV_register_combiners2.txt#5 $
+    $Id: //sw/main/docs/OpenGL/specs/GL_NV_register_combiners2.txt#7 $
 
 Number
 
@@ -229,9 +237,10 @@ GLX Protocol
     The following rendering command is sent to the sever as part of a
     glXRender request:
 
-        CombinerParameterfvNV
-            2           8+4*n           rendering command length
-            2           ????            rendering command opcode
+        CombinerStageParameterfvNV
+            2           12+4*n          rendering command length
+            2           4280            rendering command opcode
+            4           ENUM            stage
             4           ENUM            pname
                         0x852A   n=4    GL_CONSANT_COLOR0_NV
                         0x852B   n=4    GL_CONSANT_COLOR1_NV
@@ -246,7 +255,7 @@ GLX Protocol
             1           CARD8           opcode (X assigned)
             1           17              GLX opcode (glXVendorPrivateWithReply)
             2           5               request length
-            4           ????            vendor specific opcode
+            4           1327            vendor specific opcode
             4           GLX_CONTEXT_TAG context tag
             4           ENUM            stage
             4           ENUM            pname
@@ -289,6 +298,9 @@ New Implementation State
      None
 
 Revision History
+
+     December 13, 2004: Assigned GLX protocl opcodes and fixed protocol
+     with help from Thomas Roell.
 
      Version 1.2 (February 11, 2004) - When describing the
      per-fragment register initialization within the combiners, the

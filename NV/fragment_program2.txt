@@ -17,12 +17,13 @@ Status
 
 Version
 
-    Last Modified:      $Date: 2004/05/17 $
-    NVIDIA Revision:    6
+    Last Modified:      08/04/2004
+    NVIDIA Revision:    8
 
 Number
 
     304
+
 
 Dependencies
 
@@ -279,7 +280,7 @@ Additions to Chapter 3 of the OpenGL 1.2.1 Specification (Rasterization)
       FLR      X X X X X  v       v        floor
       FRC      X X X X X  v       v        fraction
       IF       - - - - -  c       -        start of if test block
-      KIL      - - - - -  v or c  v        kill fragment
+      KIL      - - - - -  v or c  -        kill fragment
       LG2      X X - X X  s       ssss     logarithm base 2
       LIT      X X - X X  v       v        compute light coefficients
       LOOP     - - - - -  v       -        start of loop block        
@@ -298,7 +299,7 @@ Additions to Chapter 3 of the OpenGL 1.2.1 Specification (Rasterization)
       RCP      X X - X X  s       ssss     reciprocal
       REP      - - - - -  v       -        start of repeat block
       RET      - - - - -  c       -        subroutine return
-      RFL      X X - X X  v       v        reflection vector
+      RFL      X X - X X  v,v     v        reflection vector
       RSQ      X X - X X  s       ssss     reciprocal square root
       SCS      X X - X X  s       ss--     sine/cosine without reduction
       SEQ      X X X X X  v,v     v        set on equal
@@ -580,13 +581,13 @@ Additions to Chapter 3 of the OpenGL 1.2.1 Specification (Rasterization)
 
     Add Section 3.11.6.6, TXL: Texture Lookup with Explicit LOD
 
-    The TXD instruction takes the x, y, and z components of the vector operand
+    The TXL instruction takes the x, y, and z components of the vector operand
     and maps them to s, t, and r, respectively.  These coordinates are used to
     sample from the specified texture target on the specified texture image
     unit in a manner consistent with its parameters.
 
     The level of detail is computed as specified in section 3.8.8, except that
-    log_2(rho(x,y)) is given by 2^w, where w is the w component of the vector
+    rho(x,y) is given by 2^w, where w is the w component of the vector
     operand.
     
     The resulting sample is mapped to RGBA as described in table 3.21 
@@ -901,6 +902,11 @@ Revision History
 
     Rev.  Date      Author   Changes
     ----  --------  -------  --------------------------------------------
+    8     08/04/04  pbrown   Fixed two typos in the TXL instruction.
+
+    7     07/08/04  pbrown   Fixed entries for KIL and RFL in the opcode
+                             table.
+
     6     05/16/04  pbrown   Documented that "A0" is a pre-defined address
                              register variable for the purposes of the 
                              grammar, and that no other address register

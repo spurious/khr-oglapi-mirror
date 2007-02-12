@@ -29,7 +29,7 @@ Version
 
     October 3, 2003 (version 1.1)
     $Date$ $Revision$
-    $Id: //sw/main/docs/OpenGL/specs/GL_NV_fence.txt#13 $
+    $Id: //sw/main/docs/OpenGL/specs/GL_NV_fence.txt#14 $
 
 Number
 
@@ -326,8 +326,8 @@ GLX Protocol
 
     Seven new GL commands are added.
 
-    The following rendering command is sent to the server as part
-    of a glXRender request:
+    The following rendering command is sent to the sever as part of a
+    glXRender request:
 
         SetFenceNV
             2           12              rendering command length

@@ -20,9 +20,9 @@ IP Status
 
 Version
 
-    NVIDIA Date: April 20, 2004
+    NVIDIA Date: June 3, 2004
     $Date$ $Revision$
-    $Id: //sw/main/docs/OpenGL/specs/GL_NV_texture_compression_vtc.txt#3 $
+    $Id: //sw/main/docs/OpenGL/specs/GL_NV_texture_compression_vtc.txt#4 $
 
 Number
 
@@ -36,13 +36,15 @@ Dependencies
 
     EXT_texture_compression_s3tc is required.
 
+    ARB_texture_non_power_of_two interacts with this extension.
+
 Overview
 
     This extension adds support for the VTC 3D texture compression
     formats, which are analogous to the S3TC texture compression formats,
     with the addition of some retiling in the Z direction.  VTC has the
-    same compression ratio as S3TC and uses 4x4x1, 4x4x2, or 4x4x4
-    blocks.
+    same compression ratio as S3TC and uses 4x4x1, 4x4x2, (4x4x3 when
+    non-power-of-two textures are supported), or 4x4x4 blocks.
 
 Issues
 
@@ -59,6 +61,18 @@ Issues
         RESOLVED: No, except for the addition of the Z-direction block
         alignment restriction for CompressedTexSubImage3D, which is
         analogous to the X and Y restrictions.
+
+    *   Should VTC compression work with the ARB_texture_non_power_of_two
+        functionality?
+
+        RESOLVED: Yes.  The blockIndex computation works for
+        non-power-of-two width, height, and depth dimensions.
+
+        Consider a 31x25x11 3D texture to be stored using VTC.
+        The initial 31x25x8 portion of the volume is bricked up using
+        VTC with 4x4x4 blocks where the 31x25 dimensions are rounded
+        up to 32x28.  Following the expanded 32x28x8 initial volume are
+        the final texels arranged as 32x28x3 with 4x4x3 blocks.
 
 New Procedures and Functions
 
@@ -153,6 +167,13 @@ Additions to Appendix A of the OpenGL 1.2.1 Specification (Invariance)
 
     None.
 
+Dependencies on ARB_texture_non_power_of_two
+
+    There are no explicit dependencies on ARB_texture_non_power_of_two
+    but the Appendix language is compatible with non-power-of-two
+    texture sizes.  4x4x3 blocks are not possible if texture sizes are
+    restricted to power-of-two values.
+
 GLX Protocol
 
     None.
@@ -205,9 +226,15 @@ Appendix
 
     Each VTC compression format is similar to a corresponding S3TC
     compression format, but where an S3TC block encodes a 4x4 block of
-    texels, a VTC block encodes a 4x4x1, 4x4x2, or 4x4x4 block of texels.
-    If the depth of the image is four or greater, 4x4x4 blocks are used,
-    and if the depth is 1 or 2, 4x4x1 or 4x4x2 blocks are used.
+    texels, a VTC block encodes a 4x4x1, 4x4x2, or 4x4x4 (or 4x4x3 if
+    non-power-of-two textures are supported) block of texels.  If the
+    depth of the image is four or greater, 4x4x4 blocks are used, and
+    if the depth is 1 or 2, 4x4x1 or 4x4x2 blocks are used.
+
+    (If non-power-of-two textures are supported and the depth of the
+    texture is not a multiple 4, the excess texels in depth after 4x4x4
+    blocks are arranged are stored with 4x4x1, 4x4x2, or 4x4x3 blocks
+    as necessary to complete the texture.)
 
     The size in bytes of a VTC image with dimensions w, h, and d is:
 
@@ -217,23 +244,36 @@ Appendix
     either 8 or 16 bytes.
 
     The block containing a texel at location (x,y,z) starts at an offset
-    inside the image of:
+    inside the image of blockIndex bytes where blockIndex is computed
+    as follows:
 
-        blocksize * min(d,4) * (floor(x/4) +
-                                ceil(w/4) * (floor(y/4) +
-                                             ceil(h/4) * floor(z/4)))
+    if (z >= 4*floor(d/4)) {
+        blockIndex = blocksize * (ceil(w/4) * ceil(h/4) * 4*floor(d/4) +
+                                  floor(x/4) +
+                                  ceil(w/4) * (floor(y/4) +
+                                               ceil(h/4) * (z-4*floor(d/4)) ));
+    } else {
+        blockIndex = blocksize * 4 * (floor(x/4) +
+                                      ceil(w/4) * (floor(y/4) +
+                                                   ceil(h/4) * floor(z/4)));
+    }
 
-    bytes.
+    These two observations about subexpressions in the above computation
+    are useful:
+
+        4*floor(d/4) == d & ~0x3
+
+        when z > 4*floor(d/4) and z < d, z-4*floor(d/4) == z & 0x3
 
     A 4x4x1 block of each of the four formats is stored in exactly the
     same way that a 4x4 block of the analogous S3TC format is stored.
 
-    A 4x4x2 or 4x4x4 block is stored as two or four consecutive 4x4
-    blocks of the analogous S3TC format, one for each layer inside the
-    block.  For example, a 4x4x2 DXT1 block consists of 16 bytes in
-    total.  The first 8 bytes encode the texels at locations (0,0,0)
-    through (3,3,0), and the second 8 bytes encode the texels at
-    locations (0,0,1) through (3,3,1).
+    A 4x4x2, 4x4x3, or 4x4x4 block is stored as two, three, or four
+    consecutive 4x4 blocks of the analogous S3TC format, one for each
+    layer inside the block.  For example, a 4x4x2 DXT1 block consists of
+    16 bytes in total.  The first 8 bytes encode the texels at locations
+    (0,0,0) through (3,3,0), and the second 8 bytes encode the texels
+    at locations (0,0,1) through (3,3,1).
 
     For definitions of the S3TC formats, please refer to the
     EXT_texture_compression_s3tc specification.
@@ -251,3 +291,5 @@ Revision History
     that depth and zoffset must be multiples of 4 still exist because the
     VTC block is a 3D 4x4x4 block (or 4x4x2 and 4x4x1 in the end cases).
 
+    Jun 3, 2004 - Update blockIndex to support non-power-of-two dimensions
+    for VTC storage.

@@ -28,7 +28,7 @@ Version
 
     NVIDIA Date: August 27, 2003
     $Date: 2003/08/27 $ $Revision: #13 $
-    $Id: //depot/main/doc/registry/extensions/NV/texture_lod_bias.spec#4 $
+    $Id: //sw/main/docs/OpenGL/specs/GL_EXT_texture_lod_bias.txt#13 $
 
 Number
 

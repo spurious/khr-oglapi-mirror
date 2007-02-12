@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified:      05/16/2004
-    NVIDIA Revision:    2
+    Last Modified:      06/23/2004
+    NVIDIA Revision:    3
 
 Number
 
@@ -742,14 +742,15 @@ Additions to Chapter 2 of the OpenGL 1.4 Specification (OpenGL Operation)
     vector.
 
       tmp = VectorLoad(op0);
-      iresult.x = floor(tmp.x);
-      iresult.y = floor(tmp.y);
-      iresult.z = floor(tmp.z);
-      iresult.w = floor(tmp.w);
+      iresult.x = round(tmp.x);
+      iresult.y = round(tmp.y);
+      iresult.z = round(tmp.z);
+      iresult.w = round(tmp.w);
 
-    The round operation returns the nearest integer to the operand.
-    For example round(-1.7) = -2.0, round(+1.0) = +1.0, and round(+3.7)
-    = +4.0.  
+    The round operation returns the nearest integer to the operand.  If the
+    fractional portion of the operand is 0.5, round() selects the nearest even
+    integer.  For example round(-1.7) = -2.0, round(+1.0) = +1.0, and
+    round(+3.7) = +4.0.
 
     Section 2.14.5.30,  BRA:  Branch
 
@@ -795,6 +796,9 @@ Additions to Chapter 2 of the OpenGL 1.4 Specification (OpenGL Operation)
     holding the call stack, and <nextInstruction> is a reference to the
     instruction immediately following the present one in the program
     string.
+
+    If the call stack overflows, the vertex program terminates abnormally and
+    all vertex program results are undefined.
 
     Section 2.14.5.32,  COS:  Cosine
 
@@ -855,6 +859,9 @@ Additions to Chapter 2 of the OpenGL 1.4 Specification (OpenGL Operation)
     In the pseudocode, <callStackDepth> is the depth of the call stack,
     <callStack> is an array holding the call stack, and <instruction> is
     a reference to an instruction previously pushed onto the call stack.
+
+    If the call stack is empty when RET executes, the vertex program
+    terminates normally.
 
     Section 2.14.5.35,  SEQ:  Set on Equal
 
@@ -1534,6 +1541,10 @@ Revision History
 
     Rev.  Date      Author   Changes
     ----  --------  -------  --------------------------------------------
+    3     06/23/04  pbrown   Documented that vertex results are undefined
+                             if the call stack overflows, and clarified that
+                             RET with an empty call stack is not an error.
+
     2     05/16/04  pbrown   Documented terminals in modified vertex program
                              grammar. 
 

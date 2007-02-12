@@ -20,13 +20,12 @@ IP Status
 
 Status
 
-    Version 1.9
+    Shipping, spec at version 1.10.
 
 Version
 
-    NVIDIA Date: February 24, 2004
-    $Date$ $Revision$
-    $Id: //sw/main/docs/OpenGL/specs/GL_NV_vertex_program.txt#20 $
+    NVIDIA Date:        September 27, 2004
+    Revision:           1.10
 
 Number
 
@@ -3559,21 +3558,21 @@ GLX Protocol
 
         VertexAttrib1svNV
             2           12              rendering command length
-            2           4189            rendering command opcode
+            2           4265            rendering command opcode
             4           CARD32          index
             2           INT16           v[0]
             2                           unused
 
         VertexAttrib2svNV
             2           12              rendering command length
-            2           4190            rendering command opcode
+            2           4266            rendering command opcode
             4           CARD32          index
             2           INT16           v[0]
             2           INT16           v[1]
 
         VertexAttrib3svNV
             2           12              rendering command length
-            2           4191            rendering command opcode
+            2           4267            rendering command opcode
             4           CARD32          index
             2           INT16           v[0]
             2           INT16           v[1]
@@ -3582,7 +3581,7 @@ GLX Protocol
 
         VertexAttrib4svNV
             2           12              rendering command length
-            2           4192            rendering command opcode
+            2           4268            rendering command opcode
             4           CARD32          index
             2           INT16           v[0]
             2           INT16           v[1]
@@ -3591,20 +3590,20 @@ GLX Protocol
 
         VertexAttrib1fvNV
             2           12              rendering command length
-            2           4193            rendering command opcode
+            2           4269            rendering command opcode
             4           CARD32          index
             4           FLOAT32         v[0]
 
         VertexAttrib2fvNV
             2           16              rendering command length
-            2           4194            rendering command opcode
+            2           4270            rendering command opcode
             4           CARD32          index
             4           FLOAT32         v[0]
             4           FLOAT32         v[1]
 
         VertexAttrib3fvNV
             2           20              rendering command length
-            2           4195            rendering command opcode
+            2           4271            rendering command opcode
             4           CARD32          index
             4           FLOAT32         v[0]
             4           FLOAT32         v[1]
@@ -3612,7 +3611,7 @@ GLX Protocol
 
         VertexAttrib4fvNV
             2           24              rendering command length
-            2           4196            rendering command opcode
+            2           4272            rendering command opcode
             4           CARD32          index
             4           FLOAT32         v[0]
             4           FLOAT32         v[1]
@@ -3621,20 +3620,20 @@ GLX Protocol
 
         VertexAttrib1dvNV
             2           16              rendering command length
-            2           4197            rendering command opcode
+            2           4273            rendering command opcode
             4           CARD32          index
             8           FLOAT64         v[0]
 
         VertexAttrib2dvNV
             2           24              rendering command length
-            2           4198            rendering command opcode
+            2           4274            rendering command opcode
             4           CARD32          index
             8           FLOAT64         v[0]
             8           FLOAT64         v[1]
 
         VertexAttrib3dvNV
             2           32              rendering command length
-            2           4199            rendering command opcode
+            2           4275            rendering command opcode
             4           CARD32          index
             8           FLOAT64         v[0]
             8           FLOAT64         v[1]
@@ -3642,7 +3641,7 @@ GLX Protocol
 
         VertexAttrib4dvNV
             2           40              rendering command length
-            2           4200            rendering command opcode
+            2           4276            rendering command opcode
             4           CARD32          index
             8           FLOAT64         v[0]
             8           FLOAT64         v[1]
@@ -3651,7 +3650,7 @@ GLX Protocol
 
         VertexAttrib4ubvNV
             2           12              rendering command length
-            2           4201            rendering command opcode
+            2           4277            rendering command opcode
             4           CARD32          index
             1           CARD8           v[0]
             1           CARD8           v[1]
@@ -3801,7 +3800,7 @@ GLX Protocol
             1           CARD8           opcode (X assigned)
             1           17              GLX opcode (glXVendorPrivateWithReply)
             2           6               request length
-            4           1296            vendor specific opcode
+            4           1319            vendor specific opcode
             4           GLX_CONTEXT_TAG context tag
             4           ENUM            target
             4           CARD32          index
@@ -3828,7 +3827,7 @@ GLX Protocol
             1           CARD8           opcode (X assigned)
             1           17              GLX opcode (glXVendorPrivateWithReply)
             2           6               request length
-            4           1297            vendor specific opcode
+            4           1320            vendor specific opcode
             4           GLX_CONTEXT_TAG context tag
             4           ENUM            target
             4           CARD32          index
@@ -3924,8 +3923,8 @@ GLX Protocol
             n*4         LISTofINT32     params
 
         Note that ATTRIB_ARRAY_SIZE_NV, ATTRIB_ARRAY_STRIDE_NV, and
-        ATTRIB_ARRAY_TYPE_NV may be queried by GetVertexAttribNV but
-        return client-side state.
+        ATTRIB_ARRAY_TYPE_NV may be queried by GetVertexAttribNV but generate
+        no protocol and return client-side state.
 
         GetVertexAttribdvNV
             1           CARD8           opcode (X assigned)
@@ -4324,3 +4323,17 @@ Revision History
     Version 1.9
 
       Added language that for SGE and SLT, -NaN < -Inf and +NaN > +Inf.
+
+    Version 1.10
+
+      Fixed GLX protocol conflicts between ARB_vertex_program and
+      NV_vertex_program.  VertexAttrib* functions shared the same opcodes, but
+      had different attribute aliasing behavior.  In particular, setting
+      attribute 3 changes the current color in NV_vertex program, may or may
+      not change current color in ARB_vertex program, and may not change the
+      current color with ARB_vertex_program as extended by ARB_vertex_shader.
+      Renumbered the NV_vertex_program opcodes since they were not currently
+      used by shipping GLX implementations.  Also, fixed the aliasing between
+      GetProgramParameter*NV and GetProgramEnvParameter*ARB, which have
+      different prototypes -- the ARB functions do not use the <pname>
+      parameter.  Again, fixed by renumbering NV protocol.

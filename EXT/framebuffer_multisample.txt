@@ -145,12 +145,12 @@ New Tokens
 
     Returned by CheckFramebufferStatusEXT:
 
-	FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_EXT	0x8D56
+        FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_EXT  0x8D56
 
     Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
     GetFloatv, and GetDoublev:
 
-	MAX_SAMPLES_EXT			    0x8D57
+        MAX_SAMPLES_EXT                     0x8D57
 
 Additions to Chapter 2 of the 1.5 Specification (OpenGL Operation)
 
@@ -338,13 +338,13 @@ GLX Protocol
 
     RenderbufferStorageMultisampleEXT
 
-	2	24		rendering command length
-	2	4331		rendering command opcode
-	4	ENUM		target
-	4	CARD32		samples
-	4	ENUM		internalformat
-	4	CARD32		width
-	4	CARD32		height
+        2       24              rendering command length
+        2       4331            rendering command opcode
+        4       ENUM            target
+        4       CARD32          samples
+        4       ENUM            internalformat
+        4       CARD32          width
+        4       CARD32          height
 
 Dependencies on EXT_framebuffer_object
 
@@ -599,8 +599,8 @@ Revision History
         - changes from June #6 merged back in
 
     #6b, October 13, 2006: Jon Leech
-	- added token values for MAX_SAMPLES_EXT and
-	  FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_EXT.
+        - added token values for MAX_SAMPLES_EXT and
+          FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_EXT.
 
     #6a, September 6, 2006: jsandmel
         - added language describing MAX_SAMPLES query

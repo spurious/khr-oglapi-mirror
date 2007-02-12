@@ -18,7 +18,7 @@ Contributors
 
 Contact
 
-    Dale Kirkland, 3Dlabs (dale.kirkland 'at' 3dlabs.com)
+    Dale Kirkland, NVIDIA (dkirkland 'at' nvidia.com)
 
 Status
 
@@ -30,7 +30,7 @@ Version
     Enables based on work by Pat Brown from the color_clamp_control proposal
 
     Last Modified Date:  February 7, 2006
-    Version:             6
+    Version              6
 
 Number
 

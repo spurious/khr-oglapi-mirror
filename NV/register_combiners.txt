@@ -24,9 +24,8 @@ Status
 
 Version
 
-    NVIDIA Date: September 30, 2003 (version 1.6)
-    $Date$ $Revision$
-    $Id: //sw/main/docs/OpenGL/specs/GL_NV_register_combiners.txt#51 $
+    NVIDIA Date: February 1, 2007 (version 1.7)
+    $Id: //sw/main/docs/OpenGL/specs/GL_NV_register_combiners.txt#55 $
 
 Number
 
@@ -44,6 +43,8 @@ Dependencies
 
     ARB_depth_texture and ARB_shadow -or- SGIX_depth_texture and
     SGIX_shadow affect the definition of this extension.
+
+    ARB_color_buffer_float affects the definiton of this extension.
 
 Overview
 
@@ -234,6 +235,23 @@ Issues
       or <cdDotProduct> is true and then <sumOutput> is not GL_DISCARD.
       However, this check was never added to the driver and some
       applications found the mode useful.
+
+    Does the GL_E_TIMES_F_NV token for the final combiner perform any
+    mapping on E or F before the mapping?  Is the multiply signed?
+    Can the result be negative?
+
+      RESOLUTION:  No input mappings are applied to E or F before their
+      product is computed.  Yes, the product is a signed multiplication.
+      The result can be negative, but the two allowed final combiner input
+      mapping modes (GL_UNSIGNED_IDENTITY_NV and GL_UNSIGNED_INVERT_NV)
+      both effectively clamp their results to [0,1].
+
+      A negative value resulting from the "E times F" product with the
+      GL_UNSIGNED_IDENTITY_NV mapping mode would be clamped to zero.
+
+      A negative value resulting from the "E times F" product with the
+      GL_UNSIGNED_INVERT_NV mpaping mode would be clamped to zero but
+      then one minus that clamped result (zero) would generate one.
 
 New Procedures and Functions
 
@@ -1306,6 +1324,24 @@ and SGIX_shadow
      to the DEPTH_TEXTURE_MODE_ARB state in this document are invalid
      and should be ignored.
 
+Dependencies on ARB_color_buffer_float
+
+     If ARB_color_buffer_float is also implemented, then the "max(0,x)",
+     "max(-1,x)" "min(1,x)", "min(x,1)", and "max(x,-1)" functions used
+     in Table NV_register_combiners.4 and the formulas for computing
+     out1rgb, out1a, out2rgb, out2a, out3rgb, out3a, and fcoc  when
+     CLAMP_FRAGMENT_COLOR_ARB is either FIXED_ONLY_ARB when rendering
+     to a floating-point color framebuffer or FALSE.
+
+     Also when CLAMP_FRAGMENT_COLOR_ARB is either FIXED_ONLY_ARB when
+     rendering to a floating-point color framebuffer or FALSE, the
+     COLOR COLOR_SUM_CLAMP_NV state operates as if TRUE regardless of
+     its actual state.
+
+     The intent of these interactions is to eliminate the specified
+     clamping behavior of register combiners when CLAMP_FRAGMENT_COLOR_ARB
+     indicates clamping should not be performed.
+
 Errors
 
      INVALID_VALUE is generated when CombinerParameterfvNV
@@ -1520,3 +1556,9 @@ Revision History
        If the <abDotProduct> or <cdDotProduct> parameter is non-FALSE,
        the value of the <sumOutput> parameter must be GL_DISCARD_NV;
        otherwise, generate an INVALID_OPERATION error.
+
+    October 19, 2006 - Add interaction with ARB_color_buffer_float to
+    document how ths extension behaves when ARB_color_buffer_float is
+    also supported and when its CLAMP_FRAGMENT_COLOR_ARB state is either
+    FIXED_ONLY_ARB when rendering to a floating-point color framebuffer
+    or FALSE.
