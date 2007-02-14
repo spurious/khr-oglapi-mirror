@@ -116,6 +116,7 @@ Extension Numbers
 319-320		NVIDIA
 321		Apple
 322-343		NVIDIA
+344		NVIDIA
 
 GLU Enumerants
 ==============
@@ -236,7 +237,8 @@ GLX Vendor Private / Vendor Private with Reply opcodes (32-bits)
   1312			NV_fence
   1313	  1420		NVIDIA (use TBD)
   1328	  1329		EXT_timer_query
-  1330	  1420		NVIDIA (use TBD)
+  1330	  1331		EXT_texture_from_pixmap
+  1332	  1420		NVIDIA (use TBD)
   1421			OES_single_precision (Khronos OpenGL ES 1.0)
   1422	  1428		EXT_framebuffer_object
       (1429-2047 unused)
