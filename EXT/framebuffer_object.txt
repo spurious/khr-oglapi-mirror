@@ -55,8 +55,8 @@ Status
 
 Version
 
-    Last Modified Date: April 5, 2006
-    Revision: #118
+    Last Modified Date: February 13, 2007
+    Revision: #119
 
 Number
 
@@ -3802,7 +3802,7 @@ Issues
             mipmap generation could not be performed in some cases, but
             there was no good way to communicate this error to the
             application.  Hence there really was a need for a separate
-            GenerateMipmaps function.  This restriction does not apply
+            GenerateMipmap function.  This restriction does not apply
             to the current API because the semantics of an incomplete
             framebuffer are different now.  Nevertheless, we decided to
             retain this manual mipmap generation as part of this
@@ -4912,7 +4912,7 @@ Issues
                 triggered by any gl{Copy}Tex{Sub}Image call if
                 GENERATE_MIPMAP is set to TRUE.  "Manual" mipmap
                 generation applies always and is triggered by a call to
-                GenerateMipmaps
+                GenerateMipmap
 
             b) "automatic" mipmap generation applies only
                to textures which are not attached to framebuffer
@@ -7292,6 +7292,8 @@ Issues
          violated.
 
 Revision History
+    #119, February 13, 2007: Jon Leech
+	- Corrected typos in 'GenerateMipmap'.
     #118, April 5, 2006:  jjuliano
         - Improve language related to which formats are
           color-renderable, and describe format conversions when reading
@@ -7614,9 +7616,9 @@ Revision History
         - Updated chapter 2 to use proposed language changes describing
           interactions with the framebuffer in the context of this
           extension.
-        - clarified that GenerateMipmaps only requires cubemap textures
+        - clarified that GenerateMipmap only requires cubemap textures
           to be cubemap complete
-        - removed unnecessary reference to proxy texture in GenerateMipmaps
+        - removed unnecessary reference to proxy texture in GenerateMipmap
         - clarified language about stencil ref value clamping
         - removed various other stale XXX comments
         - added note that RENDERBUFFER_BINDING_EXT can be queried
@@ -8115,7 +8117,7 @@ Revision History
         - clarified, reordered overview
         - added missing enums for framebuffer attachment point state
           queries to list of new enums
-        - indicated that GenerateMipmaps will only generate
+        - indicated that GenerateMipmap will only generate
           levels base through q instead of base through p
 
     #46, September 15, 2004:  jjuliano
