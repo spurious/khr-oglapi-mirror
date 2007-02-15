@@ -10,11 +10,12 @@ Name Strings
 
 Contributors
 
-    Pat Brown
+    Pat Brown, NVIDIA
+    James Jones, NVIDIA
     Jon Leech
-    Rob Mace
+    Rob Mace, ATI
     V Moya
-    Brian Paul
+    Brian Paul, Tungsten Graphics
 
 Contact
 
@@ -22,15 +23,15 @@ Contact
 
 Status
 
-    Complete. Appprove by the ARB on October 22, 2004.
+    Complete. Approved by the ARB on October 22, 2004.
 
 Version
 
-    Based on the ATI_pixel_format_float extension, verion 5
+    Based on the ATI_pixel_format_float extension, version 5
     Enables based on work by Pat Brown from the color_clamp_control proposal
 
-    Last Modified Date:  February 7, 2006
-    Version              6
+    Last Modified Date:  February 15, 2007
+    Version:             8
 
 Number
 
@@ -847,7 +848,7 @@ Errors)
     The attribute GLX_RENDER_TYPE has as its value a mask
     indicating what type of GLXContext a drawable created with
     the corresponding GLXFBConfig can be bound to. The following
-    bit settings are supported: GLX_RGBA_BIT, GLX_RGBA_FOAT_BIT,
+    bit settings are supported: GLX_RGBA_BIT, GLX_RGBA_FLOAT_BIT,
     GLX_COLOR_INDEX_BIT.  If combinations of bits are set in the
     mask then drawables created with the GLXFBConfig can be
     bound to those corresponding types of rendering contexts.
@@ -905,7 +906,14 @@ Additions to the GLX Specification
 
 GLX Protocol
 
-    None
+    The following rendering commands are sent to the server as part
+    of a glXRender request:
+
+    ClampColorARB
+        2            12              rendering command length
+        2            234             rendering command opcode
+        4            CARD32          target
+        4            CARD32          clamp
 
 Additions to the WGL Specification
 
@@ -1023,3 +1031,8 @@ Revision History
                               handling of the alpha test.
 
       6   2/6/07   Jon Leech  Fix typos in enum naming.
+
+      7   2/13/07  Jon Leech  Add GLX protocol from James Jones
+                              at NVIDIA.
+
+      8   2/15/07  Jon Leech  Assign GLX rendering opcode.
