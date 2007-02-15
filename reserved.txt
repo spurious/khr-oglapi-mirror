@@ -288,6 +288,7 @@ OpenGL Rendering Opcodes (16 Bits)
        230	    ARB_window_pos
        231     232  ARB_occlusion_query
        233	    ARB_draw_buffers
+       234	    ARB_color_buffer_float
   1008-1023 Reserved to IBM (unknown usage)
   1024-1039 Reserved to HP (originally Compaq) (unknown usage)
   1040-2047 Unused
