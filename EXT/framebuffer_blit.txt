@@ -31,8 +31,8 @@ Status
 
 Version
 
-    Last Modified Date: September 29, 2006
-    Author Revision: 14
+    Last Modified Date: April 5, 2007
+    Author Revision: 15
 
 Number
 
@@ -191,9 +191,6 @@ Operations and the Frame Buffer)
     window-system-provided framebuffer, the initial setting for
     ReadBuffer is FRONT if there is no back buffer and BACK
     otherwise.
-
-    ReadBuffer will set the read buffer for input colors other than 0
-    to NONE.
 
     Modify the first sentence of section 4.3.3 as follows:
 
@@ -588,6 +585,8 @@ Issues
 
 Revision History
 
+    Revision 15, 2007/4/6
+      - Removed language left over from ReadBuffers
     Revision 14, 2006/09/29
       - Changed the resolution of issue 12 to reflect the working
         group decision to abandon ReadBuffers.
