@@ -127,7 +127,7 @@ Additions to Chapter 3 of the OpenGL 1.5 Specification (Rasterization)
 
     Append the following to section 3.8.2:
 
-    "Calling CopyTexImage3D, CopyTexSubImage3D, CopyTexImage2D,
+    "Calling CopyTexSubImage3D, CopyTexImage2D,
     CopyTexSubImage2D, CopyTexImage1D or CopyTexSubImage1D will result
     in an INVALID_FRAMEBUFFER_OPERATION_EXT error if the object bound
     to READ_FRAMEBUFFER_BINDING_EXT is not "framebuffer complete"
@@ -586,7 +586,8 @@ Issues
 Revision History
 
     Revision 15, 2007/4/6
-      - Removed language left over from ReadBuffers
+      - Removed language left over from ReadBuffers.
+      - Removed reference to nonexistent 'CopyTexImage3D'.
     Revision 14, 2006/09/29
       - Changed the resolution of issue 12 to reflect the working
         group decision to abandon ReadBuffers.
