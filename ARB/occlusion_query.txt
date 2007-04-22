@@ -37,8 +37,9 @@ Status
 
 Version
 
-    NVIDIA Date: November 4, 2006
-    $Id: //sw/main/docs/OpenGL/specs/GL_ARB_occlusion_query.txt#6 $
+    Date: April 21, 2007
+    Revision: 7
+    $Id$
 
 Number
 
@@ -831,7 +832,8 @@ New State
     ---------                      ----    -----------     -------------   -----------              ------  ---------
     -                              B       -               FALSE           query active             4.1.6A  -
     CURRENT_QUERY_ARB              Z+      GetQueryiv      0               active query ID          4.1.6A  -
-    -                              Z+      -               0               samples-passed count     4.1.6A  -
+    QUERY_RESULT_ARB               Z+      GetQueryObjectuivARB 0               samples-passed count     4.1.6A  -
+    QUERY_RESULT_AVAILABLE_ARB     B       GetQueryObjectivARB  FALSE           query result available   4.1.6A  -
 
 New Implementation Dependent State
 
@@ -843,6 +845,11 @@ New Implementation Dependent State
                                                                             query counter
 
 Revision History
+
+   Date: 4/21/2007
+   Revision: 7 (Jon Leech)
+      - Added QUERY_RESULT_ARB and QUERY_RESULT_AVAILABLE to state table
+        6.18 (also fixed in OpenGL 2.1 spec).
 
    Date: 11/4/2006
    Revision: 6 (Benj Lipchak, AMD)
