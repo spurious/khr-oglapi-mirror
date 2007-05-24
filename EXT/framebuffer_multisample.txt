@@ -90,7 +90,7 @@ Overview
     This design for multisample resolve more closely matches current
     hardware, but still permits implementations which choose to resolve
     a single sample at a time.  If hardware that implementes the
-    multisample resololution "one sample at a time" exposes
+    multisample resolution "one sample at a time" exposes
     EXT_framebuffer_multisample, it could perform the implicit resolve
     to a driver-managed hidden surface, then read from that surface when
     the application calls BlitFramebufferEXT.
@@ -116,7 +116,7 @@ Overview
         single-sample buffer as a texture while MULTISAMPLE is ENABLED.
 
     By using the BlitFramebufferEXT from EXT_framebuffer_blit as an
-    explicit resolve to serialize access to the multisampeld contents
+    explicit resolve to serialize access to the multisampled contents
     and eliminate the implicit per-sample resolve operation, we avoid
     both of these problems.
 
