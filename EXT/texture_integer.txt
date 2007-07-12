@@ -17,8 +17,8 @@ Status
 
 Version
 
-    Last Modified Date:         11/06/2006
-    NVIDIA Revision:            4
+    Last Modified Date:         7/12/2007
+    NVIDIA Revision:            5
 
 Number
 
@@ -96,7 +96,7 @@ New Procedures and Functions
     void TexParameterIivEXT( enum target, enum pname, int *params );
     void TexParameterIuivEXT( enum target, enum pname, uint *params );
     void GetTexParameterIivEXT ( enum target, enum pname, int *params);
-    void GetTexParameterIiuvEXT ( enum target, enum pname, uint *params);
+    void GetTexParameterIuivEXT ( enum target, enum pname, uint *params);
 
 New Tokens
 
