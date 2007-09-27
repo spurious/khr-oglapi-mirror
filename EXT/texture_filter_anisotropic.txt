@@ -18,7 +18,8 @@ Version
 
 Number
 
-    187
+    OpenGL Extension #187
+    OpenGL ES Extension #41
 
 Dependencies
 
@@ -276,6 +277,9 @@ MAX_TEXTURE_MAX_ANISOTROPY_EXT   R    GetFloatv     2.0             Limit of    
                                                                     of anisotropy
 
 Revision History
+
+  9/26/07 (Jon Leech) - assigned OpenGL ES extension number so
+  the extension can live in both API registries.
 
   4/25/00 - clarify that TexParameterf and TexParameteri accept
   TEXTURE_MAX_ANISTROPY_EXT as a pname.
