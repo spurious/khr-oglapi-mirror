@@ -200,6 +200,8 @@ Enumerateds (32 Bits)
 0x8E10	0x8E8F	NVIDIA
 0x8E90	0x8E9F	QNX
 0x8EA0	0x8EAF	Imagination Technologies
+0x8EB0	0x8EBF	Khronos (OpenGL ES)
+0x8EC0	0x8ECF	Vincent
 100000	100999	GLU Library
 101000	101999	OpenGL ARB	Conformance Tests
 103000	103999	IBM
