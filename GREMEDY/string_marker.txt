@@ -18,12 +18,12 @@ Contact
 
 Status
 
-    Implemented by gDEBugger (Version 1.2.1)
+    Implemented by gDEBugger (Version 1.2.1 or later)
 
 Version
 
-    Last Modified Date: February 1, 2005
-    Author Revision: 1.2
+    Last Modified Date: October 16, 2007
+    Author Revision: 1.4
 
 Number
 
@@ -60,7 +60,7 @@ Overview
     main point of having this extension is to allow applications to have a
     clean way of accessing this functionality only when they are run
     under the control of a debugger/profiler, without having to
-    recompile or change the application.
+    recompile or change the application source code.
 
 
 IP Status
@@ -71,19 +71,12 @@ Issues
 
    (1) Should the extension use \0-terminated strings to simplify use?
     
-    RESOLVED: no. 
-    
-    OpenGL so far doesn't use \0-terminated strings anywhere. Given
-    that this is primarily a convenience extension it might make sense
-    to use \0-terminated strings here, though. 
-    
-    However, we expect the actual call to the functions in this
-    extension to be wrapped by a macro or convenience function anwyay,
-    which would make it easy enough to calculate the length.
+    RESOLVED: yes.
 
-    The latest precendent for strings is the ProgramString(), which
-    defines programs as a list of ubytes with explicit length. We'll
-    use the same reasoning here and not use \0-terminated strings.
+    This extension follows the latest precedent for strings, which is the ShaderSource().
+    It uses strings that are given as a list of ubytes with explicit length. However, If 
+    lengths is 0, then the string is assumed to be null-terminated.
+
 
    (2) Should it be legal to call this inside Begin/End?
     
@@ -138,11 +131,12 @@ Additions to Chapter 5 of the OpenGL 1.5 Specification
         void StringMarkerGREMEDY(sizei len, const void *string);
     
     can be used to insert arbitrary marker strings into the command
-    stream that can be recorded by appropriate debugging tools / porfiling tools /
+    stream that can be recorded by appropriate debugging tools / profiling tools /
     drivers. They have no influence on the rendered image or the OpenGL state.
     <string> is a pointer to the array of bytes representing the marker being
     inserted, which need not be null-terminated.  The length of the array is given
     by <len>.  If <string> is null-terminated, <len> should not include the terminator.
+    If lengths is 0, then the string is assumed to be null-terminated.
 
 Additions to Chapter 6 of the OpenGL 1.5 Specification (State and State
 Requests)
@@ -185,6 +179,9 @@ Sample Code
 
 Revision History
 
+    1.4, 10/16/07 yt:   - Minor text changes.
+    1.3, 06/08/05 yt:   - Enable the use of \0-terminated strings by specifying 
+                          a 0 string length.
     1.2, 02/01/05 dr:   - Change the extension Status
                         - Change the name of the extension 
     1.1, 01/20/05 dr:     (Thanks to Yaki Tebeka for suggestions!)
