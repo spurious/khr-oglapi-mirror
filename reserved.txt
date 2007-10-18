@@ -117,6 +117,7 @@ Extension Numbers
 321		Apple
 322-343		NVIDIA
 344		NVIDIA
+345		Graphic Remedy
 
 GLU Enumerants
 ==============
