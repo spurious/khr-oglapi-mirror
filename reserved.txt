@@ -118,6 +118,7 @@ Extension Numbers
 322-343		NVIDIA
 344		NVIDIA
 345		Graphic Remedy
+346-351		NVIDIA
 
 GLU Enumerants
 ==============
