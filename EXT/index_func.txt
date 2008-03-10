@@ -36,13 +36,13 @@ New Tokens
     and by the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv,
     and GetDoublev:
 
-	INDEX_TEST_EXT
+        INDEX_TEST_EXT
 
     Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
     GetFloatv, and GetDoublev:
 
-	INDEX_TEST_FUNC_EXT
-	INDEX_TEST_REF_EXT
+        INDEX_TEST_FUNC_EXT
+        INDEX_TEST_REF_EXT
 
 Additions to Chapter 2 of the 1.1 Specification (OpenGL Operation)
 
@@ -66,7 +66,7 @@ and the Frame Buffer)
     commands using the symbolic constant INDEX_TEST_EXT.  When disabled,
     it is as if the comparison always passes.  The test is controlled with
 
-	void IndexFunc (enum func, float ref);
+        void IndexFunc (enum func, float ref);
     
     <func> is a symbolic constant indicating the index test function; <ref>
     is a reference value.  <ref> is converted to a fixed-point value
@@ -105,13 +105,13 @@ Errors
     execution of Begin and corresponding execution of End.
 
 New State
-								Initial
-    Get Value				Get Command	Type	Value	Attrib
-    ---------				-----------	----	-------	------
+                                                                Initial
+    Get Value                           Get Command     Type    Value   Attrib
+    ---------                           -----------     ----    ------- ------
 
-    INDEX_TEST_EXT			IsEnabled	B	False	color-buffer/enable
-    INDEX_TEST_FUNC_EXT			GetFloatv	Z8	ALWAYS	color-buffer
-    INDEX_TEST_REF_EXT			GetFloatv	R	0	color-buffer
+    INDEX_TEST_EXT                      IsEnabled       B       False   color-buffer/enable
+    INDEX_TEST_FUNC_EXT                 GetFloatv       Z8      ALWAYS  color-buffer
+    INDEX_TEST_REF_EXT                  GetFloatv       R       0       color-buffer
 
 New Implementation Dependent State
 

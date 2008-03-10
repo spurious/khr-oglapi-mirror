@@ -21,8 +21,8 @@ Status
 
 Version
 
-    Last Modified Date:  $Date: 2003/01/08 $
-    $Id: //sw/main/docs/OpenGL/specs/GL_EXT_stencil_two_side.txt#6 $
+    Last Modified Date:  09/15/2005
+    Revision:            2
 
 Number
 
@@ -33,6 +33,8 @@ Dependencies
     Written based on the OpenGL 1.3 specification.
 
     NV_packed_depth_stencil affects the definition of this extension.
+
+    OpenGL 2.0 affects the definition of this extension.
 
 Overview
 
@@ -381,6 +383,71 @@ GLX Protocol
             2           4220            rendering command opcode
             4           ENUM            face
 
+Interactions with OpenGL 2.0
+
+    OpenGL 2.0 provides similar "separate stencil" functionality with an API
+    based on the ATI_separate_stencil extension.  In the OpenGL 2.0 API, there
+    is no enable; instead, new functions are provided that set both front and
+    back state simultaneously.  Non-separate stencil functions (e.g.,
+    StencilFunc, StencilOp) set *both* back and front state.  In this
+    extension, they set either front or back state depending on the active
+    stencil face.
+
+    Implementations supporting both this extension and OpenGL 2.0 will need to
+    support both styles of two-sided stencil usage without API modification,
+    which is ugly since the OpenGL 2.0 API does not have an enable for
+    two-sided functionality -- it's always on.  To achieve this, we provide
+    three different sets of stencil state:
+
+      - front state
+      - "OpenGL 2.0" back state
+      - "EXT_stencil_two_side" back state
+
+    OpenGL 2.0 separate stencil functions set the front and "OpenGL 2.0" back
+    state.  Non-separate stencil functions use the stencil face selector to
+    determine what to set:  FRONT (the default) sets both front and "OpenGL
+    2.0" back state; BACK sets "EXT_stencil_two_side" back state.
+
+    If the two-sided stencil enable in this extension is set, implying
+    EXT_stencil_two_side usage, we choose between the front state and the
+    EXT_stencil_two_side back state.  Those two sets of state are set
+    appropriately when using the active stencil face selector provided by this
+    extension.
+
+    If the two-sided stencil enable in this extension is not set, implying
+    either OpenGL 2.0 or "one-sided" EXT_stencil_two_side usage, we choose
+    between the front state and the OpenGL 2.0 back state.  In OpenGL 2.0
+    usage, the separate stencil functions set either of these two pieces of
+    state appropriately, and the non-separate stencil functions set both.  In
+    "one-sided" EXT_stencil_two_side usage, the separate stencil functions
+    from OpenGL 2.0 will not be used.  Any time the non-separate functions set
+    the front state (active face == FRONT), they also set the OpenGL 2.0 back
+    state, so the front and back state used will always be identical in this
+    case.
+
+    The relevant spec language changes in the OpenGL 2.0 specification are:
+
+    (modify 2nd paragraph, p. 202) There are three sets of stencil-related
+    state, the front stencil state set, the OpenGL 2.0 back stencil state set,
+    and the EXT_stencil_two_side back stencil state set.  Stencil tests and
+    writes use the front set of stencil state when processing fragments
+    rasterized from non-polygon primitives (points, lines, bitmaps, image
+    rectangles) and front-facing polygon primitives.  When processing
+    fragments rasterized from back-facing polygon primitives, stencil tests
+    and writes use the OpenGL 2.0 back stencil state set when
+    STENCIL_TEST_TWO_SIDE_EXT is disabled and the EXT_stencil_two_side back
+    stencil state set otherwise. ...
+
+    (modify 3rd paragraph, p. 202) StencilFuncSeparate and StencilOpSeparate
+    take a face argument which can be FRONT, BACK, or FRONT_AND_BACK and
+    indicates which set of state is affected.  If <face> is BACK or
+    FRONT_AND_BACK, the OpenGL 2.0 back stencil state is modified, but the
+    EXT_stencil_two_side state is not.  StencilFunc and StencilOp set state
+    based on the active stencil face.  If the active stencil face is FRONT,
+    the corresponding front and OpenGL 2.0 back stencil state are set to
+    identical values.  If the active stencil face is BACK, the corresponding
+    EXT_stencil_two_side back state is set.
+
 Errors
 
     None
@@ -421,6 +488,12 @@ STENCIL_WRITE_MASK         2xZ+  GetIntegerv  1's            Stencil buffer     
 
 [Type field is amended with "2x" prefix.]
 
+
 Revision History
 
-    None
+    Rev.    Date    Author    Changes
+    ----  --------  --------  --------------------------------------------
+    2     09/15/05  pbrown    Clarified interaction with OpenGL 2.0 two-
+                              sided stencil.
+
+    1     01/08/03  mjk       Initial revision.

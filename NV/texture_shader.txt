@@ -24,8 +24,8 @@ Status
 
 Version
 
-    NVIDIA Date: February 8, 2007
-    $Id: //sw/main/docs/OpenGL/specs/GL_NV_texture_shader.txt#29 $
+    NVIDIA Date: March 13, 2007
+    $Id: //sw/main/docs/OpenGL/specs/GL_NV_texture_shader.txt#30 $
 
 Number
 
@@ -970,6 +970,15 @@ Issues
       replace, the depth values of each sample of a fragment may have
       slightly different depth values because of the polygon's depth
       gradient.
+
+    How should the clamping work for GL_OFFSET_TEXTURE_2D_SCALE?
+
+       RESOLUTION:  The scale factor should be clamped to [0,1] prior
+       to scaling red, green, and blue.
+
+       Red, green, and blue are guaranteed to be unsigned RGB values
+       so the [0,1] scale factor times the [0,1] RGB values results in
+       [0,1] values so no output clamping need be specified.
 
 New Procedures and Functions
 
@@ -2298,7 +2307,7 @@ the mapping in Table 3.23 in the EXT_texture_env_combine extension).
 
      Scale is computed with floating-point math as follows:
 
-       Scale = textureOffsetBias + textureOffsetScale * MAGprev
+       Scale = max(0.0, min(1.0, textureOffsetBias + textureOffsetScale * MAGprev))
 
      where textureOffsetBias is the texture shader stage's
      OFFSET_TEXTURE_BIAS_NV value, textureOffsetScale is the texture
@@ -2310,9 +2319,9 @@ the mapping in Table 3.23 in the EXT_texture_env_combine extension).
      The texture unit RGBA result (red',green',blue',alpha') is computed
      as follows:
 
-       red'   = max(0.0, min(1.0, Scale * red))
-       green' = max(0.0, min(1.0, Scale * green))
-       blue'  = max(0.0, min(1.0, Scale * blue))
+       red'   = Scale * red
+       green' = Scale * green
+       blue'  = Scale * blue
        alpha' = alpha
 
      where red, green, blue, and alpha are the texture access components.
@@ -3302,3 +3311,7 @@ Revision History
      also supported and when its CLAMP_FRAGMENT_COLOR_ARB state is either
      FIXED_ONLY_ARB when rendering to a floating-point color framebuffer
      or FALSE.
+
+     March 13, 2007 - Fix OFFSET_TEXTURE_2D_SCALE_NV operation to clamp
+     the scale factor to [0,1] before multiplying it by red, green,
+     and blue to match the hardware's actual behavior.

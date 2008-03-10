@@ -19,8 +19,8 @@ Status
 
 Version
 
-    Last Modified Date:         01/10/2007
-    NVIDIA Revision:            16
+    Last Modified Date:         05/22/2007
+    NVIDIA Revision:            17
 
 Number
 
@@ -1524,13 +1524,13 @@ Modifications to the OpenGL Shading Language Specification version
     present, varying variables also provide the interface between the vertex
     shader and fragment shader.
 
-    The vertex, or geometry shader will compute values per vertex (such as
-    color, texture coordinates, etc) and write them to output variables
-    declared with the "varying" qualifier (vertex) or "varying out" qualifiers
-    (geometry). A vertex or geometry shader may also read these output varying
-    variables, getting back the same values it has written. Reading an output
-    varying variable in a vertex or geometry shader returns undefined results
-    if it is read before being written.
+    The vertex, or geometry shader will compute values per vertex (such
+    as color, texture coordinates, etc) and write them to output variables
+    declared with the "varying" qualifier (vertex or geometry) or "varying
+    out" qualifiers (geometry only). A vertex or geometry shader may also
+    read these output varying variables, getting back the same values it has
+    written. Reading an output varying variable in a vertex or geometry shader
+    returns undefined results if it is read before being written.
 
     A geometry shader may also read from an input varying variable declared
     with the "varying in" qualifiers. The value read will be the same value as
@@ -2464,10 +2464,25 @@ Issues
       new primitive, and the layer number emitted can be safely changed after
       EndPrimitive() is called.
 
+  33. The grammar allows "varying", "varying out", and "varying in" as
+      type-qualifiers for geometry shaders.  What does "varying" without "in"
+      or "out" mean for a geometry shader?
+
+      RESOLVED:  The "varying" type qualifier in a geometry shader not
+      followed by "in" or "out" means the same as "varying out".
+
+      This is consistent with the specification saying: "In order to seamlessly
+      be able to insert or remove a geometry shader from a program object,
+      the rules, names and types of the output built-in varying variables and
+      user-defined varying variables are the same as for the vertex shader."
+
 Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     17   05/22/07  mjk       Clarify that "varying" means the same as
+                              "varying out" in a geometry shader.
+
      16   01/10/07  pbrown    Specify that the total component limit is
                               enforced at LinkProgram time.
 

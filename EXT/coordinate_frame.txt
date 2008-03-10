@@ -1,4 +1,4 @@
-	INCOMPLETE - DO NOT RELEASE IMPLEMENTATIONS OF THIS EXTENSION
+        INCOMPLETE - DO NOT RELEASE IMPLEMENTATIONS OF THIS EXTENSION
 
 Name
 
@@ -65,29 +65,29 @@ New Tokens
     by the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv, and
     GetDoublev:
 
-	TANGENT_ARRAY_EXT		0x8439
-	BINORMAL_ARRAY_EXT		0x843A
+        TANGENT_ARRAY_EXT               0x8439
+        BINORMAL_ARRAY_EXT              0x843A
 
     Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
     GetFloatv, and GetDoublev:
 
-	CURRENT_TANGENT_EXT		0x843B
-	CURRENT_BINORMAL_EXT		0x843C
-	TANGENT_ARRAY_TYPE_EXT		0x843E
-	TANGENT_ARRAY_STRIDE_EXT	0x843F
-	BINORMAL_ARRAY_TYPE_EXT		0x8440
-	BINORMAL_ARRAY_STRIDE_EXT	0x8441
+        CURRENT_TANGENT_EXT             0x843B
+        CURRENT_BINORMAL_EXT            0x843C
+        TANGENT_ARRAY_TYPE_EXT          0x843E
+        TANGENT_ARRAY_STRIDE_EXT        0x843F
+        BINORMAL_ARRAY_TYPE_EXT         0x8440
+        BINORMAL_ARRAY_STRIDE_EXT       0x8441
 
     Accepted by the <pname> parameter of GetPointervEXT:
-	TANGENT_ARRAY_POINTER_EXT	0x8442
-	BINORMAL_ARRAY_POINTER_EXT	0x8443
+        TANGENT_ARRAY_POINTER_EXT       0x8442
+        BINORMAL_ARRAY_POINTER_EXT      0x8443
 
     Accepted by the <target> parameter of Map1,Map2:
 
-	MAP1_TANGENT_EXT		0x8444
-	MAP2_TANGENT_EXT		0x8445
-	MAP1_BINORMAL_EXT		0x8446
-	MAP2_BINORMAL_EXT		0x8447
+        MAP1_TANGENT_EXT                0x8444
+        MAP2_TANGENT_EXT                0x8445
+        MAP1_BINORMAL_EXT               0x8446
+        MAP2_BINORMAL_EXT               0x8447
 
 Additions to Chapter 2 of the 1.0 Specification (OpenGL Operation)
 
@@ -111,12 +111,12 @@ Additions to Chapter 2 of the 1.0 Specification (OpenGL Operation)
 
     The current normal, tangent and binormal are set using
 
-	void Normal3{bsifd}( T coords ) ;
-	void Normal3{bsifd}v( T coords ) ;
-	void Tangent3{bsifd}EXT( T coords ) ;
-	void Tangent3{bsifd}vEXT( T coords ) ;
-	void Binormal3{bsifd}EXT( T coords ) ;
-	void Binormal3{bsifd}vEXT( T coords ) ;
+        void Normal3{bsifd}( T coords ) ;
+        void Normal3{bsifd}v( T coords ) ;
+        void Tangent3{bsifd}EXT( T coords ) ;
+        void Tangent3{bsifd}vEXT( T coords ) ;
+        void Binormal3{bsifd}EXT( T coords ) ;
+        void Binormal3{bsifd}vEXT( T coords ) ;
 
     The current normal, tangent and binormal are set to the given...
     Byte, short, or integer values passed to Normal, Tangent or Binormal...
@@ -127,8 +127,8 @@ Additions to Chapter 2 of the 1.0 Specification (OpenGL Operation)
     texture coordinates, colors, color indices, normals, tangents, binormals,
     and vertices.
 
-	void	TangentPointerEXT( enum type, sizei stride, void *pointer);
-	void	BinormalPointerEXT( enum type, sizei stride, void *pointer);
+        void    TangentPointerEXT( enum type, sizei stride, void *pointer);
+        void    BinormalPointerEXT( enum type, sizei stride, void *pointer);
 
     Because normals, tangents and binormals are always specified...
     NormalPointer, TangentPointerEXT and BinormalPointerEXT
@@ -183,21 +183,21 @@ Errors
 
 New State
 
-    Get Value			Get Command	Type	Initial Value	Attribute
-    ---------			-----------	----	-------------	---------
+    Get Value                   Get Command     Type    Initial Value   Attribute
+    ---------                   -----------     ----    -------------   ---------
 
-    CURRENT_TANGENT_EXT		GetFloatv	R3	1,0,0		current
-    CURRENT_BINORMAL_EXT	GetFloatv	R3	0,1,0		current
-    TANGENT_ARRAY_EXT		IsEnabled	B	False		vertex-array
-    TANGENT_ARRAY_TYPE_EXT	GetIntegerv	Z5	FLOAT		vertex-array
-    TANGENT_ARRAY_STRIDE_EXT	GetIntegerv	Z+	0		vertex-array
-    TANGENT_ARRAY_COUNT_EXT	GetIntegerv	Z+	0		vertex-array
-    TANGENT_ARRAY_POINTER_EXT	GetPointerv	Z+	0		vertex-array
-    BINORMAL_ARRAY_EXT		IsEnabled	B	False		vertex-array
-    BINORMAL_ARRAY_TYPE_EXT	GetIntegerv	Z5	FLOAT		vertex-array
-    BINORMAL_ARRAY_STRIDE_EXT	GetIntegerv	Z+	0		vertex-array
-    BINORMAL_ARRAY_COUNT_EXT	GetIntegerv	Z+	0		vertex-array
-    BINORMAL_ARRAY_POINTER_EXT	GetPointerv	Z+	0		vertex-array
+    CURRENT_TANGENT_EXT         GetFloatv       R3      1,0,0           current
+    CURRENT_BINORMAL_EXT        GetFloatv       R3      0,1,0           current
+    TANGENT_ARRAY_EXT           IsEnabled       B       False           vertex-array
+    TANGENT_ARRAY_TYPE_EXT      GetIntegerv     Z5      FLOAT           vertex-array
+    TANGENT_ARRAY_STRIDE_EXT    GetIntegerv     Z+      0               vertex-array
+    TANGENT_ARRAY_COUNT_EXT     GetIntegerv     Z+      0               vertex-array
+    TANGENT_ARRAY_POINTER_EXT   GetPointerv     Z+      0               vertex-array
+    BINORMAL_ARRAY_EXT          IsEnabled       B       False           vertex-array
+    BINORMAL_ARRAY_TYPE_EXT     GetIntegerv     Z5      FLOAT           vertex-array
+    BINORMAL_ARRAY_STRIDE_EXT   GetIntegerv     Z+      0               vertex-array
+    BINORMAL_ARRAY_COUNT_EXT    GetIntegerv     Z+      0               vertex-array
+    BINORMAL_ARRAY_POINTER_EXT  GetPointerv     Z+      0               vertex-array
 
 New Implementation Dependent State
 

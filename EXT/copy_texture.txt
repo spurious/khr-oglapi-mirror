@@ -32,47 +32,47 @@ Overview
 New Procedures and Functions
 
     void CopyTexImage1DEXT(enum target,
-			   int level,
-			   enum internalformat,
-			   int x,
-			   int y,
-			   sizei width,
-			   int border);
+                           int level,
+                           enum internalformat,
+                           int x,
+                           int y,
+                           sizei width,
+                           int border);
 
     void CopyTexImage2DEXT(enum target,
-			   int level,
-			   enum internalformat,
-			   int x,
-			   int y,
-			   sizei width,
-			   sizei height,
-			   int border);
+                           int level,
+                           enum internalformat,
+                           int x,
+                           int y,
+                           sizei width,
+                           sizei height,
+                           int border);
 
     void CopyTexSubImage1DEXT(enum target,
-			      int level,
-			      int xoffset,
-			      int x,
-			      int y,
-			      sizei width);
+                              int level,
+                              int xoffset,
+                              int x,
+                              int y,
+                              sizei width);
 
     void CopyTexSubImage2DEXT(enum target,
-			      int level,
-			      int xoffset,
-			      int yoffset,
-			      int x,
-			      int y,
-			      sizei width,
-			      sizei height);
+                              int level,
+                              int xoffset,
+                              int yoffset,
+                              int x,
+                              int y,
+                              sizei width,
+                              sizei height);
 
     void CopyTexSubImage3DEXT(enum target,
-			      int level,
-			      int xoffset,
-			      int yoffset,
-			      int zoffset,
-			      int x,
-			      int y,
-			      sizei width,
-			      sizei height);
+                              int level,
+                              int xoffset,
+                              int yoffset,
+                              int zoffset,
+                              int x,
+                              int y,
+                              sizei width,
+                              sizei height);
 
 New Tokens
 
@@ -165,63 +165,63 @@ GLX Protocol
     Five new GL rendering commands are added. The following commands are sent to the
     server as part of a glXRender request:
 
-	CopyTexImage1DEXT
+        CopyTexImage1DEXT
             2           32              rendering command length
             2           4119            rendering command opcode
-            4           ENUM		target
-	    4	        INT32           level
-	    4		ENUM		internalformat
-	    4	 	INT32		x	
-	    4	 	INT32		y	
-	    4	 	INT32		width
-	    4	 	INT32		border
+            4           ENUM            target
+            4           INT32           level
+            4           ENUM            internalformat
+            4           INT32           x       
+            4           INT32           y       
+            4           INT32           width
+            4           INT32           border
 
-    	CopyTexImage2DEXT
+        CopyTexImage2DEXT
             2           36              rendering command length
             2           4120            rendering command opcode
-            4           ENUM		target
-	    4	        INT32           level
-	    4		ENUM		internalformat
-	    4	 	INT32		x	
-	    4	 	INT32		y	
-	    4	 	INT32		width
-	    4	 	INT32		height
-	    4	 	INT32		border
+            4           ENUM            target
+            4           INT32           level
+            4           ENUM            internalformat
+            4           INT32           x       
+            4           INT32           y       
+            4           INT32           width
+            4           INT32           height
+            4           INT32           border
 
-    	CopyTexSubImage1DEXT
+        CopyTexSubImage1DEXT
             2           28              rendering command length
             2           4121            rendering command opcode
-            4           ENUM		target
-	    4	        INT32           level
-	    4	        INT32           xoffset
-	    4	 	INT32		x	
-	    4	 	INT32		y	
-	    4	 	INT32		width
+            4           ENUM            target
+            4           INT32           level
+            4           INT32           xoffset
+            4           INT32           x       
+            4           INT32           y       
+            4           INT32           width
 
-    	CopyTexSubImage2DEXT
+        CopyTexSubImage2DEXT
             2           36              rendering command length
             2           4122            rendering command opcode
-            4           ENUM		target
-	    4	        INT32           level
-	    4	        INT32           xoffset
-	    4	        INT32           yoffset
-	    4	 	INT32		x	
-	    4	 	INT32		y	
-	    4	 	INT32		width
-	    4	 	INT32		height
+            4           ENUM            target
+            4           INT32           level
+            4           INT32           xoffset
+            4           INT32           yoffset
+            4           INT32           x       
+            4           INT32           y       
+            4           INT32           width
+            4           INT32           height
 
-    	CopyTexSubImage3DEXT
+        CopyTexSubImage3DEXT
             2           40              rendering command length
             2           4123            rendering command opcode
-            4           ENUM		target
-	    4	        INT32           level
-	    4	        INT32           xoffset
-	    4	        INT32           yoffset
-	    4	        INT32           zoffset
-	    4	 	INT32		x	
-	    4	 	INT32		y	
-	    4	 	INT32		width
-	    4	 	INT32		height
+            4           ENUM            target
+            4           INT32           level
+            4           INT32           xoffset
+            4           INT32           yoffset
+            4           INT32           zoffset
+            4           INT32           x       
+            4           INT32           y       
+            4           INT32           width
+            4           INT32           height
 
 Dependencies on EXT_texture
 

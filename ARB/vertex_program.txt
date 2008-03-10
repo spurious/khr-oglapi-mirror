@@ -53,8 +53,8 @@ Status
 
 Version
 
-    Last Modified Date:  09/27/04
-    Revision:            45
+    Last Modified Date:  07/25/07
+    Revision:            46
 
 Number
 
@@ -5018,12 +5018,49 @@ Interactions with NV_vertex_program
       - NV programs are required to write a vertex position; ARB programs are
         not.
 
+      - There is both an ARB and an NV boolean enable for each generic
+        array (two booleans per generic array).  Each generic array's NV
+        enable is enabled with EnableClientState(VERTEX_ATTRIB_ARRAYn_NV)
+        or disabled with DisableClientState(VERTEX_ATTRIB_ARRAYn_NV)
+        while each generic array's ARB enable is enabled
+        with EnableVertexAttribArrayARB(n) and disabled with
+        DisableVertexAttribArrayARB(n).
+
+        Enabling (or disabling) an ARB generic array enables (or disables)
+        BOTH the NV and ARB generic array booleans.
+
+        However enabling (or disabling) the NV generic array enable
+        changes only the NV generic array enable (the ARB enable is
+        UNchanged).
+
+        When an enabled valid current vertex program (whether specified
+        as an ARB or NV vertex program) is bound, the NV generic array
+        enables are considered (and the ARB enables are ignored).  If a
+        given NV generic array enable is true, the corresponding generic
+        array state is applied.  However if there is an enabled valid
+        vertex program and a particular NV generic array is disabled, then
+        the corresponding conventional aliased array state is applied.
+
+        When the current vertex program is disabled or not valid (so
+        conventional vertex processing is performed), the ARB generic
+        array enables are considered (and the NV enables are ignored).
+        If a given ARB generic array enable is true, the corresponding
+        generic array state is applied.  However if the current vertex
+        program is disabled or NOT valid and a particular ARB generic
+        array is disabled, then the corresponding conventional aliased
+        array state is applied.
+
+        This behavior means generic vertex arrays can be applied to
+        conventional vertex processing when the ARB generic vertex array
+        enable boolean is true.  For example, you can send normalized
+        UNSIGNED_SHORT texture coordinate set arrays as aliased generic
+        vertex arrays where conventionally UNSIGNED_SHORT texture
+        coordinate set arrays are unnormalized.
+
     NV_vertex_program interaction Issues:
 
       - Should matrix tracking support extend to ARB program environment
         parameters?
-
-      - Should the vertex array enables be the same state or not?
 
 
 Interactions with EXT_vertex_shader
@@ -6469,6 +6506,10 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  --------------------------------------------
+    46    07/25/07  mjk       Document how the ARB and NV generic arrays
+                              interact.  This documents NVIDIA's
+                              long-standing implemented behavior.
+
     45    09/27/04  pbrown    Fixed GLX protocol, removing the unused <pname>
                               parameters for GetProgram{Env,Local}Parameter
                               [df]vARB, leaving an unused CARD32 in its place.

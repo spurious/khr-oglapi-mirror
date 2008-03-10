@@ -34,7 +34,7 @@ Overview
 
 
     Cf ----------------------+
-			     |                 +-> to lighting parameters
+                             |                 +-> to lighting parameters
                              v                 |
     +------------+        +--------+     +-------------+
     |            |        |        |     |             |
@@ -74,9 +74,9 @@ Issues
     *  more tokens for driving multiple inputs, e.g. AMBIENT_DIFFUSE_AND_SPECULAR
 
     *  normals need to be in the range [-1,1]
-	
+        
         when a texture is used as a normal, its components are scaled
-	and biased to the range [-1,1].
+        and biased to the range [-1,1].
 
 
 New Procedures and Functions
@@ -157,9 +157,9 @@ Additions to Chapter 3 of the 1.1 Specification (Rasterization)
     of the post-texture-environment color are used to compute the 
     components nx, ny, and nz of the fragment normal vector as follows:
     
-	    nx = 2*R-1
-	    ny = 2*G-1
-	    nz = 2*B-1
+            nx = 2*R-1
+            ny = 2*G-1
+            nz = 2*B-1
     
     In effect, the post-texture-environment color components are scaled
     and biased so that their range is [-1,1].
@@ -211,11 +211,11 @@ Additions to Chapter 3 of the 1.1 Specification (Rasterization)
        + Am*As
        SUM{_i = 0 through Nf-1} {
        + Shad_i*Atten_i*SpotL_i*{
-	    + Am*Al_i
-	    + Dm*Dl_i*(N.L_i)
-	    + Sm*Sl_i*(N.H_i)^n
-	  }
-	}
+            + Am*Al_i
+            + Dm*Dl_i*(N.L_i)
+            + Sm*Sl_i*(N.H_i)^n
+          }
+        }
     
     with Shad_i coming from the red component of the post-texture-environment
     color.  If a post-environment texture color is not applied to
@@ -370,8 +370,8 @@ Errors
 
 New State
 
-    Get Value				Get Command	Type	Initial Value	    Attribute
-    ---------				-----------	----	-------------	    ---------
+    Get Value                           Get Command     Type    Initial Value       Attribute
+    ---------                           -----------     ----    -------------       ---------
     TEXTURE_APPLICATION_MODE_EXT        GetIntegerv     Z10     FRAGMENT_COLOR_EXT  texture
     TEXTURE_LIGHT_EXT                   GetIntegerv     Z5      DIFFUSE             texture
     TEXTURE_MATERIAL_FACE_EXT           GetIntegerv     Z3      FRONT_AND_BACK      texture

@@ -31,14 +31,14 @@ Overview
 New Procedures and Functions
 
     void ColorSubTableEXT( enum target,
-        		   sizei start,
-        		   sizei count,
-        		   enum format,
-        		   enum type,
-        		   const void *data);
+                           sizei start,
+                           sizei count,
+                           enum format,
+                           enum type,
+                           const void *data);
 
     void CopyColorSubTableEXT(enum target,
-        		      sizei start,
+                              sizei start,
                               int x,
                               int y,
                               sizei width);

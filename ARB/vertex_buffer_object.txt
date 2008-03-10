@@ -43,7 +43,7 @@ Status
 Version
 
     Last Modified Date: November 4, 2006
-    Revision: 0.92
+    Revision: 0.93
 
 Number
 
@@ -180,7 +180,7 @@ Issues
     to be stored in buffer objects?
     
         RESOLVED: YES.  It is easily and cleanly added with just the
-	addition of a binding point for the index buffer object.  Since
+        addition of a binding point for the index buffer object.  Since
         our approach of overloading pointers works for any pointer in GL,
         no additional APIs need be defined, unlike in the various
         *_element_array extensions.
@@ -247,9 +247,9 @@ Issues
         Note that both the user-controlled binding ARRAY_BUFFER_ARB
         binding point and the per-array bindings push and pop.
 
-	Note that additional binding points, such as ones for pixel or
-	texture transfers, would not be part of the vertex array state,
-	and thus would likely push and pop as part of the pixel store
+        Note that additional binding points, such as ones for pixel or
+        texture transfers, would not be part of the vertex array state,
+        and thus would likely push and pop as part of the pixel store
         (client) state when they are defined.
 
     How is the decision whether to use the array pointer as an offset or
@@ -262,8 +262,8 @@ Issues
         object sitting at base NULL and with an extent large enough that
         it covers all of the system's virtual address space.
 
-	Note that this approach essentially requires that binding points
-	be client (not server) state.
+        Note that this approach essentially requires that binding points
+        be client (not server) state.
 
     Can buffer objects be shared between contexts in the same way that
     display lists are?
@@ -428,19 +428,19 @@ Issues
 
         RESOLVED: We define new types that will work well on 64-bit
         systems, analogous to C's "intptr_t".  The new type "GLintptrARB"
-	should be used in place of GLint whenever it is expected that
-	values might exceed 2 billion.  The new type "GLsizeiptrARB"
-	should be used in place of GLsizei whenever it is expected
-	that counts might exceed 2 billion.  Both types are defined as
+        should be used in place of GLint whenever it is expected that
+        values might exceed 2 billion.  The new type "GLsizeiptrARB"
+        should be used in place of GLsizei whenever it is expected
+        that counts might exceed 2 billion.  Both types are defined as
         signed integers large enough to contain any pointer value.  As a
         result, they naturally scale to larger numbers of bits on systems
         with 64-bit or even larger pointers.
 
-	The offsets introduced in this extension are typed GLintptrARB,
-	consistent with other GL parameters that must be non-negative,
-	but are arithmetic in nature (not uint), and are not sizes; for
+        The offsets introduced in this extension are typed GLintptrARB,
+        consistent with other GL parameters that must be non-negative,
+        but are arithmetic in nature (not uint), and are not sizes; for
         example, the xoffset argument to TexSubImage*D is of type GLint.
-	Buffer sizes are typed GLsizeiptrARB.
+        Buffer sizes are typed GLsizeiptrARB.
 
         The idea of making these types unsigned was considered, but was
         ultimately rejected on the grounds that supporting buffers larger
@@ -457,7 +457,7 @@ Issues
 
     Should "Unmap" be treated as one word or two?
 
-	RESOLVED: One word.
+        RESOLVED: One word.
 
     Should "usage" be a parameter to BufferDataARB, or specified
     separately using a parameter specification command, e.g.,
@@ -516,7 +516,7 @@ Issues
 
     Should UnmapBufferARB return a boolean indicating data integrity?
 
-	RESOLVED: YES, since the Unmap is precisely the point at which
+        RESOLVED: YES, since the Unmap is precisely the point at which
         the buffer can no longer be lost.
 
     How is unaligned data handled?
@@ -571,17 +571,17 @@ Issues
     What new usages do we need to add?
 
         RESOLVED.  We have defined a 3x3 matrix of usages.  The
-	pixel-related terms draw, read, and copy are used to distinguish
-	between three basic data paths: application to GL (draw), GL to
-	application (read), and GL to GL (copy).  The terms stream,
-	static, and dynamic are used to identify three data access
-	patterns: specify once and use once or perhaps only a few times
+        pixel-related terms draw, read, and copy are used to distinguish
+        between three basic data paths: application to GL (draw), GL to
+        application (read), and GL to GL (copy).  The terms stream,
+        static, and dynamic are used to identify three data access
+        patterns: specify once and use once or perhaps only a few times
         (stream), specify once and use many times (static), and specify
         and use repeatedly (dynamic).
 
-	Note that the "copy" and "read" usage token values will become
-	meaningful only when pixel transfer capability is added to
-	buffer objects by a (presumed) subsequent extension.
+        Note that the "copy" and "read" usage token values will become
+        meaningful only when pixel transfer capability is added to
+        buffer objects by a (presumed) subsequent extension.
 
         Note that the data paths "draw", "read", and "copy" are analogous
         in both name and meaning to the GL commands DrawPixels,
@@ -670,6 +670,22 @@ Issues
         If you wanted to put the array of <primcount> offsets in a buffer
         object, you'd have to define a new extension with a new target.
 
+    When is the binding between a buffer object and a specific vertex array
+    (e.g., VERTEX_ARRAY_BUFFER_BINDING_ARB) established?
+
+        The array's buffer binding is set when the array pointer is specified.
+        Using the vertex array as an example, this is when VertexPointer is
+        called.  At that time, the current array buffer binding is used for
+        the vertex array.  The current array buffer binding is set by calling
+        BindBufferARB with a <target> of ARRAY_BUFFER_ARB.  Changing the
+        current array buffer binding does not affect the bindings used by
+        already established arrays.
+
+          BindBufferARB(ARRAY_BUFFER_ARB, 1);
+          VertexPointer(...);   // vertex array data points to buffer 1
+          BindBufferARB(ARRAY_BUFFER_ARB, 2);
+          // vertex array data still points to buffer 1
+
 New Procedures and Functions
 
     void BindBufferARB(enum target, uint buffer);
@@ -754,10 +770,10 @@ Additions to Chapter 2 of the 1.4 Specification (OpenGL Operation)
     Add to Table 2.2:
 
        "GL Type        Minimum       Description
-	               Bit Width
-	-----------------------------------------------------------------
-	intptrARB      <ptrbits>     signed 2's complement binary integer
-	sizeiptrARB    <ptrbits>     Non-negative binary integer size"
+                       Bit Width
+        -----------------------------------------------------------------
+        intptrARB      <ptrbits>     signed 2's complement binary integer
+        sizeiptrARB    <ptrbits>     Non-negative binary integer size"
 
     Add to the paragraph under Table 2.2:
 
@@ -780,16 +796,16 @@ Additions to Chapter 2 of the 1.4 Specification (OpenGL Operation)
     reserved for the GL.  A buffer object is created by binding an unused
     name to ARRAY_BUFFER_ARB.  The binding is effected by calling
 
-	void BindBufferARB(enum target, uint buffer);
+        void BindBufferARB(enum target, uint buffer);
 
     with <target> set to ARRAY_BUFFER_ARB and <buffer> set to the unused
     name.  The resulting buffer object is a new state vector, initialized
     with a zero-sized memory buffer, and comprising the state values
     listed in Table BufObj1.
 
-	Name                   Type         Initial Value   Legal Values
-	----                   ----         -------------   ------------
-	BUFFER_SIZE_ARB        integer      0               any non-negative
+        Name                   Type         Initial Value   Legal Values
+        ----                   ----         -------------   ------------
+        BUFFER_SIZE_ARB        integer      0               any non-negative
                                                             integer
         BUFFER_USAGE_ARB       enum         STATIC_DRAW_ARB STREAM_DRAW_ARB,
                                                             STREAM_READ_ARB,
@@ -804,7 +820,7 @@ Additions to Chapter 2 of the 1.4 Specification (OpenGL Operation)
                                                             WRITE_ONLY_ARB,
                                                             READ_WRITE_ARB
         BUFFER_MAPPED_ARB      boolean      FALSE           TRUE, FALSE
-        BUFFER_MAP_POINTER_ARB void*        NULL	    address
+        BUFFER_MAP_POINTER_ARB void*        NULL            address
 
         Table BufObj1: Buffer object parameters and their values.
 
@@ -825,7 +841,7 @@ Additions to Chapter 2 of the 1.4 Specification (OpenGL Operation)
 
     Buffer objects are deleted by calling
 
-	void DeleteBuffersARB(sizei n, const uint *buffers);
+        void DeleteBuffersARB(sizei n, const uint *buffers);
 
     <buffers> contains <n> names of buffer objects to be deleted.  After
     a buffer object is deleted it has no contents, and its name is again
@@ -834,7 +850,7 @@ Additions to Chapter 2 of the 1.4 Specification (OpenGL Operation)
 
     The command
 
-	void GenBuffersARB(sizei n, uint *buffers);
+        void GenBuffersARB(sizei n, uint *buffers);
 
     returns <n> previously unused buffer object names in <buffers>.
     These names are marked as used, for the purposes of GenBuffersARB
@@ -882,7 +898,7 @@ Additions to Chapter 2 of the 1.4 Specification (OpenGL Operation)
                            by the application, and used many times as the
                            source for GL (drawing) commands.
         STATIC_READ_ARB    The data store contents will be specified once
-        		   by reading data from the GL, and queried many
+                           by reading data from the GL, and queried many
                            times by the application. 
         STATIC_COPY_ARB    The data store contents will be specified once
                            by reading data from the GL, and used many
@@ -904,13 +920,13 @@ Additions to Chapter 2 of the 1.4 Specification (OpenGL Operation)
     BufferDataARB deletes any existing data store, and sets the values of
     the buffer object's state variables to:
 
-	Name                   Value
-	----                   -----
-	BUFFER_SIZE_ARB        <size>
-	BUFFER_USAGE_ARB       <usage>
-	BUFFER_ACCESS_ARB      READ_WRITE_ARB
-	BUFFER_MAPPED_ARB      FALSE
-	BUFFER_MAP_POINTER_ARB NULL
+        Name                   Value
+        ----                   -----
+        BUFFER_SIZE_ARB        <size>
+        BUFFER_USAGE_ARB       <usage>
+        BUFFER_ACCESS_ARB      READ_WRITE_ARB
+        BUFFER_MAPPED_ARB      FALSE
+        BUFFER_MAP_POINTER_ARB NULL
 
     Clients must align data elements consistent with the requirements
     of the client platform, with an additional base-level requirement
@@ -923,7 +939,7 @@ Additions to Chapter 2 of the 1.4 Specification (OpenGL Operation)
     To modify some or all of the data contained in a buffer object's data
     store, the client may use the command
 
-	void BufferSubDataARB(enum target, intptrARB offset,
+        void BufferSubDataARB(enum target, intptrARB offset,
                               sizeiptrARB size, const void *data);
 
     with <target> set to ARRAY_BUFFER_ARB.  <offset> and <size> indicate
@@ -937,7 +953,7 @@ Additions to Chapter 2 of the 1.4 Specification (OpenGL Operation)
     The entire data store of a buffer object can be mapped into the
     client's address space by calling
 
-	void *MapBufferARB(enum target, enum access);
+        void *MapBufferARB(enum target, enum access);
 
     with <target> set to ARRAY_BUFFER_ARB.  If the GL is able to map the
     buffer object's data store into the client's address space,
@@ -949,11 +965,11 @@ Additions to Chapter 2 of the 1.4 Specification (OpenGL Operation)
 
     MapBufferARB sets the following buffer object state values:
 
-	Name                   Value
-	----                   -----
-	BUFFER_ACCESS_ARB      <access>
-	BUFFER_MAPPED_ARB      TRUE
-	BUFFER_MAP_POINTER_ARB pointer to the data store
+        Name                   Value
+        ----                   -----
+        BUFFER_ACCESS_ARB      <access>
+        BUFFER_MAPPED_ARB      TRUE
+        BUFFER_MAP_POINTER_ARB pointer to the data store
 
     It is an INVALID_OPERATION error to map a buffer data store that is
     in the mapped state.
@@ -987,7 +1003,7 @@ Additions to Chapter 2 of the 1.4 Specification (OpenGL Operation)
     and before the data in that store are dereferenced by any GL commands,
     the mapping must be relinquished by calling
 
-	boolean UnmapBufferARB(enum target);
+        boolean UnmapBufferARB(enum target);
 
     with <target> set to ARRAY_BUFFER_ARB.  Unmapping a mapped buffer
     object invalidates the pointers to its data store and sets the
@@ -1076,7 +1092,7 @@ Additions to Chapter 2 of the 1.4 Specification (OpenGL Operation)
 
     A buffer object is bound to ELEMENT_ARRAY_BUFFER_ARB by calling
 
-	void BindBufferARB(enum target, uint buffer);
+        void BindBufferARB(enum target, uint buffer);
 
     with <target> set to ELEMENT_ARRAY_BUFFER_ARB, and <buffer> set to
     the name of the buffer object.  If no corresponding buffer object
@@ -1151,7 +1167,7 @@ Requests)
 
     The command
 
-	void GetBufferSubDataARB(enum target, intptrARB offset,
+        void GetBufferSubDataARB(enum target, intptrARB offset,
                                  sizeiptrARB size, void *data);
 
     queries the data contents of a buffer object.  <target> is
@@ -1166,7 +1182,7 @@ Requests)
     While the data store of a buffer object is mapped, the pointer to
     the data store can be queried by calling
 
-	void GetBufferPointervARB(enum target, enum pname, void **params);
+        void GetBufferPointervARB(enum target, enum pname, void **params);
 
     with <target> set to ARRAY_BUFFER_ARB and <pname> set to
     BUFFER_MAP_POINTER_ARB.  The single buffer map pointer is returned
@@ -1177,7 +1193,7 @@ Requests)
 
     Added to the list of queries in section 6.1.3, Enumerated Queries:
 
-	"void GetBufferParameterivARB(enum target, enum pname, int *params);"
+        "void GetBufferParameterivARB(enum target, enum pname, int *params);"
 
 
 Errors
@@ -1350,8 +1366,8 @@ Usage Examples
         // Free system memory buffer
         free(data);
 
-	// Frame rendering loop
-	while (...) {
+        // Frame rendering loop
+        while (...) {
 
             // Define arrays
             BindBufferARB(ARRAY_BUFFER_ARB, 1);
@@ -1375,7 +1391,7 @@ Usage Examples
         }
 
         // Delete buffer object
-	int buffer[1] = {1};
+        int buffer[1] = {1};
         DeleteBuffersARB(1, buffer);
 
 
@@ -1387,16 +1403,16 @@ Usage Examples
         // Fill system memory buffer
         ...
 
-	// Initialize buffer object, and null the data pointer
+        // Initialize buffer object, and null the data pointer
 #ifdef USE_BUFFER_OBJECTS
         BindBufferARB(ARRAY_BUFFER_ARB, 1);
         BufferDataARB(ARRAY_BUFFER_ARB, 320, data, STATIC_DRAW_ARB);
         free(data);
-	data = NULL;
+        data = NULL;
 #endif
 
-	// Frame rendering loop
-	while (...) {
+        // Frame rendering loop
+        while (...) {
 
             // Define arrays
 #ifdef USE_BUFFER_OBJECTS
@@ -1423,7 +1439,7 @@ Usage Examples
 
         // Delete buffer object
 #ifdef USE_BUFFER_OBJECTS
-	int buffer[1] = {1};
+        int buffer[1] = {1};
         DeleteBuffersARB(1, buffer);
 #else
         // Free system memory buffer
@@ -1433,8 +1449,8 @@ Usage Examples
 
     Vertex arrays using a mapped buffer object:
 
-	// Frame rendering loop
-	while (...) {
+        // Frame rendering loop
+        while (...) {
 
             // Define arrays (and create buffer object in first pass)
             BindBufferARB(ARRAY_BUFFER_ARB, 1);
@@ -1448,14 +1464,14 @@ Usage Examples
             // Initialize data store of buffer object
             BufferDataARB(ARRAY_BUFFER_ARB, 320, NULL, STREAM_DRAW_ARB);
 
-	    // Map the buffer object
-	    float *p = MapBufferARB(ARRAY_BUFFER_ARB, WRITE_ONLY);
+            // Map the buffer object
+            float *p = MapBufferARB(ARRAY_BUFFER_ARB, WRITE_ONLY);
 
             // Compute and store data in mapped buffer object
             ...
 
-	    // Unmap buffer object and draw arrays
-	    if (UnmapBufferARB(ARRAY_BUFFER_ARB)) {
+            // Unmap buffer object and draw arrays
+            if (UnmapBufferARB(ARRAY_BUFFER_ARB)) {
                 DrawArrays(TRIANGLE_STRIP, 0, 16);
             }
 
@@ -1466,10 +1482,10 @@ Usage Examples
             // Other rendering commands
             ...
 
-	}
+        }
 
         // Delete buffer object
-	int buffer[1] = {1};
+        int buffer[1] = {1};
         DeleteBuffersARB(1, buffer);
 
 
@@ -1490,8 +1506,8 @@ Usage Examples
         // Free system memory buffer
         free(indexdata);
 
-	// Frame rendering loop
-	while (...) {
+        // Frame rendering loop
+        while (...) {
 
             // Define arrays (and create buffer object in first pass)
             BindBufferARB(ARRAY_BUFFER_ARB, 1);
@@ -1506,15 +1522,15 @@ Usage Examples
             // Initialize data store of buffer object
             BufferDataARB(ARRAY_BUFFER_ARB, 320, NULL, STREAM_DRAW_ARB);
 
-	    // Map the buffer object
-	    float *p = MapBufferARB(ARRAY_BUFFER_ARB, WRITE_ONLY);
+            // Map the buffer object
+            float *p = MapBufferARB(ARRAY_BUFFER_ARB, WRITE_ONLY);
 
             // Compute and store data in mapped buffer object
             ...
 
-	    // Unmap buffer object and draw arrays
-	    if (UnmapBufferARB(ARRAY_BUFFER_ARB)) {
-	        DrawElements(TRIANGLE_STRIP, 100, UNSIGNED_INT,
+            // Unmap buffer object and draw arrays
+            if (UnmapBufferARB(ARRAY_BUFFER_ARB)) {
+                DrawElements(TRIANGLE_STRIP, 100, UNSIGNED_INT,
                              BUFFER_OFFSET(0));
             }
 
@@ -1525,10 +1541,10 @@ Usage Examples
             // Other rendering commands
             ...
 
-	}
+        }
 
         // Delete buffer objects
-	int buffers[2] = {1, 2};
+        int buffers[2] = {1, 2};
         DeleteBuffersARB(1, buffers);
 
 

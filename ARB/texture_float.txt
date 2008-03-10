@@ -15,18 +15,18 @@ Contributors
 
 Contact
 
-    Dale Kirkland, 3Dlabs (dale.kirkland 'at' 3dlabs.com)
+    Dale Kirkland, NVIDIA (dkirkland 'at' nvidia.com)
 
 Status
 
-    Complete. Approved by the ARB on October 22, 2004.
+    Complete. Appprove by the ARB on October 22, 2004.
 
 Version
 
     Based on the ATI_texture_float extension, verion 4
 
-    Last Modified Date:  February 8, 2007
-    Version:             6
+    Last Modified Date:  February 19, 2008
+    Version:             7
 
 Number
 
@@ -274,6 +274,12 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
 
     (remove TEXTURE_BORDER_COLOR from end of first paragraph, p. 166)
 
+    ... If the values for TEXTURE_BORDER_COLOR or the value for
+    TEXTURE_PRIORITY are specified as integers, the conversion for signed
+    integers from table 2.9 is applied to convert this value to
+    floating-point.  Regardless of the original data type, the value for
+    TEXTURE_PRIORITY is clamped to lie in [0, 1].
+
     ... If the value for TEXTURE_PRIORITY is specified as an integer,
     the conversion for signed integers from table 2.9 is applied to
     convert this value to floating-point, followed by clamping the
@@ -411,4 +417,9 @@ Revision History
                               Reviewed by the ARB and closed all
                               UNRESOLVED issues.
 
-      6   2/8/07   Jon Leech  Move 3.8.13 changes to appropriate section.
+      6    7/6/06  pbrown     Fixed broken language for border color 
+                              handling.  TexParameteriv border colors
+                              should still be converted to integer; we
+                              only intended to remove the [0,1] clamping.
+
+      7   2/8/07   Jon Leech  Move 3.8.13 changes to appropriate section.

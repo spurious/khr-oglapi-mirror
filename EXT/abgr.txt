@@ -29,11 +29,11 @@ New Procedures and Functions
     None
 
 New Tokens
-	
+        
     Accepted by the <format> parameter of DrawPixels, GetTexImage,
     ReadPixels, TexImage1D, and TexImage2D:
 
-	ABGR_EXT                     0x8000
+        ABGR_EXT                     0x8000
 
 Additions to Chapter 2 of the GL Specification (OpenGL Operation)
 
@@ -44,25 +44,25 @@ Additions to Chapter 3 of the GL Specification (Rasterization)
     One entry is added to table 3.5 (DrawPixels and ReadPixels formats).
     The new table is:
 
-									Target
-	Name			Type		Elements		Buffer
-	----			----		--------		------
-	COLOR_INDEX		Index		Color Index		Color
-	STENCIL_INDEX		Index		Stencil value		Stencil
-	DEPTH_COMPONENT		Component	Depth value		Depth
-	RED			Component	R			Color
-	GREEN			Component	G			Color
-	BLUE			Component	B			Color
-	ALPHA			Component	A			Color
-	RGB			Component	R, G, B			Color
-	RGBA			Component	R, G, B, A		Color
-	LUMINANCE		Component	Luminance value		Color
-	LUMINANCE_ALPHA		Component	Luminance value, A	Color
-	ABGR_EXT		Component	A, B, G, R		Color
+                                                                        Target
+        Name                    Type            Elements                Buffer
+        ----                    ----            --------                ------
+        COLOR_INDEX             Index           Color Index             Color
+        STENCIL_INDEX           Index           Stencil value           Stencil
+        DEPTH_COMPONENT         Component       Depth value             Depth
+        RED                     Component       R                       Color
+        GREEN                   Component       G                       Color
+        BLUE                    Component       B                       Color
+        ALPHA                   Component       A                       Color
+        RGB                     Component       R, G, B                 Color
+        RGBA                    Component       R, G, B, A              Color
+        LUMINANCE               Component       Luminance value         Color
+        LUMINANCE_ALPHA         Component       Luminance value, A      Color
+        ABGR_EXT                Component       A, B, G, R              Color
 
-	Table 3.5: DrawPixels and ReadPixels formats.  The third column
-	gives a description of and the number and order of elements in a
-	group.
+        Table 3.5: DrawPixels and ReadPixels formats.  The third column
+        gives a description of and the number and order of elements in a
+        group.
 
 Additions to Chapter 4 of the GL Specification (Per-Fragment Operations
 and the Framebuffer)
@@ -94,13 +94,13 @@ GLX Protocol
 
     One entry is added to tables 1 and 5 in the GLX Protocol Specification:
 
-	format				encoding
-	------				--------
-	GL_ABGR_EXT                     0x8000
+        format                          encoding
+        ------                          --------
+        GL_ABGR_EXT                     0x8000
 
     Table A.2 is also extended:
 
-	format                          nelements
+        format                          nelements
         ------                          --------
         GL_ABGR_EXT                     4
 

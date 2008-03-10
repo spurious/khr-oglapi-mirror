@@ -35,7 +35,7 @@ Overview
 New Procedures and Functions
 
     void PolygonOffsetEXT(float factor,
-			  float bias);
+                          float bias);
 
 New Tokens
 
@@ -43,13 +43,13 @@ New Tokens
     by the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv, and
     GetDoublev:
 
-	POLYGON_OFFSET_EXT               0x8037
+        POLYGON_OFFSET_EXT               0x8037
 
     Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
     GetFloatv, and GetDoublev:
 
-	POLYGON_OFFSET_FACTOR_EXT        0x8038
-	POLYGON_OFFSET_BIAS_EXT          0x8039
+        POLYGON_OFFSET_FACTOR_EXT        0x8038
+        POLYGON_OFFSET_BIAS_EXT          0x8039
 
 Additions to Chapter 2 of the GL Specification (OpenGL Operation)
 
@@ -64,7 +64,7 @@ Additions to Chapter 3 of the GL Specification (Rasterization)
     equation
 
 
-	Z = (a * Za) + (b * Zb) + (c * Zc)
+        Z = (a * Za) + (b * Zb) + (c * Zc)
 
 
     where a, b, and c are the barycentric coordinates of the fragment
@@ -73,12 +73,12 @@ Additions to Chapter 3 of the GL Specification (Rasterization)
     equation as follows:
 
 
-	Z' = (a * Za) + (b * Zb) + (c * Zc) + (factor * maxdZ) + bias
+        Z' = (a * Za) + (b * Zb) + (c * Zc) + (factor * maxdZ) + bias
 
 
-	     / 0	Z' < 0
-	Z = <  Z'	0 <= Z' <= 1
-	     \ 1	Z' > 1
+             / 0        Z' < 0
+        Z = <  Z'       0 <= Z' <= 1
+             \ 1        Z' > 1
 
 
     where factor and bias are the polygon offset factor and bias as
@@ -89,27 +89,27 @@ Additions to Chapter 3 of the GL Specification (Rasterization)
     maxdZ, dZ/dX, and dZ/dY are:
 
 
-	                     2         2
-	maxdZ = sqrt[ (dZ/dX) + (dZ/dY) ]
+                             2         2
+        maxdZ = sqrt[ (dZ/dX) + (dZ/dY) ]
 
 
-		((Yc - Yb) * (Zb - Za)) - ((Yb - Ya) * (Zc - Zb))
-	dZ/dX =	-------------------------------------------------
-				       area
+                ((Yc - Yb) * (Zb - Za)) - ((Yb - Ya) * (Zc - Zb))
+        dZ/dX = -------------------------------------------------
+                                       area
 
 
-		((Xb - Xa) * (Zc - Zb)) - ((Xc - Xb) * (Zb - Za))
-	dZ/dY =	-------------------------------------------------
-				       area
+                ((Xb - Xa) * (Zc - Zb)) - ((Xc - Xb) * (Zb - Za))
+        dZ/dY = -------------------------------------------------
+                                       area
 
 
-	area = ((Xb - Xa) * (Yc - Yb)) - ((Xc - Xb) * (Yb - Ya))
+        area = ((Xb - Xa) * (Yc - Yb)) - ((Xc - Xb) * (Yb - Ya))
 
 
     To simplify the calculations, maxdZ may be approximated by
 
 
-	maxdZ = maximum( |dZ/dX| , |dZ/dY| )
+        maxdZ = maximum( |dZ/dX| , |dZ/dY| )
 
 
     Note that all these equations treat window coordinate Z values as
@@ -142,11 +142,11 @@ GLX Protocol
     server as part of a glXRender request:
 
 
-  	PolygonOffsetEXT
-	    2		12		rendering command length
-	    2		4098		rendering command opcode
-	    4		FLOAT32		factor
-	    4		FLOAT32		bias
+        PolygonOffsetEXT
+            2           12              rendering command length
+            2           4098            rendering command opcode
+            4           FLOAT32         factor
+            4           FLOAT32         bias
 
 Errors
 
@@ -155,12 +155,12 @@ Errors
 
 New State
 
-							Initial
-    Get Value			Get Command	Type	Value	Attrib
-    ---------			-----------	----	-------	------
-    POLYGON_OFFSET_EXT		IsEnabled	B	False	polygon/enable
-    POLYGON_OFFSET_FACTOR_EXT	GetFloatv	R	0	polygon
-    POLYGON_OFFSET_BIAS_EXT	GetFloatv	R	0	polygon
+                                                        Initial
+    Get Value                   Get Command     Type    Value   Attrib
+    ---------                   -----------     ----    ------- ------
+    POLYGON_OFFSET_EXT          IsEnabled       B       False   polygon/enable
+    POLYGON_OFFSET_FACTOR_EXT   GetFloatv       R       0       polygon
+    POLYGON_OFFSET_BIAS_EXT     GetFloatv       R       0       polygon
 
 New Implementation Dependent State
 

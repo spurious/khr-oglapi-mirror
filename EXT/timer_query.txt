@@ -21,14 +21,16 @@ Status
 
     Shipping (version 1.0)
 
+    Supported by NVIDIA Release 80 drivers.
+
 Version
 
-    Last Modified Date:         10/6/2005
-    Revision:                   1
+    Last Modified Date:         11/6/2006
+    Revision:                   2
 
 Number
 
-    TBD
+    319
 
 Dependencies
 
@@ -37,7 +39,6 @@ Dependencies
     OpenGL 1.5 is required.
 
     This extension modifies ARB_occlusion_query and NV_occlusion_query.
-
 
 Overview
 
@@ -61,7 +62,6 @@ Overview
     without stalling the rendering pipeline.  It uses the query object
     mechanisms first introduced in the occlusion query extension, which allow
     time intervals to be polled asynchronously by the application.
-
 
 Issues
 
@@ -155,7 +155,6 @@ New Tokens
     GetQueryiv:
 
         TIME_ELAPSED_EXT                               0x88BF
-
 
 Additions to Chapter 2 of the OpenGL 2.0 Specification (OpenGL Operation)
   
@@ -267,7 +266,6 @@ Operations and the Framebuffer)
     state necessary to keep the current results of an asynchronous query in
     progress.
 
-
     Section 4.1.7.1, Occlusion Queries
 
     Occlusion queries use query objects to track the number of fragments or
@@ -295,7 +293,6 @@ Operations and the Framebuffer)
     implementations handle this overflow case by saturating at 2^n - 1 and
     incrementing no further.
 
-
     (Add new Section 4.1.12, Timer Queries, p.212)
 
     Timer queries use query objects (section 4.1.7) to track the amount of
@@ -317,7 +314,6 @@ Operations and the Framebuffer)
     elapsed time, its value becomes undefined.  It is recommended, but not
     required, that implementations handle this overflow case by saturating at
     2^n - 1.
-
 
 Additions to Chapter 5 of the OpenGL 2.0 Specification (Special Functions)
 
@@ -371,7 +367,6 @@ Requests)
       void GetQueryObjectuiv(uint id, enum pname, uint *params);
       void GetQueryObjecti64vEXT(uint id, enum pname, int64EXT *params);
       void GetQueryObjectui64vEXT(uint id, enum pname, uint64EXT *params);      
-
     If <id> is not the name of a query object, or if the query object named by
     <id> is currently active, then an INVALID_OPERATION error is generated.
 
@@ -396,7 +391,6 @@ Requests)
     always be from the last query issued.  The results from any queries before
     the last one will be lost if they are not retrieved before starting a new
     query on the same <target> and <id>.
-    
    
 GLX Protocol (Modification to the GLX 1.3 Protocol Encoding Specification)
 
@@ -502,11 +496,10 @@ New Implementation Dependent State
    cover timer queries:
 
     Get Value               Type Get Command  Minimum Value  Description                  Sec     Attribute
-    --------------------    ---- -----------  -------------  --------------------------   ------  --------------
+    --------------------    ---- -----------  -------------  --------------------------   ------  ---------
     QUERY_COUNTER_BITS      2xZ+ GetQueryiv   see 6.1.12     Asynchronous query counter   6.1.12  -
                                                              bits (occlusion and timer 
                                                              queries)
-
 
 Dependencies on ARB_occlusion_query and NV_occlusion_query
 
@@ -514,12 +507,6 @@ Dependencies on ARB_occlusion_query and NV_occlusion_query
     spec edits are considered to apply to the nearly identical language in
     these extension specifications.  Note that the functionality provided by
     these extensions is included in OpenGL versions 1.5 and greater.
-
-
-Revision History
-
-    none yet
-
 
 Usage Examples
 
@@ -566,7 +553,7 @@ Usage Examples
 
             // Do something useful with the time.  Note that care should be
             // taken to use all significant bits of the result, not just the
-            // least signficant 32 bits.
+            // least significant 32 bits.
             AdjustObjectLODBasedOnDrawTime(i, timeElapsed);
         }
 
@@ -574,3 +561,7 @@ Usage Examples
     frame to wait for query results.  Ideally, the collection of results
     would be delayed one frame to minimize the amount of time spent
     waiting for the GPU to finish rendering.
+
+Revision History
+
+    none yet

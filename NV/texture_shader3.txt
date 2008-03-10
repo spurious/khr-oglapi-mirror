@@ -20,8 +20,8 @@ IP Status
 
 Version
 
-    NVIDIA Date: February 1, 2007
-    $Id: //sw/main/docs/OpenGL/specs/GL_NV_texture_shader3.txt#9 $
+    NVIDIA Date: March 5, 2007
+    $Id: //sw/main/docs/OpenGL/specs/GL_NV_texture_shader3.txt#11 $
 
 Number
 
@@ -105,15 +105,17 @@ Overview
          and blue components of a previous shader RGBA result into an
          (s,t,r) texture coordinate set to access a cube map texture.
 
-    <dot product textures>
+    <dot product pass through>
 
-    35.  DOT_PRODUCT_TEXTURE_1D_NV - Computes a dot product in the manner
-         of the DOT_PRODUCT_NV operation and uses the result as the s
-         texture coordinate to access a 2D non-projective texture.
-
-    36.  DOT_PRODUCT_PASS_THROUGH_NV - Computes a dot product in the
+    35.  DOT_PRODUCT_PASS_THROUGH_NV - Computes a dot product in the
          manner of the DOT_PRODUCT_NV operation and the result is [0,1]
          clamped and smeared to generate the texture unit RGBA result.
+
+    <dot product textures>
+
+    36.  DOT_PRODUCT_TEXTURE_1D_NV - Computes a dot product in the manner
+         of the DOT_PRODUCT_NV operation and uses the result as the s
+         texture coordinate to access a 2D non-projective texture.
 
     <dot product depth replace>
 
@@ -376,11 +378,12 @@ DEPENDENT_RGB_TEXTURE_CUBE_MAP_NV             shader result type must    -      
                                                (signed RGB components
                                                are allowed)
 --------------------------------------------  -------------------------  -------------------------------  ----------------  --------------------------------
-DOT_PRODUCT_TEXTURE_PASS_THROUGH_NV           shader result type must    -                                -                 -
+DOT_PRODUCT_PASS_THROUGH_NV                   shader result type must    -                                -                 -
                                                be one of signed HILO,
                                                unsigned HILO, all
                                                signed RGBA, or all
                                                unsigned RGBA
+--------------------------------------------  -------------------------  -------------------------------  ----------------  --------------------------------
 DOT_PRODUCT_TEXTURE_1D_NV                     shader result type must    -                                -                 -
                                                be one of signed HILO,
                                                unsigned HILO, all
@@ -416,8 +419,9 @@ DEPENDENT_HILO_TEXTURE_2D_NV                  2D target must be consistent
 DEPENDENT_RGB_TEXTURE_3D_NV                   3D target must be consistent
 DEPENDENT_RGB_TEXTURE_CUBE_MAP_NV             cube map target must be consistent
 --------------------------------------------  ---------------------------------------
+DOT_PRODUCT_PASS_THROUGH_NV                   -
+--------------------------------------------  ---------------------------------------
 DOT_PRODUCT_TEXTURE_1D_NV                     1D target must be consistent
-DOT_PRODUCT_TEXTURE_PASS_THROUGH_NV           -
 --------------------------------------------  ---------------------------------------
 DOT_PRODUCT_AFFINE_DEPTH_REPLACE_NV           -
 --------------------------------------------  ---------------------------------------
@@ -450,6 +454,7 @@ DEPENDENT_RGB_TEXTURE_3D_NV          -           3D         -       -       -   
 DEPENDENT_RGB_TEXTURE_CUBE_MAP_NV    -           cube map   -       -       -       y         -      -          -         -
 -----------------------------------  ----------  ---------  ------  ------  ------  --------  -----  ---------  --------  ------
 DOT_PRODUCT_PASS_THROUGH_NV          s,t,r       -          -       -       -       y         -      -          -         -
+-----------------------------------  ----------  ---------  ------  ------  ------  --------  -----  ---------  --------  ------
 DOT_PRODUCT_TEXTURE_1D_NV            s,t,r       1D         -       -       -       y         -      -          -         -
 -----------------------------------  ----------  ---------  ------  ------  ------  --------  -----  ---------  --------  ------
 DOT_PRODUCT_AFFINE_DEPTH_REPLACE_NV  s,t,r       -          -       -       -       y         -      -          -         -
@@ -492,6 +497,7 @@ DOT_PRODUCT_PASS_THROUGH_NV        unsigned RGBA                  (max(0,min(1,[
                                                                    max(0,min(1,[s,t,r]dot[a,b,c])),     max(0,min(1,[s,t,r]dot[a,b,c])),
                                                                    max(0,min(1,[s,t,r]dot[a,b,c])),     max(0,min(1,[s,t,r]dot[a,b,c])),
                                                                    max(0,min(1,[s,t,r]dot[a,b,c])))     max(0,min(1,[s,t,r]dot[a,b,c])))
+---------------------------------  -----------------------------  -----------------------------------  --------------------------------------
 DOT_PRODUCT_TEXTURE_1D_NV          matches 1D target type         filtered 1D target texel             if 1D target texture type is RGBA,
                                                                                                         filtered 1D target texel,
                                                                                                         else (0,0,0,0)  
@@ -1053,3 +1059,6 @@ Revision History
      swap the HI and LO components of GL_HILO8_NV and GL_SIGNED_HILO8_NV
      textures.  Drivers after this date have fixed the problem and match
      the specified behavior.
+
+     March 5, 2007 - Corrected some enum names.
+

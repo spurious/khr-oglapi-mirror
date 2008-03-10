@@ -1,21 +1,21 @@
 Name
-	EXT_nurbs_tessellator
+        EXT_nurbs_tessellator
 
 Name Strings
 
-	GLU_EXT_nurbs_tessellator
+        GLU_EXT_nurbs_tessellator
 
 Version
 
-	Date: 1996/04/19
+        Date: 1996/04/19
 
 Number
-	
-	100
+        
+        100
 
 Dependencies
 
-	None
+        None
 
 Overview
 
@@ -34,16 +34,16 @@ Issues
      affine ones? Are there any circumstances where the user prefers
      to have the homogeneous coordinates?
 
-New Procedures and Functions	
+New Procedures and Functions    
 
      gluNurbsCallbackDataEXT(GLUnurbsObj* theNurb, 
-	             void* userData);
+                     void* userData);
 
 New Tokens
 
       Accepted by the <property> parameter of NurbsProperty:
 
-	GLU_NURBS_MODE_EXT             100160
+        GLU_NURBS_MODE_EXT             100160
 
       Accepted by the <value> parameter of NurbsProperty:
 
@@ -53,19 +53,19 @@ New Tokens
 
       Accepted by the <which> parameter of NurbsCallback:
 
-	GLU_NURBS_BEGIN_EXT	               100164
-	GLU_NURBS_VERTEX_EXT                   100165
-	GLU_NURBS_NORMAL_EXT                   100166
-	GLU_NURBS_COLOR_EXT                    100167
-	GLU_NURBS_TEXTURE_COORD_EXT            100168
-	GLU_NURBS_END_EXT                      100169
+        GLU_NURBS_BEGIN_EXT                    100164
+        GLU_NURBS_VERTEX_EXT                   100165
+        GLU_NURBS_NORMAL_EXT                   100166
+        GLU_NURBS_COLOR_EXT                    100167
+        GLU_NURBS_TEXTURE_COORD_EXT            100168
+        GLU_NURBS_END_EXT                      100169
 
-	GLU_NURBS_BEGIN_DATA_EXT	       100170
-	GLU_NURBS_VERTEX_DATA_EXT              100171
-	GLU_NURBS_NORMAL_DATA_EXT              100172
-	GLU_NURBS_COLOR_DATA_EXT               100173
-	GLU_NURBS_TEXTURE_COORD_DATA_EXT       100174
-	GLU_NURBS_END_DATA_EXT                 100175
+        GLU_NURBS_BEGIN_DATA_EXT               100170
+        GLU_NURBS_VERTEX_DATA_EXT              100171
+        GLU_NURBS_NORMAL_DATA_EXT              100172
+        GLU_NURBS_COLOR_DATA_EXT               100173
+        GLU_NURBS_TEXTURE_COORD_DATA_EXT       100174
+        GLU_NURBS_END_DATA_EXT                 100175
 
 
 Additions to the GLU Specification version 1.2, section 7.1

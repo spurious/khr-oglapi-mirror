@@ -36,16 +36,16 @@ Overview
     which can be used by the vertex program to compute per-instance
     values, typically an object's transform.
 
+New Tokens
+
+    None
+
 New Procedures and Functions
 
     void DrawArraysInstancedEXT(enum mode, int first, sizei count,
             sizei primcount);
     void DrawElementsInstancedEXT(enum mode, sizei count, enum type,
             const void *indices, sizei primcount);
-
-New Tokens
-
-    None
 
 Additions to Chapter 2 of the OpenGL 2.0 Specification
 (OpenGL Operation)

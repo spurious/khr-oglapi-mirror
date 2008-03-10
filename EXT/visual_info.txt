@@ -63,32 +63,32 @@ New Tokens
     Accepted by the <attrib> parameter of glXGetConfig, and by the
     <attrib_list> parameter of glXChooseVisual: 
 
-	GLX_X_VISUAL_TYPE_EXT		0x22
-	GLX_TRANSPARENT_TYPE_EXT	0x23
-	GLX_TRANSPARENT_INDEX_VALUE_EXT	0x24
-	GLX_TRANSPARENT_RED_VALUE_EXT	0x25
-	GLX_TRANSPARENT_GREEN_VALUE_EXT	0x26
-	GLX_TRANSPARENT_BLUE_VALUE_EXT	0x27
-	GLX_TRANSPARENT_ALPHA_VALUE_EXT	0x28
+        GLX_X_VISUAL_TYPE_EXT           0x22
+        GLX_TRANSPARENT_TYPE_EXT        0x23
+        GLX_TRANSPARENT_INDEX_VALUE_EXT 0x24
+        GLX_TRANSPARENT_RED_VALUE_EXT   0x25
+        GLX_TRANSPARENT_GREEN_VALUE_EXT 0x26
+        GLX_TRANSPARENT_BLUE_VALUE_EXT  0x27
+        GLX_TRANSPARENT_ALPHA_VALUE_EXT 0x28
 
     Returned by glXGetConfig, and accepted by the <attrib_list>
     parameter of glXChooseVisual (following the GLX_X_VISUAL_TYPE_EXT 
     token):
 
-	GLX_TRUE_COLOR_EXT		0x8002
-	GLX_DIRECT_COLOR_EXT		0x8003
-	GLX_PSEUDO_COLOR_EXT		0x8004
-	GLX_STATIC_COLOR_EXT		0x8005
- 	GLX_GRAY_SCALE_EXT		0x8006
- 	GLX_STATIC_GRAY_EXT		0x8007
+        GLX_TRUE_COLOR_EXT              0x8002
+        GLX_DIRECT_COLOR_EXT            0x8003
+        GLX_PSEUDO_COLOR_EXT            0x8004
+        GLX_STATIC_COLOR_EXT            0x8005
+        GLX_GRAY_SCALE_EXT              0x8006
+        GLX_STATIC_GRAY_EXT             0x8007
 
     Returned by glXGetConfig, and accepted by the <attrib_list>
     parameter of glXChooseVisual (following the GLX_TRANSPARENT_TYPE_EXT
     token):
 
-	GLX_NONE_EXT			0x8000
-	GLX_TRANSPARENT_RGB_EXT		0x8008
-	GLX_TRANSPARENT_INDEX_EXT	0x8009
+        GLX_NONE_EXT                    0x8000
+        GLX_TRANSPARENT_RGB_EXT         0x8008
+        GLX_TRANSPARENT_INDEX_EXT       0x8009
 
 Additions to Chapter 2 of the 1.0 Specification (OpenGL Operation)
 
@@ -141,50 +141,50 @@ Additions to the GLX Specification
     between 0 and (2**GLX_RED_SIZE)-1.  (GLX_TRANSPARENT_ALPHA_VALUE_EXT is 
     for future use.)
 
-	Attribute		  Type	    Notes
-	---------		  ----	    -----
-	GLX_USE_GL		  boolean   True if OpenGL rendering is supported
-	GLX_BUFFER_SIZE		  integer   depth of the color buffer
-	GLX_LEVEL		  integer   frame buffer level
-	GLX_RGBA		  boolean   True if in RGBA rendering is supported
-	GLX_DOUBLEBUFFER	  boolean   True if color buffers have front/back pairs
-	GLX_STEREO		  boolean   True if color buffers have left/right pairs
-	GLX_AUX_BUFFERS		  integer   number of auxiliary color buffers
-	GLX_RED_SIZE		  integer   number of bits of Red in the framebuffer
-	GLX_GREEN_SIZE		  integer   number of bits of Green in the framebuffer
-	GLX_BLUE_SIZE		  integer   number of bits of Blue in the framebuffer
-	GLX_ALPHA_SIZE		  integer   number of bits of Alpha in the framebuffer
-	GLX_DEPTH_SIZE		  integer   number of bits in the depth buffer
-	GLX_STENCIL_SIZE	  integer   number of bits in the stencil buffer
-	GLX_ACCUM_RED_SIZE	  integer   number of bits of Red in the accumulation buffer
-	GLX_ACCUM_GREEN_SIZE	  integer   number of bits of Green in the accumulation buffer
-	GLX_ACCUM_BLUE_SIZE	  integer   number of bits of Blue in the accumulation buffer
-	GLX_ACCUM_ALPHA_SIZE	  integer   number of bits of Alpha in the accumulation buffer
-	GLX_SAMPLE_BUFFERS_SGIS	  integer   number of multisample buffers
-	GLX_SAMPLES_SGIS	  integer   number of samples stored in each multisample buffer
-	GLX_X_VISUAL_TYPE_EXT	  integer   X visual type of the GLX visual
-	GLX_TRANSPARENT_TYPE_EXT enum       None, TRANSPARENT_RGB_EXT, or TRANSPARENT_INDEX_EXT
-	GLX_TRANSPARENT_INDEX_VALUE_EXT integer   transparent index value.
-	GLX_TRANSPARENT_RED_VALUE_EXT   integer transparent red value.
-	GLX_TRANSPARENT_GREEN_VALUE_EXT integer transparent green value.
-	GLX_TRANSPARENT_BLUE_VALUE_EXT  integer transparent blue value.
-	GLX_TRANSPARENT_ALPHA_VALUE_EXT integer transparent alpha value.
+        Attribute                 Type      Notes
+        ---------                 ----      -----
+        GLX_USE_GL                boolean   True if OpenGL rendering is supported
+        GLX_BUFFER_SIZE           integer   depth of the color buffer
+        GLX_LEVEL                 integer   frame buffer level
+        GLX_RGBA                  boolean   True if in RGBA rendering is supported
+        GLX_DOUBLEBUFFER          boolean   True if color buffers have front/back pairs
+        GLX_STEREO                boolean   True if color buffers have left/right pairs
+        GLX_AUX_BUFFERS           integer   number of auxiliary color buffers
+        GLX_RED_SIZE              integer   number of bits of Red in the framebuffer
+        GLX_GREEN_SIZE            integer   number of bits of Green in the framebuffer
+        GLX_BLUE_SIZE             integer   number of bits of Blue in the framebuffer
+        GLX_ALPHA_SIZE            integer   number of bits of Alpha in the framebuffer
+        GLX_DEPTH_SIZE            integer   number of bits in the depth buffer
+        GLX_STENCIL_SIZE          integer   number of bits in the stencil buffer
+        GLX_ACCUM_RED_SIZE        integer   number of bits of Red in the accumulation buffer
+        GLX_ACCUM_GREEN_SIZE      integer   number of bits of Green in the accumulation buffer
+        GLX_ACCUM_BLUE_SIZE       integer   number of bits of Blue in the accumulation buffer
+        GLX_ACCUM_ALPHA_SIZE      integer   number of bits of Alpha in the accumulation buffer
+        GLX_SAMPLE_BUFFERS_SGIS   integer   number of multisample buffers
+        GLX_SAMPLES_SGIS          integer   number of samples stored in each multisample buffer
+        GLX_X_VISUAL_TYPE_EXT     integer   X visual type of the GLX visual
+        GLX_TRANSPARENT_TYPE_EXT enum       None, TRANSPARENT_RGB_EXT, or TRANSPARENT_INDEX_EXT
+        GLX_TRANSPARENT_INDEX_VALUE_EXT integer   transparent index value.
+        GLX_TRANSPARENT_RED_VALUE_EXT   integer transparent red value.
+        GLX_TRANSPARENT_GREEN_VALUE_EXT integer transparent green value.
+        GLX_TRANSPARENT_BLUE_VALUE_EXT  integer transparent blue value.
+        GLX_TRANSPARENT_ALPHA_VALUE_EXT integer transparent alpha value.
 
-	Table 1: Configuration attributes
+        Table 1: Configuration attributes
 
     glXGetConfig returns one of the values in table 2 (below) when called
     with attribute name GLX_X_VISUAL_TYPE_EXT.
 
-	GLX token name			X Visual Type
-	--------------			-------------
-	GLX_TRUE_COLOR_EXT		TrueColor
-	GLX_DIRECT_COLOR_EXT		DirectColor
-	GLX_PSEUDO_COLOR_EXT		PseudoColor
-	GLX_STATIC_COLOR_EXT		StaticColor
- 	GLX_GRAY_SCALE_EXT		GrayScale
- 	GLX_STATIC_GRAY_EXT		StaticGray
+        GLX token name                  X Visual Type
+        --------------                  -------------
+        GLX_TRUE_COLOR_EXT              TrueColor
+        GLX_DIRECT_COLOR_EXT            DirectColor
+        GLX_PSEUDO_COLOR_EXT            PseudoColor
+        GLX_STATIC_COLOR_EXT            StaticColor
+        GLX_GRAY_SCALE_EXT              GrayScale
+        GLX_STATIC_GRAY_EXT             StaticGray
 
-	Table 2: X visual type token values
+        Table 2: X visual type token values
 
     Replace the GLX specification discussion of glXChooseVisual with
     the following text:
@@ -192,8 +192,8 @@ Additions to the GLX Specification
     glXChooseVisual is used to find a visual that matches the client's
     specified attributes.
 
-	XVisualInfo* glXChooseVisual( Display *dpy, int screen,
-				      int *attrib_list );
+        XVisualInfo* glXChooseVisual( Display *dpy, int screen,
+                                      int *attrib_list );
 
     glXChooseVisual returns a pointer to an XVisualInfo structure
     describing the visual that best meets a minimum specification.  The
@@ -252,21 +252,21 @@ GLX Protocol
     type/property value pairs are encoded as
 
     4           ENUM                    property type
-	 	0x22			GLX_X_VISUAL_TYPE_EXT		
+                0x22                    GLX_X_VISUAL_TYPE_EXT           
     4           ENUM                    property value
-		0x8002			GLX_TRUE_COLOR_EXT	
-		0x8003			GLX_DIRECT_COLOR_EXT
-		0x8004			GLX_PSEUDO_COLOR_EXT
-		0x8005			GLX_STATIC_COLOR_EXT	
-		0x8006			GLX_GRAY_SCALE_EXT
-		0x8007			GLX_STATIC_GRAY_EXT
+                0x8002                  GLX_TRUE_COLOR_EXT      
+                0x8003                  GLX_DIRECT_COLOR_EXT
+                0x8004                  GLX_PSEUDO_COLOR_EXT
+                0x8005                  GLX_STATIC_COLOR_EXT    
+                0x8006                  GLX_GRAY_SCALE_EXT
+                0x8007                  GLX_STATIC_GRAY_EXT
 
-    4	        ENUM			property type
+    4           ENUM                    property type
                 0x23                    GLX_TRANSPARENT_TYPE_EXT
     4           ENUM                    property value
-		0x8000			GLX_NONE_EXT
-		0x8008			GLX_TRANSPARENT_RGB_EXT
-		0x8009			GLX_TRANSPARENT_INDEX_EXT
+                0x8000                  GLX_NONE_EXT
+                0x8008                  GLX_TRANSPARENT_RGB_EXT
+                0x8009                  GLX_TRANSPARENT_INDEX_EXT
 
     4           ENUM                    property type
                 0x24                    GLX_TRANSPARENT_INDEX_VALUE_EXT
@@ -305,12 +305,12 @@ New State
 
 New Implementation Dependent State
 
-    Get Value		  		Get Command	Type
-    ---------		  		-----------	----
-    GLX_X_VISUAL_TYPE_EXT	  	glXGetConfig	Z6
-    GLX_TRANSPARENT_TYPE_EXT 		glXGetConfig
-    GLX_TRANSPARENT_INDEX_VALUE_EXT	glXGetConfig	
-    GLX_TRANSPARENT_RED_VALUE_EXT   	glXGetConfig
-    GLX_TRANSPARENT_GREEN_VALUE_EXT 	glXGetConfig
-    GLX_TRANSPARENT_BLUE_VALUE_EXT  	glXGetConfig
-    GLX_TRANSPARENT_ALPHA_VALUE_EXT 	glXGetConfig
+    Get Value                           Get Command     Type
+    ---------                           -----------     ----
+    GLX_X_VISUAL_TYPE_EXT               glXGetConfig    Z6
+    GLX_TRANSPARENT_TYPE_EXT            glXGetConfig
+    GLX_TRANSPARENT_INDEX_VALUE_EXT     glXGetConfig    
+    GLX_TRANSPARENT_RED_VALUE_EXT       glXGetConfig
+    GLX_TRANSPARENT_GREEN_VALUE_EXT     glXGetConfig
+    GLX_TRANSPARENT_BLUE_VALUE_EXT      glXGetConfig
+    GLX_TRANSPARENT_ALPHA_VALUE_EXT     glXGetConfig

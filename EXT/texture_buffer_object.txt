@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Date:         11/09/2006
-    NVIDIA Revision:            3
+    Last Modified Date:         10/30/2007
+    NVIDIA Revision:            4
 
 Number
 
@@ -553,12 +553,19 @@ Issues
     (5) What happens if a buffer object is deleted or respecified when bound
         to a buffer texture?
 
-      UNRESOLVED.
+      RESOLVED: BufferData is allowed to be used to update a buffer object that
+      has already been bound to a texture with TexBuffer. The update to the data
+      is not guaranteed to affect the texture until next time it is bound to a
+      texture image unit.  When DeleteBuffers is called, any buffer that is
+      bound to a texture is removed from the names array, but remains as long as
+      it is bound to a texture.  The buffer is fully removed when the texture
+      unbinds it or when the texture buffer object is deleted.
 
     (6) Should applications be able to modify the data store of a buffer
         object while it is bound to a buffer texture?
 
-      UNRESOLVED.
+      RESOLVED: An application is allowed to update the data store for a buffer
+      object when the buffer object is bound to a texture.
 
     (7) Do buffer textures support texture parameters (TexParameter) or
         queries (GetTexParameter, GetTexLevelParameter, GetTexImage)?
@@ -597,7 +604,7 @@ Issues
         or should the extension instead nominally support all formats, but
         accept only an implementation-dependent subset?
 
-      UNRESOLVED:  Provide a specified set of supported formats.  This
+      RESOLVED:  Provide a specified set of supported formats.  This
       extension simply enumerates all 8-, 16-, and 32-byte internal formats
       with 1, 2, or 4 components, and specifies the mapping of unformatted
       buffer object data to texture components.  A follow-on extension could
@@ -678,13 +685,13 @@ Issues
          textures introduced in NV_texture_shader that match the convention
          used for floating-point and integer textures?
 
-      UNRESOLVED.  These needed to be added to the supported formats table in
-      any event.
+      RESOLVED: No.
 
     (14) Can a buffer object be attached to more than one buffer texture at
          once?
 
-      UNRESOLVED.
+      RESOLVED: Multiple buffer textures may attach to the same buffer object
+      simultaneously.
 
     (15) How does this extension interact with display lists?
 
@@ -694,4 +701,8 @@ Issues
 
 Revision History
 
-    None
+    Rev.    Date    Author    Changes
+    ----  --------  --------  -----------------------------------------
+      4   10/30/07  ewerness  Add resolutions to various issues
+
+      3      --               Pre-release revisions.

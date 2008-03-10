@@ -15,7 +15,7 @@ Contributors
 
 Contact
 
-    Dale Kirkland, 3Dlabs, Inc (dale.kirkland 'at' 3dlabs.com)
+    Dale Kirkland, NVIDIA (dkirkland 'at' nvidia.com)
 
 Status
 

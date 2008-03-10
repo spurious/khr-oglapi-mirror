@@ -32,10 +32,10 @@ Overview
 
 Issues
 
-    *	I've prefixed the ADD token with FUNC, to indicate that the blend
-	equation includes the parameters specified by BlendFunc.  (The min
-	and max equations don't.)  Is this necessary?  Is it too ugly?
-	Is there a better way to accomplish the same thing?
+    *   I've prefixed the ADD token with FUNC, to indicate that the blend
+        equation includes the parameters specified by BlendFunc.  (The min
+        and max equations don't.)  Is this necessary?  Is it too ugly?
+        Is there a better way to accomplish the same thing?
     
 New Procedures and Functions
 
@@ -45,14 +45,14 @@ New Tokens
 
     Accepted by the <mode> parameter of BlendEquationEXT:
 
-	FUNC_ADD_EXT                     0x8006
-	MIN_EXT                          0x8007
-	MAX_EXT                          0x8008
+        FUNC_ADD_EXT                     0x8006
+        MIN_EXT                          0x8007
+        MAX_EXT                          0x8008
 
     Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
     GetFloatv, and GetDoublev:
 
-	BLEND_EQUATION_EXT               0x8009
+        BLEND_EQUATION_EXT               0x8009
 
 Additions to Chapter 2 of the GL Specification (OpenGL Operation)
 
@@ -71,11 +71,11 @@ and the Framebuffer)
     value FUNC_ADD_EXT specifies that the blending equation defined in
     the GL Specification be used.  This equation is
 
-	C' = (Cs * S) + (Cd * D)
+        C' = (Cs * S) + (Cd * D)
 
-	     /  1.0	C' > 1.0
-	C = (
-	     \   C'	C' <= 1.0
+             /  1.0     C' > 1.0
+        C = (
+             \   C'     C' <= 1.0
 
     where Cs and Cd are the source and destination colors, and S and D are
     as specified by BlendFunc.
@@ -83,12 +83,12 @@ and the Framebuffer)
     If BlendEquationEXT is called with <mode> set to MIN_EXT, the
     blending equation becomes
 
-	C = min (Cs, Cd)
+        C = min (Cs, Cd)
 
     Finally, if BlendEquationEXT is called with <mode> set to MAX_EXT, the
     blending equation becomes
 
-	C = max (Cs, Cd)
+        C = max (Cs, Cd)
 
     In all cases the blending equation is evaluated separately for each
     color component.
@@ -110,10 +110,10 @@ GLX Protocol
     A new GL rendering command is added. The following command is sent to the 
     server as part of a glXRender request:
 
-	BlendEquationEXT
+        BlendEquationEXT
             2           8               rendering command length
             2           4097            rendering command opcode
-            4           ENUM		mode
+            4           ENUM            mode
 
 Errors
 
@@ -125,9 +125,9 @@ Errors
 
 New State
 
-    Get Value		Get Command	Type	Initial Value	Attribute
-    ---------		-----------	----	-------------	---------
-    BLEND_EQUATION_EXT	GetIntegerv	Z3	FUNC_ADD_EXT	color-buffer
+    Get Value           Get Command     Type    Initial Value   Attribute
+    ---------           -----------     ----    -------------   ---------
+    BLEND_EQUATION_EXT  GetIntegerv     Z3      FUNC_ADD_EXT    color-buffer
 
 New Implementation Dependent State
 

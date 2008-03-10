@@ -25,7 +25,7 @@ Version
     Author Revision: 0.2
 
     Based on:  EXT_texture_env_add
-	       Date: 1999/03/22 Revision: 1.1
+               Date: 1999/03/22 Revision: 1.1
 
 Number
 
@@ -39,7 +39,7 @@ Overview
 
     New texture environment function ADD is supported with the following
     equation:
-			Cv = Cf + Ct
+                        Cv = Cf + Ct
 
     New function may be specified by calling TexEnv with ADD token.
 
@@ -57,11 +57,11 @@ New Tokens
     Accepted by the <params> parameter of TexEnvf, TexEnvi, TexEnvfv, and
     TexEnvfi when the <pname> parameter value is GL_TEXTURE_ENV_MODE
 
-	ADD
+        ADD
 
 Additions to Chapter 2 of the GL Specification (OpenGL Operation)
 
-	None
+        None
 
 Additions to Chapter 3 of the GL Specification (Rasterization)
 
@@ -73,42 +73,42 @@ Additions to Chapter 3 of the GL Specification (Rasterization)
 
     Table 3.19 is augmented as follows:
 
-	    Base	    DECAL      BLEND	  ADD
-	Internal Format     tex func   tex func   tex func
-	---------------     -----      -----	  ---
+            Base            DECAL      BLEND      ADD
+        Internal Format     tex func   tex func   tex func
+        ---------------     -----      -----      ---
 
-	ALPHA		     ...	...	 Rv = Rf
-			     ...	...	 Gv = Gf
-			     ...	...	 Bv = Bf
-			     ...	...	 Av = AfAt
+        ALPHA                ...        ...      Rv = Rf
+                             ...        ...      Gv = Gf
+                             ...        ...      Bv = Bf
+                             ...        ...      Av = AfAt
 
-	LUMINANCE	     ...	...	 Rv = Rf+Lt
-	 (or 1)		     ...	...	 Gv = Gf+Lt
-			     ...	...	 Bv = Bf+Lt
-			     ...	...	 Av = Af
+        LUMINANCE            ...        ...      Rv = Rf+Lt
+         (or 1)              ...        ...      Gv = Gf+Lt
+                             ...        ...      Bv = Bf+Lt
+                             ...        ...      Av = Af
 
-	LUMINANCE_ALPHA      ...	...	 Rv = Rf+Lt
-	 (or 2)		     ...	...	 Gv = Gf+Lt
-			     ...	...	 Bv = Bf+Lt
-			     ...	...	 Av = AfAt
+        LUMINANCE_ALPHA      ...        ...      Rv = Rf+Lt
+         (or 2)              ...        ...      Gv = Gf+Lt
+                             ...        ...      Bv = Bf+Lt
+                             ...        ...      Av = AfAt
 
-	INTENSITY	     ...	...	 Rv = Rf+It
-			     ...	...	 Gv = Gf+It
-			     ...	...	 Bv = Bf+It
-			     ...	...	 Av = Af+It
+        INTENSITY            ...        ...      Rv = Rf+It
+                             ...        ...      Gv = Gf+It
+                             ...        ...      Bv = Bf+It
+                             ...        ...      Av = Af+It
 
-	RGB		     ...	...	 Rv = Rf+Rt
-	(or 3)		     ...	...	 Gv = Gf+Gt
-			     ...	...	 Bv = Bf+Bt
-			     ...	...	 Av = Af
+        RGB                  ...        ...      Rv = Rf+Rt
+        (or 3)               ...        ...      Gv = Gf+Gt
+                             ...        ...      Bv = Bf+Bt
+                             ...        ...      Av = Af
 
-	RGBA		     ...	...	 Rv = Rf+Rt
-	(or 4)		     ...	...	 Gv = Gf+Gt
-			     ...	...	 Bv = Bf+Bt
-			     ...	...	 Av = AfAt
+        RGBA                 ...        ...      Rv = Rf+Rt
+        (or 4)               ...        ...      Gv = Gf+Gt
+                             ...        ...      Bv = Bf+Bt
+                             ...        ...      Av = AfAt
 
 
-	Table 3.19: Decal, blend and add texture functions.
+        Table 3.19: Decal, blend and add texture functions.
 
 
 Additions to Chapter 4 of the GL Specification (Per-Fragment Operations
@@ -140,7 +140,7 @@ New State
 
     The Type of TEXTURE_ENV_MODE in Table F.2 should be changed to
 
-	1 * xZ5
+        1 * xZ5
 
 New Implementation Dependent State
 
@@ -148,13 +148,13 @@ New Implementation Dependent State
 
 Revision History
 
-    11/09/1999	0.1
-	- First ARB draft based on the original EXT draft.
+    11/09/1999  0.1
+        - First ARB draft based on the original EXT draft.
 
-    1/13/2000	0.2
-	- Added justification to the overview
-	- Updated to describe modifications to 1.2.1 specification
-	- Added changes to description of TEXTURE_ENV_MODE parameter
-	  to TexEnv{if} and TexEnv{if}v
-	- Added change to TEXTURE_ENV_MODE type (Z4 -> Z5)
+    1/13/2000   0.2
+        - Added justification to the overview
+        - Updated to describe modifications to 1.2.1 specification
+        - Added changes to description of TEXTURE_ENV_MODE parameter
+          to TexEnv{if} and TexEnv{if}v
+        - Added change to TEXTURE_ENV_MODE type (Z4 -> Z5)
 

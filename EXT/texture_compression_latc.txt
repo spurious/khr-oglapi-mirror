@@ -12,6 +12,7 @@ Contributors
     Mark J. Kilgard, NVIDIA
     Pat Brown, NVIDIA
     Yanjun Zhang, S3
+    Attila Barsi, Holografika
      
 Contact
 
@@ -23,8 +24,8 @@ Status
 
 Version
 
-    Last Modified Date:         11/06/2006
-    Revision: 1.0
+    Last Modified Date:         1/21/2008
+    Revision: 1.2
 
 Number
 
@@ -365,6 +366,14 @@ Appendix
 
         MAXLUM =  1.0
 
+    CAVEAT for signed lum0 and lum1 values: the expressions "lum0 >
+    lum1" and "lum0 <= lum1" above are considered undefined (read: may
+    vary by implementation) when lum0 equals -127 and lum1 equals -128,
+    This is because if lum0 were remapped to -127 prior to the comparison
+    to reduce the latency of a hardware decompressor, the expressions
+    would reverse their logic.  Encoders for the signed LA formats should
+    avoid encoding blocks where lum0 equals -127 and lum1 equals -128.
+
 
     COMPRESSED_LUMINANCE_ALPHA_LATC2:  Each 4x4 block of texels consists
     of 64 bits of compressed unsigned luminance image data followed by
@@ -629,6 +638,70 @@ Issues
         Subsequent NVIDIA drivers will rename the extension to its EXT
         name only.
 
+    15) Should the the generic formats
+        GL_COMPRESSED_LUMINANCE and GL_COMPRESSED_LUMINANCE_ALPHA
+        correspond to COMPRESSED_LUMINANCE_LATC1_EXT and
+        COMPRESSED_LUMINANCE_ALPHA_LATC2_EXT respecitively when this
+        extension is supported?
+
+        RESOLVED:  Yes.  While no generic compression is strictly
+        required for an implementation and there might exist superior
+        compression schemes for luminance and luminance-alpha textures
+        in the future, an application should reasonably expect that an
+        implementation that supports EXT_texture_compression_latc will
+        also use these formats for the generic compressed luminance and
+        luminance-alpha formats.
+
+        The COMPRESSED_LUMINANCE_LATC1_EXT and
+        COMPRESSED_LUMINANCE_ALPHA_LATC2_EXT are generic enough in their
+        respective luminance and luminance-alpha behavior that these
+        compression formats are acceptable generic compressed formats
+        for luminance and luminance-alpha generic compressed formats.
+
+    16) Should the GL_NUM_COMPRESSED_TEXTURE_FORMATS and
+        GL_COMPRESSED_TEXTURE_FORMATS queries return the LATC formats?
+
+        RESOLVED:  No.
+
+        The OpenGL 2.1 specification says "The only values returned
+        by this query [GL_COMPRESSED_TEXTURE_FORMATS"] are those
+        corresponding to formats suitable for general-purpose usage.
+        The renderer will not enumerate formats with restrictions that
+        need to be specifically understood prior to use."
+
+        Historically, OpenGL implementation have advertised the RGB and
+        RGBA versions of the S3TC extensions compressed format tokens
+        through this mechanism.
+
+        The specification is not sufficiently clear about what "suitable
+        for general-purpose usage" means.  Historically that seems to mean
+        unsigned RGB or unsigned RGBA.  The DXT1 format supporting alpha
+        (GL_COMPRESSED_RGBA_S3TC_DXT1_EXT) is not exposed in the list (at
+        least for NVIDIA drivers) because the alpha is always 1.0 expect
+        when it is 0.0 when RGB is required to be black.  NVIDIA's even
+        limits itself to true linear RGB or RGBA formats, specifically
+        not including EXT_texture_sRGB's sRGB S3TC compressed formats.
+
+        Adding luminance and luminance-alpha texture formats (and
+        certainly signed versions of luminance and luminance-alpha
+        formats!) invites potential comptaibility problems with old
+        applications using this mechanism since old applications are
+        unlikely to expect non-RGB or non-RGBA formats to be advertised
+        through this mechanism.  However no specific misinteractions
+        with old applications is known.
+
+        Applications that seek to use the LATC formats should do so
+        by looking for this extension's name in the string returned by
+        glGetString(GL_EXTENSIONS) rather than
+        what GL_NUM_COMPRESSED_TEXTURE_FORMATS and
+        GL_COMPRESSED_TEXTURE_FORMATS return.
+
 Revision History
 
-    None
+    Revision 1.1, April 24, 2007: mjk
+        -  Add caveat about how signed LA decompression happens when
+           lum0 equals -127 and lum1 equals -128.  This caveat matches
+           a decoding allowance in DirectX 10.
+
+    Revision 1.2, January 21, 2008: mjk
+        -  Add issues #15 and #16.

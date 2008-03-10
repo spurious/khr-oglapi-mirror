@@ -30,7 +30,7 @@ Overview
     environment functions, such as filtering or applying the depth values
     computed from a texture, but leaves this to other extensions, such as
     the shadow extension.
-	
+        
 New Procedures and Functions
 
     None
@@ -41,9 +41,9 @@ New Tokens
     and by the <internalformat> parameters of TexImage3DEXT,
     CopyTexImage1DEXT, and CopyTexImage2DEXT:
 
-    DEPTH_COMPONENT16_SGIX 		0x81A5
-    DEPTH_COMPONENT24_SGIX		0x81A6
-    DEPTH_COMPONENT32_SGIX		0x81A7
+    DEPTH_COMPONENT16_SGIX              0x81A5
+    DEPTH_COMPONENT24_SGIX              0x81A6
+    DEPTH_COMPONENT32_SGIX              0x81A7
 
 
 Additions to Chapter 2 of the 1.0 Specification (OpenGL Operation)
@@ -56,21 +56,21 @@ Additions to Chapter 3 of the 1.0 Specification (Rasterization)
 
     Notes:
 
-    *	Defines DEPTH_COMPONENT as a new base internal format for
-	textures.  Defines 16, 24, and 32 bit specific internal formats
-	for texture.  Just as for the specific color internal formats,
-	an implementation can choose whether to implement them or not.
+    *   Defines DEPTH_COMPONENT as a new base internal format for
+        textures.  Defines 16, 24, and 32 bit specific internal formats
+        for texture.  Just as for the specific color internal formats,
+        an implementation can choose whether to implement them or not.
 
-    *	Texture commands that accept images from memory now allow the
-	internal format to be DEPTH_COMPONENT or DEPTH_COMPONENT*_SGIX
-	when the format of the image data is DEPTH_COMPONENT.  Depth, not
-	color pixel transfer operations are applied to depth images.
+    *   Texture commands that accept images from memory now allow the
+        internal format to be DEPTH_COMPONENT or DEPTH_COMPONENT*_SGIX
+        when the format of the image data is DEPTH_COMPONENT.  Depth, not
+        color pixel transfer operations are applied to depth images.
 
-    *	Texture commands that accept images from the framebuffer now take
-	their data from the depth buffer when the internal format is
-	DEPTH_COMPONENT or DEPTH_COMPONENT*_SGIX, or when no internal
-	format is specified, and the internal format of the target texture
-	is DEPTH_COMPONENT or DEPTH_COMPONENT*_SGIX.
+    *   Texture commands that accept images from the framebuffer now take
+        their data from the depth buffer when the internal format is
+        DEPTH_COMPONENT or DEPTH_COMPONENT*_SGIX, or when no internal
+        format is specified, and the internal format of the target texture
+        is DEPTH_COMPONENT or DEPTH_COMPONENT*_SGIX.
 
 Additions to Chapter 4 of the 1.0 Specification (Per-Fragment Operations
 and the Frame Buffer)

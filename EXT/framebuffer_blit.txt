@@ -566,8 +566,8 @@ Issues
         multiple color buffers may be copied with a single call to
         BlitFramebuffer?
 
-	Resolved: No, we considered this but the behavior is awkward
-	to define and the functionality is of limited use.
+        Resolved: No, we considered this but the behavior is awkward
+        to define and the functionality is of limited use.
 
     13) How should BlitFramebuffer color space conversion be
         specified?  Do we allow context clamp state to affect the
@@ -608,7 +608,7 @@ Revision History
         incomplete.
     Revision 12, 2005/12/22 (Jon Leech)
       - Assigned enumerant values. Add return type to BlitFramebufferEXT.
-	Note INVALID_ENUM error if filter is not LINEAR or NEAREST.
+        Note INVALID_ENUM error if filter is not LINEAR or NEAREST.
     Revision 11, 2005/12/14
       - Added several missing conditions to the Errors section.
       - Changed status to "Complete".

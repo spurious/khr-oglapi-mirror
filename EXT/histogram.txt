@@ -31,45 +31,45 @@ Overview
 New Procedures and Functions
 
     void HistogramEXT(enum target,
-		      sizei width,
-		      enum internalformat,
-		      boolean sink);
+                      sizei width,
+                      enum internalformat,
+                      boolean sink);
 
     void ResetHistogramEXT(enum target);
 
     void GetHistogramEXT(enum target,
-			 boolean reset,
-			 enum format,
-			 enum type,
-			 void* values);
+                         boolean reset,
+                         enum format,
+                         enum type,
+                         void* values);
 
     void GetHistogramParameterivEXT(enum target,
-				    enum pname,
-				    int* params);
+                                    enum pname,
+                                    int* params);
 
     void GetHistogramParameterfvEXT(enum target,
-				    enum pname,
-				    float* params);
+                                    enum pname,
+                                    float* params);
 
     void MinmaxEXT(enum target,
-		   enum internalformat,
-		   boolean sink);
+                   enum internalformat,
+                   boolean sink);
 
     void ResetMinmaxEXT(enum target);
 
     void GetMinmaxEXT(enum target,
-		      boolean reset,
-		      enum format,
-		      enum type,
-		      void* values);
+                      boolean reset,
+                      enum format,
+                      enum type,
+                      void* values);
 
     void GetMinmaxParameterivEXT(enum target,
-				 enum pname,
-				 int* params);
+                                 enum pname,
+                                 int* params);
 
     void GetMinmaxParameterfvEXT(enum target,
-				 enum pname,
-				 float* params);
+                                 enum pname,
+                                 float* params);
 
 New Tokens
 
@@ -79,60 +79,60 @@ New Tokens
     ResetHistogramEXT, GetHistogramEXT, GetHistogramParameterivEXT, and
     GetHistogramParameterfvEXT:
 
-	HISTOGRAM_EXT			    0x8024
+        HISTOGRAM_EXT                       0x8024
 
     Accepted by the <target> parameter of HistogramEXT,
     GetHistogramParameterivEXT, and GetHistogramParameterfvEXT:
 
-	PROXY_HISTOGRAM_EXT		    0x8025
+        PROXY_HISTOGRAM_EXT                 0x8025
 
     Accepted by the <pname> parameter of GetHistogramParameterivEXT and
     GetHistogramParameterfvEXT:
 
-	HISTOGRAM_WIDTH_EXT                 0x8026
-	HISTOGRAM_FORMAT_EXT                0x8027
-	HISTOGRAM_RED_SIZE_EXT              0x8028
-	HISTOGRAM_GREEN_SIZE_EXT            0x8029
-	HISTOGRAM_BLUE_SIZE_EXT             0x802A
-	HISTOGRAM_ALPHA_SIZE_EXT            0x802B
-	HISTOGRAM_LUMINANCE_SIZE_EXT        0x802C
-	HISTOGRAM_SINK_EXT                  0x802D
+        HISTOGRAM_WIDTH_EXT                 0x8026
+        HISTOGRAM_FORMAT_EXT                0x8027
+        HISTOGRAM_RED_SIZE_EXT              0x8028
+        HISTOGRAM_GREEN_SIZE_EXT            0x8029
+        HISTOGRAM_BLUE_SIZE_EXT             0x802A
+        HISTOGRAM_ALPHA_SIZE_EXT            0x802B
+        HISTOGRAM_LUMINANCE_SIZE_EXT        0x802C
+        HISTOGRAM_SINK_EXT                  0x802D
 
     Accepted by the <cap> parameter of Enable, Disable, and IsEnabled, by
     the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv, and
     GetDoublev, and by the <target> parameter of MinmaxEXT, ResetMinmaxEXT,
     GetMinmaxEXT, GetMinmaxParameterivEXT, and GetMinmaxParameterfvEXT:
 
-	MINMAX_EXT			    0x802E
+        MINMAX_EXT                          0x802E
 
     Accepted by the <pname> parameter of GetMinmaxParameterivEXT and
     GetMinmaxParameterfvEXT:
 
-	MINMAX_FORMAT_EXT		    0x802F
-	MINMAX_SINK_EXT			    0x8030
+        MINMAX_FORMAT_EXT                   0x802F
+        MINMAX_SINK_EXT                     0x8030
 
 Additions to Chapter 2 of the 1.0 Specification (OpenGL Operation)
 
     A new error token value, TABLE_TOO_LARGE_EXT, is defined and added to
     table 2.3:
-									   Offending
-									   command
-	Error			Description				   ignored?
-	-----			-----------				   ---------
-	INVALID_ENUM		enum argument out of range		   Yes
-	INVALID_VALUE		Numeric argument out of range		   Yes
-	INVALID_OPERATION	Operation illegal in current state	   Yes
-	STACK_OVERFLOW		Command would cause a stack overflow	   Yes
-	STACK_UNDERFLOW		Command would cause a stack underflow	   Yes
-	OUT_OF_MEMORY		Not enough memory left to execute command  Unknown
-	TEXTURE_TOO_LARGE_EXT	The specified texture is too large	   Yes
-	TABLE_TOO_LARGE_EXT	The specified table is too large	   Yes
+                                                                           Offending
+                                                                           command
+        Error                   Description                                ignored?
+        -----                   -----------                                ---------
+        INVALID_ENUM            enum argument out of range                 Yes
+        INVALID_VALUE           Numeric argument out of range              Yes
+        INVALID_OPERATION       Operation illegal in current state         Yes
+        STACK_OVERFLOW          Command would cause a stack overflow       Yes
+        STACK_UNDERFLOW         Command would cause a stack underflow      Yes
+        OUT_OF_MEMORY           Not enough memory left to execute command  Unknown
+        TEXTURE_TOO_LARGE_EXT   The specified texture is too large         Yes
+        TABLE_TOO_LARGE_EXT     The specified table is too large           Yes
 
-	Table 2.3: Summary of GL errors
+        Table 2.3: Summary of GL errors
 
     and defined as follows:
 
-	GL_TABLE_TOO_LARGE_EXT              0x8031
+        GL_TABLE_TOO_LARGE_EXT              0x8031
 
 
 Additions to Chapter 3 of the 1.0 specification (Rasterization)
@@ -252,13 +252,13 @@ Additions to Chapter 3 of the 1.0 specification (Rasterization)
     zero.  The assignments of internal color components to the components
     requested by <format> are
 
-		internal component	resulting component
-		------------------	-------------------
-		red			red
-		green			green
-		blue			blue
-		alpha			alpha
-		luminance		red
+                internal component      resulting component
+                ------------------      -------------------
+                red                     red
+                green                   green
+                blue                    blue
+                alpha                   alpha
+                luminance               red
     
     <reset> is either TRUE or FALSE.  If TRUE, each component counter that
     is actually returned is reset to zero.  Counters that are not returned
@@ -359,29 +359,29 @@ GLX Protocol
         HistogramEXT
             2           20              rendering command length
             2           4110            rendering command opcode
-	    4		ENUM		target
-	    4 		INT32		width
-	    4		ENUM		internalformat
-	    1		BOOL		sink
-	    3				unused
+            4           ENUM            target
+            4           INT32           width
+            4           ENUM            internalformat
+            1           BOOL            sink
+            3                           unused
 
         ResetHistogramEXT
             2           8               rendering command length
             2           4112            rendering command opcode
-	    4		ENUM		target
+            4           ENUM            target
 
         MinmaxEXT
             2           16              rendering command length
             2           4111            rendering command opcode
-	    4		ENUM		target
-	    4		ENUM		internalformat
-	    1		BOOL		sink
-	    3				unused
+            4           ENUM            target
+            4           ENUM            internalformat
+            1           BOOL            sink
+            3                           unused
 
         ResetMinmaxEXT
             2           8               rendering command length
             2           4113            rendering command opcode
-	    4		ENUM		target
+            4           ENUM            target
 
 
     The remaining commands are non-rendering commands. These commands
@@ -392,16 +392,16 @@ GLX Protocol
         GetHistogramEXT
             1           CARD8           opcode (X assigned)
             1           17              GLX opcode (glXVendorPrivateWithReply)
-            2           7        	request length
+            2           7               request length
             4           5               vendor specific opcode
-	    4		GLX_CONTEXT_TAG context tag
-	    4		ENUM		target
-	    4		ENUM		format
-	    4		ENUM		type
-	    1		BOOL		swap_bytes
-	    1		BOOL		reset
-	    2				unused
-	  =>
+            4           GLX_CONTEXT_TAG context tag
+            4           ENUM            target
+            4           ENUM            format
+            4           ENUM            type
+            1           BOOL            swap_bytes
+            1           BOOL            reset
+            2                           unused
+          =>
             1           1               reply
             1                           unused
             2           CARD16          sequence number
@@ -420,28 +420,28 @@ GLX Protocol
         GetHistogramParameterfvEXT
             1           CARD8           opcode (X assigned)
             1           17              GLX opcode (glXVendorPrivateWithReply)
-            2           5        	request length
+            2           5               request length
             4           6               vendor specific opcode
-	    4		GLX_CONTEXT_TAG context tag
-	    4		ENUM		target
-	    4		ENUM		pname
-	  =>
+            4           GLX_CONTEXT_TAG context tag
+            4           ENUM            target
+            4           ENUM            pname
+          =>
             1           1               reply
             1                           unused
             2           CARD16          sequence number
             4           m               reply length, m = (n==1 ? 0 : n)
             4                           unused
-            4           CARD32		n
+            4           CARD32          n
 
-	    if (n=1) this follows:
+            if (n=1) this follows:
 
-            4           INT32		params
+            4           INT32           params
             12                          unused
 
-	    otherwise this follows:
+            otherwise this follows:
 
             16                          unused
-	    n*4		LISTofINT32     params
+            n*4         LISTofINT32     params
 
         Note that n may be zero, indicating that a GL error
         occurred. Also, n>1, is for future extensibility.
@@ -450,28 +450,28 @@ GLX Protocol
         GetHistogramParameterivEXT
             1           CARD8           opcode (X assigned)
             1           17              GLX opcode (glXVendorPrivateWithReply)
-            2           5	        request length
+            2           5               request length
             4           7               vendor specific opcode
-	    4		GLX_CONTEXT_TAG context tag
-	    4		ENUM		target
-	    4		ENUM		pname
-	  =>
+            4           GLX_CONTEXT_TAG context tag
+            4           ENUM            target
+            4           ENUM            pname
+          =>
             1           1               reply
             1                           unused
             2           CARD16          sequence number
             4           m               reply length, m = (n==1 ? 0 : n)
             4                           unused
-            4           CARD32		n
+            4           CARD32          n
 
-	    if (n=1) this follows:
+            if (n=1) this follows:
 
-            4           INT32		params
+            4           INT32           params
             12                          unused
 
-	    otherwise this follows:
+            otherwise this follows:
 
             16                          unused
-	    n*4		LISTofINT32     params
+            n*4         LISTofINT32     params
 
         Note that n may be zero, indicating that a GL error
         occurred. Also, n>1, is for future extensibility.
@@ -480,16 +480,16 @@ GLX Protocol
         GetMinmaxEXT
             1           CARD8           opcode (X assigned)
             1           17              GLX opcode (glXVendorPrivateWithReply)
-            2           7         	request length
+            2           7               request length
             4           8               vendor specific opcode
-	    4		GLX_CONTEXT_TAG context tag
-	    4		ENUM		target
-	    4		ENUM		format
-	    4		ENUM		type
-	    1		BOOL		swap_bytes
-	    1		BOOL		reset
-	    2				unused
-	  =>
+            4           GLX_CONTEXT_TAG context tag
+            4           ENUM            target
+            4           ENUM            format
+            4           ENUM            type
+            1           BOOL            swap_bytes
+            1           BOOL            reset
+            2                           unused
+          =>
             1           1               reply
             1                           unused
             2           CARD16          sequence number
@@ -505,31 +505,31 @@ GLX Protocol
         format already pads to 32 bits.
 
 
-    	GetMinmaxParameterfvEXT
+        GetMinmaxParameterfvEXT
             1           CARD8           opcode (X assigned)
             1           17              GLX opcode (glXVendorPrivateWithReply)
-            2           5	        request length
+            2           5               request length
             4           9               vendor specific opcode
-	    4		GLX_CONTEXT_TAG context tag
-	    4		ENUM		target
-	    4		ENUM		pname
-	  =>
+            4           GLX_CONTEXT_TAG context tag
+            4           ENUM            target
+            4           ENUM            pname
+          =>
             1           1               reply
             1                           unused
             2           CARD16          sequence number
             4           m               reply length, m = (n==1 ? 0 : n)
             4                           unused
-            4           CARD32		n
+            4           CARD32          n
 
-	    if (n=1) this follows:
+            if (n=1) this follows:
 
-            4           INT32		params
+            4           INT32           params
             12                          unused
 
-	    otherwise this follows:
+            otherwise this follows:
 
             16                          unused
-	    n*4		LISTofINT32     params
+            n*4         LISTofINT32     params
 
         Note that n may be zero, indicating that a GL error
         occurred. Also, n>1, is for future extensibility.
@@ -538,28 +538,28 @@ GLX Protocol
         GetMinmaxParameterivEXT
             1           CARD8           opcode (X assigned)
             1           17              GLX opcode (glXVendorPrivateWithReply)
-            2           5	        request length
+            2           5               request length
             4           10              vendor specific opcode
-	    4		GLX_CONTEXT_TAG context tag
-	    4		ENUM		target
-	    4		ENUM		pname
-	  =>
+            4           GLX_CONTEXT_TAG context tag
+            4           ENUM            target
+            4           ENUM            pname
+          =>
             1           1               reply
             1                           unused
             2           CARD16          sequence number
             4           m               reply length, m = (n==1 ? 0 : n)
             4                           unused
-            4           CARD32		n
+            4           CARD32          n
 
-	    if (n=1) this follows:
+            if (n=1) this follows:
 
-            4           INT32		params
+            4           INT32           params
             12                          unused
 
-	    otherwise this follows:
+            otherwise this follows:
 
             16                          unused
-	    n*4		LISTofINT32     params
+            n*4         LISTofINT32     params
 
 
         Note that n may be zero, indicating that a GL error
@@ -658,23 +658,23 @@ Errors
 
 New State
 
-    Get Value			    Get Command			Type	Initial Value		Attribute
-    ---------			    -----------			----	-------------		---------
-    HISTOGRAM_EXT		    IsEnabled			B	False			pixel/enable
-    HISTOGRAM			    GetHistogramEXT		I	empty			    -
-    HISTOGRAM_WIDTH_EXT		    GetHistogramParameterivEXT	Z+	0			    -
-    HISTOGRAM_FORMAT_EXT	    GetHistogramParameterivEXT	Z33	RGBA			    -
-    HISTOGRAM_RED_SIZE_EXT	    GetHistogramParameterivEXT	Z+	0			    -
-    HISTOGRAM_GREEN_SIZE_EXT	    GetHistogramParameterivEXT	Z+	0			    -
-    HISTOGRAM_BLUE_SIZE_EXT	    GetHistogramParameterivEXT	Z+	0			    -
-    HISTOGRAM_ALPHA_SIZE_EXT	    GetHistogramParameterivEXT	Z+	0			    -
-    HISTOGRAM_LUMINANCE_SIZE_EXT    GetHistogramParameterivEXT	Z+	0			    -
-    HISTOGRAM_SINK_EXT		    GetHistogramParameterivEXT	B	False			    -
+    Get Value                       Get Command                 Type    Initial Value           Attribute
+    ---------                       -----------                 ----    -------------           ---------
+    HISTOGRAM_EXT                   IsEnabled                   B       False                   pixel/enable
+    HISTOGRAM                       GetHistogramEXT             I       empty                       -
+    HISTOGRAM_WIDTH_EXT             GetHistogramParameterivEXT  Z+      0                           -
+    HISTOGRAM_FORMAT_EXT            GetHistogramParameterivEXT  Z33     RGBA                        -
+    HISTOGRAM_RED_SIZE_EXT          GetHistogramParameterivEXT  Z+      0                           -
+    HISTOGRAM_GREEN_SIZE_EXT        GetHistogramParameterivEXT  Z+      0                           -
+    HISTOGRAM_BLUE_SIZE_EXT         GetHistogramParameterivEXT  Z+      0                           -
+    HISTOGRAM_ALPHA_SIZE_EXT        GetHistogramParameterivEXT  Z+      0                           -
+    HISTOGRAM_LUMINANCE_SIZE_EXT    GetHistogramParameterivEXT  Z+      0                           -
+    HISTOGRAM_SINK_EXT              GetHistogramParameterivEXT  B       False                       -
 
-    MINMAX_EXT			    IsEnabled			B	False			pixel/enable
-    MINMAX			    GetMinmaxEXT		Rn	(M,M,M,M),(m,m,m,m)	    -
-    MINMAX_FORMAT_EXT		    GetMinmaxParameterivEXT	Z33	RGBA			    -
-    MINMAX_SINK_EXT		    GetMinmaxParameterivEXT	B	False			    -
+    MINMAX_EXT                      IsEnabled                   B       False                   pixel/enable
+    MINMAX                          GetMinmaxEXT                Rn      (M,M,M,M),(m,m,m,m)         -
+    MINMAX_FORMAT_EXT               GetMinmaxParameterivEXT     Z33     RGBA                        -
+    MINMAX_SINK_EXT                 GetMinmaxParameterivEXT     B       False                       -
 
     Note, M and m are the maximum and minimum representable values of the
     minmax components.

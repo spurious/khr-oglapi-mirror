@@ -35,34 +35,34 @@ Overview
 New Procedures and Functions
 
     void TexSubImage1DEXT(enum target,
-			  int level,
-			  int xoffset,
-			  sizei width,
-			  enum format,
-			  enum type,
-			  const void* pixels);
+                          int level,
+                          int xoffset,
+                          sizei width,
+                          enum format,
+                          enum type,
+                          const void* pixels);
 
     void TexSubImage2DEXT(enum target,
-			  int level,
-			  int xoffset,
-			  int yoffset,
-			  sizei width,
-			  sizei height,
-			  enum format,
-			  enum type,
-			  const void* pixels);
+                          int level,
+                          int xoffset,
+                          int yoffset,
+                          sizei width,
+                          sizei height,
+                          enum format,
+                          enum type,
+                          const void* pixels);
 
     void TexSubImage3DEXT(enum target,
-			  int level,
-			  int xoffset,
-			  int yoffset,
-			  int zoffset,
-			  sizei width,
-			  sizei height,
-			  sizei depth,
-			  enum format,
-			  enum type,
-			  const void* pixels);
+                          int level,
+                          int xoffset,
+                          int yoffset,
+                          int zoffset,
+                          sizei width,
+                          sizei height,
+                          sizei depth,
+                          enum format,
+                          enum type,
+                          const void* pixels);
 
 New Tokens
 
@@ -89,9 +89,9 @@ Additions to Chapter 3 of the 1.0 Specification (Rasterization)
     and z directions within the texture array being modified.  The new
     image replaces the portion of the texture array indexed with
 
-	xoffset <= i < (xoffset + width),
-	yoffset <= j < (yoffset + height),
-	zoffset <= k < (zoffset + depth),
+        xoffset <= i < (xoffset + width),
+        yoffset <= j < (yoffset + height),
+        zoffset <= k < (zoffset + depth),
 
     where i, j, and k are indexes as described in Figure 3.10 of the GL
     Specification.  It is an error for this region to include any texels
@@ -99,12 +99,12 @@ Additions to Chapter 3 of the 1.0 Specification (Rasterization)
     Specifically, the error INVALID_VALUE results if any of the following
     conditions are met:
 
-	xoffset < -TEXTURE_BORDER
-	(xoffset + width) > (TEXTURE_WIDTH - TEXTURE_BORDER)
-	yoffset < -TEXTURE_BORDER
-	(yoffset + height) > (TEXTURE_HEIGHT - TEXTURE_BORDER)
-	zoffset < -TEXTURE_BORDER
-	(zoffset + depth) > (TEXTURE_DEPTH_EXT - TEXTURE_BORDER)
+        xoffset < -TEXTURE_BORDER
+        (xoffset + width) > (TEXTURE_WIDTH - TEXTURE_BORDER)
+        yoffset < -TEXTURE_BORDER
+        (yoffset + height) > (TEXTURE_HEIGHT - TEXTURE_BORDER)
+        zoffset < -TEXTURE_BORDER
+        (zoffset + depth) > (TEXTURE_DEPTH_EXT - TEXTURE_BORDER)
 
     and TEXTURE_WIDTH, TEXTURE_HEIGHT, TEXTURE_DEPTH_EXT, and TEXTURE_BORDER
     are the state values of the texture array that is being modified.  Note
@@ -117,11 +117,11 @@ Additions to Chapter 3 of the 1.0 Specification (Rasterization)
     Counting from zero, each Nth pixel is assigned internal integer
     coordinates [i,j,k], where
 
-	i = xoffset + (N mod width),			1D, 2D, and 3D textures
+        i = xoffset + (N mod width),                    1D, 2D, and 3D textures
 
-	j = yoffset + ((N div width) mod height),	2D and 3D textures only
+        j = yoffset + ((N div width) mod height),       2D and 3D textures only
 
-	k = zoffset + ((N div (width * height)) mod depth),  3D textures only
+        k = zoffset + ((N div (width * height)) mod depth),  3D textures only
 
     and the div operator performs integer division with truncation.
 
@@ -182,7 +182,7 @@ GLX Protocol
             4           INT32           height
             4           ENUM            format
             4           ENUM            type
-            4           CARD32		unused
+            4           CARD32          unused
             n           LISTofBYTE      image
             p                           unused, p=pad(n)
 
@@ -220,7 +220,7 @@ GLX Protocol
             4           INT32           height
             4           ENUM            format
             4           ENUM            type
-	    4	        CARD32		unused
+            4           CARD32          unused
             n           LISTofBYTE      image
             p                           unused, p=pad(n)
 
@@ -230,7 +230,7 @@ GLX Protocol
             4           64+n+p          rendering command length
             4           4100            rendering command opcode
 
-	If <width> < 0, <height> < 0, <format> is invalid or <type> is invalid, then 
+        If <width> < 0, <height> < 0, <format> is invalid or <type> is invalid, then 
         the command is erroneous and n=0.
 
         The structure of <pixels> is described in Appendix A of the GLX Protocol 
@@ -265,7 +265,7 @@ GLX Protocol
             4           INT32           size4d
             4           ENUM            format
             4           ENUM            type
-            4           CARD32		unused
+            4           CARD32          unused
             n           LISTofBYTE      image
             p                           unused, p=pad(n)
 
@@ -275,7 +275,7 @@ GLX Protocol
             4           92+n+p          rendering command length
             4           4115            rendering command opcode
 
-	If <width> < 0, <height> < 0, <depth> < 0, <format> is invalid or <type> is 
+        If <width> < 0, <height> < 0, <depth> < 0, <format> is invalid or <type> is 
         invalid, then the command is erroneous and n=0. The <woffset>, <size4d>,
         <image_depth>, and <skip_volumes> parameters in this request are ignored.
 
@@ -340,9 +340,9 @@ Errors
     less than -TEXTURE_BORDER.
 
     INVALID_VALUE is generated if
-	(xoffset + width) > (TEXTURE_WIDTH - TEXTURE_BORDER), or if
-	(yoffset + height) > (TEXTURE_HEIGHT - TEXTURE_BORDER), or if
-	(zoffset + depth) > (TEXTURE_DEPTH_EXT - TEXTURE_BORDER).
+        (xoffset + width) > (TEXTURE_WIDTH - TEXTURE_BORDER), or if
+        (yoffset + height) > (TEXTURE_HEIGHT - TEXTURE_BORDER), or if
+        (zoffset + depth) > (TEXTURE_DEPTH_EXT - TEXTURE_BORDER).
 
     INVALID_ENUM is generated if <format> is not COLOR_INDEX, RED, GREEN,
     BLUE, ALPHA, RGB, RGBA, LUMINANCE, or LUMINANCE_ALPHA (or ABGR_EXT if

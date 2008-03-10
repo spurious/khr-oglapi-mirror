@@ -1,4 +1,4 @@
-	INCOMPLETE - DO NOT RELEASE IMPLEMENTATIONS OF THIS EXTENSION
+        INCOMPLETE - DO NOT RELEASE IMPLEMENTATIONS OF THIS EXTENSION
 
 Name
 
@@ -33,50 +33,50 @@ Overview
     at each vertex, and the specular contribution can be evaluated at each
     fragment with the results being summed together to generate the final
     result.
-		  Ct  Cf
-		  |   |-------------------------------+
-		  |   |                               |
-		----------                            |
-		|        |                            |
-		| TexEnv |                            |
-		|        |                            |
-		----------                            |
-		    |                                 |
-		----------                            |
-		| Clamp  |            Nf  Lf  Hf  Ff  |
-		----------            |   |   |   |   | FragmentColorMaterial
-		    |              -----------------  |
-		    |              |               |  v
-		    Cf'            | FragmentLight |<-o-<- Material {Am,Em,Dm,Sm,Nm,...}
-		    |		   |               |          
-		    |		   -----------------
-		    |                      |
-		    |                  ---------
-		    |                  | Clamp |
-		    |                  ---------
-		    |       Cl             |
-		    |      +----------------
-		    v      v 
-		  ------------
-		  |          |
-		  | LightEnv |
-		  |          |
-		  ------------
-		       |
-		   ---------
-		   | Clamp |
-		   ---------
-		       |
-		       Cf''
-		       |
-		       v
-		    -------
-		    |     |
-		    | Fog |
-		    |     |
-		    -------
-		       |
-		       v
+                  Ct  Cf
+                  |   |-------------------------------+
+                  |   |                               |
+                ----------                            |
+                |        |                            |
+                | TexEnv |                            |
+                |        |                            |
+                ----------                            |
+                    |                                 |
+                ----------                            |
+                | Clamp  |            Nf  Lf  Hf  Ff  |
+                ----------            |   |   |   |   | FragmentColorMaterial
+                    |              -----------------  |
+                    |              |               |  v
+                    Cf'            | FragmentLight |<-o-<- Material {Am,Em,Dm,Sm,Nm,...}
+                    |              |               |          
+                    |              -----------------
+                    |                      |
+                    |                  ---------
+                    |                  | Clamp |
+                    |                  ---------
+                    |       Cl             |
+                    |      +----------------
+                    v      v 
+                  ------------
+                  |          |
+                  | LightEnv |
+                  |          |
+                  ------------
+                       |
+                   ---------
+                   | Clamp |
+                   ---------
+                       |
+                       Cf''
+                       |
+                       v
+                    -------
+                    |     |
+                    | Fog |
+                    |     |
+                    -------
+                       |
+                       v
 
 Patent Note
 
@@ -95,103 +95,103 @@ Patent Note
 
 Issues
 
-    *	We specify a complete model and don't allow subsetting.  if
-	portions of the model aren't supported with hardware acceleration
-	then a software implementation of the complete model is
-	necessary.  There should be sufficient mechanism for an
-	implementation to include partial acceleration and easily
-	identify when it can be used.  The alternative is to
-	allow subsetting and a mechanisms for enumerating the capability
-	would this be any better?
+    *   We specify a complete model and don't allow subsetting.  if
+        portions of the model aren't supported with hardware acceleration
+        then a software implementation of the complete model is
+        necessary.  There should be sufficient mechanism for an
+        implementation to include partial acceleration and easily
+        identify when it can be used.  The alternative is to
+        allow subsetting and a mechanisms for enumerating the capability
+        would this be any better?
 
-	I don't think so.  Lighting will be an important area of
-	growth for OpenGL.  I think we owe it to our developers
-	to force a consistent growth direction by trying to look
-	ahead a little.
+        I don't think so.  Lighting will be an important area of
+        growth for OpenGL.  I think we owe it to our developers
+        to force a consistent growth direction by trying to look
+        ahead a little.
     
     *   We apply texture environment before lighting so that decals
-	can be lighted correctly.  The spec does not provide a
-	mechanism for applying texture after lighting.  There are
-	applications where it would be useful to apply texture after
-	lighting (e.g. shadows or spotlight effects), but we deliberately
-	leave them out.  Instead we will add binding posts in another
-	extension to allow textures to be bound to the attenuation
-	term, specular exponent, environment term, normal perturbation,
-	etc.
+        can be lighted correctly.  The spec does not provide a
+        mechanism for applying texture after lighting.  There are
+        applications where it would be useful to apply texture after
+        lighting (e.g. shadows or spotlight effects), but we deliberately
+        leave them out.  Instead we will add binding posts in another
+        extension to allow textures to be bound to the attenuation
+        term, specular exponent, environment term, normal perturbation,
+        etc.
     
-    *	Should the FragmentColorMaterial command really be done through
-	texture binding posts and TexEnv moved after lighting?
+    *   Should the FragmentColorMaterial command really be done through
+        texture binding posts and TexEnv moved after lighting?
 
-	No. 
+        No. 
     
     *   New LightModel parameters?
-	yes, NORMAL_INTERPOLATION control
+        yes, NORMAL_INTERPOLATION control
     
     *   We deliberately chose to decouple the control of normal interpolation
-	for fragment lighting from ShadeModel, choosing to put it in the
-	FragmentLightModel command.  We chose not to provide any mechanism to
-	allow flat coloring before vertex lighting, so FlatShading continues
-	to mean that the vertex color after vertex lighting is used to
-	provide a constant color across the face of a primitive.
+        for fragment lighting from ShadeModel, choosing to put it in the
+        FragmentLightModel command.  We chose not to provide any mechanism to
+        allow flat coloring before vertex lighting, so FlatShading continues
+        to mean that the vertex color after vertex lighting is used to
+        provide a constant color across the face of a primitive.
 
     *   Material parameters are not interpolated.  If FragmentMaterial is
-	enabled then the interpolated color parameter will be used as one or
-	more of the material parameters, but there is no equivalent notion
-	to per-vertex materials.  If a material change occurs between a
-	Begin/End sequence, then only the last material specified before the
-	provoking vertex will affect the shading computation.
+        enabled then the interpolated color parameter will be used as one or
+        more of the material parameters, but there is no equivalent notion
+        to per-vertex materials.  If a material change occurs between a
+        Begin/End sequence, then only the last material specified before the
+        provoking vertex will affect the shading computation.
     
     *   overload ColorMaterial & Material face param with FRAGMENT_FRONT,
-	FRAGMENT_BACK, and FRAGMENT_FRONT_AND_BACK rather than separate commands?
+        FRAGMENT_BACK, and FRAGMENT_FRONT_AND_BACK rather than separate commands?
 
-	since the behaviour is somewhat different (not persistent) so it feels
-	like it should be a different command
+        since the behaviour is somewhat different (not persistent) so it feels
+        like it should be a different command
 
     *   proxy mechanism for subsetting?  proxy mechanism for determining
-	what is supported in hardware.  NO.
+        what is supported in hardware.  NO.
 
     *   add some comments about where lighting parameters are sampled
-	(fragment centers, pixel centers, ...)
+        (fragment centers, pixel centers, ...)
 
     *   shadow term is not quite right.  removed it.
 
     *   should the material be undefined after color material is disabled
 
-	it should be well defined.  fragment color material should be
-	thought of as a switch which causes the material parameters to be
-	sourced from the fragment material 'register' or from the fragment
-	color.  At all times queries to the fragment material refer to the
-	material 'register' and whenever fragment color material is
-	disabled, material parameters are sourced from the unperturbed
-	fragment material 'register'
+        it should be well defined.  fragment color material should be
+        thought of as a switch which causes the material parameters to be
+        sourced from the fragment material 'register' or from the fragment
+        color.  At all times queries to the fragment material refer to the
+        material 'register' and whenever fragment color material is
+        disabled, material parameters are sourced from the unperturbed
+        fragment material 'register'
 
     *   disallow fragment material changes between begin/end?
-	seems okay, since we added a new command! - DONE
+        seems okay, since we added a new command! - DONE
 
     *   add a total number of lights so that implementations can
-	share state between vertex and fragment lights yet be more flexible
-	about whether the state is used for a vertex or fragment light
-	(vimal).
+        share state between vertex and fragment lights yet be more flexible
+        about whether the state is used for a vertex or fragment light
+        (vimal).
 
         Yes.  MAX_ACTIVE_LIGHTS_EXT
     
     *   is the flatshading definition correct?  unlike flatshading for
-	vertex lighting, the color will not be constant, just the normal
-	so N.L will vary across the face.  Yes, it is what we want.
-	There is now a mechanism which allows flat or smooth color with
-	flat or smooth fragment lighting (flat or smooth normals).
+        vertex lighting, the color will not be constant, just the normal
+        so N.L will vary across the face.  Yes, it is what we want.
+        There is now a mechanism which allows flat or smooth color with
+        flat or smooth fragment lighting (flat or smooth normals).
     
-    *	treatment of alpha?
+    *   treatment of alpha?
 
-	alpha comes from the diffuse material if fragment lighting
-	is enabled.
+        alpha comes from the diffuse material if fragment lighting
+        is enabled.
     
     *   the state of FrontFace affects the interpretation of two-sided
-	lighting.  Should there be separate state for vertex and fragment
-	lighting?
+        lighting.  Should there be separate state for vertex and fragment
+        lighting?
 
-	No.  its a property of the geometry and shouldn't different for the
-	two light source types.
+        No.  its a property of the geometry and shouldn't different for the
+        two light source types.
 
 New Procedures and Functions
 
@@ -366,12 +366,12 @@ Additions to Chapter 3 of the 1.1 Specification (Rasterization)
     (Cf) and the color computed (Cl) in equation (3.2) below. The functions
     are specified in Table 3.3
 
-    REPLACE	MODULATE	ADD
+    REPLACE     MODULATE        ADD
 
-    Rv = Rl	Rv = RfRl	Rv = Rf+Rl
-    Gv = Gl	Gv = GfGl	Gv = Gf+Gl
-    Bv = Bl	Bv = BfBl	Bv = Bf+Bl
-    Av = Al	Av = AfAl	Av = Af+Al
+    Rv = Rl     Rv = RfRl       Rv = Rf+Rl
+    Gv = Gl     Gv = GfGl       Gv = Gf+Gl
+    Bv = Bl     Bv = BfBl       Bv = Bf+Bl
+    Av = Al     Av = AfAl       Av = Af+Al
 
     Table 3.3 Light environment functions
 
@@ -380,22 +380,22 @@ Additions to Chapter 3 of the 1.1 Specification (Rasterization)
 
     The equation for the fragment illumination model is:
 
-    C  =  Em 				emissive
-       + Am*As				ambient material*scene ambient color
+    C  =  Em                            emissive
+       + Am*As                          ambient material*scene ambient color
        SUM{_i = 0 through Nf-1} {
-       + Atten_i*SpotL_i*{		distance/spot light attenuation
-	    + Am*Al_i			ambient material*ambient light
-	    + Dm*Dl_i*(N.L_i)		diffuse material*diffuse light
-	    + Sm*Sl_i*(f_i)(N.H_i)^n	specular material*specular light
-	  }
-	}
+       + Atten_i*SpotL_i*{              distance/spot light attenuation
+            + Am*Al_i                   ambient material*ambient light
+            + Dm*Dl_i*(N.L_i)           diffuse material*diffuse light
+            + Sm*Sl_i*(f_i)(N.H_i)^n    specular material*specular light
+          }
+        }
     
-	Nf is the number of fragment light sources
-	N is the fragment normal vector 
-	L_i is the direction vector from the fragment position to the light source
-	H_i is the half angle vector
-	f_i is as defined in equation (2.2)
-	n is the specular exponent (shininess)
+        Nf is the number of fragment light sources
+        N is the fragment normal vector 
+        L_i is the direction vector from the fragment position to the light source
+        H_i is the half angle vector
+        f_i is as defined in equation (2.2)
+        n is the specular exponent (shininess)
     
     Rewrite the equation as:
 
@@ -405,7 +405,7 @@ Additions to Chapter 3 of the 1.1 Specification (Rasterization)
 
     I' = SUM{i = 0 through Nf-1} I[i]
 
-    C = Em + Am*As + I'						(3.2)
+    C = Em + Am*As + I'                                         (3.2)
 
     Equation (3.1) is the same as the vertex lighting equation described in
     section 2.13.1 for a single light source. Similar to vertex lighting,
@@ -494,7 +494,7 @@ Additions to Chapter 3 of the 1.1 Specification (Rasterization)
 
     The command that controls which of these modes is selected is
 
-	void FragmentColorMaterial(enum face, enum mode);
+        void FragmentColorMaterial(enum face, enum mode);
     
     <face> is one of FRONT, BACK, or FRONT_AND_BACK, indicating whether
     the front material, back material, or both are affected by the
@@ -598,8 +598,8 @@ Errors
 
 New State
 
-    Get Value					Get Command			Type	Initial Value		Attribute
-    ---------					-----------			----	-------------		---------
+    Get Value                                   Get Command                     Type    Initial Value           Attribute
+    ---------                                   -----------                     ----    -------------           ---------
 
     FRAGMENT_LIGHTING_EXT                       IsEnabled                       B       False                   lighting/enable
     FRAGMENT_COLOR_MATERIAL_EXT                 IsEnabled                       B       False                   lighting/enable
@@ -631,7 +631,7 @@ New State
 
 New Implementation Dependent State
 
-    Get Value				Get Command			Type	Minimum Value
-    ---------				-----------			----	-------------
+    Get Value                           Get Command                     Type    Minimum Value
+    ---------                           -----------                     ----    -------------
     MAX_FRAGMENT_LIGHTS_EXT             GetIntegerv                     Z+      1
     MAX_ACTIVE_LIGHTS_EXT               GetIntegerv                     z+      MAX_LIGHTS

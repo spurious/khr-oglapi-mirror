@@ -8,7 +8,7 @@ Name Strings
 
 Version
 
-    Date: June 27, 2002	Version: 1.32
+    Date: June 27, 2002 Version: 1.32
 
 Number
 
@@ -35,77 +35,77 @@ Overview
 New Procedures and Functions
 
     void ConvolutionFilter1DEXT(enum target,
-				enum internalformat,
-				sizei width,
-				enum format,
-				enum type,
-				const void* image);
+                                enum internalformat,
+                                sizei width,
+                                enum format,
+                                enum type,
+                                const void* image);
 
     void ConvolutionFilter2DEXT(enum target,
-				enum internalformat,
-				sizei width,
-				sizei height,
-				enum format,
-				enum type,
-				const void* image);
+                                enum internalformat,
+                                sizei width,
+                                sizei height,
+                                enum format,
+                                enum type,
+                                const void* image);
 
     void CopyConvolutionFilter1DEXT(enum target,
-				    enum internalformat,
-				    int x,
-				    int y,
-				    sizei width);
+                                    enum internalformat,
+                                    int x,
+                                    int y,
+                                    sizei width);
 
     void CopyConvolutionFilter2DEXT(enum target,
-				    enum internalformat,
-				    int x,
-				    int y,
-				    sizei width,
-				    sizei height);
+                                    enum internalformat,
+                                    int x,
+                                    int y,
+                                    sizei width,
+                                    sizei height);
 
     void GetConvolutionFilterEXT(enum target,
-				 enum format,
-				 enum type,
-				 void* image);
+                                 enum format,
+                                 enum type,
+                                 void* image);
 
     void SeparableFilter2DEXT(enum target,
-			      enum internalformat,
-			      sizei width,
-			      sizei height,
-			      enum format,
-			      enum type,
-			      const void* row,
-			      const void* column);
+                              enum internalformat,
+                              sizei width,
+                              sizei height,
+                              enum format,
+                              enum type,
+                              const void* row,
+                              const void* column);
 
     void GetSeparableFilterEXT(enum target,
-			       enum format,
-			       enum type,
-			       void* row,
-			       void* column,
-			       void* span);
+                               enum format,
+                               enum type,
+                               void* row,
+                               void* column,
+                               void* span);
 
     void ConvolutionParameteriEXT(enum target,
-			          enum pname,
-			          int param);
+                                  enum pname,
+                                  int param);
 
     void ConvolutionParameterivEXT(enum target,
-				   enum pname,
-				   const int* params);
+                                   enum pname,
+                                   const int* params);
 
     void ConvolutionParameterfEXT(enum target,
-				  enum pname,
-				  float param);
+                                  enum pname,
+                                  float param);
 
     void ConvolutionParameterfvEXT(enum target,
-				   enum pname,
-				   const float* params);
+                                   enum pname,
+                                   const float* params);
 
     void GetConvolutionParameterivEXT(enum target,
-				      enum pname,
-				      int* params);
+                                      enum pname,
+                                      int* params);
 
     void GetConvolutionParameterfvEXT(enum target,
-				      enum pname,
-				      float* params);
+                                      enum pname,
+                                      float* params);
 
 New Tokens
 
@@ -117,7 +117,7 @@ New Tokens
     ConvolutionParameterivEXT, ConvolutionParameterfvEXT,
     GetConvolutionParameterivEXT, and GetConvolutionParameterfvEXT:
 
-	CONVOLUTION_1D_EXT               0x8010
+        CONVOLUTION_1D_EXT               0x8010
 
     Accepted by the <cap> parameter of Enable, Disable, and IsEnabled, by
     the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv, and
@@ -127,7 +127,7 @@ New Tokens
     ConvolutionParameterivEXT, ConvolutionParameterfvEXT,
     GetConvolutionParameterivEXT, and GetConvolutionParameterfvEXT:
 
-	CONVOLUTION_2D_EXT               0x8011
+        CONVOLUTION_2D_EXT               0x8011
 
     Accepted by the <cap> parameter of Enable, Disable, and IsEnabled, by
     the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv, and
@@ -137,50 +137,50 @@ New Tokens
     ConvolutionParameterivEXT, ConvolutionParameterfvEXT,
     GetConvolutionParameterivEXT, and GetConvolutionParameterfvEXT:
 
-	SEPARABLE_2D_EXT                 0x8012
+        SEPARABLE_2D_EXT                 0x8012
 
     Accepted by the <pname> parameter of ConvolutionParameteriEXT,
     ConvolutionParameterfEXT, ConvolutionParameterivEXT,
     ConvolutionParameterfvEXT, GetConvolutionParameterivEXT, and
     GetConvolutionParameterfvEXT:
 
-	CONVOLUTION_BORDER_MODE_EXT      0x8013
+        CONVOLUTION_BORDER_MODE_EXT      0x8013
 
     Accepted by the <pname> parameter of ConvolutionParameterivEXT,
     ConvolutionParameterfvEXT, GetConvolutionParameterivEXT, and
     GetConvolutionParameterfvEXT:
 
-	CONVOLUTION_FILTER_SCALE_EXT     0x8014
-	CONVOLUTION_FILTER_BIAS_EXT      0x8015
+        CONVOLUTION_FILTER_SCALE_EXT     0x8014
+        CONVOLUTION_FILTER_BIAS_EXT      0x8015
 
     Accepted by the <param> parameter of ConvolutionParameteriEXT,
     and ConvolutionParameterfEXT, and by the <params> parameter of
     ConvolutionParameterivEXT and ConvolutionParameterfvEXT, when the
     <pname> parameter is CONVOLUTION_BORDER_MODE_EXT:
 
-	REDUCE_EXT                       0x8016
+        REDUCE_EXT                       0x8016
 
     Accepted by the <pname> parameter of GetConvolutionParameterivEXT and
     GetConvolutionParameterfvEXT:
 
-	CONVOLUTION_FORMAT_EXT           0x8017
-	CONVOLUTION_WIDTH_EXT            0x8018
-	CONVOLUTION_HEIGHT_EXT           0x8019
-	MAX_CONVOLUTION_WIDTH_EXT        0x801A
-	MAX_CONVOLUTION_HEIGHT_EXT       0x801B
+        CONVOLUTION_FORMAT_EXT           0x8017
+        CONVOLUTION_WIDTH_EXT            0x8018
+        CONVOLUTION_HEIGHT_EXT           0x8019
+        MAX_CONVOLUTION_WIDTH_EXT        0x801A
+        MAX_CONVOLUTION_HEIGHT_EXT       0x801B
 
     Accepted by the <pname> parameter of PixelTransferi, PixelTransferf,
     and by the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv,
     and GetDoublev:
 
-	POST_CONVOLUTION_RED_SCALE_EXT   0x801C
-	POST_CONVOLUTION_GREEN_SCALE_EXT 0x801D
-	POST_CONVOLUTION_BLUE_SCALE_EXT  0x801E
-	POST_CONVOLUTION_ALPHA_SCALE_EXT 0x801F
-	POST_CONVOLUTION_RED_BIAS_EXT    0x8020
-	POST_CONVOLUTION_GREEN_BIAS_EXT  0x8021
-	POST_CONVOLUTION_BLUE_BIAS_EXT   0x8022
-	POST_CONVOLUTION_ALPHA_BIAS_EXT  0x8023
+        POST_CONVOLUTION_RED_SCALE_EXT   0x801C
+        POST_CONVOLUTION_GREEN_SCALE_EXT 0x801D
+        POST_CONVOLUTION_BLUE_SCALE_EXT  0x801E
+        POST_CONVOLUTION_ALPHA_SCALE_EXT 0x801F
+        POST_CONVOLUTION_RED_BIAS_EXT    0x8020
+        POST_CONVOLUTION_GREEN_BIAS_EXT  0x8021
+        POST_CONVOLUTION_BLUE_BIAS_EXT   0x8022
+        POST_CONVOLUTION_ALPHA_BIAS_EXT  0x8023
 
 Additions to Chapter 2 of the 1.0 Specification (OpenGL Operation)
 
@@ -215,15 +215,15 @@ Additions to Chapter 3 of the 1.0 Specification (Rasterization)
     and A) to the values included in the internal format (red, green, blue,
     alpha, luminance, and intensity).  The mapping is as follows:
 
-	Internal Format		red	green	blue	alpha	luminance intensity
-	---------------		---	-----	----	-----	--------- ---------
+        Internal Format         red     green   blue    alpha   luminance intensity
+        ---------------         ---     -----   ----    -----   --------- ---------
 
-	ALPHA						A
-	LUMINANCE						R
-	LUMINANCE_ALPHA					A	R
-	INTENSITY_EXT							  R
-	RGB			R	G	B
-	RGBA			R	G	B	A
+        ALPHA                                           A
+        LUMINANCE                                               R
+        LUMINANCE_ALPHA                                 A       R
+        INTENSITY_EXT                                                     R
+        RGB                     R       G       B
+        RGBA                    R       G       B       A
 
 
     Pixel Organization
@@ -347,20 +347,20 @@ Additions to Chapter 3 of the 1.0 Specification (Rasterization)
     pixel are convolved with one filter component, or are passed unmodified.
     The rules for this are:
 
-	Filter format		
-	-------------
-	ALPHA			R = Rs			G = Gs			B = Bs			A = convolve(As,Af)
-	LUMINANCE		R = convolve(Rs,Lf)	G = convolve(Gs,Lf)	B = convolve(Bs,Lf)	A = As
-	LUMINANCE_ALPHA		R = convolve(Rs,Lf)	G = convolve(Gs,Lf)	B = convolve(Bs,Lf)	A = convolve(As,Af)
-	INTENSITY		R = convolve(Rs,If)	G = convolve(Gs,If)	B = convolve(Bs,If)	A = convolve(As,If)
-	RGB			R = convolve(Rs,Rf)	G = convolve(Gs,Gf)	B = convolve(Bs,Bf)	A = As
-	RGBA			R = convolve(Rs,Rf)	G = convolve(Gs,Gf)	B = convolve(Bs,Bf)	A = convolve(As,Af)
+        Filter format           
+        -------------
+        ALPHA                   R = Rs                  G = Gs                  B = Bs                  A = convolve(As,Af)
+        LUMINANCE               R = convolve(Rs,Lf)     G = convolve(Gs,Lf)     B = convolve(Bs,Lf)     A = As
+        LUMINANCE_ALPHA         R = convolve(Rs,Lf)     G = convolve(Gs,Lf)     B = convolve(Bs,Lf)     A = convolve(As,Af)
+        INTENSITY               R = convolve(Rs,If)     G = convolve(Gs,If)     B = convolve(Bs,If)     A = convolve(As,If)
+        RGB                     R = convolve(Rs,Rf)     G = convolve(Gs,Gf)     B = convolve(Bs,Bf)     A = As
+        RGBA                    R = convolve(Rs,Rf)     G = convolve(Gs,Gf)     B = convolve(Bs,Bf)     A = convolve(As,Af)
 
     The convolution operation is defined differently for each of the three
     convolution filters.  In the following equations the
     
-	SUM{}{}equation
-	
+        SUM{}{}equation
+        
     notation indicate the sum of the equation evaluated for all combinations
     of conditions indicated within the sets of curly brackets.  The
     variables Wf and Hf refer to the dimensions of the convolution filter.
@@ -370,25 +370,25 @@ Additions to Chapter 3 of the 1.0 Specification (Rasterization)
 
     The convolution equations are:
 
-	1-dimensional filter:
+        1-dimensional filter:
 
-	    C[i] = SUM{n = 0 through Wf-1}
-	    
-		      Cs[i+n] * Cf[n]
+            C[i] = SUM{n = 0 through Wf-1}
+            
+                      Cs[i+n] * Cf[n]
 
-	2-dimensional filter:
+        2-dimensional filter:
 
-	    C[i,j] = SUM{n = 0 through Wf-1}
-			{m = 0 through Hf-1}
-			
-			Cs[i+n,j+m] * Cf[n,m]
+            C[i,j] = SUM{n = 0 through Wf-1}
+                        {m = 0 through Hf-1}
+                        
+                        Cs[i+n,j+m] * Cf[n,m]
 
-	2-dimensional separable filter:
+        2-dimensional separable filter:
 
-	    C[i,j] = SUM{n = 0 through Wf-1}
-			{m = 0 through Hf-1}
+            C[i,j] = SUM{n = 0 through Wf-1}
+                        {m = 0 through Hf-1}
 
-			Cs[i+n,j+m] * Crow[n] * Ccolumn[m]
+                        Cs[i+n,j+m] * Crow[n] * Ccolumn[m]
 
     If Wf of a 1-dimensional filter is zero, then C[i] is always set to
     zero.  Likewise, if either Wf or Hf of a 2-dimensional filter is zero,
@@ -417,17 +417,17 @@ Additions to Chapter 3 of the 1.0 Specification (Rasterization)
     and biased by parameters specified using the PixelTransfer command.
     These operations are:
 
-	red = red * POST_CONVOLUTION_RED_SCALE_EXT
-	    + POST_CONVOLUTION_RED_BIAS_EXT
+        red = red * POST_CONVOLUTION_RED_SCALE_EXT
+            + POST_CONVOLUTION_RED_BIAS_EXT
 
-	green = green * POST_CONVOLUTION_GREEN_SCALE_EXT
-	      + POST_CONVOLUTION_GREEN_BIAS_EXT
+        green = green * POST_CONVOLUTION_GREEN_SCALE_EXT
+              + POST_CONVOLUTION_GREEN_BIAS_EXT
 
-	blue = blue * POST_CONVOLUTION_BLUE_SCALE_EXT
-	     + POST_CONVOLUTION_BLUE_BIAS_EXT
+        blue = blue * POST_CONVOLUTION_BLUE_SCALE_EXT
+             + POST_CONVOLUTION_BLUE_BIAS_EXT
 
-	alpha = alpha * POST_CONVOLUTION_ALPHA_SCALE_EXT
-	      + POST_CONVOLUTION_ALPHA_BIAS_EXT
+        alpha = alpha * POST_CONVOLUTION_ALPHA_SCALE_EXT
+              + POST_CONVOLUTION_ALPHA_BIAS_EXT
 
     If no convolution operation is performed, the scale and bias are not
     performed either.
@@ -473,14 +473,14 @@ Additions to Chapter 6 of the 1.0 Specification (State and State Requests)
     The assignments of internal color components to the components requested by
     <format> are
 
-		internal component	resulting component
-		------------------	-------------------
-		red			red
-		green			green
-		blue			blue
-		alpha			alpha
-		luminance		red
-		intensity		red
+                internal component      resulting component
+                ------------------      -------------------
+                red                     red
+                green                   green
+                blue                    blue
+                alpha                   alpha
+                luminance               red
+                intensity               red
 
     The current contents of a separable filter image are queried using
     GetSeparableFilterEXT.  <target> must be SEPARABLE_2D_EXT.  <format>
@@ -521,34 +521,34 @@ GLX Protocol
             4           INT32           height
 
         ConvolutionParameteriEXT
-            2           16             	rendering command length
-            2           4105           	rendering command opcode
-            4           ENUM           	target
-            4           ENUM		pname
-			0x8013		CONVOLUTION_BORDER_MODE_EXT
-            4           INT32          	param
+            2           16              rendering command length
+            2           4105            rendering command opcode
+            4           ENUM            target
+            4           ENUM            pname
+                        0x8013          CONVOLUTION_BORDER_MODE_EXT
+            4           INT32           param
 
         ConvolutionParameterivEXT
             2           12+4*n          rendering command length
             2           4106            rendering command opcode
             4           ENUM            target
             4           ENUM            pname
-			0x8013    n=1	CONVOLUTION_BORDER_MODE_EXT
-			0x8014    n=4	CONVOLUTION_FILTER_SCALE_EXT
-			0x8015    n=4	CONVOLUTION_FILTER_BIAS_EXT
-			0x8017    n=1   CONVOLUTION_FORMAT_EXT
-			0x8018    n=1	CONVOLUTION_WIDTH_EXT  
-			0x8019    n=1	CONVOLUTION_HEIGHT_EXT  
-			0x801A    n=1	MAX_CONVOLUTION_WIDTH_EXT
-			0x801B	  n=1	MAX_CONVOLUTION_HEIGHT_EXT
-            4*n         LISTofINT32   	params
+                        0x8013    n=1   CONVOLUTION_BORDER_MODE_EXT
+                        0x8014    n=4   CONVOLUTION_FILTER_SCALE_EXT
+                        0x8015    n=4   CONVOLUTION_FILTER_BIAS_EXT
+                        0x8017    n=1   CONVOLUTION_FORMAT_EXT
+                        0x8018    n=1   CONVOLUTION_WIDTH_EXT  
+                        0x8019    n=1   CONVOLUTION_HEIGHT_EXT  
+                        0x801A    n=1   MAX_CONVOLUTION_WIDTH_EXT
+                        0x801B    n=1   MAX_CONVOLUTION_HEIGHT_EXT
+            4*n         LISTofINT32     params
 
         ConvolutionParameterfEXT
             2           16              rendering command length
             2           4103            rendering command opcode
             4           ENUM            target
             4           ENUM            pname
-			0x8013		CONVOLUTION_BORDER_MODE_EXT
+                        0x8013          CONVOLUTION_BORDER_MODE_EXT
             4           FLOAT32         param
 
         ConvolutionParameterfvEXT
@@ -556,14 +556,14 @@ GLX Protocol
             2           4104            rendering command opcode
             4           ENUM            target
             4           ENUM            pname
-			0x8013    n=1	CONVOLUTION_BORDER_MODE_EXT
-			0x8014    n=4	CONVOLUTION_FILTER_SCALE_EXT
-			0x8015    n=4	CONVOLUTION_FILTER_BIAS_EXT
-			0x8017    n=1   CONVOLUTION_FORMAT_EXT
-			0x8018    n=1	CONVOLUTION_WIDTH_EXT  
-			0x8019    n=1	CONVOLUTION_HEIGHT_EXT  
-			0x801A    n=1	MAX_CONVOLUTION_WIDTH_EXT
-			0x801B	  n=1	MAX_CONVOLUTION_HEIGHT_EXT
+                        0x8013    n=1   CONVOLUTION_BORDER_MODE_EXT
+                        0x8014    n=4   CONVOLUTION_FILTER_SCALE_EXT
+                        0x8015    n=4   CONVOLUTION_FILTER_BIAS_EXT
+                        0x8017    n=1   CONVOLUTION_FORMAT_EXT
+                        0x8018    n=1   CONVOLUTION_WIDTH_EXT  
+                        0x8019    n=1   CONVOLUTION_HEIGHT_EXT  
+                        0x801A    n=1   MAX_CONVOLUTION_WIDTH_EXT
+                        0x801B    n=1   MAX_CONVOLUTION_HEIGHT_EXT
             4*n         LISTofFLOAT32   params
 
     The following three rendering commands contain pixel data and are thus
@@ -590,17 +590,17 @@ GLX Protocol
             p                           unused, p=pad(n)
 
             If the command is encoded in a glXRenderLarge request, the
-	    command opcode and command length fields above are expanded to
-	    4 bytes each:
+            command opcode and command length fields above are expanded to
+            4 bytes each:
             4           52+n+p          rendering command length
             4           4101            rendering command opcode
 
         If <width> < 0, <format> is invalid or <type> is invalid, then the
-	command is erroneous and n=0. The structure of <pixels> is described
-	in Appendix A of the GLX Protocol Specification, "Pixel Data", using
-	the parameters <swap_bytes>, <lsb_first>, <row_length>, <skip_rows>,
-	<skip_pixels>, <alignment>, <width>, <format>, and <type> as given
-	in the request, and a height of 1.
+        command is erroneous and n=0. The structure of <pixels> is described
+        in Appendix A of the GLX Protocol Specification, "Pixel Data", using
+        the parameters <swap_bytes>, <lsb_first>, <row_length>, <skip_rows>,
+        <skip_pixels>, <alignment>, <width>, <format>, and <type> as given
+        in the request, and a height of 1.
 
         ConvolutionFilter2DEXT
             2           48+n+p          rendering command length
@@ -622,17 +622,17 @@ GLX Protocol
             p                           unused, p=pad(n)
 
             If the command is encoded in a glXRenderLarge request, the
-	    command opcode and command length fields above are expanded to
-	    4 bytes each:
+            command opcode and command length fields above are expanded to
+            4 bytes each:
             4           52+n+p          rendering command length
             4           4102            rendering command opcode
 
         If <width> < 0, <height> < 0, <format> is invalid or <type> is
-	invalid, then the command is erroneous and n=0. The structure of
-	<pixels> is described in Appendix A of the GLX Protocol
-	Specification, "Pixel Data", using the parameters <swap_bytes>, 
+        invalid, then the command is erroneous and n=0. The structure of
+        <pixels> is described in Appendix A of the GLX Protocol
+        Specification, "Pixel Data", using the parameters <swap_bytes>, 
         <lsb_first>, <row_length>, <skip_rows>, <skip_pixels>, <alignment>,
-	<width>, <height>, <format>, and <type> as given in the request.
+        <width>, <height>, <format>, and <type> as given in the request.
 
         SeparableFilter2DEXT
             2           48+n1+p1+n2+p2  rendering command length
@@ -656,20 +656,20 @@ GLX Protocol
             p2                          unused, p=pad(n)
 
             If the command is encoded in a glXRenderLarge request, the
-	    command opcode and command length fields above are expanded
-	    to 4 bytes each:
+            command opcode and command length fields above are expanded
+            to 4 bytes each:
             4           52+n+p          rendering command length
             4           4109            rendering command opcode
 
         If <width> < 0, <height> < 0, <format> is invalid or <type> is
-	invalid, then the command is erroneous and n=0. The structure of
-	<row> is described in Appendix A of the GLX Protocol Specification,
-	"Pixel Data", using the parameters <swap_bytes>, <lsb_first>,
-	<row_length>, <skip_rows>, <skip_pixels>, <alignment>, <width>, 
+        invalid, then the command is erroneous and n=0. The structure of
+        <row> is described in Appendix A of the GLX Protocol Specification,
+        "Pixel Data", using the parameters <swap_bytes>, <lsb_first>,
+        <row_length>, <skip_rows>, <skip_pixels>, <alignment>, <width>, 
         <format>, and <type> as given in the request, and and a height of 1.
-	The structure of <column> is the same (it is also a one-dimensional
-	image) except that it is <height> pixels wide, instead of <width>
-	pixels wide.
+        The structure of <column> is the same (it is also a one-dimensional
+        image) except that it is <height> pixels wide, instead of <width>
+        pixels wide.
 
     The remaining commands are non-rendering commands. These commands are
     sent separately (i.e., not as part of a glXRender or glXRenderLarge
@@ -749,18 +749,18 @@ GLX Protocol
             1                           unused
             2           CARD16          sequence number
             4           n               reply length
-	    8				unused
-            4           INT32		width
-            4           INT32		height
+            8                           unused
+            4           INT32           width
+            4           INT32           height
             8                           unused
             4*n         LISTofBYTE      pixels
 
-	Note that n may be zero, indicating that a GL error occurred.
+        Note that n may be zero, indicating that a GL error occurred.
 
         If <format> or <type> is invalid then the command is erroneous and
-	n=0. The structure of <pixels> is described in Appendix A of the GLX
-	Protocol Specification, "Pixel Data", using the parameters
-	<swap_bytes>, <format>, and <type>. No extra padding is needed after
+        n=0. The structure of <pixels> is described in Appendix A of the GLX
+        Protocol Specification, "Pixel Data", using the parameters
+        <swap_bytes>, <format>, and <type>. No extra padding is needed after
         <pixels> because the image format already pads to 32 bits.
 
  
@@ -780,18 +780,18 @@ GLX Protocol
             1                           unused
             2           CARD16          sequence number
             4           n               reply length
-	    8				unused
-            4           INT32		width
-            4           INT32		height
+            8                           unused
+            4           INT32           width
+            4           INT32           height
             8                           unused
             4*n         LISTofBYTE      row followed by column
 
-	Note that n may be zero, indicating that a GL error occurred.
+        Note that n may be zero, indicating that a GL error occurred.
 
         If <format> or <type> is invalid then the command is erroneous and
-	n=0. The structure of <pixels> is described in Appendix A of the GLX
-	Protocol Specification, "Pixel Data", using the parameters
-	<swap_bytes>, <format>, and <type>. No extra padding is needed after
+        n=0. The structure of <pixels> is described in Appendix A of the GLX
+        Protocol Specification, "Pixel Data", using the parameters
+        <swap_bytes>, <format>, and <type>. No extra padding is needed after
         <pixels> because the image format already pads to 32 bits.
 
 Dependencies on EXT_abgr
@@ -927,38 +927,38 @@ Errors
 
 New State
 
-    Get Value				Get Command			Type		Initial Value		Attribute
-    ---------				-----------			----		-------------		---------
-    CONVOLUTION_1D_EXT			IsEnabled			B		False			pixel/enable
-    CONVOLUTION_2D_EXT			IsEnabled			B		False			pixel/enable
-    SEPARABLE_2D_EXT			IsEnabled			B		False			pixel/enable
-    CONVOLUTION_FILTER_SCALE_EXT	GetConvolutionParameterivEXT	3 x R4		(1,1,1,1)		pixel
-    CONVOLUTION_FILTER_BIAS_EXT		GetConvolutionParameterivEXT	3 x R4		(0,0,0,0)		pixel
-    CONVOLUTION_BORDER_MODE_EXT		GetConvolutionParameterivEXT	3 x Z1		REDUCE_EXT		pixel
+    Get Value                           Get Command                     Type            Initial Value           Attribute
+    ---------                           -----------                     ----            -------------           ---------
+    CONVOLUTION_1D_EXT                  IsEnabled                       B               False                   pixel/enable
+    CONVOLUTION_2D_EXT                  IsEnabled                       B               False                   pixel/enable
+    SEPARABLE_2D_EXT                    IsEnabled                       B               False                   pixel/enable
+    CONVOLUTION_FILTER_SCALE_EXT        GetConvolutionParameterivEXT    3 x R4          (1,1,1,1)               pixel
+    CONVOLUTION_FILTER_BIAS_EXT         GetConvolutionParameterivEXT    3 x R4          (0,0,0,0)               pixel
+    CONVOLUTION_BORDER_MODE_EXT         GetConvolutionParameterivEXT    3 x Z1          REDUCE_EXT              pixel
 
-    CONVOLUTION_xD (x is 1 or 2)	GetConvolutionFilterEXT		2 x I		empty			    -
-    SEPARABLE_2D			GetSeparableFilterEXT		1 x I		empty			    -
-    CONVOLUTION_FORMAT_EXT		GetConvolutionParameterivEXT	3 x Z8		RGBA			    -
-    CONVOLUTION_WIDTH_EXT		GetConvolutionParameterivEXT	3 x Z+		0			    -
-    CONVOLUTION_HEIGHT_EXT		GetConvolutionParameterivEXT	2 x Z+		0			    -
+    CONVOLUTION_xD (x is 1 or 2)        GetConvolutionFilterEXT         2 x I           empty                       -
+    SEPARABLE_2D                        GetSeparableFilterEXT           1 x I           empty                       -
+    CONVOLUTION_FORMAT_EXT              GetConvolutionParameterivEXT    3 x Z8          RGBA                        -
+    CONVOLUTION_WIDTH_EXT               GetConvolutionParameterivEXT    3 x Z+          0                           -
+    CONVOLUTION_HEIGHT_EXT              GetConvolutionParameterivEXT    2 x Z+          0                           -
 
-    POST_CONVOLUTION_RED_SCALE_EXT	GetFloatv			R		1			pixel
-    POST_CONVOLUTION_GREEN_SCALE_EXT	GetFloatv			R		1			pixel
-    POST_CONVOLUTION_BLUE_SCALE_EXT	GetFloatv			R		1			pixel
-    POST_CONVOLUTION_ALPHA_SCALE_EXT	GetFloatv			R		1			pixel
-    POST_CONVOLUTION_RED_BIAS_EXT	GetFloatv			R		0			pixel
-    POST_CONVOLUTION_GREEN_BIAS_EXT	GetFloatv			R		0			pixel
-    POST_CONVOLUTION_BLUE_BIAS_EXT	GetFloatv			R		0			pixel
-    POST_CONVOLUTION_ALPHA_BIAS_EXT	GetFloatv			R		0			pixel
+    POST_CONVOLUTION_RED_SCALE_EXT      GetFloatv                       R               1                       pixel
+    POST_CONVOLUTION_GREEN_SCALE_EXT    GetFloatv                       R               1                       pixel
+    POST_CONVOLUTION_BLUE_SCALE_EXT     GetFloatv                       R               1                       pixel
+    POST_CONVOLUTION_ALPHA_SCALE_EXT    GetFloatv                       R               1                       pixel
+    POST_CONVOLUTION_RED_BIAS_EXT       GetFloatv                       R               0                       pixel
+    POST_CONVOLUTION_GREEN_BIAS_EXT     GetFloatv                       R               0                       pixel
+    POST_CONVOLUTION_BLUE_BIAS_EXT      GetFloatv                       R               0                       pixel
+    POST_CONVOLUTION_ALPHA_BIAS_EXT     GetFloatv                       R               0                       pixel
 
 New Implementation Dependent State
 
-    Get Value				Get Command			Type		Minimum Value
-    ---------				-----------			----		-------------
-    MAX_CONVOLUTION_WIDTH_EXT		GetConvolutionParameterivEXT	3 x Z+		3
-    MAX_CONVOLUTION_HEIGHT_EXT		GetConvolutionParameterivEXT	2 x Z+		3
+    Get Value                           Get Command                     Type            Minimum Value
+    ---------                           -----------                     ----            -------------
+    MAX_CONVOLUTION_WIDTH_EXT           GetConvolutionParameterivEXT    3 x Z+          3
+    MAX_CONVOLUTION_HEIGHT_EXT          GetConvolutionParameterivEXT    2 x Z+          3
 
 Revision History
 
     Version 1.32, 2002/06/27 - fixed targets for GetConvolutionFilter and
-    	GetSeparableFilter.
+        GetSeparableFilter.

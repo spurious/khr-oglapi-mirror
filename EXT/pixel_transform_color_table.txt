@@ -36,12 +36,12 @@ New Tokens
     ColorTableParameterfvSGI, GetColorTableSGI, GetColorTableParameterivSGI,
     and GetColorTableParameterfvSGI:
 
-	PIXEL_TRANSFORM_COLOR_TABLE_EXT
+        PIXEL_TRANSFORM_COLOR_TABLE_EXT
 
     Accepted by the <target> parameter of ColorTableSGI,
     GetColorTableParameterivSGI, and GetColorTableParameterfvSGI:
 
-	PROXY_PIXEL_TRANSFORM_COLOR_TABLE_EXT
+        PROXY_PIXEL_TRANSFORM_COLOR_TABLE_EXT
 
 
 Additions to Chapter 3 of the 1.1 Specification (Rasterization)
@@ -74,11 +74,11 @@ Dependencies on SGI_color_table
     defined by EXT_pixel_transform.
 
 New State
-											Initial
-    Get Value					Get Command			Type	Value 	  Attrib
-    ---------					-----------			----	-------   ------
-    PIXEL_TRANSFORM_COLOR_TABLE_EXT		IsEnabled		  	 B	 False	  pixel/enable
-    PIXEL_TRANSFORM_COLOR_TABLE_EXT		GetColorTableEXT		3 x I	 empty	    -
+                                                                                        Initial
+    Get Value                                   Get Command                     Type    Value     Attrib
+    ---------                                   -----------                     ----    -------   ------
+    PIXEL_TRANSFORM_COLOR_TABLE_EXT             IsEnabled                        B       False    pixel/enable
+    PIXEL_TRANSFORM_COLOR_TABLE_EXT             GetColorTableEXT                3 x I    empty      -
 
 New Implementation Dependent State
 

@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Date:         02/09/2007
-    NVIDIA Revision:            3
+    Last Modified Date:         02/04/2008
+    NVIDIA Revision:            4
 
 Number
 
@@ -1715,7 +1715,7 @@ Additions to Chapter 2 of the OpenGL 1.5 Specification (OpenGL Operation)
     addressed with relative addressing.
 
     Implementations may have a limit on the total number of result binding
-    components used by each program target (MAX_PROGRAM_RESULT_COMPONENTS).
+    components used by each program target (MAX_PROGRAM_RESULT_COMPONENTS_NV).
     Programs that require more result binding components than this limit will
     fail to load.  The method of counting used result binding components is
     implementation-dependent, but must satisfy the following properties:
@@ -2388,14 +2388,13 @@ Additions to Chapter 2 of the OpenGL 1.5 Specification (OpenGL Operation)
     texture filtering.
 
     <offset> is a constant 3-component signed integer vector specified
-    according to the <texelOffset> grammar rule, which is added to the
-    computed <u>, <v>, and <w> texel locations prior to sampling.  One, two,
-    or three components may be specified in the instruction; if fewer than
-    three are specified, the remaining offset components are zero.  A limited
-    range of offset values are supported; the minimum and maximum
-    <texelOffset> values are implementation-dependent and given by
-    MIN_PROGRAM_TEXEL_OFFSET_EXT and MAX_PROGRAM_TEXEL_OFFSET_EXT,
-    respectively.  A program will fail to load:
+    according to the <texOffset> grammar rule, which is added to the computed
+    <u>, <v>, and <w> texel locations prior to sampling.  One, two, or three
+    components may be specified in the instruction; if fewer than three are
+    specified, the remaining offset components are zero.  A limited range of
+    offset values are supported; the minimum and maximum <texOffset> values
+    are implementation-dependent and given by MIN_PROGRAM_TEXEL_OFFSET_EXT and
+    MAX_PROGRAM_TEXEL_OFFSET_EXT, respectively.  A program will fail to load:
 
       * if the texture target specified in the instruction is 1D, ARRAY1D,
         SHADOW1D, or SHADOWARRAY1D, and the second or third component of the
@@ -4630,7 +4629,7 @@ Additions to Chapter 3 of the OpenGL 1.5 Specification (Rasterization)
                                          otherwise
       CLAMP_TO_EDGE               u' = clamp(u, 0.5, w_t-0.5)
       CLAMP_TO_BORDER             u' = clamp(u, -0.5, w_t+0.5)
-      REPEAT                      u' = fmod(u, w_t)
+      REPEAT                      u' = clamp(fmod(u, w_t), 0.5, w_t-0.5)
       MIRROR_CLAMP_EXT            u' = clamp(fabs(u), 0.5, w_t-0.5),
                                          if NEAREST filtering, or
                                      = clamp(fabs(u), 0.5, w_t),
@@ -4684,9 +4683,11 @@ Additions to Chapter 3 of the OpenGL 1.5 Specification (Rasterization)
       i_1   = i_0 + 1,
       j_1   = j_0 + 1,
       k_1   = k_0 + 1,
-      alpha = u' - i_0,
-      beta  = v' - j_0, and
-      gamma = w' - k_0.
+      alpha = frac(u' - 0.5),
+      beta  = frac(v' - 0.5),
+      gamma = frac(w' - 0.5),
+
+    where frac(<x>) denotes the fractional part of <x>.
 
     For a three-dimensional texture, the texture value tau is found as...
 
@@ -6028,6 +6029,11 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  --------------------------------------------
+     4    02/04/08  pbrown    Fix errors in texture wrap mode handling.
+                              Added a missing clamp to avoid sampling border
+                              in REPEAT mode.  Fixed incorrectly specified
+                              weights for LINEAR filtering.
+
      3    02/09/07  pbrown    Updated status section (now released).
 
      2    10/19/06  pbrown    Change the token suffix for maximum texel offset

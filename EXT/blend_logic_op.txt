@@ -49,7 +49,7 @@ and the Framebuffer)
     A single additional blending equation is defined.  If BlendEquationEXT
     is called with <mode> set to LOGIC_OP, the blending equation becomes
 
-	C = Cs OP Cd
+        C = Cs OP Cd
 
     where Cs and Cd are the source and destination colors, and OP is the
     logic operation as specified by LogicOp.
@@ -94,9 +94,9 @@ Errors
 
 New State
 
-    Get Value		Get Command	Type	Initial Value	Attribute
-    ---------		-----------	----	-------------	---------
-    BLEND_EQUATION_EXT	GetIntegerv	Z6	FUNC_ADD_EXT	color-buffer
+    Get Value           Get Command     Type    Initial Value   Attribute
+    ---------           -----------     ----    -------------   ---------
+    BLEND_EQUATION_EXT  GetIntegerv     Z6      FUNC_ADD_EXT    color-buffer
 
 New Implementation Dependent State
 

@@ -25,7 +25,7 @@ Status
 Version
 
     NVIDIA Date: February 1, 2007 (version 1.7)
-    $Id: //sw/main/docs/OpenGL/specs/GL_NV_register_combiners.txt#55 $
+    $Id: //sw/main/docs/OpenGL/specs/GL_NV_register_combiners.txt#56 $
 
 Number
 
@@ -240,11 +240,12 @@ Issues
     mapping on E or F before the mapping?  Is the multiply signed?
     Can the result be negative?
 
-      RESOLUTION:  No input mappings are applied to E or F before their
-      product is computed.  Yes, the product is a signed multiplication.
-      The result can be negative, but the two allowed final combiner input
-      mapping modes (GL_UNSIGNED_IDENTITY_NV and GL_UNSIGNED_INVERT_NV)
-      both effectively clamp their results to [0,1].
+      RESOLUTION:  Input mappings and component usage is applied to E or
+      F before their product is computed.  Yes, the product is a signed
+      multiplication.  The result can be negative, but the two allowed
+      final combiner input mapping modes (GL_UNSIGNED_IDENTITY_NV and
+      GL_UNSIGNED_INVERT_NV) both effectively clamp their results to
+      [0,1].
 
       A negative value resulting from the "E times F" product with the
       GL_UNSIGNED_IDENTITY_NV mapping mode would be clamped to zero.

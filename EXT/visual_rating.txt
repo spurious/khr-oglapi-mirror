@@ -68,15 +68,15 @@ New Tokens
     Accepted by the <attribute> parameter of glXGetConfig and by the 
     <attrib_list> parameter of glXChooseVisual:
 
-	GLX_VISUAL_CAVEAT_EXT		0x20
+        GLX_VISUAL_CAVEAT_EXT           0x20
 
     Returned by the <value> parameter of glXGetConfig (when <attribute> is set 
     to GLX_VISUAL_CAVEAT_EXT) and accepted by the <attrib_list> parameter of 
     glXChooseVIsual (following the GLX_VISUAL_CAVEAT_EXT token):
 
-	GLX_NONE_EXT			0x8000
-	GLX_SLOW_VISUAL_EXT		0x8001
-	GLX_NON_CONFORMANT_VISUAL_EXT	0x800D
+        GLX_NONE_EXT                    0x8000
+        GLX_SLOW_VISUAL_EXT             0x8001
+        GLX_NON_CONFORMANT_VISUAL_EXT   0x800D
 
 Additions to Chapter 2 of the 1.0 Specification (OpenGL Operation)
 
@@ -133,7 +133,7 @@ GLX Protocol
      4         ENUM            property value
                0x8000          GLX_NONE_EXT
                0x8001          GLX_SLOW_VISUAL_EXT
-	       0x800D	       GLX_NON_CONFORMANT_VISUAL_EXT
+               0x800D          GLX_NON_CONFORMANT_VISUAL_EXT
 
 
     If this property type/property value pair is not specified for a visual,

@@ -379,8 +379,8 @@ Additions to Chapter 2 of the OpenGL 1.5 Specification (OpenGL Operation)
     Geometry programs are enabled by calling Enable with the value
     GEOMETRY_PROGRAM_NV.  A geometry program takes a single input primitive
     and generates vertices to be arranged into one or more output primitives.
-    The original input primitive is discarded by the output primitives are
-    processed in order, by the remainder of the GL pipeline.
+    The original input primitive is discarded, and the output primitives are
+    processed in order by the remainder of the GL pipeline.
 
     Section 2.14.6.1, Geometry Program Input Primitives
 

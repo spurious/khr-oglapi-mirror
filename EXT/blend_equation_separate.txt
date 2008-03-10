@@ -20,7 +20,7 @@ Version
 
 Status
 
-    Ready to implement
+    Shipping as of May 2004 for GeForce6.
 
 Number
 

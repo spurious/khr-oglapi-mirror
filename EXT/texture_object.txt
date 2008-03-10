@@ -27,52 +27,52 @@ Overview
 
 Issues
 
-    *	Should the dimensions of a texture object be static once they are
-	changed from zero?  This might simplify the management of texture
-	memory.  What about other properties of a texture object?
+    *   Should the dimensions of a texture object be static once they are
+        changed from zero?  This might simplify the management of texture
+        memory.  What about other properties of a texture object?
 
-	No.
+        No.
 
 Reasoning
 
-    *	Previous proposals overloaded the <target> parameter of many Tex
-	commands with texture object names, as well as the original
-	enumerated values.  This proposal eliminated such overloading,
-	choosing instead to require an application to bind a texture object,
-	and then operate on it through the binding reference.  If this
-	constraint ultimately proves to be unacceptable, we can always
-	extend the extension with additional binding points for editing and
-	querying only, but if we expect to do this, we might choose to bite
-	the bullet and overload the <target> parameters now.
+    *   Previous proposals overloaded the <target> parameter of many Tex
+        commands with texture object names, as well as the original
+        enumerated values.  This proposal eliminated such overloading,
+        choosing instead to require an application to bind a texture object,
+        and then operate on it through the binding reference.  If this
+        constraint ultimately proves to be unacceptable, we can always
+        extend the extension with additional binding points for editing and
+        querying only, but if we expect to do this, we might choose to bite
+        the bullet and overload the <target> parameters now.
 
-    *	Commands to directly set the priority of a texture object and to
-	query the resident status of a texture object are included.  I feel
-	that binding a texture object would be an unacceptable burden for
-	these management operations.  These commands also allow queries and
-	operations on lists of texture objects, which should improve
-	efficiency.
+    *   Commands to directly set the priority of a texture object and to
+        query the resident status of a texture object are included.  I feel
+        that binding a texture object would be an unacceptable burden for
+        these management operations.  These commands also allow queries and
+        operations on lists of texture objects, which should improve
+        efficiency.
 
-    *	GenTexturesEXT does not return a success/failure boolean because
-	it should never fail in practice.
+    *   GenTexturesEXT does not return a success/failure boolean because
+        it should never fail in practice.
 
 New Procedures and Functions
 
     void GenTexturesEXT(sizei n,
-			uint* textures);
+                        uint* textures);
 
     void DeleteTexturesEXT(sizei n,
-			   const uint* textures);
+                           const uint* textures);
 
     void BindTextureEXT(enum target,
-			uint texture);
+                        uint texture);
 
     void PrioritizeTexturesEXT(sizei n,
-			       const uint* textures,
-			       const clampf* priorities);
+                               const uint* textures,
+                               const clampf* priorities);
 
     boolean AreTexturesResidentEXT(sizei n,
-				   const uint* textures,
-				   boolean* residences);
+                                   const uint* textures,
+                                   boolean* residences);
 
     boolean IsTextureEXT(uint texture);
 
@@ -81,19 +81,19 @@ New Tokens
     Accepted by the <pname> parameters of TexParameteri, TexParameterf,
     TexParameteriv, TexParameterfv, GetTexParameteriv, and GetTexParameterfv:
 
-	TEXTURE_PRIORITY_EXT		0x8066
+        TEXTURE_PRIORITY_EXT            0x8066
 
     Accepted by the <pname> parameters of GetTexParameteriv and
     GetTexParameterfv:
 
-	TEXTURE_RESIDENT_EXT		0x8067
+        TEXTURE_RESIDENT_EXT            0x8067
 
     Accepted by the <pname> parameters of GetBooleanv, GetIntegerv,
     GetFloatv, and GetDoublev:
 
-	TEXTURE_1D_BINDING_EXT		0x8068
-	TEXTURE_2D_BINDING_EXT		0x8069
-	TEXTURE_3D_BINDING_EXT		0x806A
+        TEXTURE_1D_BINDING_EXT          0x8068
+        TEXTURE_2D_BINDING_EXT          0x8069
+        TEXTURE_3D_BINDING_EXT          0x806A
 
 Additions to Chapter 2 of the 1.0 Specification (OpenGL Operation)
 
@@ -228,25 +228,25 @@ Additions to Chapter 6 of the 1.0 Specification (State and State Requests)
     filter modes, and wrap modes that are associated with that object.  More
     explicitly, the state list
     
-	TEXTURE,
-	TEXTURE_PRIORITY_EXT
-	TEXTURE_RED_SIZE,
-	TEXTURE_GREEN_SIZE,
-	TEXTURE_BLUE_SIZE,
-	TEXTURE_ALPHA_SIZE,
-	TEXTURE_LUMINANCE_SIZE,
-	TEXTURE_INTENSITY_SIZE,
-	TEXTURE_WIDTH,
-	TEXTURE_HEIGHT,
-	TEXTURE_DEPTH_EXT,
-	TEXTURE_BORDER,
-	TEXTURE_COMPONENTS,
-	TEXTURE_BORDER_COLOR,
-	TEXTURE_MIN_FILTER,
-	TEXTURE_MAG_FILTER,
-	TEXTURE_WRAP_S,
-	TEXTURE_WRAP_T,
-	TEXTURE_WRAP_R_EXT
+        TEXTURE,
+        TEXTURE_PRIORITY_EXT
+        TEXTURE_RED_SIZE,
+        TEXTURE_GREEN_SIZE,
+        TEXTURE_BLUE_SIZE,
+        TEXTURE_ALPHA_SIZE,
+        TEXTURE_LUMINANCE_SIZE,
+        TEXTURE_INTENSITY_SIZE,
+        TEXTURE_WIDTH,
+        TEXTURE_HEIGHT,
+        TEXTURE_DEPTH_EXT,
+        TEXTURE_BORDER,
+        TEXTURE_COMPONENTS,
+        TEXTURE_BORDER_COLOR,
+        TEXTURE_MIN_FILTER,
+        TEXTURE_MAG_FILTER,
+        TEXTURE_WRAP_S,
+        TEXTURE_WRAP_T,
+        TEXTURE_WRAP_R_EXT
 
     composes a single texture object.
 
@@ -280,16 +280,16 @@ GLX Protocol
     The following rendering command can be sent to the server as part of a
     glXRender request or as part of a glXRenderLarge request:
 
-	PrioritizeTexturesEXT
-	    2           8+(n*8)         rendering command length
+        PrioritizeTexturesEXT
+            2           8+(n*8)         rendering command length
             2           4118            rendering command opcode
             4           INT32           n
             n*4         LISTofCARD32    textures
             n*4         LISTofFLOAT32   priorities
 
-	    If the command is encoded in a glXRenderLarge request, the
-	    command opcode and command length fields above are expanded to
-	    4 bytes each:
+            If the command is encoded in a glXRenderLarge request, the
+            command opcode and command length fields above are expanded to
+            4 bytes each:
 
             4           12+(n*8)        rendering command length
             4           4118            rendering command opcode
@@ -299,62 +299,62 @@ GLX Protocol
     request), using either the glXVendorPrivate request or the
     glXVendorPrivateWithReply request: 
 
-    	DeleteTexturesEXT
-	    1		CARD8		opcode (X assigned)
-	    1 		16		GLX opcode (glXVendorPrivate)
-	    2	        4+n		request length
-	    4		12              vendor specific opcode
-	    4           GLX_CONTEXT_TAG context tag
-	    4		INT32		n
-	    n*4		CARD32		textures
+        DeleteTexturesEXT
+            1           CARD8           opcode (X assigned)
+            1           16              GLX opcode (glXVendorPrivate)
+            2           4+n             request length
+            4           12              vendor specific opcode
+            4           GLX_CONTEXT_TAG context tag
+            4           INT32           n
+            n*4         CARD32          textures
 
         GenTexturesEXT
-	    1		CARD8		opcode (X assigned)
-	    1 		17		GLX opcode (glXVendorPrivateWithReply)
-	    2	        4		request length
-	    4		13              vendor specific opcode
-	    4           GLX_CONTEXT_TAG context tag
-	    4		INT32		n
-	  =>
-	    1           1               reply
+            1           CARD8           opcode (X assigned)
+            1           17              GLX opcode (glXVendorPrivateWithReply)
+            2           4               request length
+            4           13              vendor specific opcode
+            4           GLX_CONTEXT_TAG context tag
+            4           INT32           n
+          =>
+            1           1               reply
             1                           unused
-            2		CARD16		sequence number
-            4		n               reply length
-            24				unused
+            2           CARD16          sequence number
+            4           n               reply length
+            24                          unused
             4*n         LISTofCARD32    textures
 
         AreTexturesResidentEXT
-	    1		CARD8		opcode (X assigned)
-	    1 		17		GLX opcode (glXVendorPrivateWithReply)
-	    2	        4+n		request length
-	    4		11              vendor specific opcode
-	    4           GLX_CONTEXT_TAG context tag
-	    4		INT32		n
-	    4*n		LISTofCARD32	textures
-	  =>
-	    1           1               reply
+            1           CARD8           opcode (X assigned)
+            1           17              GLX opcode (glXVendorPrivateWithReply)
+            2           4+n             request length
+            4           11              vendor specific opcode
+            4           GLX_CONTEXT_TAG context tag
+            4           INT32           n
+            4*n         LISTofCARD32    textures
+          =>
+            1           1               reply
             1                           unused
-            2		CARD16		sequence number
-            4		(n+p)/4 	reply length
+            2           CARD16          sequence number
+            4           (n+p)/4         reply length
             4           BOOL32          return_value 
-            20				unused
+            20                          unused
             n           LISTofBOOL      residences
-            p           		unused, p=pad(n)
+            p                           unused, p=pad(n)
 
         IsTextureEXT
-	    1		CARD8		opcode (X assigned)
-	    1 		17		GLX opcode (glXVendorPrivateWithReply)
-	    2	        4		request length
-	    4		14              vendor specific opcode
-	    4           GLX_CONTEXT_TAG context tag
-	    4		CARD32		textures
-	  =>
-	    1           1               reply
+            1           CARD8           opcode (X assigned)
+            1           17              GLX opcode (glXVendorPrivateWithReply)
+            2           4               request length
+            4           14              vendor specific opcode
+            4           GLX_CONTEXT_TAG context tag
+            4           CARD32          textures
+          =>
+            1           1               reply
             1                           unused
-            2		CARD16		sequence number
-            4		0 		reply length
+            2           CARD16          sequence number
+            4           0               reply length
             4           BOOL32          return_value 
-            20				unused
+            20                          unused
 
 Dependencies on EXT_texture3D
 
@@ -399,38 +399,38 @@ Errors
 New State
 
 
-    Get Value				Get Command		Type			Initial Value		Attribute
-    ---------				-----------		----			-------------		---------
-    TEXTURE_1D				IsEnabled		B			FALSE			texture/enable
-    TEXTURE_2D				IsEnabled		B			FALSE			texture/enable
-    TEXTURE_3D_EXT			IsEnabled		B			FALSE			texture/enable
-    TEXTURE_1D_BINDING_EXT		GetIntegerv		Z+			0			texture
-    TEXTURE_2D_BINDING_EXT		GetIntegerv		Z+			0			texture
-    TEXTURE_3D_BINDING_EXT		GetIntegerv		Z+			0			texture
-    TEXTURE_PRIORITY_EXT		GetTexParameterfv	n x Z+			1			texture
-    TEXTURE_RESIDENT_EXT		AreTexturesResidentEXT	n x B			unknown			   -
+    Get Value                           Get Command             Type                    Initial Value           Attribute
+    ---------                           -----------             ----                    -------------           ---------
+    TEXTURE_1D                          IsEnabled               B                       FALSE                   texture/enable
+    TEXTURE_2D                          IsEnabled               B                       FALSE                   texture/enable
+    TEXTURE_3D_EXT                      IsEnabled               B                       FALSE                   texture/enable
+    TEXTURE_1D_BINDING_EXT              GetIntegerv             Z+                      0                       texture
+    TEXTURE_2D_BINDING_EXT              GetIntegerv             Z+                      0                       texture
+    TEXTURE_3D_BINDING_EXT              GetIntegerv             Z+                      0                       texture
+    TEXTURE_PRIORITY_EXT                GetTexParameterfv       n x Z+                  1                       texture
+    TEXTURE_RESIDENT_EXT                AreTexturesResidentEXT  n x B                   unknown                    -
 
-    TEXTURE				GetTexImage		n x levels x I		null			   -
-    TEXTURE_RED_SIZE_EXT		GetTexLevelParameteriv	n x levels x Z+		0			   -
-    TEXTURE_GREEN_SIZE_EXT		GetTexLevelParameteriv	n x levels x Z+		0			   -
-    TEXTURE_BLUE_SIZE_EXT		GetTexLevelParameteriv	n x levels x Z+		0			   -
-    TEXTURE_ALPHA_SIZE_EXT		GetTexLevelParameteriv	n x levels x Z+		0			   -
-    TEXTURE_LUMINANCE_SIZE_EXT		GetTexLevelParameteriv	n x levels x Z+		0			   -
-    TEXTURE_INTENSITY_SIZE_EXT		GetTexLevelParameteriv	n x levels x Z+		0			   -
-    TEXTURE_WIDTH			GetTexLevelParameteriv	n x levels x Z+		0			   -
-    TEXTURE_HEIGHT			GetTexLevelParameteriv	n x levels x Z+		0			   -
-    TEXTURE_DEPTH_EXT			GetTexLevelParameteriv	n x levels x Z+		0			   -
-    TEXTURE_4DSIZE_SGIS			GetTexLevelParameteriv	n x levels x Z+		0			   -
-    TEXTURE_BORDER			GetTexLevelParameteriv	n x levels x Z+		0			   -
-    TEXTURE_COMPONENTS (1D and 2D)	GetTexLevelParameteriv	n x levels x Z42	1			   -
-    TEXTURE_COMPONENTS (3D and 4D)	GetTexLevelParameteriv	n x levels x Z38	LUMINANCE		   -
-    TEXTURE_BORDER_COLOR		GetTexParameteriv	n x C			0, 0, 0, 0		texture
-    TEXTURE_MIN_FILTER			GetTexParameteriv	n x Z7			NEAREST_MIPMAP_LINEAR	texture
-    TEXTURE_MAG_FILTER			GetTexParameteriv	n x Z3			LINEAR			texture
-    TEXTURE_WRAP_S			GetTexParameteriv	n x Z2			REPEAT			texture
-    TEXTURE_WRAP_T			GetTexParameteriv	n x Z2			REPEAT			texture
-    TEXTURE_WRAP_R_EXT			GetTexParameteriv	n x Z2			REPEAT			texture
-    TEXTURE_WRAP_Q_SGIS			GetTexParameteriv	n x Z2			REPEAT			texture
+    TEXTURE                             GetTexImage             n x levels x I          null                       -
+    TEXTURE_RED_SIZE_EXT                GetTexLevelParameteriv  n x levels x Z+         0                          -
+    TEXTURE_GREEN_SIZE_EXT              GetTexLevelParameteriv  n x levels x Z+         0                          -
+    TEXTURE_BLUE_SIZE_EXT               GetTexLevelParameteriv  n x levels x Z+         0                          -
+    TEXTURE_ALPHA_SIZE_EXT              GetTexLevelParameteriv  n x levels x Z+         0                          -
+    TEXTURE_LUMINANCE_SIZE_EXT          GetTexLevelParameteriv  n x levels x Z+         0                          -
+    TEXTURE_INTENSITY_SIZE_EXT          GetTexLevelParameteriv  n x levels x Z+         0                          -
+    TEXTURE_WIDTH                       GetTexLevelParameteriv  n x levels x Z+         0                          -
+    TEXTURE_HEIGHT                      GetTexLevelParameteriv  n x levels x Z+         0                          -
+    TEXTURE_DEPTH_EXT                   GetTexLevelParameteriv  n x levels x Z+         0                          -
+    TEXTURE_4DSIZE_SGIS                 GetTexLevelParameteriv  n x levels x Z+         0                          -
+    TEXTURE_BORDER                      GetTexLevelParameteriv  n x levels x Z+         0                          -
+    TEXTURE_COMPONENTS (1D and 2D)      GetTexLevelParameteriv  n x levels x Z42        1                          -
+    TEXTURE_COMPONENTS (3D and 4D)      GetTexLevelParameteriv  n x levels x Z38        LUMINANCE                  -
+    TEXTURE_BORDER_COLOR                GetTexParameteriv       n x C                   0, 0, 0, 0              texture
+    TEXTURE_MIN_FILTER                  GetTexParameteriv       n x Z7                  NEAREST_MIPMAP_LINEAR   texture
+    TEXTURE_MAG_FILTER                  GetTexParameteriv       n x Z3                  LINEAR                  texture
+    TEXTURE_WRAP_S                      GetTexParameteriv       n x Z2                  REPEAT                  texture
+    TEXTURE_WRAP_T                      GetTexParameteriv       n x Z2                  REPEAT                  texture
+    TEXTURE_WRAP_R_EXT                  GetTexParameteriv       n x Z2                  REPEAT                  texture
+    TEXTURE_WRAP_Q_SGIS                 GetTexParameteriv       n x Z2                  REPEAT                  texture
 
 New Implementation Dependent State
 

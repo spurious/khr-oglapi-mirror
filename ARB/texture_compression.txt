@@ -30,7 +30,7 @@ Dependencies
     This extension is written against the OpenGL 1.2.1 Specification.
 
     This extension is written against the GLX Extensions for OpenGL
-	Specification (Version 1.3).
+    Specification (Version 1.3).
 
     Depends on GL_ARB_texture_cube_map, as cube maps may be stored in
     compressed form.
@@ -41,13 +41,13 @@ Overview
     improve performance when rendering textured primitives.  This extension
     allows OpenGL applications to use compressed texture images by providing:
 
-	(1) A framework upon which extensions providing specific compressed
-	    image formats can be built.
+        (1) A framework upon which extensions providing specific compressed
+            image formats can be built.
 
-	(2) A set of generic compressed internal formats that allow
-	    applications to specify that texture images should be stored in
-	    compressed form without needing to code for specific compression
-	    formats.
+        (2) A set of generic compressed internal formats that allow
+            applications to specify that texture images should be stored in
+            compressed form without needing to code for specific compression
+            formats.
 
     An application can define compressed texture images by providing a texture
     image stored in a specific compressed image format.  This extension does
@@ -83,15 +83,15 @@ Overview
     would:
 
       (1) Provide a new extension defininig specific compressed
-	  <internalformat> and <format> tokens for TexImage[123]D,
-	  TexSubImage[123]D, CopyTexImage[12]D, CompressedTexImage[123]DARB,
+          <internalformat> and <format> tokens for TexImage[123]D,
+          TexSubImage[123]D, CopyTexImage[12]D, CompressedTexImage[123]DARB,
           CompressedTexSubImage[123]DARB, and GetCompressedTexImageARB calls.
 
       (2) Specify the encoding of compressed images of that specific format.
 
       (3) Specify a method for deriving the size of compressed images of that
-	  specific format, using the <internalformat>, <width>, <height>,
-	  <depth> parameters, and (if necessary) the compressed image itself.
+          specific format, using the <internalformat>, <width>, <height>,
+          <depth> parameters, and (if necessary) the compressed image itself.
 
 IP Status
 
@@ -167,7 +167,7 @@ Issues
       Certain compressed formats may allow a wider variety of edits -- their
       specifications will document the restrictions under which these edits
       are permitted.  it is impossible to document such restrictions for
-      unknown generic formats.	It is desirable to keep the behavior of
+      unknown generic formats.  It is desirable to keep the behavior of
       generic formats and the specific formats they map to as consistent as
       possible.
 
@@ -177,7 +177,7 @@ Issues
       RESOLVED:  Some behavior has to be defined. For both normal and proxy
       textures, we return the bit depths of an uncompressed sized image that
       would most closely match the quality of the compression algorithm for an
-      "average" texture image.	Since compressed image quality is highly data
+      "average" texture image.  Since compressed image quality is highly data
       dependent, the actual compressed image quality may be better or worse
       than the renderer's best guess at the best matching sized internal
       format.  To implement this feature in a driver, it is expected that an
@@ -207,7 +207,7 @@ Issues
 
       RESOLVED:  Not a problem for generic compressed formats since a base
       internal format can be used if borders are not supported in the
-      compressed image format.	Borders may pose problems for specific
+      compressed image format.  Borders may pose problems for specific
       compression extensions, and compressed textures with borders might well
       be disallowed by those extensions.
 
@@ -229,36 +229,36 @@ Issues
       RESOLVED:  Yes.  This can be done without knowledge of specific
       compression formats in the following manner:
 
-	* Call TexImage with an uncompressed image and a generic compressed
-	  internal format.  The texture image will be compressed by the GL, if
-	  possible.
+        * Call TexImage with an uncompressed image and a generic compressed
+          internal format.  The texture image will be compressed by the GL, if
+          possible.
 
-	* Call GetTexLevelParameteriv with a <value> of TEXTURE_COMPRESSED_ARB
-	  to determine if the GL was able to store the image in compressed
-	  form.
+        * Call GetTexLevelParameteriv with a <value> of TEXTURE_COMPRESSED_ARB
+          to determine if the GL was able to store the image in compressed
+          form.
 
-	* Call GetTexLevelParameteriv with a <value> of
-	  TEXTURE_INTERNAL_FORMAT to determine the specific compressed image
-	  format in which the image is stored.
+        * Call GetTexLevelParameteriv with a <value> of
+          TEXTURE_INTERNAL_FORMAT to determine the specific compressed image
+          format in which the image is stored.
 
-	* Call GetTexLevelParameteriv with a <value> of
-	  TEXTURE_COMPRESSED_IMAGE_SIZE_ARB to determine the size (in ubytes)
-	  of the compressed image that will be returned by the GL.  Allocate a
-	  buffer of at least this size.
+        * Call GetTexLevelParameteriv with a <value> of
+          TEXTURE_COMPRESSED_IMAGE_SIZE_ARB to determine the size (in ubytes)
+          of the compressed image that will be returned by the GL.  Allocate a
+          buffer of at least this size.
 
-	* Call GetCompressedTexImageARB.  The GL will write the compressed
-	  texture image into the allocated buffer.
+        * Call GetCompressedTexImageARB.  The GL will write the compressed
+          texture image into the allocated buffer.
 
-	* Save the returned compressed image to disk, along with the
-	  associated width, height, depth, border parameters and the returned
-	  values of TEXTURE_COMPRESSED_IMAGE_SIZE_ARB and
-	  TEXTURE_INTERNAL_FORMAT.
+        * Save the returned compressed image to disk, along with the
+          associated width, height, depth, border parameters and the returned
+          values of TEXTURE_COMPRESSED_IMAGE_SIZE_ARB and
+          TEXTURE_INTERNAL_FORMAT.
 
-	* Load the compressed image and its parameters, and call
-	  CompressedTexImage_[123]DARB to use the compressed image.  The value
-	  of TEXTURE_INTERNAL_FORMAT should be used as <internalFormat> and
-	  the value of TEXTURE_COMPRESSED_IMAGE_SIZE_ARB should be used as
-	  <imageSize>.
+        * Load the compressed image and its parameters, and call
+          CompressedTexImage_[123]DARB to use the compressed image.  The value
+          of TEXTURE_INTERNAL_FORMAT should be used as <internalFormat> and
+          the value of TEXTURE_COMPRESSED_IMAGE_SIZE_ARB should be used as
+          <imageSize>.
 
       The saved images will be valid as long as they are used on a device
       supporting the returned <internalFormat> parameter.  If the saved images
@@ -311,13 +311,13 @@ Issues
       problems.  There is also a reliability issue with respect to the GLX
       environment -- if the compressed image size provided by the user is less
       than the required image size, the GLX server may run off the end of the
-      image and access invalid memory.	A size check may thus be desirable to
+      image and access invalid memory.  A size check may thus be desirable to
       prevent server crashes (even though that could be considered an
       "undefined" result).
 
       While enforcing correct <imageSize> parameters is trivial for current
       compressed internal formats, it might not be reasonable on others
-      (particular variable-ratio compression formats).	For such formats, this
+      (particular variable-ratio compression formats).  For such formats, this
       restriction should be overridden in the spec defining the formats.  The
       <imageSize> check was made mandatory only in the final draft approved at
       the March 2000 OpenGL ARB meeting.
@@ -330,7 +330,7 @@ Issues
       RESOLVED:  Yes.  Advantages:  Works in exactly the same way as generic
       formats, meaning no extra code/error checking.  Inherent limitations of
       TexImage on specific formats should be documented in their specs and
-      observed by their users.	One simple query can detect fallback cases.
+      observed by their users.  One simple query can detect fallback cases.
       Disadvantages: Silent fallback to a format not requested by the user.
 
     (16) Should the texture format invariance requirements disallow scanning
@@ -351,7 +351,7 @@ Issues
       internal format chosen by the renderer.
 
     (17) Should functionality be provided to enumerate the specific compressed
-    formats supported by the renderer?	If so, how and what will it accomplish?
+    formats supported by the renderer?  If so, how and what will it accomplish?
 
       RESOLVED:  Yes.  A glGet* query is added to return the number of
       compressed internal formats supported by the renderer and the
@@ -378,7 +378,7 @@ Issues
       format.  For example, the DirectX DXT1 compression format is
       fundamentally an RGB format, but it has a "transparent" encoding where
       the red, green, and blue component values are forced to zero, regardless
-      of their original (uncompressed) values.	Since such formats may have
+      of their original (uncompressed) values.  Since such formats may have
       caveats that must be understood before being used, they should not be
       enumerated by this query.
 
@@ -386,11 +386,11 @@ Issues
       compression techniques provided by future renderers.
 
     (18) Should the separate GetCompressedTexImageARB function exist, or is
-	 GetTexImage with special <format> and/or <type> parameters
-	 sufficient?
+         GetTexImage with special <format> and/or <type> parameters
+         sufficient?
 
-      RESOLVED:  Provide a separate GetCompressedTexImageARB function.	The
-      primary rationale is for GLX indirect rendering.	The client GetTexImage
+      RESOLVED:  Provide a separate GetCompressedTexImageARB function.  The
+      primary rationale is for GLX indirect rendering.  The client GetTexImage
       would require information to determine if an image is uncompressed (and
       should be decoded using pixel storage state) or compressed (pixel
       storage ignored).  In addition, if the image is compressed, the actual
@@ -436,28 +436,28 @@ New Tokens
     Accepted by the <internalformat> parameter of TexImage1D, TexImage2D,
     TexImage3D, CopyTexImage1D, and CopyTexImage2D:
 
-	COMPRESSED_ALPHA_ARB				0x84E9
-	COMPRESSED_LUMINANCE_ARB			0x84EA
-	COMPRESSED_LUMINANCE_ALPHA_ARB			0x84EB
-	COMPRESSED_INTENSITY_ARB			0x84EC
-	COMPRESSED_RGB_ARB				0x84ED
-	COMPRESSED_RGBA_ARB				0x84EE
+        COMPRESSED_ALPHA_ARB                            0x84E9
+        COMPRESSED_LUMINANCE_ARB                        0x84EA
+        COMPRESSED_LUMINANCE_ALPHA_ARB                  0x84EB
+        COMPRESSED_INTENSITY_ARB                        0x84EC
+        COMPRESSED_RGB_ARB                              0x84ED
+        COMPRESSED_RGBA_ARB                             0x84EE
 
     Accepted by the <target> parameter of Hint and the <value> parameter of
     GetIntegerv, GetBooleanv, GetFloatv, and GetDoublev:
 
-	TEXTURE_COMPRESSION_HINT_ARB			0x84EF
+        TEXTURE_COMPRESSION_HINT_ARB                    0x84EF
 
     Accepted by the <value> parameter of GetTexLevelParameter:
 
-	TEXTURE_COMPRESSED_IMAGE_SIZE_ARB		0x86A0
-	TEXTURE_COMPRESSED_ARB				0x86A1
+        TEXTURE_COMPRESSED_IMAGE_SIZE_ARB               0x86A0
+        TEXTURE_COMPRESSED_ARB                          0x86A1
 
     Accepted by the <value> parameter of GetIntegerv, GetBooleanv, GetFloatv,
     and GetDoublev:
 
-	NUM_COMPRESSED_TEXTURE_FORMATS_ARB		0x86A2
-	COMPRESSED_TEXTURE_FORMATS_ARB			0x86A3
+        NUM_COMPRESSED_TEXTURE_FORMATS_ARB              0x86A2
+        COMPRESSED_TEXTURE_FORMATS_ARB                  0x86A3
 
 Additions to Chapter 2 of the OpenGL 1.2.1 Specification (OpenGL Operation)
 
@@ -515,28 +515,28 @@ Additions to Chapter 3 of the OpenGL 1.2.1 Specification (Rasterization)
     established.  In addition, the choice of a compressed image format may not
     be affected by the <data> parameter.  Allocations must be invariant; the
     same allocation and compressed image format must be chosen each time a
-    texture image is specified with the same parameter values.	These
+    texture image is specified with the same parameter values.  These
     allocation rules also apply to proxy textures, which are described in
     section 3.8.7.
 
     Add Table 3.16.1:  Specific Compressed Internal Formats
 
-	Compressed Internal Format	   Base Internal Format
-	==========================	   ====================
-	none provided here -- defined by dependent extensions
+        Compressed Internal Format         Base Internal Format
+        ==========================         ====================
+        none provided here -- defined by dependent extensions
 
 
     Add Table 3.16.2:  Generic Compressed Internal Formats
 
-	Generic Compressed Internal
-	Format				   Base Internal Format
-	==========================	   ====================
-	COMPRESSED_ALPHA_ARB		   ALPHA
-	COMPRESSED_LUMINANCE_ARB	   LUMINANCE
-	COMPRESSED_LUMINANCE_ALPHA_ARB	   LUMINANCE_ALPHA
-	COMPRESSED_INTENSITY_ARB	   INTENSITY
-	COMPRESSED_RGB_ARB		   RGB
-	COMPRESSED_RGBA_ARB		   RGBA
+        Generic Compressed Internal
+        Format                             Base Internal Format
+        ==========================         ====================
+        COMPRESSED_ALPHA_ARB               ALPHA
+        COMPRESSED_LUMINANCE_ARB           LUMINANCE
+        COMPRESSED_LUMINANCE_ALPHA_ARB     LUMINANCE_ALPHA
+        COMPRESSED_INTENSITY_ARB           INTENSITY
+        COMPRESSED_RGB_ARB                 RGB
+        COMPRESSED_RGBA_ARB                RGBA
 
 
     Modify Section 3.8.2, Alternate Image Specification
@@ -563,7 +563,7 @@ Additions to Chapter 3 of the OpenGL 1.2.1 Specification (Rasterization)
     Compressed Texture Images
 
     Texture images may also be specified or modified using image data already
-    stored in a known compressed image format.	The ARB_texture_compression
+    stored in a known compressed image format.  The ARB_texture_compression
     extension defines no such formats, but provides the mechanisms for other
     extensions that do.
 
@@ -588,7 +588,7 @@ Additions to Chapter 3 of the OpenGL 1.2.1 Specification (Rasterization)
     <target>, <level>, <internalformat>, <width>, <height>, <depth>, and
     <border> parameters have the same meaning as in TexImage1D, TexImage2D,
     and TexImage3D.  <data> points to compressed image data stored in the
-    compressed image format corresponding to <internalformat>.	Since this
+    compressed image format corresponding to <internalformat>.  Since this
     extension provides no specific image formats, using any of the six generic
     compressed internal formats as <internalformat> will result in an
     INVALID_ENUM error.
@@ -618,16 +618,16 @@ Additions to Chapter 3 of the OpenGL 1.2.1 Specification (Rasterization)
     INVALID_OPERATION error if the following restrictions are satisfied:
 
       * <data> points to a compressed texture image returned by
-	GetCompressedTexImageARB (Section 6.1.4).
+        GetCompressedTexImageARB (Section 6.1.4).
 
       * <target>, <level>, and <internalformat> match the <target>, <level>
-	and <format> parameters provided to the GetCompressedTexImageARB call
-	returning <data>.
+        and <format> parameters provided to the GetCompressedTexImageARB call
+        returning <data>.
 
       * <width>, <height>, <depth>, <border>, <internalformat>, and
-	<imageSize> match the values of TEXTURE_WIDTH, TEXTURE_HEIGHT,
-	TEXTURE_DEPTH, TEXTURE_BORDER, TEXTURE_INTERNAL_FORMAT, and
-	TEXTURE_COMPRESSED_IMAGE_SIZE_ARB for image level <level> in effect at
+        <imageSize> match the values of TEXTURE_WIDTH, TEXTURE_HEIGHT,
+        TEXTURE_DEPTH, TEXTURE_BORDER, TEXTURE_INTERNAL_FORMAT, and
+        TEXTURE_COMPRESSED_IMAGE_SIZE_ARB for image level <level> in effect at
         the time of the GetCompressedTexImageARB call returning <data>.
 
     This guarantee applies not just to images returned by
@@ -659,7 +659,7 @@ Additions to Chapter 3 of the OpenGL 1.2.1 Specification (Rasterization)
     <level>, <xoffset>, <yoffset>, <zoffset>, <width>, <height>, and <depth>
     parameters have the same meaning as in TexSubImage1D, TexSubImage2D, and
     TexSubImage3D.  <data> points to compressed image data stored in the
-    compressed image format corresponding to <format>.	Since this extension
+    compressed image format corresponding to <format>.  Since this extension
     provides no specific image formats, using any of these six generic
     compressed internal formats as <format> will result in an INVALID_ENUM
     error.
@@ -686,24 +686,24 @@ Additions to Chapter 3 of the OpenGL 1.2.1 Specification (Rasterization)
     an INVALID_OPERATION error if the following restrictions are satisfied:
 
       * <data> points to a compressed texture image returned by
-	GetCompressedTexImageARB (Section 6.1.4).
+        GetCompressedTexImageARB (Section 6.1.4).
 
       * <target>, <level>, and <format> match the <target>, <level> and
-	<format> parameters provided to the GetCompressedTexImageARB call
-	returning <data>.
+        <format> parameters provided to the GetCompressedTexImageARB call
+        returning <data>.
 
       * <width>, <height>, <depth>, <format>, and <imageSize> match the values
-	of TEXTURE_WIDTH, TEXTURE_HEIGHT, TEXTURE_DEPTH,
-	TEXTURE_INTERNAL_FORMAT, and TEXTURE_COMPRESSED_IMAGE_SIZE_ARB for
+        of TEXTURE_WIDTH, TEXTURE_HEIGHT, TEXTURE_DEPTH,
+        TEXTURE_INTERNAL_FORMAT, and TEXTURE_COMPRESSED_IMAGE_SIZE_ARB for
         image level <level> in effect at the time of the
         GetCompressedTexImageARB call returning <data>.
 
       * <width>, <height>, <depth>, <format> match the values of
-	TEXTURE_WIDTH, TEXTURE_HEIGHT, TEXTURE_DEPTH, and
-	TEXTURE_INTERNAL_FORMAT currently in effect for image level <level>.
+        TEXTURE_WIDTH, TEXTURE_HEIGHT, TEXTURE_DEPTH, and
+        TEXTURE_INTERNAL_FORMAT currently in effect for image level <level>.
 
       * <xoffset>, <yoffset>, and <zoffset> are all "-<b>", where <b> is the
-	value of TEXTURE_BORDER currently in effect for image level <level>.
+        value of TEXTURE_BORDER currently in effect for image level <level>.
 
     This guarantee applies not just to images returned by
     GetCompressedTexImageARB, but also to any other properly encoded
@@ -780,7 +780,7 @@ State Requests)
 
     is used to obtain texture images stored in compressed form.  The
     parameters <target>, <lod>, and <img> are interpreted in the same manner
-    as in GetTexImage.	When called, GetCompressedTexImageARB writes
+    as in GetTexImage.  When called, GetCompressedTexImageARB writes
     TEXTURE_COMPRESSED_IMAGE_SIZE_ARB ubytes of compressed image data to the
     memory pointed to by <img>.  The compressed image data is formatted
     according to the specification defining INTERNAL_FORMAT.  All pixel
@@ -808,24 +808,24 @@ GLX Protocol
 
     GetCompressedTexImageARB
 
-	1	CARD8		    opcode (X assigned)
-	1	160		    GLX opcode
-	2	4		    request length
-	4	GLX_CONTEXT_TAG     context tag
-	4	ENUM		    target
-	4	INT32		    level
+        1       CARD8               opcode (X assigned)
+        1       160                 GLX opcode
+        2       4                   request length
+        4       GLX_CONTEXT_TAG     context tag
+        4       ENUM                target
+        4       INT32               level
 
      -->
 
-	1	1		    Reply
-	1	1		    unused
-	2	CARD16		    sequence number
-	4	n		    reply length
-	8			    unused
-	4	INT32		    compressed image size (in bytes) --
-				      should be between 4n-3 and 4n
-	12			    unused
-	4*n	LISTofBYTE	    teximage
+        1       1                   Reply
+        1       1                   unused
+        2       CARD16              sequence number
+        4       n                   reply length
+        8                           unused
+        4       INT32               compressed image size (in bytes) --
+                                      should be between 4n-3 and 4n
+        12                          unused
+        4*n     LISTofBYTE          teximage
 
     Note that n may be zero, indicating that a GL error occurred.
 
@@ -838,129 +838,129 @@ GLX Protocol
 
     CompressedTexImage1DARB
 
-	2	32+n+p		rendering command length
-	2	214		rendering command opcode
-	4	ENUM		target
-	4	INT32		level
-	4	ENUM		internalformat
-	4	INT32		width
-	4			unused
-	4	INT32		border
-	n	LISTofBYTE	image
-	4	INT32		imageSize
-	p			unused, p=pad(n)
+        2       32+n+p          rendering command length
+        2       214             rendering command opcode
+        4       ENUM            target
+        4       INT32           level
+        4       ENUM            internalformat
+        4       INT32           width
+        4                       unused
+        4       INT32           border
+        n       LISTofBYTE      image
+        4       INT32           imageSize
+        p                       unused, p=pad(n)
 
     If the command is encoded in a glXRenderLarge request, the command
     opcode and command length fields are expanded to 4 bytes each.
 
-	4	36+n+p		rendering command length
-	4	214		rendering command opcode
+        4       36+n+p          rendering command length
+        4       214             rendering command opcode
 
     CompressedTexImage2DARB
 
-	2	32+n+p		rendering command length
-	2	215		rendering command opcode
-	4	ENUM		target
-	4	INT32		level
-	4	ENUM		internalformat
-	4	INT32		width
-	4	INT32		height
-	4	INT32		border
-	4	INT32		imageSize
-	n	LISTofBYTE	image
-	p			unused, p=pad(n)
+        2       32+n+p          rendering command length
+        2       215             rendering command opcode
+        4       ENUM            target
+        4       INT32           level
+        4       ENUM            internalformat
+        4       INT32           width
+        4       INT32           height
+        4       INT32           border
+        4       INT32           imageSize
+        n       LISTofBYTE      image
+        p                       unused, p=pad(n)
 
     If the command is encoded in a glXRenderLarge request, the command
     opcode and command length fields are expanded to 4 bytes each.
 
-	4	36+n+p		rendering command length
-	4	215		rendering command opcode
+        4       36+n+p          rendering command length
+        4       215             rendering command opcode
 
     CompressedTexImage3DARB
 
-	2	36+n+p		rendering command length
-	2	216		rendering command opcode
-	4	ENUM		target
-	4	INT32		level
-	4	INT32		internalformat
-	4	INT32		width
-	4	INT32		height
-	4	INT32		depth
-	4	INT32		border
-	4	INT32		imageSize
-	n	LISTofBYTE	image
-	p			unused, p=pad(n)
+        2       36+n+p          rendering command length
+        2       216             rendering command opcode
+        4       ENUM            target
+        4       INT32           level
+        4       INT32           internalformat
+        4       INT32           width
+        4       INT32           height
+        4       INT32           depth
+        4       INT32           border
+        4       INT32           imageSize
+        n       LISTofBYTE      image
+        p                       unused, p=pad(n)
 
     If the command is encoded in a glXRenderLarge request, the command
     opcode and command length fields are expanded to 4 bytes each.
 
-	4	36+n+p		rendering command length
-	4	216		rendering command opcode
+        4       36+n+p          rendering command length
+        4       216             rendering command opcode
 
     CompressedTexSubImage1DARB
 
-	2	36+n+p		rendering command length
-	2	217		rendering command opcode
-	4	ENUM		target
-	4	INT32		level
-	4	INT32		xoffset
-	4			unused
-	4	INT32		width
-	4			unused
-	4	ENUM		format
-	4	INT32		imageSize
-	n	LISTofBYTE	image
-	p			unused, p=pad(n)
+        2       36+n+p          rendering command length
+        2       217             rendering command opcode
+        4       ENUM            target
+        4       INT32           level
+        4       INT32           xoffset
+        4                       unused
+        4       INT32           width
+        4                       unused
+        4       ENUM            format
+        4       INT32           imageSize
+        n       LISTofBYTE      image
+        p                       unused, p=pad(n)
 
     If the command is encoded in a glXRenderLarge request, the command
     opcode and command length fields are expanded to 4 bytes each.
 
-	4	40+n+p		rendering command length
-	4	217		rendering command opcode
+        4       40+n+p          rendering command length
+        4       217             rendering command opcode
 
     CompressedTexSubImage2DARB
 
-	2	36+n+p		rendering command length
-	2	218		rendering command opcode
-	4	ENUM		target
-	4	INT32		level
-	4	INT32		xoffset
-	4	INT32		yoffset
-	4	INT32		width
-	4	INT32		height
-	4	ENUM		format
-	4	INT32		imageSize
-	n	LISTofBYTE	image
-	p			unused, p=pad(n)
+        2       36+n+p          rendering command length
+        2       218             rendering command opcode
+        4       ENUM            target
+        4       INT32           level
+        4       INT32           xoffset
+        4       INT32           yoffset
+        4       INT32           width
+        4       INT32           height
+        4       ENUM            format
+        4       INT32           imageSize
+        n       LISTofBYTE      image
+        p                       unused, p=pad(n)
 
     If the command is encoded in a glXRenderLarge request, the command
     opcode and command length fields are expanded to 4 bytes each.
 
-	4	40+n+p		rendering command length
-	4	218		rendering command opcode
+        4       40+n+p          rendering command length
+        4       218             rendering command opcode
 
     CompressedTexSubImage3DARB
 
-	2	44+n+p		rendering command length
-	2	219		rendering command opcode
-	4	ENUM		target
-	4	INT32		level
-	4	INT32		xoffset
-	4	INT32		yoffset
-	4	INT32		zoffset
-	4	INT32		width
-	4	INT32		height
-	4	INT32		depth
-	4	ENUM		format
-	4	INT32		imageSize
-	n	LISTofBYTE	image
-	p			unused, p=pad(n)
+        2       44+n+p          rendering command length
+        2       219             rendering command opcode
+        4       ENUM            target
+        4       INT32           level
+        4       INT32           xoffset
+        4       INT32           yoffset
+        4       INT32           zoffset
+        4       INT32           width
+        4       INT32           height
+        4       INT32           depth
+        4       ENUM            format
+        4       INT32           imageSize
+        n       LISTofBYTE      image
+        p                       unused, p=pad(n)
 
     If the command is encoded in a glXRenderLarge request, the command
     opcode and command length fields are expanded to 4 bytes each.
 
-	4	48+n+p		rendering command length
-	4	219		rendering command opcode
+        4       48+n+p          rendering command length
+        4       219             rendering command opcode
 
 
 Errors
@@ -976,7 +976,7 @@ Errors
 
     INVALID_VALUE is generated by CompressedTexSubImage1DARB,
     CompressedTexSubImage2DARB, or CompressedTexSubImage3DARB if the entire
-    texture image is not being edited:	if <xoffset>, <yoffset>, or <zoffset>
+    texture image is not being edited:  if <xoffset>, <yoffset>, or <zoffset>
     is greater than -b, <xoffset> + <width> is less than w+b, <yoffset> +
     <height> is less than h+b, or <zoffset> + <depth> is less than d+b, where
     b is the value of TEXTURE_BORDER, w is the value of TEXTURE_WIDTH, h is
@@ -1080,40 +1080,40 @@ Errors
 New State
 
     (table 6.12, p.202)
-								Initial
-    Get Value				Type	Get Command	Value	Description Sec.    Attribute
-    ---------				----	-----------	------- ----------- ----    ---------
-    TEXTURE_COMPRESSED_IMAGE_SIZE_ARB	n x Z+	GetTexLevel-	0	size (in    3.8     -
-						Parameter		ubytes)
-									of xD compressed
-									texture image i.
-    TEXTURE_COMPRESSED_ARB		n x B	GetTexLevel-	FALSE	True if xD  3.8     -
-						Parameter		image i has
-									a compressed
-									internal format
+                                                                Initial
+    Get Value                           Type    Get Command     Value   Description Sec.    Attribute
+    ---------                           ----    -----------     ------- ----------- ----    ---------
+    TEXTURE_COMPRESSED_IMAGE_SIZE_ARB   n x Z+  GetTexLevel-    0       size (in    3.8     -
+                                                Parameter               ubytes)
+                                                                        of xD compressed
+                                                                        texture image i.
+    TEXTURE_COMPRESSED_ARB              n x B   GetTexLevel-    FALSE   True if xD  3.8     -
+                                                Parameter               image i has
+                                                                        a compressed
+                                                                        internal format
 
     (table 6.23, p.213)
-								Initial
-    Get Value				Type	Get Command	Value	Description Sec.    Attribute
-    ---------				----	-----------	------- ----------- ----    ---------
-    TEXTURE_COMPRESSION_HINT_ARB	Z_3	GetIntegerv	DONT_	Texture     5.6     hint
-								CARE	compression
-									quality hint
+                                                                Initial
+    Get Value                           Type    Get Command     Value   Description Sec.    Attribute
+    ---------                           ----    -----------     ------- ----------- ----    ---------
+    TEXTURE_COMPRESSION_HINT_ARB        Z_3     GetIntegerv     DONT_   Texture     5.6     hint
+                                                                CARE    compression
+                                                                        quality hint
 
     (table 6.25, p. 215)
-								Minimum
-    Get Value				Type	Get Command	Value	Description Sec.    Attribute
-    ---------				----	-----------	------- ----------- ----    ---------
-    NUM_COMPRESSED_TEXTURE_FORMATS_ARB	Z	GetIntegerv	0	Number of   3.8     -
-									enumerated
-									compressed
-									texture
-									formats
+                                                                Minimum
+    Get Value                           Type    Get Command     Value   Description Sec.    Attribute
+    ---------                           ----    -----------     ------- ----------- ----    ---------
+    NUM_COMPRESSED_TEXTURE_FORMATS_ARB  Z       GetIntegerv     0       Number of   3.8     -
+                                                                        enumerated
+                                                                        compressed
+                                                                        texture
+                                                                        formats
 
-    COMPRESSED_TEXTURE_FORMATS_ARB	0* x Z	GetIntegerv	-	Enumerated  3.8     -
-									compressed
-									texture
-									formats
+    COMPRESSED_TEXTURE_FORMATS_ARB      0* x Z  GetIntegerv     -       Enumerated  3.8     -
+                                                                        compressed
+                                                                        texture
+                                                                        formats
 
 Revision History
 
@@ -1138,70 +1138,70 @@ Revision History
                              supported by GL_ARB_texture_cube_map.
 
     1.0,  03/24/00 prbrown1: Applied changes approved as part of the extension
-			     at the March 2000 ARB meeting, as follows:
+                             at the March 2000 ARB meeting, as follows:
 
-			     * CompressedTexSubImage:  Only allowed if the
-			       entire image is replaced.  Document that this
-			       restriction can be relaxed for specific
-			       compression extensions.
-			     * Renamed TEXTURE_IMAGE_SIZE_ARB to
-			       TEXTURE_COMPRESSED_IMAGE_SIZE_ARB.
-			     * Querying image size on uncompressed images is
-			       now an INVALID_OPERATION error.
-			     * INVALID_VALUE error is generated if <imageSize>
-			       is inconsistent with the image data.  This
-			       restriction may be overridden by specific
-			       extensions only if requiring an image size
-			       check is unreasonable.
-			     * Added documentaion of undefined behavior for
-			       CompressedTexImage/SubImage if the image data
-			       is encoded in a manner inconsistent with the
-			       spec defining the compressed image format.
-			     * Fixed issue (16).  Text was truncated.
-			     * Modified invariance section.  <data> can not
-			       affect the choice of compressed internal
-			       format, but can theoretically affect regular
-			       component resolution.
-			     * Add new function GetCompressedTexImage to deal
-			       with subtle GLX issues.
-			     * GLX protocol for CompressedTexImage/SubImage
-			       and GetCompressedTexImage holds both a padded
-			       image size (for GLX data transfer) and actual
-			       image size (for packing in user buffers).
+                             * CompressedTexSubImage:  Only allowed if the
+                               entire image is replaced.  Document that this
+                               restriction can be relaxed for specific
+                               compression extensions.
+                             * Renamed TEXTURE_IMAGE_SIZE_ARB to
+                               TEXTURE_COMPRESSED_IMAGE_SIZE_ARB.
+                             * Querying image size on uncompressed images is
+                               now an INVALID_OPERATION error.
+                             * INVALID_VALUE error is generated if <imageSize>
+                               is inconsistent with the image data.  This
+                               restriction may be overridden by specific
+                               extensions only if requiring an image size
+                               check is unreasonable.
+                             * Added documentaion of undefined behavior for
+                               CompressedTexImage/SubImage if the image data
+                               is encoded in a manner inconsistent with the
+                               spec defining the compressed image format.
+                             * Fixed issue (16).  Text was truncated.
+                             * Modified invariance section.  <data> can not
+                               affect the choice of compressed internal
+                               format, but can theoretically affect regular
+                               component resolution.
+                             * Add new function GetCompressedTexImage to deal
+                               with subtle GLX issues.
+                             * GLX protocol for CompressedTexImage/SubImage
+                               and GetCompressedTexImage holds both a padded
+                               image size (for GLX data transfer) and actual
+                               image size (for packing in user buffers).
 
-			     Minor wording clean-ups.
+                             Minor wording clean-ups.
 
-			     Added enum and GLX opcode values allocated from
-			     OpenGL Extensions and GLX registries.
+                             Added enum and GLX opcode values allocated from
+                             OpenGL Extensions and GLX registries.
 
     0.81, 03/07/00 prbrown1: Fixed error documentation for TexSubImage calls
-			     of arbitrary alignment (did not document that the
-			     internal format had to be compressed).  Removed
-			     references to CopyTexImage3D, which doesn't
-			     actually exist.
+                             of arbitrary alignment (did not document that the
+                             internal format had to be compressed).  Removed
+                             references to CopyTexImage3D, which doesn't
+                             actually exist.
 
-			     Per Kurt Akeley suggestions: (1) Renamed
-			     TexImageCompressed to CompressedTexImage to
-			     conform with naming conventions, (2) clarified
-			     that the main feature distinguishing
-			     CompressedTex[Sub]Image calls from normal
-			     Tex[Sub]Image calls is compressed input data, (3)
-			     added query to explicitly determine whether the
-			     internal format of a texture is compressed.
+                             Per Kurt Akeley suggestions: (1) Renamed
+                             TexImageCompressed to CompressedTexImage to
+                             conform with naming conventions, (2) clarified
+                             that the main feature distinguishing
+                             CompressedTex[Sub]Image calls from normal
+                             Tex[Sub]Image calls is compressed input data, (3)
+                             added query to explicitly determine whether the
+                             internal format of a texture is compressed.
 
     0.8,  02/23/00 prbrown1: Marked previously unresolved issues as resolved
-			     per the ARB working group.  Added docs for errors
-			     not specific to compression for the new
-			     CompressedTexImage and CompressedTexSubImage
-			     calls.  Added queries to enumerate specific
-			     compressed texture formats.
+                             per the ARB working group.  Added docs for errors
+                             not specific to compression for the new
+                             CompressedTexImage and CompressedTexSubImage
+                             calls.  Added queries to enumerate specific
+                             compressed texture formats.
     0.76, 02/16/00 prbrown1: Removed "gl" and "GL_" prefixes.
     0.75, 02/07/00 prbrown1: Incorporated feedback from 12/99 ARB meeting
-			     and a number of other revisions.
+                             and a number of other revisions.
     0.7,  12/03/99 prbrown1: Incorporated comments from public review of 0.2
-			     document.
+                             document.
     0.2,  10/28/99 prbrown1: Renamed to ARB_texture_compression.  Significant
-			     functional changes.
+                             functional changes.
     0.11, 10/21/99 prbrown1: Edits suggested by 3dfx.
     0.1,  10/19/99 prbrown1: Initial revision.
 

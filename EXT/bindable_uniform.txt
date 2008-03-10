@@ -17,8 +17,8 @@ Status
 
 Version
 
-    Last Modified Date:         12/15/2006
-    Author revision:            12
+    Last Modified Date:         02/14/2008
+    Author revision:            14
 
 Number
 
@@ -36,11 +36,12 @@ Dependencies
 Overview
 
     This extension introduces the concept of bindable uniforms to the OpenGL
-    Shading Language. A uniform variable can be declared bindable, which means
-    that the storage for the uniform is not allocated by the compiler/linker
-    anymore, but is backed by a buffer object. This buffer object is bound to
-    the bindable uniform through the new command UniformBuffer(). Binding
-    needs to happen after linking a program object.
+    Shading Language.  A uniform variable can be declared bindable, which
+    means that the storage for the uniform is not allocated by the
+    compiler/linker anymore, but is backed by a buffer object.  This buffer
+    object is bound to the bindable uniform through the new command
+    UniformBufferEXT().  Binding needs to happen after linking a program
+    object.
 
     Binding different buffer objects to a bindable uniform allows an
     application to easily use different "uniform data sets", without having to
@@ -163,11 +164,10 @@ Additions to Chapter 2 of the OpenGL 2.0 Specification (OpenGL Operation)
     generated if <location> does not correspond to an active bindable uniform
     in <program>.  The parameter <location> has to be location corresponding
     to the name of the bindable uniform itself, otherwise the error
-    INVALID_OPERATION is generated. This means that the string passed to the
-    parameter <name> in GetUniformLocation() cannot contain the "." (dot) or
-    "[]" operators, unless the bindable uniform is an array, then the name of
-    the bindable uniform appended with "[0]" can also be used. If <program>
-    has not been successfully linked, the error INVALID_OPERATION is
+    INVALID_OPERATION is generated.  If the bindable uniform is a structure,
+    <location> can not refer to a structure member.  If it is an array,
+    <location> can not refer to any array member other than the first one.  If
+    <program> has not been successfully linked, the error INVALID_OPERATION is
     generated.
 
     There is an implementation-dependent limit on the size of bindable uniform
@@ -216,17 +216,17 @@ Additions to Chapter 2 of the OpenGL 2.0 Specification (OpenGL Operation)
     It is not necessary to bind a buffer object to UNIFORM_BUFFER_EXT in order
     to use it with an active program object.
 
-    The size and layout of a bindable uniform variable in buffer object
-    storage is not defined.  However, the values of signed integer, unsigned
-    integer, or floating-point uniforms may be updated by modifying the
-    underying buffer object storage using either MapBuffer or BufferSubData.
-    The command
+    The exact layout of bindable uniform variables in buffer object storage is
+    not defined.  However, the values of signed integer, unsigned integer, or
+    floating-point uniforms, or vectors thereof, may be updated by modifying
+    the underlying buffer object storage using either MapBuffer or
+    BufferSubData.  The command
 
       intptr GetUniformOffsetEXT(uint program, int location);
 
     returns the offset (in bytes) of the uniform in <program> whose location
-    returned by GetUniformLocation is <location>.  The error INVALID_VALUE is
-    generated if the object named by <program> does not exist.  The error
+    as returned by GetUniformLocation is <location>.  The error INVALID_VALUE
+    is generated if the object named by <program> does not exist.  The error
     INVALID_OPERATION is generated if <program> is not a program object, if
     <program> was not linked successfully, or if <location> refers to a
     uniform that was not declared as bindable.  The memory layout of matrix,
@@ -718,6 +718,12 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     14   02/14/08  pbrown    Clarify some confusing language about the memory
+                              layout restrictions and GetUniformOffsetEXT.
+
+     13   12/13/07  pbrown    Minor clarification on what values can be passed
+                              to GetUniformBufferSizeEXT and UniformBufferEXT.
+
      12   12/15/06  pbrown    Documented that the '#extension' token
                               for this extension should begin with "GL_",
                               as apparently called for per convention.

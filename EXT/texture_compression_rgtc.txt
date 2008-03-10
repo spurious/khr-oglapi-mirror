@@ -11,6 +11,7 @@ Contributors
     Mark J. Kilgard, NVIDIA
     Pat Brown, NVIDIA
     Yanjun Zhang, S3
+    Attila Barsi, Holografika
      
 Contact
 
@@ -22,8 +23,8 @@ Status
 
 Version
 
-    Date: November 6, 2006
-    Revision: 1.0
+    Date: January 21, 2008
+    Revision: 1.2
 
 Number
 
@@ -381,6 +382,14 @@ Appendix
 
         MAXRED =  1.0
 
+    CAVEAT for signed red0 and red1 values: the expressions "red0 >
+    red1" and "red0 <= red1" above are considered undefined (read: may
+    vary by implementation) when red0 equals -127 and red1 equals -128,
+    This is because if red0 were remapped to -127 prior to the comparison
+    to reduce the latency of a hardware decompressor, the expressions
+    would reverse their logic.  Encoders for the signed LA formats should
+    avoid encoding blocks where red0 equals -127 and red1 equals -128.
+
 
     COMPRESSED_RED_GREEN_RGTC2:  Each 4x4 block of texels consists of
     64 bits of compressed unsigned red image data followed by 64 bits
@@ -695,6 +704,40 @@ Issues
         GL_RED has been a valid external format parameter to glTexImage
         and similar commands since OpenGL 1.0.
 
+    18) Should any of the generic compression GL_COMPRESSED_* tokens in
+        OpenGL 2.1 map to RGTC formats?
+
+        RESOLVED:  No.  The RGTC formats are missing color components
+        so are not adequate implementations for any of the generic
+        compression formats.
+
+    19) Should the GL_NUM_COMPRESSED_TEXTURE_FORMATS and
+        GL_COMPRESSED_TEXTURE_FORMATS queries return the RGTC formats?
+
+        RESOLVED:  No.
+
+        The OpenGL 2.1 specification says "The only values returned
+        by this query [GL_COMPRESSED_TEXTURE_FORMATS"] are those
+        corresponding to formats suitable for general-purpose usage.
+        The renderer will not enumerate formats with restrictions that
+        need to be specifically understood prior to use."
+
+        Compressed textures with just red or red-green components are
+        not general-purpose so should not be returned by these queries
+        because they have restrictions.
+
+        Applications that seek to use the RGTC formats should do so
+        by looking for this extension's name in the string returned by
+        glGetString(GL_EXTENSIONS) rather than
+        what GL_NUM_COMPRESSED_TEXTURE_FORMATS and
+        GL_COMPRESSED_TEXTURE_FORMATS return.
+
 Revision History
 
-    None
+    Revision 1.1, April 24, 2007: mjk
+        -  Add caveat about how signed LA decompression happens when
+           lum0 equals -127 and lum1 equals -128.  This caveat matches
+           a decoding allowance in DirectX 10.
+
+    Revision 1.2, January 21, 2008: mjk
+        -  Add issues #18 and #19.

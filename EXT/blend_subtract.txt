@@ -34,8 +34,8 @@ New Tokens
 
     Accepted by the <mode> parameter of BlendEquationEXT:
 
-	FUNC_SUBTRACT_EXT                0x800A
-	FUNC_REVERSE_SUBTRACT_EXT        0x800B
+        FUNC_SUBTRACT_EXT                0x800A
+        FUNC_REVERSE_SUBTRACT_EXT        0x800B
 
 Additions to Chapter 2 of the GL Specification (OpenGL Operation)
 
@@ -52,11 +52,11 @@ and the Framebuffer)
     called with <mode> set to FUNC_SUBTRACT_EXT, the blending equation
     becomes
 
-	C' = (Cs * S) - (Cd * D)
+        C' = (Cs * S) - (Cd * D)
 
-	     /  0.0	C' < 0.0
-	C = (
-	     \   C'	C' >= 0.0
+             /  0.0     C' < 0.0
+        C = (
+             \   C'     C' >= 0.0
 
     where Cs and Cd are the source and destination colors, and S and D are
     as specified by BlendFunc.
@@ -64,11 +64,11 @@ and the Framebuffer)
     If BlendEquationEXT is called with <mode> set to
     FUNC_REVERSE_SUBTRACT_EXT, the blending equation becomes
 
-	C' = (Cd * D) - (Cs * S)
+        C' = (Cd * D) - (Cs * S)
 
-	     /  0.0	C' < 0.0
-	C = (
-	     \   C'	C' >= 0.0
+             /  0.0     C' < 0.0
+        C = (
+             \   C'     C' >= 0.0
 
     In all cases the blending equation is evaluated separately for each
     color component.
@@ -109,9 +109,9 @@ Errors
 
 New State
 
-    Get Value		Get Command	Type	Initial Value	Attribute
-    ---------		-----------	----	-------------	---------
-    BLEND_EQUATION_EXT	GetIntegerv	Z5	FUNC_ADD_EXT	color-buffer
+    Get Value           Get Command     Type    Initial Value   Attribute
+    ---------           -----------     ----    -------------   ---------
+    BLEND_EQUATION_EXT  GetIntegerv     Z5      FUNC_ADD_EXT    color-buffer
 
 New Implementation Dependent State
 

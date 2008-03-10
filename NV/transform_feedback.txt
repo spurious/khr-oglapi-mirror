@@ -23,8 +23,8 @@ Status
 
 Version
 
-    Last Modified Date:         2/9/2007
-    NVIDIA Revision:            10
+    Last Modified Date:         02/04/2008
+    NVIDIA Revision:            14
 
 Number
 
@@ -185,6 +185,7 @@ New Tokens
       SECONDARY_COLOR_NV                                0x852D
       PRIMARY_COLOR                                     0x8577
       POSITION                                          0x1203
+      LAYER_NV                                          0x8DAA
 
       (note:  POINT_SIZE, FOG_COORDINATE, PRIMARY_COLOR, and POSITION are
        defined in the core OpenGL specification; SECONDARY_COLOR_NV is defined
@@ -361,13 +362,15 @@ Operation)
     object.  In the SEPARATE_ATTRIBS_NV mode, vertex attributes are recorded,
     non-interleaved, into several buffer objects simultaneously.
 
-    It is an INVALID_OPERATION error to call BeginTransformFeedbackNV if
-    there is no buffer object bound to index 0 (see the description of the
+    It is an INVALID_OPERATION error to call BeginTransformFeedbackNV if there
+    is no buffer object bound to index 0 (see the description of the
     BindBuffer* commands below) in INTERLEAVED_ATTRIBS_NV mode. It is also an
     INVALID_OPERATION error to call BeginTransformFeedbackNV if the number of
     buffer objects bound in SEPARATE_ATTRIBS_NV mode is less than the number
     of buffer objects required, as given by the current transform feedback
-    state.
+    state.  It is also an INVALID_OPERATION error to call
+    BeginTransformFeedbackNV if no attributes are specified to be captured in
+    either separate or interleaved mode.
 
     Buffer objects are made to be targets of transform feedback by calling one
     of
@@ -463,8 +466,10 @@ Operation)
     The value for any attribute specified to be streamed to a buffer object
     but not actually written by a vertex or geometry shader is undefined.
 
-    When neither a vertex nor geometry shader is active, the set of vertex
-    attributes recorded in transform feedback mode is specified by
+    When neither a vertex nor geometry shader is active, the vertex attributes
+    produced by fixed-function vertex processing or an assembly vertex or
+    geometry program can be recorded in transform feedback mode.  The set of
+    attributes to record is specified by
 
       void TransformFeedbackAttribsNV(sizei count, const int *attribs,
                                       enum bufferMode)
@@ -498,6 +503,7 @@ Operation)
      VERTEX_ID_NV              1           no       vertexid
      PRIMITIVE_ID_NV           1           no       primid
      GENERIC_ATTRIB_NV         1,2,3,4     yes      attrib[index]
+     LAYER_NV                  1           no       layer
 
     Table X.2:  Transform Feedback Attribute Specifiers.The 'attrib' column
     specifies which attribute to record. The 'permitted sizes' column
@@ -530,12 +536,12 @@ Operation)
 
     The value for any attribute specified to be streamed to a buffer object
     but not actually written by a vertex or geometry program is undefined.
-
-    Note that the value of PRIMITIVE_ID is well defined even if there is no
-    geometry program active, but that the value of VERTEX_ID is only defined
-    if a vertex program is active and writes to the output attribute
-    "result.id". See the NV_vertex_program4 and NV_geometry_program4
-    specifications for more information.
+    The values of PRIMITIVE_ID_NV or LAYER_NV for a vertex is defined if and
+    only if a geometry program is active and that program writes to the result
+    variables "result.primid" or "result.layer", respectively.  The value of
+    VERTEX_ID_NV is only defined if and only if a vertex program is active, no
+    geometry program is active, and the vertex program writes to the output
+    attribute "result.id".
 
     Section 2.Z, Primitive Queries
  
@@ -895,8 +901,8 @@ Interactions with EXT_timer_query
 Dependencies on NV_geometry_program4 and EXT_geometry_shader4
 
     If NV_geometry_program4 is not supported, delete the reference to the
-    output primitive type in Section 2.Y. Delete the reference to PRIMITIVE_ID
-    and VERTEX_ID.
+    output primitive type in Section 2.Y.  Delete the reference to
+    PRIMITIVE_ID_NV and LAYER_NV.
 
     If EXT_geometry_shader4 is not supported, delete any reference to a
     geometry shader.
@@ -904,9 +910,9 @@ Dependencies on NV_geometry_program4 and EXT_geometry_shader4
 Dependencies on NV_vertex_program4 and NV_gpu_program4
 
     If NV_vertex_program4 is not supported, delete any reference to
-    VERTEX_ID. If NV_gpu_program4 is not supported, table X.2 needs to refer
-    to the "result" variables defined in the ARB_vertex_program specification
-    instead.
+    VERTEX_ID_NV.  If NV_gpu_program4 is not supported, table X.2 needs to
+    refer to the "result" variables defined in the ARB_vertex_program
+    specification instead.
 
 Interactions with ARB_shader_objects and OpenGL 2.0
 
@@ -947,6 +953,9 @@ Errors
     than the number of buffer objects required, as given by the current
     transform feedback state.
 
+    The error INVALID_OPERATION is generated by BeginTransformFeedbackNV if
+    no attributes are specified to be captured.
+
     The error INVALID_OPERATION is generated by BeginTransformFeedbackNV,
     TransformFeedbackBufferNV, TransformFeedbackVaryingsNV,
     TransformFeedbackAttribsNV, or UseProgram or LinkProgram, called on the
@@ -981,11 +990,6 @@ Errors
     in INTERLEAVED_ATTRIBS_NV mode if the total number of components of all
     varying variables specified in the array <locations> is greater than
     MAX_TRANSFORM_FEEDBACK_INTERLEAVED_COMPONENTS_NV.
-
-    The error INVALID_OPERATION is generated by the
-    TransformFeedbackAttribsNV and TransformFeedbackVaryingsNV commands in
-    SEPARATE_ATTRIBS_NV mode if <count> is not equal to the number of buffer
-    objects bound.
 
     The error INVALID_VALUE is generated by TransformFeedbackVaryingsNV or
     TransformFeedbackAttribsNV in SEPARATE_ATTRIBS_NV mode if <count> is
@@ -1435,22 +1439,67 @@ Issues
       RESOLVED: Yes, there is nothing that precludes this. The application is
       responsible for sending down the needed vertex attributes and setting
       the GL state, as desired, for the attributes it wants to stream to a
-      buffer object. Note that VERTEX_ID is not defined in fixed-function.
+      buffer object. Note that VERTEX_ID_NV is not defined in fixed-function.
+
+    28. Is it possible to record hardware-generated primitive ID values that
+        would be available to a pixel shader?
+
+      RESOLVED:  Transform feedback can only record the primitive ID values
+      emitted per-vertex by a geometry shader or program.  While each
+      primitive recorded for transform-feedback has a well-defined primitive
+      ID, transform feedback is only capable of recording the attributes of
+      individual vertices.
+
+    29.  Does transform feedback support the ability to capture per-vertex
+         layer outputs, as provided by EXT_geometry_shader4 and
+         NV_geometry_program4?
+
+      RESOLVED:  Yes.  For GLSL shaders, it is sufficient to reference the
+      built-in varying "gl_Layer".  For assembly geometry programs, the
+      original version of the spec did not provide an enum allowing you to
+      name "result.layer" in TransformFeedbackAttribsNV.  This was an
+      oversight in the original spec, which was fixed by version 14.  An
+      updated driver will be required to take advantage of this capability;
+      NVIDIA drivers supporting this extension published prior to February
+      2008 will not be able to capture "result.layer".  The value captured for
+      LAYER_NV will be undefined unless a geometry program that writes
+      "result.layer" is active.
 
 Revision History
 
       Rev.    Date    Author    Changes
       ----  --------  --------  -----------------------------------------
-      10    02/09/07  pbrown    Updated status section (now released).
+       14   02/04/08  pbrown    Fixed a problem with the spec where we were
+                                unable to record "result.layer" using the
+                                assembly interface.  Added a new enum to 
+                                address.
 
-       9    10/23/06  pbrown    Fixed prototype for GetIntegerIndexedEXT and
+       13   11/28/07  pbrown    Specified the captured primitive ID to be
+                                undefined unless a geometry shader emits it
+                                as a vertex output.  XFB can only record
+                                per-vertex data.
+
+       12   09/27/07  pbrown    Removed incorrect error description from
+                                the errors section -- buffer objects don't
+                                need to be bound before calling Transform-
+                                Feedback{Attribs,Varyings}NV, just before
+                                BeginTransformFeedbackNV.
+
+       11   08/28/07  pbrown    Added an error calling BeginTransformFeedback
+                                if no attributes would be captured (i.e.,
+                                attribute count is 0 for ASM or no attributes
+                                specified in the active GLSL program).
+
+       10   02/09/07  pbrown    Updated status section (now released).
+
+        9   10/23/06  pbrown    Fixed prototype for GetIntegerIndexedEXT and
                                 GetBooleanIndexedEXT:  <index> is unsigned.
 
-       8    10/19/06  pbrown    Removed stray addition of GetFloatIndexedvEXT
+        8   10/19/06  pbrown    Removed stray addition of GetFloatIndexedvEXT
                                 and GetDoubleIndexedvEXT.  Minor wording
                                 fixes.
 
-       7    10/17/06  pbrown    Rename from EXT to NV while working on
+        7   10/17/06  pbrown    Rename from EXT to NV while working on
                                 standardizing a functional subset extension
                                 that will be named EXT_transform_feedback.  We
                                 expect that the EXT should be equivalent to
@@ -1464,7 +1513,7 @@ Revision History
                                 which are not needed by this and related
                                 extensions.
 
-       6    09/11/06  pbrown    Fix bad prototype for GetActiveVaryingEXT
+        6   09/11/06  pbrown    Fix bad prototype for GetActiveVaryingEXT
                                 and bad references to "GetActiveVaryingsEXT".
                                 Fix enum names for INTERLEAVED_ATTRIBS_EXT and
                                 SEPARATE_ATTRIBS_EXT (no TRANSFORM_ FEEDBACK
@@ -1472,7 +1521,7 @@ Revision History
                                 that were obsoleted by the introduction of the
                                 TRANSFORM_FEEDBACK_RECORD_EXT query.
        
-       5    08/31/06  pbrown    Fix miscellaneous spec errata.   Record enum
+        5   08/31/06  pbrown    Fix miscellaneous spec errata.   Record enum
                                 values that weren't documented in previous
                                 spec versions.  Use correct function names for
                                 indexed "Get" functions.  Clarify that GLSL
@@ -1486,14 +1535,14 @@ Revision History
                                 object range bindings to match the API
                                 (start/size, not start/end).
 
-       4    08/30/06  pbrown    Reformatting as a plaintext document 
+        4   08/30/06  pbrown    Reformatting as a plaintext document 
                                 instead of an exported MS Word document.
 
-       3    07/26/06  barthold  Forgot a few changes w.r.t. version 2.
+        3   07/26/06  barthold  Forgot a few changes w.r.t. version 2.
 
-       2    07/14/06  barthold  Change BindBufferRangeEXT to take an
+        2   07/14/06  barthold  Change BindBufferRangeEXT to take an
                                 offset and size parameter. Change 
                                 BindBufferOffsetEXT to take an offset
                                 parameter.
 
-       1              barthold  Internal spec development.
+        1             barthold  Internal spec development.

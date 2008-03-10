@@ -64,14 +64,14 @@ Issues
         Yes, this was an over-sight in the original spec. Integer
         formats allow for the potential to provide smaller data
         types to the API. Integer data types are always mapped
-		to floats in the same manner as colors.
+                to floats in the same manner as colors.
 
     Should the blending weights be forced to sum to 1?
 
         No, it should be provided as a convenience to developers,
-		since it is the most common case. Additionally, it should
-		be noted that even if the weights do not sum to one,
-		the result of the modelview transformation provides an
+                since it is the most common case. Additionally, it should
+                be noted that even if the weights do not sum to one,
+                the result of the modelview transformation provides an
         eye coordinate whose homogenous coordinate is equivalent
         to the homogeneous coordinate after the transformation
         had the weights been scaled to sum to one.
@@ -117,7 +117,7 @@ Issues
       scalars?
 
         Yes, this removes little flexibility and significantly
-		reduces the call overhead.
+                reduces the call overhead.
 
 
 New Procedures and Functions
@@ -125,9 +125,9 @@ New Procedures and Functions
     void Weight{bsifd ubusui}vARB(int size, T* weights)
 
     void WeightPointerARB(int size, enum type, sizei stride,
-	                      void *pointer)
+                              void *pointer)
 
-	void VertexBlendARB(int count)
+        void VertexBlendARB(int count)
 
 
 New Tokens
@@ -136,14 +136,14 @@ New Tokens
     GetFloatv, and GetDoublev:
 
       MAX_VERTEX_UNITS_ARB            0x86A4
-	  ACTIVE_VERTEX_UNITS_ARB         0x86A5
+          ACTIVE_VERTEX_UNITS_ARB         0x86A5
 
-	Accepted by the <cap> parameters of Enable and Disable, by the
+        Accepted by the <cap> parameters of Enable and Disable, by the
     <value> parameter of IsEnabled, GetBooleanv, GetIntegerv,
     GetFloatv, and GetDoublev:
 
-	  WEIGHT_SUM_UNITY_ARB            0x86A6
-	  VERTEX_BLEND_ARB                0x86A7
+          WEIGHT_SUM_UNITY_ARB            0x86A6
+          VERTEX_BLEND_ARB                0x86A7
 
     Accepted by the <mode> parameter of MatrixMode and by the
     <value> parameter of GetBooleanv, GetIntegerv, GetFloatv, and
@@ -192,7 +192,7 @@ New Tokens
 
       WEIGHT_ARRAY_TYPE_ARB           0x86A9
       WEIGHT_ARRAY_STRIDE_ARB         0x86AA
-	  WEIGHT_ARRAY_SIZE_ARB           0x86AB
+          WEIGHT_ARRAY_SIZE_ARB           0x86AB
 
     Accepted by the <pname> parameter of GetPointerv:
       WEIGHT_ARRAY_POINTER_ARB        0x86AC
@@ -243,25 +243,25 @@ Additions to Chapter 2 of the OpenGL 1.2.1 Specification (Operation)
               void Weight{bsifd ubusui}vARB(int size, T* weights);
 
           the floating point values are assigned to the current
-		  weight vector. The first <size> current weights are
-		  replaced with <weights> such that:
-		  
-		      w[i] = <weights>[i]
-		 
-		  When WEIGHT_SUM_UNITY_ARB is enabled, 
-		  
+                  weight vector. The first <size> current weights are
+                  replaced with <weights> such that:
+                  
+                      w[i] = <weights>[i]
+                 
+                  When WEIGHT_SUM_UNITY_ARB is enabled, 
+                  
                                               <size>-1 
-		      w[<size>] = 1 - SUM <weights>[i]
-			                                  i=0
+                      w[<size>] = 1 - SUM <weights>[i]
+                                                          i=0
 
-		  otherwise the rest of the current weights are set to
-		  0. If <size> is greater than MAX_VERTEX_UNITS_ARB or if
-		  WEIGHT_SUM_UNITY_ARB is enabled and <size> equals
-		  MAX_VERTEX_UNITS_ARB, then the error INVALID_VALUE is
-		  generated. When the values are supplied as byte, short,
-		  int, or their unsigned counterparts, they are converted to
-		  floating-point values as indicated for the corresponding
-		  type in Table 2.6."
+                  otherwise the rest of the current weights are set to
+                  0. If <size> is greater than MAX_VERTEX_UNITS_ARB or if
+                  WEIGHT_SUM_UNITY_ARB is enabled and <size> equals
+                  MAX_VERTEX_UNITS_ARB, then the error INVALID_VALUE is
+                  generated. When the values are supplied as byte, short,
+                  int, or their unsigned counterparts, they are converted to
+                  floating-point values as indicated for the corresponding
+                  type in Table 2.6."
 
     - (2.8, p. 21) First paragraph changed to read:
 
@@ -275,7 +275,7 @@ Additions to Chapter 2 of the OpenGL 1.2.1 Specification (Operation)
           The client may specify an implementation dependent set of
           arrays: one each to store edge flags, texture coordinates,
           colors, color indices, normals, vertices, and weights.
-		  The commands
+                  The commands
 
               void EdgeFlagPointer( sizei stride, void *pointer);
 
@@ -295,7 +295,7 @@ Additions to Chapter 2 of the OpenGL 1.2.1 Specification (Operation)
                 void *pointer );
 
               void WeightPointerARB( int size, enum type,
-			    sizei stride, void *pointer)
+                            sizei stride, void *pointer)
 
           describe the locations and organizations of these arrays.
           For each command, type specifies the data type of the
@@ -307,16 +307,16 @@ Additions to Chapter 2 of the OpenGL 1.2.1 Specification (Operation)
           argument. Likewise, because color indices, edge flags, and
           weights are always specified with a single value,
           IndexPointer, and EdgeFlagPointer also have no size
-		  argument. Table 2.4 indicates the allowable values for size
-		  and type (when present). For type the values BYTE, SHORT,
-		  INT, FLOAT, and DOUBLE indicates types byte, short, int,
-		  float, and double, respectively; and the values
-		  UNSIGNED_BYTE, UNSIGNED_SHORT, and UNSIGNED_INT indicate
-		  types ubyte, ushort, and uint, respectively. The error
-		  INVALID_VALUE is generated if size is specified with
-		  a value other than that indicated in the table, or if the
-		  <size> parameter to WeightPointerARB is outside the range
-		  allowed for WeightvARB in section 2.7."
+                  argument. Table 2.4 indicates the allowable values for size
+                  and type (when present). For type the values BYTE, SHORT,
+                  INT, FLOAT, and DOUBLE indicates types byte, short, int,
+                  float, and double, respectively; and the values
+                  UNSIGNED_BYTE, UNSIGNED_SHORT, and UNSIGNED_INT indicate
+                  types ubyte, ushort, and uint, respectively. The error
+                  INVALID_VALUE is generated if size is specified with
+                  a value other than that indicated in the table, or if the
+                  <size> parameter to WeightPointerARB is outside the range
+                  allowed for WeightvARB in section 2.7."
          
     - (2.8, p. 22) Change table 2.4 to read:
 
@@ -331,7 +331,7 @@ Additions to Chapter 2 of the OpenGL 1.2.1 Specification (Operation)
           TexCoordPointer    1,2,3,4  short, int, float, double
           EdgeFlagPointer    1        boolean
           WeightPointerARB   1 ...    byte, ubyte, short, ushort,
-		         MAX_VERTEX_UNITS_ARB int, uint, float, double
+                         MAX_VERTEX_UNITS_ARB int, uint, float, double
 
 
     - (2.8 p. 23) Change paragraph two to:
@@ -366,10 +366,10 @@ Additions to Chapter 2 of the OpenGL 1.2.1 Specification (Operation)
           are EdgeFlagv, TexCoord[size][type]v, Color[size][type]v,
           Index[type]v, Normal[type]v, and Weight[type]vARB,
           respectively. The <size> parameter to WeightvARB is the
-		  current <size> for the weight array. If the vertex array
-		  is enabled, it is as though Vertex[size][type]v is executed
-		  last, after the executions of the other corresponding
-		  commands."
+                  current <size> for the weight array. If the vertex array
+                  is enabled, it is as though Vertex[size][type]v is executed
+                  last, after the executions of the other corresponding
+                  commands."
 
     - (2.10 p. 28) Added after the second paragraph:
 
@@ -379,15 +379,15 @@ Additions to Chapter 2 of the OpenGL 1.2.1 Specification (Operation)
           blending is handled by Enable or Disable with the argument
           of VERTEX_BLEND_ARB. When blending is enabled, the vertex
           is transformed by multiple model-view transformations.
-		  The number of active transformations applied is set by
+                  The number of active transformations applied is set by
 
-		      void VertexBlendARB(int count)
-		  
-		  where count is the number of transformations to blend.
-		  If count is greater than the implementation defined
-		  maximum number of transformations reported in 
-		  MAX_VERTEX_UNITS_ARB, then the error
-		  INVALID_VALUE is generated."
+                      void VertexBlendARB(int count)
+                  
+                  where count is the number of transformations to blend.
+                  If count is greater than the implementation defined
+                  maximum number of transformations reported in 
+                  MAX_VERTEX_UNITS_ARB, then the error
+                  INVALID_VALUE is generated."
 
     - (2.10 p. 29) Add after the second paragraph:
 
@@ -400,12 +400,12 @@ Additions to Chapter 2 of the OpenGL 1.2.1 Specification (Operation)
             (we)                      (wo)
 
           where M_i is the i'th model-view matrix, w_i is the
-		  vertex's associated weight for vertex unit i, 
+                  vertex's associated weight for vertex unit i, 
 
-			and
+                        and
 
-			n = ACTIVE_VERTEX_UNITS_ARB
-			"
+                        n = ACTIVE_VERTEX_UNITS_ARB
+                        "
 
     - (2.10.2 p. 31) Change the first paragraph to:
 
@@ -426,18 +426,18 @@ Additions to Chapter 2 of the OpenGL 1.2.1 Specification (Operation)
           model-view matrix. MODELVIEW0_ARB is aliased to
           MODELVIEW."  
 
-	- (2.10.2 p. 34) Changed the second paragraph to read:
+        - (2.10.2 p. 34) Changed the second paragraph to read:
 
-	      "There is a stack of matrices for each of the matrix
-		  modes. For MODELVIEWn mode, the stack depth is at least 32
-		  (that is, there is a stack of at least 32 MODELVIEWn
-		  matrices). Additionally, all modelview matrices must
-		  have the same stack depth. ..."
+              "There is a stack of matrices for each of the matrix
+                  modes. For MODELVIEWn mode, the stack depth is at least 32
+                  (that is, there is a stack of at least 32 MODELVIEWn
+                  matrices). Additionally, all modelview matrices must
+                  have the same stack depth. ..."
 
-	- (2.10.2 p. 34) Changed the third paragraph to read:
+        - (2.10.2 p. 34) Changed the third paragraph to read:
 
-	      "... and a stack of at least 32 4 x 4 matrices with an
-		  associated stack pointer for each MODELVIEWn. ..."
+              "... and a stack of at least 32 4 x 4 matrices with an
+                  associated stack pointer for each MODELVIEWn. ..."
           
 
     - (2.10.3 p. 35) Added after the third paragraph:
@@ -460,7 +460,7 @@ Additions to Chapter 2 of the OpenGL 1.2.1 Specification (Operation)
           model-view for vertex unit i, w_i is the vertex's
           associated weight for vertex unit i, and
 
-			n = ACTIVE_VERTEX_UNITS_ARB"
+                        n = ACTIVE_VERTEX_UNITS_ARB"
 
 
     - (2.10.3 p. 36) Added after the second paragraph:
@@ -496,53 +496,53 @@ GLX Protocol
     Nine new GL rendering commandsl are added. The following commands
     are sent to the server as part of a glXRender request:
 
-	   WeightbvARB
+           WeightbvARB
 
-		2    8+n    rendering command length
-		2    220    rendering command opcode
-		4    INT32  size
-		1*n  INT8   weights
-	   
-	   WeightubvARB
+                2    8+n    rendering command length
+                2    220    rendering command opcode
+                4    INT32  size
+                1*n  INT8   weights
+           
+           WeightubvARB
 
-		2    8+n    rendering command length
-		2    221    rendering command opcode
-		4    INT32  size
-		1*n  CARD8  weights
-	   
-	   WeightsvARB
+                2    8+n    rendering command length
+                2    221    rendering command opcode
+                4    INT32  size
+                1*n  CARD8  weights
+           
+           WeightsvARB
 
-		2    8+2*n  rendering command length
-		2    222    rendering command opcode
-		4    INT32  size
-		2*n  INT16  weights
+                2    8+2*n  rendering command length
+                2    222    rendering command opcode
+                4    INT32  size
+                2*n  INT16  weights
 
-	   WeightusvARB
+           WeightusvARB
 
-		2    8+2*n  rendering command length
-		2    223    rendering command opcode
-		4    INT32  size
-		2*n  CARD16 weights
+                2    8+2*n  rendering command length
+                2    223    rendering command opcode
+                4    INT32  size
+                2*n  CARD16 weights
 
-	   WeightivARB
+           WeightivARB
 
-		2    8+4*n  rendering command length
-		2    224    rendering command opcode
-		4    INT32  size
-		4*n  INT32  weights
+                2    8+4*n  rendering command length
+                2    224    rendering command opcode
+                4    INT32  size
+                4*n  INT32  weights
 
-	   WeightuivARB
+           WeightuivARB
 
-		2    8+4*n  rendering command length
-		2    225    rendering command opcode
-		4    INT32  size
-		4*n  CARD32 weights
+                2    8+4*n  rendering command length
+                2    225    rendering command opcode
+                4    INT32  size
+                4*n  CARD32 weights
 
-	   VertexBlendARB
+           VertexBlendARB
 
-		2    8      rendering command length
-		2    226    rendering command opcode
-		4    INT32  count
+                2    8      rendering command length
+                2    226    rendering command opcode
+                4    INT32  count
 
         WeightfvARB
 
@@ -561,12 +561,12 @@ GLX Protocol
 Errors
       
       INVALID_VALUE is generated if the <size> parameter for
-	  WeightvARB or WeightPointerARB is greater than
-	  MAX_VERTEX_UNITS_ARB, or if WEIGHT_SUM_UNITY_ARB is enabled
-	  and <size> is equal to MAX_VERTEX_UNITS_ARB
+          WeightvARB or WeightPointerARB is greater than
+          MAX_VERTEX_UNITS_ARB, or if WEIGHT_SUM_UNITY_ARB is enabled
+          and <size> is equal to MAX_VERTEX_UNITS_ARB
 
-	  INVALID_VALUE is generated if the <count> parameter to
-	  VertexBlendARB is greater than MAX_VERTEX_UNITS_ARB or
+          INVALID_VALUE is generated if the <count> parameter to
+          VertexBlendARB is greater than MAX_VERTEX_UNITS_ARB or
       if <count> is equal to zero.
 
 New State

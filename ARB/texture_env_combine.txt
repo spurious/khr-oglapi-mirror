@@ -99,6 +99,20 @@ Issues
       needs to be fixed first to allow a full featured color and clearly
       state the interaction of how it interacts with the color sum stage. 
 
+ 7. How exactly is this ARB extension different from the EXT version?
+
+    -  RESOLVED:
+
+       1) This extension adds the GL_SUBTRACT_ARB mode
+
+       2) OPERAND2_RGB_ARB can use SRC_COLOR, ONE_MINUS_SRC_COLOR,
+          SRC_ALPHA, and ONE_MINUS_SRC_ALPHA instead of just SRC_ALPHA
+          (NV_texture_env_combine4 already provides this).
+
+       3) OPERAND2_ALPHA_ARB can use SRC_ALPHA and ONE_MINUS_SRC_ALPHA
+          instead of just SRC_ALPHA (NV_texture_env_combine4 already
+          provides this).
+
 New Procedures and Functions
 
     None
@@ -362,7 +376,10 @@ New Implementation Dependent State
     None
 
 Revision History
+
     06/11/04  benj      Updated contact info after ATI/AMD merger.
+
+    01/05/21  mjk       Added ARB versus EXT differences issue
 
     01/02/02  bpoddar   Added original EXT/ARB contributors to the contact
                         list

@@ -193,15 +193,15 @@ Issues
     shader:
 
       1) When using a traditional transform in a vertex shader, compute the
-	 eye coordinates and store the result in gl_ClipVertex.
+         eye coordinates and store the result in gl_ClipVertex.
 
       2) If clip planes are enabled with a vertex shader, gl_ClipVertex must
-	 be written to, otherwise results will be undefined.
+         be written to, otherwise results will be undefined.
 
       3) When doing object-space clipping, keep in mind that the clip planes
-	 are automatically transformed to eye coordinates (see section 2.11
-	 of the GL 1.4 spec). Use an identity modelView matrix to avoid this
-	 transformation.
+         are automatically transformed to eye coordinates (see section 2.11
+         of the GL 1.4 spec). Use an identity modelView matrix to avoid this
+         transformation.
 
     RESOLUTION: Resolved. See also section 2.11.
 
@@ -238,7 +238,7 @@ Issues
     shader is active. This behavior is the same in ARB_vertex_program.
 
     11) Does generic attribute zero also provoke (signal the end of a
-	vertex), or just the glVertex command?
+        vertex), or just the glVertex command?
 
     DISCUSSION: To be more compatible with ARB_vertex_program this would be
     desirable. It may be that no attribute directly expresses a vertex
@@ -315,7 +315,7 @@ Issues
     is considered magnified, and only paragraph 3.8.9 applies.
 
     13) Do we split a texture unit into a texture image unit and a texture
-	coordinate set?
+        coordinate set?
 
     DISCUSSION: This is what ARB_fragment_program does, and
     ARB_fragment_shader as well. The OpenGL Shading Language allows for
@@ -331,7 +331,7 @@ Issues
     RESOLUTION: Yes
 
     14) Do we need to specify different texture coordinate sets for a vertex
-	shader and fragment processing?
+        shader and fragment processing?
 
     DISCUSSION: So far there are MAX_TEXTURE_COORDS_ARB texture coordinate
     sets. This constant is defined in ARB_fragment_program, and re-used in
@@ -351,7 +351,7 @@ Issues
     RESOLUTION: Resolved, zero.
 
     16) Do we also need a built in function to guarantee position invariance
-	with respect to user clip planes?
+        with respect to user clip planes?
 
     DISCUSSION: Issue 1 discusses invariance with respect to the vertex
     position. A vertex shader however can also output coordinates used for
@@ -385,7 +385,7 @@ Issues
     back-facing triangle, but not if it could belong to a front-facing one.
 
     18) What is the deal with range and precision of colors once output from
-	the vertex shader?
+        the vertex shader?
 
     DISCUSSION: Section 2.13.6 of the GL 1.4 spec specifies that all
     components of both the primary and secondary colors be clamped to the
@@ -415,11 +415,11 @@ Issues
     There are three cases to consider:
 
       1) An ARB_vertex_shader shader writing colors that are consumed by an
-	 ARB_fragment_shader shader.
+         ARB_fragment_shader shader.
       2) An ARB_vertex_shader shader writing colors that are consumed by an
-	 ARB_fragment_program shader.
+         ARB_fragment_program shader.
       3) An ARB_vertex_shader shader writing colors that are consumed by
-	 fixed-function fragment processing.
+         fixed-function fragment processing.
 
     An argument can be made that a shader writer can bypass the clamping and
     conversion to fixed-point by defining its own varying variables, and use
@@ -438,7 +438,7 @@ Issues
     gl_BackColor, and gl_BackSecondaryColor.
 
     19) How do I get a list of all attributes and their types used by a
-	shader and when do I bind generic vertex attributes?
+        shader and when do I bind generic vertex attributes?
 
     DISCUSSION: GetActiveAttribARB will return the name of an attribute and
     its type declared and actually used in the shader, as determined by the
@@ -464,7 +464,7 @@ Issues
     RESOLUTION: Resolved, call GetActiveAttribARB.
 
     20) Who assigns vertex attribute variable names to indices used in the
-	VertexAttrib*ARB commands?
+        VertexAttrib*ARB commands?
 
     DISCUSSION: Both the GL and the application can do this. The linker will
     assign indices to vertex attributes declared in a vertex shader. These
@@ -484,7 +484,7 @@ Issues
     RESOLUTION: Both the GL and the application.
 
     21) How should this extension handle changes to material state within
-	Begin/End?
+        Begin/End?
 
     DISCUSSION: Supporting per-vertex material properties places additional
     pressure on the number of per-vertex bindings an OpenGL implementation
@@ -524,7 +524,7 @@ Issues
       * alternate texture image specification (pp. 128-132)
       * compressed texture image specification (pp. 132-135)
       * texture parameters behave as specified even when a texture is
-	accessed from within a vertex shader (pp. 135-147)
+        accessed from within a vertex shader (pp. 135-147)
       * texture state and proxy state (pp. 148-149)
       * texture object specification (pp. 149-152)
       * texture comparison modes (p. 157)
@@ -572,7 +572,7 @@ New Procedures and Functions
     void VertexAttrib4NuivARB(uint index, const uint *v)
 
     void VertexAttribPointerARB(uint index, int size, enum type, boolean normalized,
-				sizei stride, const void *pointer)
+                                sizei stride, const void *pointer)
 
     void EnableVertexAttribArrayARB(uint index)
     void DisableVertexAttribArrayARB(uint index)
@@ -580,7 +580,7 @@ New Procedures and Functions
     void BindAttribLocationARB(handleARB programObj, uint index, const charARB *name)
 
     void GetActiveAttribARB(handleARB programObj, uint index, sizei maxLength,
-			     sizei *length, int *size, enum *type, charARB *name)
+                             sizei *length, int *size, enum *type, charARB *name)
 
     GLint GetAttribLocationARB(handleARB programObj, const charARB *name)
 
@@ -594,53 +594,53 @@ New Tokens
     Accepted by the <shaderType> argument of CreateShaderObjectARB and
     returned by the <params> parameter of GetObjectParameter{if}vARB:
 
-	VERTEX_SHADER_ARB				0x8B31
+        VERTEX_SHADER_ARB                               0x8B31
 
     Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
     GetFloatv, and GetDoublev:
 
-	MAX_VERTEX_UNIFORM_COMPONENTS_ARB		0x8B4A
-	MAX_VARYING_FLOATS_ARB				0x8B4B
-	MAX_VERTEX_ATTRIBS_ARB				0x8869
-	MAX_TEXTURE_IMAGE_UNITS_ARB			0x8872
-	MAX_VERTEX_TEXTURE_IMAGE_UNITS_ARB		0x8B4C
-	MAX_COMBINED_TEXTURE_IMAGE_UNITS_ARB		0x8B4D
-	MAX_TEXTURE_COORDS_ARB				0x8871
+        MAX_VERTEX_UNIFORM_COMPONENTS_ARB               0x8B4A
+        MAX_VARYING_FLOATS_ARB                          0x8B4B
+        MAX_VERTEX_ATTRIBS_ARB                          0x8869
+        MAX_TEXTURE_IMAGE_UNITS_ARB                     0x8872
+        MAX_VERTEX_TEXTURE_IMAGE_UNITS_ARB              0x8B4C
+        MAX_COMBINED_TEXTURE_IMAGE_UNITS_ARB            0x8B4D
+        MAX_TEXTURE_COORDS_ARB                          0x8871
 
     Accepted by the <cap> parameter of Disable, Enable, and IsEnabled, and
     by the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv, and
     GetDoublev:
 
-	VERTEX_PROGRAM_POINT_SIZE_ARB			0x8642
-	VERTEX_PROGRAM_TWO_SIDE_ARB			0x8643
+        VERTEX_PROGRAM_POINT_SIZE_ARB                   0x8642
+        VERTEX_PROGRAM_TWO_SIDE_ARB                     0x8643
 
     Accepted by the <pname> parameter GetObjectParameter{if}vARB:
 
-	OBJECT_ACTIVE_ATTRIBUTES_ARB			0x8B89
-	OBJECT_ACTIVE_ATTRIBUTE_MAX_LENGTH_ARB		0x8B8A
+        OBJECT_ACTIVE_ATTRIBUTES_ARB                    0x8B89
+        OBJECT_ACTIVE_ATTRIBUTE_MAX_LENGTH_ARB          0x8B8A
 
     Accepted by the <pname> parameter of GetVertexAttrib{dfi}vARB:
 
-	VERTEX_ATTRIB_ARRAY_ENABLED_ARB			0x8622
-	VERTEX_ATTRIB_ARRAY_SIZE_ARB			0x8623
-	VERTEX_ATTRIB_ARRAY_STRIDE_ARB			0x8624
-	VERTEX_ATTRIB_ARRAY_TYPE_ARB			0x8625
-	VERTEX_ATTRIB_ARRAY_NORMALIZED_ARB		0x886A
-	CURRENT_VERTEX_ATTRIB_ARB			0x8626
+        VERTEX_ATTRIB_ARRAY_ENABLED_ARB                 0x8622
+        VERTEX_ATTRIB_ARRAY_SIZE_ARB                    0x8623
+        VERTEX_ATTRIB_ARRAY_STRIDE_ARB                  0x8624
+        VERTEX_ATTRIB_ARRAY_TYPE_ARB                    0x8625
+        VERTEX_ATTRIB_ARRAY_NORMALIZED_ARB              0x886A
+        CURRENT_VERTEX_ATTRIB_ARB                       0x8626
 
     Accepted by the <pname> parameter of GetVertexAttribPointervARB:
 
-	VERTEX_ATTRIB_ARRAY_POINTER_ARB			0x8645
+        VERTEX_ATTRIB_ARRAY_POINTER_ARB                 0x8645
 
     Returned by the <type> parameter of GetActiveAttribARB:
 
-	FLOAT						0x1406
-	FLOAT_VEC2_ARB					0x8B50
-	FLOAT_VEC3_ARB					0x8B51
-	FLOAT_VEC4_ARB					0x8B52
-	FLOAT_MAT2_ARB					0x8B5A
-	FLOAT_MAT3_ARB					0x8B5B
-	FLOAT_MAT4_ARB					0x8B5C
+        FLOAT                                           0x1406
+        FLOAT_VEC2_ARB                                  0x8B50
+        FLOAT_VEC3_ARB                                  0x8B51
+        FLOAT_VEC4_ARB                                  0x8B52
+        FLOAT_MAT2_ARB                                  0x8B5A
+        FLOAT_MAT3_ARB                                  0x8B5B
+        FLOAT_MAT4_ARB                                  0x8B5C
 
 Additions to Chapter 2 of the OpenGL 1.4 Specification (OpenGL Operation)
 
@@ -676,8 +676,8 @@ Additions to Chapter 2 of the OpenGL 1.4 Specification (OpenGL Operation)
     (modify second paragraph, p. 20) Implementations support more than one
     set of texture coordinates. The commands
 
-	void MultiTexCoord{1234}{sifd}(enum texture, T coords)
-	void MultiTexCoord{1234}{sifd}v(enum texture, T coords)
+        void MultiTexCoord{1234}{sifd}(enum texture, T coords)
+        void MultiTexCoord{1234}{sifd}v(enum texture, T coords)
 
     take the coordinate set to be modified as the <texture> parameter.
     <texture> is a symbolic constant of the form TEXTUREi, indicating that
@@ -698,9 +698,9 @@ Additions to Chapter 2 of the OpenGL 1.4 Specification (OpenGL Operation)
 
     The commands
 
-	void VertexAttrib{1234}{sfd}ARB(uint index, T values)
-	void VertexAttrib{123}{sfd}vARB(uint index, T values)
-	void VertexAttrib4{bsifd ubusui}vARB(uint index, T values)
+        void VertexAttrib{1234}{sfd}ARB(uint index, T values)
+        void VertexAttrib{123}{sfd}vARB(uint index, T values)
+        void VertexAttrib4{bsifd ubusui}vARB(uint index, T values)
 
     can be used to load the given value(s) into the generic attribute at
     slot <index>, whose components are named <x>, <y>, <z>, and <w>. The
@@ -714,8 +714,8 @@ Additions to Chapter 2 of the OpenGL 1.4 Specification (OpenGL Operation)
 
     The commands
 
-	void VertexAttrib4NubARB(uint index, T values)
-	void VertexAttrib4N{bsi ubusui}vARB(uint index, T values)
+        void VertexAttrib4NubARB(uint index, T values)
+        void VertexAttrib4N{bsi ubusui}vARB(uint index, T values)
 
     also specify vertex attributes with fixed-point coordinates that are
     scaled to a normalized range, according to Table 2.6.
@@ -775,11 +775,11 @@ Additions to Chapter 2 of the OpenGL 1.4 Specification (OpenGL Operation)
 
     The commands
 
-	...
+        ...
 
-	void VertexAttribPointerARB(uint index, int size, enum type,
-				    boolean normalized, sizei stride,
-				    const void *pointer)
+        void VertexAttribPointerARB(uint index, int size, enum type,
+                                    boolean normalized, sizei stride,
+                                    const void *pointer)
 
     describe the locations and organizations...
 
@@ -795,8 +795,8 @@ Additions to Chapter 2 of the OpenGL 1.4 Specification (OpenGL Operation)
     (add to the beginning of the page, p. 25) An individual generic vertex
     attribute array is enabled or disabled by calling one of
 
-	void EnableVertexAttribArrayARB(uint index)
-	void DisableVertexAttribArrayARB(uint index)
+        void EnableVertexAttribArrayARB(uint index)
+        void DisableVertexAttribArrayARB(uint index)
 
     where <index> identifies the generic vertex attribute array to enable or
     disable. The error INVALID_VALUE is generated if <index> is greater than
@@ -804,23 +804,23 @@ Additions to Chapter 2 of the OpenGL 1.4 Specification (OpenGL Operation)
 
     (modify Table 2.4, p.24)
 
-					  Normal
-	 Command		 Sizes	  ized?   Types
-	 ----------------------  -------  ------  ---------------------------
-	 VertexPointer		 2,3,4	   no	  short, int, float, double
-	 NormalPointer		 3	   yes	  byte, short, int, float,
-						  double
-	 ColorPointer		 3,4	   yes	  byte, ubyte, short, ushort,
-						  int, uint, float, double
-	 SecondaryColorPointer	 3	   yes	  byte, ubyte, short, ushort,
-						  int, uint, float, double
-	 IndexPointer		 1	   no	  ubyte, short, int, float,
-						  double
-	 FogCoordPointer	 1	   n/a	  float, double
-	 TexCoordPointer	 1,2,3,4   no	  short, int, float, double
-	 EdgeFlagPointer	 1	   no	  boolean
-	 VertexAttribPointerARB  1,2,3,4   flag   byte, ubyte, short, ushort,
-						  int, uint, float, double
+                                          Normal
+         Command                 Sizes    ized?   Types
+         ----------------------  -------  ------  ---------------------------
+         VertexPointer           2,3,4     no     short, int, float, double
+         NormalPointer           3         yes    byte, short, int, float,
+                                                  double
+         ColorPointer            3,4       yes    byte, ubyte, short, ushort,
+                                                  int, uint, float, double
+         SecondaryColorPointer   3         yes    byte, ubyte, short, ushort,
+                                                  int, uint, float, double
+         IndexPointer            1         no     ubyte, short, int, float,
+                                                  double
+         FogCoordPointer         1         n/a    float, double
+         TexCoordPointer         1,2,3,4   no     short, int, float, double
+         EdgeFlagPointer         1         no     boolean
+         VertexAttribPointerARB  1,2,3,4   flag   byte, ubyte, short, ushort,
+                                                  int, uint, float, double
 
     Table 2.4: Vertex array sizes (values per vertex) and data types. The
     "normalized" column indicates whether fixed-point types are accepted
@@ -830,7 +830,7 @@ Additions to Chapter 2 of the OpenGL 1.4 Specification (OpenGL Operation)
 
     (modify first paragraph, p. 25) The command
 
-	void ClientActiveTexture(enum texture)
+        void ClientActiveTexture(enum texture)
 
     is used to select the vertex array client state parameters to be
     modified by the TexCoordPointer command and the array affected by
@@ -843,59 +843,59 @@ Additions to Chapter 2 of the OpenGL 1.4 Specification (OpenGL Operation)
 
     (modify third paragraph, p. 25) The command
 
-	void ArrayElement(int i);
+        void ArrayElement(int i);
 
     transfers the ith element of every enabled array to the GL. The effect
     of ArrayElement(i) is the same as the effect of the command sequence
 
-	if (normal array enabled) {
-	  Normal3[type]v(normal array element i);
-	}
-	if (color array enabled) {
-	  Color[size][type]v(color array element i);
-	}
-	if (secondary color array enabled) {
-	  SecondaryColor3[type]v(secondary color array element i);
-	}
-	if (fog coordinate array enabled) {
-	  FogCoord[type]v(fog coordinate array element i);
-	}
-	for (j = 0; j < textureUnits; j++) {
-	  if (texture coordinate set j array enabled) {
-	    MultiTexCoord[size][type]v(TEXTURE0 + j,
-				       texture coordinate set j
-				       array element i);
-	}
-	if (color index array enabled) {
-	  Index[type]v(color index array element i);
-	}
-	if (edge flag array enabled) {
-	  EdgeFlagv(edge flag array element i);
-	}
-	for (j = 1; j < genericAttributes; j++) {
-	  if (generic vertex attribute j array enabled) {
-	    if (generic vertex attribute j array normalization flag
-		is set, and type is not FLOAT or DOUBLE) {
-	      VertexAttrib[size]N[type]vARB(j, generic vertex attribute j
-					       array element i);
-	    } else {
-		VertexAttrib[size][type]vARB(j, generic vertex attribute j
-					      array element i);
-	    }
-	  }
-	}
-	if (generic attribute array 0 enabled) {
-	  if (generic vertex attribute 0 array normalization flag
-	      is set, and type is not FLOAT or DOUBLE) {
-	    VertexAttrib[size]N[type]vARB(0, generic vertex attribute 0
-					     array element i);
-	  } else {
-	    VertexAttrib[size][type]vARB(0, generic vertex attribute 0
-					    array element i);
-	  }
-	} else if (vertex array enabled) {
-	    Vertex[size][type]vARB(vertex array element i);
-	}
+        if (normal array enabled) {
+          Normal3[type]v(normal array element i);
+        }
+        if (color array enabled) {
+          Color[size][type]v(color array element i);
+        }
+        if (secondary color array enabled) {
+          SecondaryColor3[type]v(secondary color array element i);
+        }
+        if (fog coordinate array enabled) {
+          FogCoord[type]v(fog coordinate array element i);
+        }
+        for (j = 0; j < textureUnits; j++) {
+          if (texture coordinate set j array enabled) {
+            MultiTexCoord[size][type]v(TEXTURE0 + j,
+                                       texture coordinate set j
+                                       array element i);
+        }
+        if (color index array enabled) {
+          Index[type]v(color index array element i);
+        }
+        if (edge flag array enabled) {
+          EdgeFlagv(edge flag array element i);
+        }
+        for (j = 1; j < genericAttributes; j++) {
+          if (generic vertex attribute j array enabled) {
+            if (generic vertex attribute j array normalization flag
+                is set, and type is not FLOAT or DOUBLE) {
+              VertexAttrib[size]N[type]vARB(j, generic vertex attribute j
+                                               array element i);
+            } else {
+                VertexAttrib[size][type]vARB(j, generic vertex attribute j
+                                              array element i);
+            }
+          }
+        }
+        if (generic attribute array 0 enabled) {
+          if (generic vertex attribute 0 array normalization flag
+              is set, and type is not FLOAT or DOUBLE) {
+            VertexAttrib[size]N[type]vARB(0, generic vertex attribute 0
+                                             array element i);
+          } else {
+            VertexAttrib[size][type]vARB(0, generic vertex attribute 0
+                                            array element i);
+          }
+        } else if (vertex array enabled) {
+            Vertex[size][type]vARB(vertex array element i);
+        }
 
     where <textureUnits> and <genericAttributes> give the number of texture
     coordinate sets and generic vertex attributes supported by the
@@ -944,7 +944,7 @@ Additions to Chapter 2 of the OpenGL 1.4 Specification (OpenGL Operation)
 
     (modify third and fourth paragraphs, p. 37) The command
 
-	void ActiveTexture(enum texture)
+        void ActiveTexture(enum texture)
 
     specifies the active texture unit selector, ACTIVE_TEXTURE. Each texture
     unit contains up to two distinct sub-units: a texture coordinate
@@ -1132,9 +1132,9 @@ Additions to Chapter 2 of the OpenGL 1.4 Specification (OpenGL Operation)
     To determine which of the declared vertex attribute variables an
     executable program uses and to determine their types, use the command:
 
-	void GetActiveAttribARB(handleARB programObj, uint index,
-				sizei maxLength, sizei *length, int *size,
-				enum *type, charARB *name)
+        void GetActiveAttribARB(handleARB programObj, uint index,
+                                sizei maxLength, sizei *length, int *size,
+                                enum *type, charARB *name)
 
     This command provides information about the attribute selected by
     <index>. The <index> of 0 selects the first active attribute, and
@@ -1183,7 +1183,7 @@ Additions to Chapter 2 of the OpenGL 1.4 Specification (OpenGL Operation)
 
     The command
 
-	GLint GetAttribLocationARB(handle programObj, const charARB *name)
+        GLint GetAttribLocationARB(handle programObj, const charARB *name)
 
     will return the generic attribute index that the attribute variable
     named <name> is bound to. <name> has to be a null terminated string.
@@ -1200,8 +1200,8 @@ Additions to Chapter 2 of the OpenGL 1.4 Specification (OpenGL Operation)
 
     The command
 
-	void BindAttribLocationARB(handleARB programObj, uint index,
-				   const charARB *name)
+        void BindAttribLocationARB(handleARB programObj, uint index,
+                                   const charARB *name)
 
     binds the attribute variable named <name> to generic vertex attribute
     <index> for the program object <programObj>. If <name> was bound
@@ -1346,15 +1346,15 @@ Additions to Chapter 2 of the OpenGL 1.4 Specification (OpenGL Operation)
     The results of a texture lookup function are undefined if:
 
       * The sampler used in a texture lookup function is of type sampler1D
-	or sampler2D or sampler2DRect, and the texture object's internal
-	format is DEPTH_COMPONENT, and the TEXTURE_COMPARE_MODE is not NONE.
+        or sampler2D or sampler2DRect, and the texture object's internal
+        format is DEPTH_COMPONENT, and the TEXTURE_COMPARE_MODE is not NONE.
       * The sampler used in a texture lookup function is of type
-	sampler1DShadow or sampler2DShadow or sampler2DRectShadow, and the
-	texture object's internal format is DEPTH_COMPONENT, and the
-	TEXTURE_COMPARE_MODE is NONE.
+        sampler1DShadow or sampler2DShadow or sampler2DRectShadow, and the
+        texture object's internal format is DEPTH_COMPONENT, and the
+        TEXTURE_COMPARE_MODE is NONE.
       * The sampler used in a texture lookup function is of type
-	sampler1DShadow or sampler2DShadow or sampler2DRectShadow, and the
-	texture object's internal format is not DEPTH_COMPONENT.
+        sampler1DShadow or sampler2DShadow or sampler2DRectShadow, and the
+        texture object's internal format is not DEPTH_COMPONENT.
 
     If a vertex shader uses a sampler which associated texture object is not
     complete, as defined in section 3.8.10, the texture image unit will
@@ -1377,20 +1377,20 @@ Additions to Chapter 2 of the OpenGL 1.4 Specification (OpenGL Operation)
     2.10-2.13. In particular,
 
       * The model-view matrix is not applied to vertex coordinates (pp.
-	31-32)
+        31-32)
       * The projection matrix is not applied to vertex coordinates (pp.
-	31-32)
+        31-32)
       * The texture matrices are not applied to texture coordinates (p. 37)
       * Normals are not transformed to eye coordinates (pp. 38-39)
       * Normals are not rescaled or normalized (pp. 39-40)
       * Normalization of AUTO_NORMAL evaluated normals is not performed. (p.
-	191)
+        191)
       * Texture coordinates are not generated automatically (pp. 40-42)
       * Per vertex lighting is not performed (pp. 48-53)
       * Color material computations are not performed (pp. 54-57)
       * Color index lighting is not performed (pp. 57-58)
       * All of the above applies when setting the current raster position
-	(pp. 44-45)
+        (pp. 44-45)
 
     The following operations are applied to vertex values that are the
     result of executing the vertex shader:
@@ -1403,7 +1403,7 @@ Additions to Chapter 2 of the OpenGL 1.4 Specification (OpenGL Operation)
       * Front face determination (p. 53)
       * Flat-shading (pp. 58-59)
       * Color, texture coordinate, fog, point-size and generic attribute
-	clipping (pp. 59-60)
+        clipping (pp. 59-60)
       * Final color processing (p. 60)
 
     Section 2.15.8 Required State
@@ -1414,9 +1414,9 @@ Additions to Chapter 2 of the OpenGL 1.4 Specification (OpenGL Operation)
     The state required to support vertex shaders consists of:
 
       * A bit indicating whether or not vertex program two-sided color mode
-	is enabled, initially disabled.
+        is enabled, initially disabled.
       * A bit indicating whether or not vertex program point size mode is
-	enabled, initially disabled.
+        enabled, initially disabled.
 
     The state required per program object consists of:
 
@@ -1426,9 +1426,9 @@ Additions to Chapter 2 of the OpenGL 1.4 Specification (OpenGL Operation)
       * An integer holding the number of active attributes
       * An integer holding the length of the longest attribute name.
       * An array of integers holding the locations of active generic
-	attributes.
+        attributes.
       * An array of MAX_VERTEX_UNIFORM_COMPONENTS_ARB words that holds
-	uniform values.
+        uniform values.
 
 Additions to Chapter 3 of the OpenGL 1.4 Specification (Rasterization)
 
@@ -1437,7 +1437,7 @@ Additions to Chapter 3 of the OpenGL 1.4 Specification (Rasterization)
     (replace the first and second paragraph) If a vertex shader is not
     active, then the rasterization of points is controlled with
 
-	void PointSize(float size)
+        void PointSize(float size)
 
     <size> specifies the requested size of a point. The default value is
     1.0. A value less than or equal to zero results in the error
@@ -1446,7 +1446,7 @@ Additions to Chapter 3 of the OpenGL 1.4 Specification (Rasterization)
     clamped to the implementation-dependent point size range to produce the
     derived point size:
 
-	derived_size = ...
+        derived_size = ...
 
     (add a paragraph between the third and fourth paragraph)
 
@@ -1472,15 +1472,15 @@ Additions to Chapter 3 of the OpenGL 1.4 Specification (Rasterization)
     The choice is governed by a scale factor rho(x,y) and the level of
     detail parameter lambda(x,y), defined as
 
-    lambda_base(x,y) = log2[rho(x,y)]				       3.16a
+    lambda_base(x,y) = log2[rho(x,y)]                                  3.16a
 
-    lambda'(x,y) = lambda_base(x,y) +				       3.16b
-		   clamp(texobj_bias + texunit_bias)
+    lambda'(x,y) = lambda_base(x,y) +                                  3.16b
+                   clamp(texobj_bias + texunit_bias)
 
-		  |------- LODmax     lambda' > LODmax
-    lambda(x,y) = |	   lambda'    LODmin <= lambda' <= LODmax      3.16c
-		  |	   LODmin     lambda' < LODmin
-		  |------- undefined  LODmin > LODmax
+                  |------- LODmax     lambda' > LODmax
+    lambda(x,y) = |        lambda'    LODmin <= lambda' <= LODmax      3.16c
+                  |        LODmin     lambda' < LODmin
+                  |------- undefined  LODmin > LODmax
 
     texobj_bias is the value of TEXTURE_LOD_BIAS for the bound texture
     object (as described in section 3.8.4), and texunit_bias is the value of
@@ -1519,9 +1519,9 @@ Additions to Chapter 5 of the OpenGL 1.4 Specification (Special Functions)
     (modify next-to-last paragraph, p. 191) For MAP_VERTEX_3, let q = p. For
     MAP_VERTEX_4, let q=(x/w,y/w,z/w), where (x,y,z,w) = p. Then let
 
-		dq   dq
-	    m = -- x --.
-		du   dv
+                dq   dq
+            m = -- x --.
+                du   dv
 
     Then the generated analytic normal, n, is given by n=m if a vertex
     shader is active, or else by n=m/|m|.
@@ -1561,9 +1561,9 @@ Requests)
 
     The commands
 
-	void GetObjectParameterfvARB(handleARB obj, enum pname,
-				     float *params)
-	void GetObjectParameterivARB(handleARB obj, enum pname, int *params)
+        void GetObjectParameterfvARB(handleARB obj, enum pname,
+                                     float *params)
+        void GetObjectParameterivARB(handleARB obj, enum pname, int *params)
 
     return object specific parameter values for object <obj> in <params>.
     The parameter value to return is specified by <pname>.
@@ -1585,9 +1585,9 @@ Requests)
 
     The commands
 
-	void GetVertexAttribdvARB(uint index, enum pname, double *params)
-	void GetVertexAttribfvARB(uint index, enum pname, float *params)
-	void GetVertexAttribivARB(uint index, enum pname, int *params)
+        void GetVertexAttribdvARB(uint index, enum pname, double *params)
+        void GetVertexAttribfvARB(uint index, enum pname, float *params)
+        void GetVertexAttribivARB(uint index, enum pname, int *params)
 
     obtain the vertex attribute state named by <pname> for the generic
     vertex attribute numbered <index> and places the information in the
@@ -1615,8 +1615,8 @@ Requests)
 
     The command
 
-	void GetVertexAttribPointervARB(uint index, enum pname,
-					void **pointer)
+        void GetVertexAttribPointervARB(uint index, enum pname,
+                                        void **pointer)
 
     obtains the pointer named <pname> for vertex attribute numbered <index>
     and places the information in the array <pointer>. <pname> must be
@@ -1655,23 +1655,23 @@ Interactions with ARB_vertex_program
     The following enums and entry points are re-used from
     ARB_vertex_program:
 
-	MAX_VERTEX_ATTRIBS_ARB				0x8869
-	VERTEX_ATTRIB_ARRAY_ENABLED_ARB			0x8622
-	VERTEX_ATTRIB_ARRAY_SIZE_ARB			0x8623
-	VERTEX_ATTRIB_ARRAY_STRIDE_ARB			0x8624
-	VERTEX_ATTRIB_ARRAY_TYPE_ARB			0x8625
-	VERTEX_ATTRIB_ARRAY_NORMALIZED_ARB		0x886A
-	CURRENT_VERTEX_ATTRIB_ARB			0x8626
-	VERTEX_ATTRIB_ARRAY_POINTER_ARB			0x8645
-	VERTEX_PROGRAM_TWO_SIDE_ARB			0x8643
-	VERTEX_PROGRAM_POINT_SIZE_ARB			0x8642
+        MAX_VERTEX_ATTRIBS_ARB                          0x8869
+        VERTEX_ATTRIB_ARRAY_ENABLED_ARB                 0x8622
+        VERTEX_ATTRIB_ARRAY_SIZE_ARB                    0x8623
+        VERTEX_ATTRIB_ARRAY_STRIDE_ARB                  0x8624
+        VERTEX_ATTRIB_ARRAY_TYPE_ARB                    0x8625
+        VERTEX_ATTRIB_ARRAY_NORMALIZED_ARB              0x886A
+        CURRENT_VERTEX_ATTRIB_ARB                       0x8626
+        VERTEX_ATTRIB_ARRAY_POINTER_ARB                 0x8645
+        VERTEX_PROGRAM_TWO_SIDE_ARB                     0x8643
+        VERTEX_PROGRAM_POINT_SIZE_ARB                   0x8642
 
-	VertexAttrib*ARB
-	VertexAttribPointerARB
-	EnableVertexAttribArrayARB
-	DisableVertexAttribArrayARB
-	GetVertexAttrib*ARB
-	GetVertexAttribPointervARB
+        VertexAttrib*ARB
+        VertexAttribPointerARB
+        EnableVertexAttribArrayARB
+        DisableVertexAttribArrayARB
+        GetVertexAttrib*ARB
+        GetVertexAttribPointervARB
 
     The ARB_vertex_program extension is modified to turn undefined vertex
     attribute aliasing into non-aliasing. That means that generic vertex
@@ -1682,28 +1682,28 @@ Interactions with ARB_vertex_program
     specification.
 
       * Section 2.7. Delete the paragraph above Table X.1, Generic and
-	Conventional Attribute Mappings. Add the following sentence in its
-	place: "There is no aliasing among generic attributes and
-	conventional attributes."
+        Conventional Attribute Mappings. Add the following sentence in its
+        place: "There is no aliasing among generic attributes and
+        conventional attributes."
       * Section 2.7. Delete the paragraph below Table X.1
       * Section 2.7. Delete Table X.1.
       * Change the last sentence in Section 2.7 to: "The initial values for
-	all generic vertex attributes are (0, 0, 0, 1)."
+        all generic vertex attributes are (0, 0, 0, 1)."
       * Section 2.8. Edit the paragraph below the pseudo code. Change "As
-	described in section 2.7, setting a generic vertex attributes ..."
-	into "As described in section 2.7, there is no aliasing among
-	generic vertex attributes and conventional attributes".
+        described in section 2.7, setting a generic vertex attributes ..."
+        into "As described in section 2.7, there is no aliasing among
+        generic vertex attributes and conventional attributes".
       * Section 2.14.3.1. Delete the first part of the paragraph above Table
-	X.2.1. The new paragraph becomes "A vertex program will fail to load
-	if it binds both a conventional vertex attribute and a generic
-	vertex attribute listed in the same row of Table X.2.1."
+        X.2.1. The new paragraph becomes "A vertex program will fail to load
+        if it binds both a conventional vertex attribute and a generic
+        vertex attribute listed in the same row of Table X.2.1."
 
 Interactions with ARB_fragment_program
 
     The following enums are re-used from ARB_fragment_program:
 
-	MAX_TEXTURE_IMAGE_UNITS_ARB			0x8872
-	MAX_TEXTURE_COORDS_ARB				0x8871
+        MAX_TEXTURE_IMAGE_UNITS_ARB                     0x8872
+        MAX_TEXTURE_COORDS_ARB                          0x8871
 
 Interactions with ARB_vertex_blend
 
@@ -1713,9 +1713,9 @@ Interactions with ARB_vertex_blend
     processing described in ARB_vertex_blend. In particular,
 
       * Vertex coordinates are not transformed to eye space as described by
-	the equation in Section 2.10 provided by ARB_vertex_blend.
+        the equation in Section 2.10 provided by ARB_vertex_blend.
       * Normals are not transformed to eye space as described by the
-	equations in Section 2.10.2 provided by ARB_vertex_blend.
+        equations in Section 2.10.2 provided by ARB_vertex_blend.
 
 Interactions with ARB_matrix_palette
 
@@ -1725,10 +1725,10 @@ Interactions with ARB_matrix_palette
     described in ARB_matrix_palette. In particular,
 
       * Vertex coordinates are not transformed to eye space as described by
-	the equation in Section 2.10 of the ARB_matrix_palette
-	specification.
+        the equation in Section 2.10 of the ARB_matrix_palette
+        specification.
       * Normals are not transformed to eye space as described by the
-	equations in Section 2.10.3 of the ARB_matrix_palette specification.
+        equations in Section 2.10.3 of the ARB_matrix_palette specification.
 
 Errors
 
@@ -1800,85 +1800,85 @@ Errors
     <index> is equal or greater than MAX_VERTEX_ATTRIBS_ARB.
 
 New State
-								   Initial
-    Get Value			  Type	Get Command		   Value      Description	       Sec.   Attribute
-    ---------			  ----	-------------------------  -------    -----------	       ----   ---------
-    VERTEX_PROGRAM_TWO_SIDE_ARB     B	 IsEnabled		    False     two-sided color mode     2.13.1	 enable
-    CURRENT_VERTEX_ATTRIB_ARB	 16+xR4  GetVertexAttributeARB	    (0,0,0,1) generic vertex attribute 2.7	 current
-    VERTEX_PROGRAM_POINT_SIZE_ARB   B	 IsEnabled		    False     point size mode	       3.3	 enable
+                                                                   Initial
+    Get Value                     Type  Get Command                Value      Description              Sec.   Attribute
+    ---------                     ----  -------------------------  -------    -----------              ----   ---------
+    VERTEX_PROGRAM_TWO_SIDE_ARB     B    IsEnabled                  False     two-sided color mode     2.13.1    enable
+    CURRENT_VERTEX_ATTRIB_ARB    16+xR4  GetVertexAttributeARB      (0,0,0,1) generic vertex attribute 2.7       current
+    VERTEX_PROGRAM_POINT_SIZE_ARB   B    IsEnabled                  False     point size mode          3.3       enable
 
     Table X.  New Accessible State Introduced by ARB_vertex_shader
 
 
-    Get Value			     Type    Get Command    Initial Value Description	      Section  Attribute
+    Get Value                        Type    Get Command    Initial Value Description         Section  Attribute
     -------------------------------  ------  -------------  ------------- ------------------  -------  ------------
-    VERTEX_ATTRIB_ARRAY_ENABLED_ARB  16+xB   GetVertex-     False	  vertex attrib       2.8      vertex-array
-					     AttribARB			  array enable
-    VERTEX_ATTRIB_ARRAY_SIZE_ARB     16+xZ   GetVertex-     4		  vertex attrib       2.8      vertex-array
-					     AttribARB			  array size
-    VERTEX_ATTRIB_ARRAY_STRIDE_ARB   16+xZ+  GetVertex-     0		  vertex attrib       2.8      vertex-array
-					     AttributeARB		  array stride
-    VERTEX_ATTRIB_ARRAY_TYPE_ARB     16+xZ4  GetVertex-     FLOAT	  vertex attrib       2.8      vertex-array
-					     AttributeARB		  array type
-    VERTEX_ATTRIB_ARRAY_	     16+xB   GetVertex-     False	  vertex attrib       2.8      vertex-array
-	NORMALIZED_ARB			     AttributeARB		  array normalized
-    VERTEX_ATTRIB_ARRAY_POINTER_ARB  16+xP   GetVertex-     NULL	  vertex attrib       2.8      vertex-array
-					     AttribPointerARB		  array pointer
+    VERTEX_ATTRIB_ARRAY_ENABLED_ARB  16+xB   GetVertex-     False         vertex attrib       2.8      vertex-array
+                                             AttribARB                    array enable
+    VERTEX_ATTRIB_ARRAY_SIZE_ARB     16+xZ   GetVertex-     4             vertex attrib       2.8      vertex-array
+                                             AttribARB                    array size
+    VERTEX_ATTRIB_ARRAY_STRIDE_ARB   16+xZ+  GetVertex-     0             vertex attrib       2.8      vertex-array
+                                             AttributeARB                 array stride
+    VERTEX_ATTRIB_ARRAY_TYPE_ARB     16+xZ4  GetVertex-     FLOAT         vertex attrib       2.8      vertex-array
+                                             AttributeARB                 array type
+    VERTEX_ATTRIB_ARRAY_             16+xB   GetVertex-     False         vertex attrib       2.8      vertex-array
+        NORMALIZED_ARB                       AttributeARB                 array normalized
+    VERTEX_ATTRIB_ARRAY_POINTER_ARB  16+xP   GetVertex-     NULL          vertex attrib       2.8      vertex-array
+                                             AttribPointerARB             array pointer
 
     Table X  New Accessible Client State Introduced by ARB_vertex_shader
 
-							     Initial
-    Get Value		   Type   Get Command		     Value	       Description	    Sec.   Attribute
-    ---------		   -----  -----------------------   -------------      -----------	    ----   ---------
-    OBJECT_TYPE_ARB	   Z2	  GetObjectParameterivARB   SHADER_OBJECT_ARB  Type of object	    2.15.1	  -
-    OBJECT_SUBTYPE_ARB	   Z2	  GetObjectParameterivARB   VERTEX_SHADER_ARB  Sub type of object   2.15.1	  -
+                                                             Initial
+    Get Value              Type   Get Command                Value             Description          Sec.   Attribute
+    ---------              -----  -----------------------   -------------      -----------          ----   ---------
+    OBJECT_TYPE_ARB        Z2     GetObjectParameterivARB   SHADER_OBJECT_ARB  Type of object       2.15.1        -
+    OBJECT_SUBTYPE_ARB     Z2     GetObjectParameterivARB   VERTEX_SHADER_ARB  Sub type of object   2.15.1        -
 
     Table X Shader object state.
 
-								      Initial
-    Get Value			  Type	     Get Command	      Value	Description		     Sec.    Attribute
-    ---------			  -----      -----------------------  --------	-----------		     ----    ---------
-    -				  0+xZ+      GetActiveAttribARB		-	Size of active attribute     2.15.2	 -
-    -				  0+xZ+      GetActiveAttribARB		-	Type of active attribute     2.15.2	 -
-    -				  0+xcharARB GetActiveAttribARB        ""	Name of active attribute     2.15.2	 -
-    -				  0+xZ	     GetAttribLocationARB	-	Location of active generic   2.15.2	 -
-										attribute
-				  512+xR     GetUniformARB		0	Uniform value		     2.15.3	 -
-    OBJECT_ACTIVE_ATTRIBUTES_ARB  Z+	     GetObjectParameterivARB	0	Number of active attributes  2.15.2	 -
+                                                                      Initial
+    Get Value                     Type       Get Command              Value     Description                  Sec.    Attribute
+    ---------                     -----      -----------------------  --------  -----------                  ----    ---------
+    -                             0+xZ+      GetActiveAttribARB         -       Size of active attribute     2.15.2      -
+    -                             0+xZ+      GetActiveAttribARB         -       Type of active attribute     2.15.2      -
+    -                             0+xcharARB GetActiveAttribARB        ""       Name of active attribute     2.15.2      -
+    -                             0+xZ       GetAttribLocationARB       -       Location of active generic   2.15.2      -
+                                                                                attribute
+                                  512+xR     GetUniformARB              0       Uniform value                2.15.3      -
+    OBJECT_ACTIVE_ATTRIBUTES_ARB  Z+         GetObjectParameterivARB    0       Number of active attributes  2.15.2      -
     OBJECT_ACTIVE_ATTRIBUTES_
-		MAX_LENGTH_ARB	  Z+	     GetObjectParameterivARB	0	Max attribute name length    6.1.12	 -
+                MAX_LENGTH_ARB    Z+         GetObjectParameterivARB    0       Max attribute name length    6.1.12      -
 
     Table X Program object state.
 
 
 New Implementation Dependent State
 
-								Minimum
-    Get Value				    Type  Get Command	 Value	 Description			Sec.  Attr.
-    ---------				    ----  -----------	-------  -----------			----  -----
-    MAX_VERTEX_ATTRIBS_ARB		    Z+	  GetIntegerv	  16	 Number of active		2.15.2	 -
-									 vertex attributes
-    MAX_VERTEX_UNIFORM_COMPONENTS_ARB	    Z+	  GetIntegerv	 512	 Number of words		2.15.3	 -
-									 for vertex shader
-									 uniform variables
-    MAX_VARYING_FLOATS_ARB		    Z+	  GetIntegerv	  32	 Number of floats		2.15.4	 -
-									 for interpolated
-									 (varying) variables
-    MAX_COMBINED_TEXTURE_IMAGE_UNITS_ARB    Z+	  GetIntegerv	   2	 Number of texture image	2.15.5	 -
-									 units that can be accessed
-									 by a vertex shader and the
-									 fragment processing part of
-									 OpenGL combined.
-    MAX_VERTEX_TEXTURE_IMAGE_UNITS_ARB	    Z+	  GetIntegerv	   0	 Number of separate		2.15.5	 -
-									 texture units that can
-									 be accessed by a vertex
-									 shader.
-    MAX_TEXTURE_IMAGE_UNITS_ARB		    Z+	  GetIntegerv	   2	 Number of separate		2.15.5	 -
-									 texture units that can
-									 be accessed by the fragment
-									 processing part of OpenGL.
-    MAX_TEXTURE_COORDS_ARB		    Z+	  GetIntegerv	   2	 Number of texture		2.7	 -
-									 coordinate sets
+                                                                Minimum
+    Get Value                               Type  Get Command    Value   Description                    Sec.  Attr.
+    ---------                               ----  -----------   -------  -----------                    ----  -----
+    MAX_VERTEX_ATTRIBS_ARB                  Z+    GetIntegerv     16     Number of active               2.15.2   -
+                                                                         vertex attributes
+    MAX_VERTEX_UNIFORM_COMPONENTS_ARB       Z+    GetIntegerv    512     Number of words                2.15.3   -
+                                                                         for vertex shader
+                                                                         uniform variables
+    MAX_VARYING_FLOATS_ARB                  Z+    GetIntegerv     32     Number of floats               2.15.4   -
+                                                                         for interpolated
+                                                                         (varying) variables
+    MAX_COMBINED_TEXTURE_IMAGE_UNITS_ARB    Z+    GetIntegerv      2     Number of texture image        2.15.5   -
+                                                                         units that can be accessed
+                                                                         by a vertex shader and the
+                                                                         fragment processing part of
+                                                                         OpenGL combined.
+    MAX_VERTEX_TEXTURE_IMAGE_UNITS_ARB      Z+    GetIntegerv      0     Number of separate             2.15.5   -
+                                                                         texture units that can
+                                                                         be accessed by a vertex
+                                                                         shader.
+    MAX_TEXTURE_IMAGE_UNITS_ARB             Z+    GetIntegerv      2     Number of separate             2.15.5   -
+                                                                         texture units that can
+                                                                         be accessed by the fragment
+                                                                         processing part of OpenGL.
+    MAX_TEXTURE_COORDS_ARB                  Z+    GetIntegerv      2     Number of texture              2.7      -
+                                                                         coordinate sets
 
     Table X  New Implementation Dependent State Introduced by ARB_vertex_shader
 
@@ -1886,92 +1886,92 @@ Sample Usage
 
     GLboolean init(GLcharARB *vertexShader)
     {
-	GLcharARB *pInfoLog;
-	GLboolean compiled  = GL_FALSE;
-	GLboolean linked    = GL_FALSE;
-	GLint	  length, maxLength;
+        GLcharARB *pInfoLog;
+        GLboolean compiled  = GL_FALSE;
+        GLboolean linked    = GL_FALSE;
+        GLint     length, maxLength;
 
-	//
-	// Create shader and program objects.
-	//
-	ProgramObject	   = glCreateProgramObjectARB();
-	VertexShaderObject = glCreateShaderObjectARB(GL_VERTEX_SHADER_ARB);
+        //
+        // Create shader and program objects.
+        //
+        ProgramObject      = glCreateProgramObjectARB();
+        VertexShaderObject = glCreateShaderObjectARB(GL_VERTEX_SHADER_ARB);
 
-	length = strlen(vertexShader);
-	glShaderSourceARB(VertexShaderObject, 1, &vertexShader, &length);
+        length = strlen(vertexShader);
+        glShaderSourceARB(VertexShaderObject, 1, &vertexShader, &length);
 
-	//
-	// OpenGL made a copy of the shader, we can free our copy
-	//
-	free(vertexShader);
+        //
+        // OpenGL made a copy of the shader, we can free our copy
+        //
+        free(vertexShader);
 
-	//
-	// Compile the vertex shader, and print out the compiler log file.
-	//
-	glCompileShaderARB(VertexShaderObject);
-	glGetObjectParameterivARB(VertexShaderObject,
-				  GL_OBJECT_COMPILE_STATUS_ARB, &compiled);
+        //
+        // Compile the vertex shader, and print out the compiler log file.
+        //
+        glCompileShaderARB(VertexShaderObject);
+        glGetObjectParameterivARB(VertexShaderObject,
+                                  GL_OBJECT_COMPILE_STATUS_ARB, &compiled);
 
-	glGetObjectParameterivARB(VertexShaderObject,
-				 GL_OBJECT_INFO_LOG_LENGTH_ARB, &maxLength);
-	pInfoLog = (GLcharARB *) malloc(maxLength * sizeof(GLcharARB));
-	glGetInfoLogARB(VertexShaderObject, maxLength, &length, pInfoLog);
+        glGetObjectParameterivARB(VertexShaderObject,
+                                 GL_OBJECT_INFO_LOG_LENGTH_ARB, &maxLength);
+        pInfoLog = (GLcharARB *) malloc(maxLength * sizeof(GLcharARB));
+        glGetInfoLogARB(VertexShaderObject, maxLength, &length, pInfoLog);
 
-	printf("%s\n", pInfoLog);
-	free(pInfoLog);
+        printf("%s\n", pInfoLog);
+        free(pInfoLog);
 
-	if (!compiled) {
-	    printf("Compile failed\n");
-	    return GL_FALSE;
-	}
+        if (!compiled) {
+            printf("Compile failed\n");
+            return GL_FALSE;
+        }
 
-	//
-	// Populate the program object with the compiled shader
-	//
-	glAttachObjectARB(ProgramObject, VertexShaderObject);
+        //
+        // Populate the program object with the compiled shader
+        //
+        glAttachObjectARB(ProgramObject, VertexShaderObject);
 
-	//
-	// We want the shader object to go away as soon as it is detached
-	// from the program object it is attached to. We can call delete now
-	// to achieve that. Note that calling delete on a program object
-	// will result in all shaders attached to that program object to be
-	// detached. If delete has been called for the shader object,
-	// calling delete on the program object will result in the shader
-	// object being deleted as well.
-	//
-	glDeleteObjectARB(VertexShaderObject);
+        //
+        // We want the shader object to go away as soon as it is detached
+        // from the program object it is attached to. We can call delete now
+        // to achieve that. Note that calling delete on a program object
+        // will result in all shaders attached to that program object to be
+        // detached. If delete has been called for the shader object,
+        // calling delete on the program object will result in the shader
+        // object being deleted as well.
+        //
+        glDeleteObjectARB(VertexShaderObject);
 
-	//
-	// Bind user attributes before linking the program object.
-	//
-	glBindAttribLocationARB(ProgramObject, 1, "myFirstAttribute");
-	glBindAttribLocationARB(ProgramObject, 2, "mySecondAttribute");
+        //
+        // Bind user attributes before linking the program object.
+        //
+        glBindAttribLocationARB(ProgramObject, 1, "myFirstAttribute");
+        glBindAttribLocationARB(ProgramObject, 2, "mySecondAttribute");
 
-	//
-	// Link the program and print out the linker log file
-	//
-	glLinkProgramARB(ProgramObject);
-	glGetObjectParameterivARB(ProgramObject, GL_OBJECT_LINK_STATUS_ARB,
-				  &linked);
+        //
+        // Link the program and print out the linker log file
+        //
+        glLinkProgramARB(ProgramObject);
+        glGetObjectParameterivARB(ProgramObject, GL_OBJECT_LINK_STATUS_ARB,
+                                  &linked);
 
-	glGetObjectParameterivARB(ProgramObject,
-				 GL_OBJECT_INFO_LOG_LENGTH_ARB, &maxLength);
-	pInfoLog = (GLcharARB *) malloc(maxLength * sizeof(GLcharARB));
-	glGetInfoLogARB(ProgramObject, maxLength, &length, pInfoLog);
+        glGetObjectParameterivARB(ProgramObject,
+                                 GL_OBJECT_INFO_LOG_LENGTH_ARB, &maxLength);
+        pInfoLog = (GLcharARB *) malloc(maxLength * sizeof(GLcharARB));
+        glGetInfoLogARB(ProgramObject, maxLength, &length, pInfoLog);
 
-	printf("%s\n", pInfoLog);
-	free(pInfoLog);
+        printf("%s\n", pInfoLog);
+        free(pInfoLog);
 
-	//
-	// If all went well, make the ProgramObject part of the current state
-	//
-	if (linked) {
-	    glUseProgramObjectARB(ProgramObject);
-	    return GL_TRUE;
-	} else {
-	    printf("Link failed\n");
-	    return GL_FALSE;
-	}
+        //
+        // If all went well, make the ProgramObject part of the current state
+        //
+        if (linked) {
+            glUseProgramObjectARB(ProgramObject);
+            return GL_TRUE;
+        } else {
+            printf("Link failed\n");
+            return GL_FALSE;
+        }
     }
 
     GLhandleARB  ProgramObject;
@@ -1979,43 +1979,43 @@ Sample Usage
 
     void main()
     {
-	GLcharARB *vertexShader; // Holds source for the shader
-	int	  location;	 // Uniform location
-	float	  uniformData[3] = {0.0, 1.0. 2.0};
-	float	  vertexData1[3] = {0.0, 1.0. 2.0};
-	float	  vertexData2[3] = {0.0, 1.0. 2.0};
+        GLcharARB *vertexShader; // Holds source for the shader
+        int       location;      // Uniform location
+        float     uniformData[3] = {0.0, 1.0. 2.0};
+        float     vertexData1[3] = {0.0, 1.0. 2.0};
+        float     vertexData2[3] = {0.0, 1.0. 2.0};
 
-	//
-	// Fill in the source in vertexShader
-	//
-	.
-	.
+        //
+        // Fill in the source in vertexShader
+        //
+        .
+        .
 
-	//
-	// Create shader and program objects, setup generic attributes,
-	// compile the shader object and link the program object and make it
-	// part of the current state.
-	//
-	init(vertexShader);
+        //
+        // Create shader and program objects, setup generic attributes,
+        // compile the shader object and link the program object and make it
+        // part of the current state.
+        //
+        init(vertexShader);
 
-	//
-	// Get the location of someUniformName in the vertex shader, then
-	// load its data.
-	//
-	location = glGetUniformLocationARB(ProgramObject, "someUniformName")
-	glUniform3fvARB(location, 1, &uniformData[0]);
+        //
+        // Get the location of someUniformName in the vertex shader, then
+        // load its data.
+        //
+        location = glGetUniformLocationARB(ProgramObject, "someUniformName")
+        glUniform3fvARB(location, 1, &uniformData[0]);
 
-	//
-	// Render
-	//
-	glBegin(...);
-	.
-	.
-	glVertexAttrib3fvARB(1, vertexData1);
-	glVertexAttrib3fvARB(2, vertexData2);
-	.
-	.
-	glEnd();
+        //
+        // Render
+        //
+        glBegin(...);
+        .
+        .
+        glVertexAttrib3fvARB(1, vertexData1);
+        glVertexAttrib3fvARB(2, vertexData2);
+        .
+        .
+        glEnd();
     }
 
 Revision History
@@ -2026,22 +2026,22 @@ Revision History
       - Updated API entry points in the New Procedures and Functions section
       - Named and explained all parameters to all API calls
       - BindAttributeLocationGL2 and GetActiveAttributesGL2 now have a
-	length argument for their strings
+        length argument for their strings
       - Updated the section that describes state required to support vertex
-	specification
+        specification
       - Changed how standard attribute values are preserved across program
-	changes (always preserved)
+        changes (always preserved)
       - Changed language describing what happens when too few or too many
-	attributes are provided
+        attributes are provided
       - Updated the list of OpenGL stages that are and are not replaced by a
-	vertex shader
+        vertex shader
       - Added suggestion for what new vertex array functionality to include
       - Added content to the errors section
       - Expanded the issues section up to and including number 4.
     Revision: 0.52
       - Generic vertex attributes, except for vertex arrays, are loaded
-	using the exact same API commands as ARB_vertex_program uses. Added
-	discussion of this to the issues section.
+        using the exact same API commands as ARB_vertex_program uses. Added
+        discussion of this to the issues section.
       - Changed the vertex array section to be TBD.
     Revision: 0.53
       - Now references V1.0 of the OpenGL Shading Language Specification
@@ -2052,10 +2052,10 @@ Revision History
       - Expanded GetObjectParameter{if}GL2. Added OBJECT_SUBTYPE_GL2.
     Revision: 0.55 10/18/2002
       - The index parameter to BindAttributeLocation is now a uint instead
-	of a ubyte.
+        of a ubyte.
       - Updated Errors section.
       - Added language disallowing mixing GL2 high level vertex shader with
-	low level ARB vertex program or fragment program.
+        low level ARB vertex program or fragment program.
       - Documented interaction with ARB_vertex_blend
     Revision: 0.56 10/18/2002
       - Added vertex array interface, and added an issue discussing it.
@@ -2064,12 +2064,12 @@ Revision History
       - Changed VA interface to be exactly the same as ARB_vertex_program
       - Replaced MAX_ACTIVE_ATTRIBUTES_GL2 with MAX_VERTEX_ATTRIBS_ARB.
       - Went back to a different set of VertexAttribute*GL2 calls (instead
-	of re-using the ARB_vertex_program ones).
+        of re-using the ARB_vertex_program ones).
       - Updated issues 2 and 3.
       - Added code to the sample usage section.
     Revision: 0.58 10/23/2002
       - Spelled out GetObjectParameter, instead of using 'T value' in its
-	parameter list.
+        parameter list.
       - Fixed usage of const keyword in GetAttributeLocations.
       - Added GetVertexAttribute{ifd}vGL2
       - Added GetVertexAttribPointervARB
@@ -2086,19 +2086,19 @@ Revision History
     Revision: 0.61 11/26/2002
       - Minimum for MAX_VARYING_FLOATS reduced from 40 to 32.
       - Allowed mixing of a high level GL2 vertex shader with a low level
-	ARB_fragment_program shader.
+        ARB_fragment_program shader.
     Revision: 0.62 12/04/2002
       - Resolved Issue 5 the same way as ARB_vertex_program. As a result,
-	added language to section 5.1.
+        added language to section 5.1.
     Revision: 0.63 1/29/2003
       - Marked issues 2 and 4 as unresolved.
       - Updated list of contributors.
       - Added issue 6, 7, 8, 9.
       - Updated the 'state required' section of section 2.7 and 2.8.
       - Renamed 'user-defined attribute' to 'generic attribute' to match
-	ARB_vertex_program terminology.
+        ARB_vertex_program terminology.
       - Added language to section 2.13.2 and 2.13.3 about material and
-	ColorMaterial handling when a GL2 shader is active.
+        ColorMaterial handling when a GL2 shader is active.
       - Added wording to section 3.10 for PointSize and Fog.
       - Added a two sided lighting enable to section 2.13.1.
       - Added wording to explain how raster pos works, section 2.12
@@ -2112,175 +2112,175 @@ Revision History
       - Updated the New State section
       - Updated the New Tokens section
       - Changed the VertexAttribute*GL2 entry points to VertexAttrib*ARB,
-	which are the same entry points as defined in ARB_vertex_program.
+        which are the same entry points as defined in ARB_vertex_program.
       - Made generic attribute zero provoke a vertex
       - Resolved issue 2,3 and 4. Edited the interactions with
-	ARB_vertex_program section to reflect this.
+        ARB_vertex_program section to reflect this.
       - Consistently used 'conventional attributes' instead of 'standard
-	attributes'.
+        attributes'.
       - Tried to clarify the wording in section 2.15.2 regarding attribute
-	tracking.
+        tracking.
       - Updated the Errors section
       - Added issue 12, texture access
       - Fourth working group distribution.
     Revision: 0.65 2/10/2003
       - Updated section 5.4, commands excluded from a display list.
       - Added section 2.15.6, position invariance. Renamed the old section
-	2.15.6 to 2.15.7.
+        2.15.6 to 2.15.7.
       - Added a discussion section to issue 1, invariance
       - Updated Appendix A, invariance
       - Added a proposed resolution to issue 12. Related to that are the new
-	issues 13, 14 and 15.
+        issues 13, 14 and 15.
       - Added language to sections 2.7, 2.8, 2.10.2 and 6.1.2 to support
-	texture access.
+        texture access.
       - Added a new section 2.15.5 to support texture access.
       - Added MAX_FRAGMENT_TEXTURE_UNITS_GL2, MAX_VERTEX_TEXTURE_UNITS_GL2
-	and MAX_TEXTURE_IMAGE_UNITS_GL2.
+        and MAX_TEXTURE_IMAGE_UNITS_GL2.
       - Fifth working group distribution
     Revision: 0.66 2/11/2003
       - Added issue 16. Position invariance with respect to user clipping
-	and closed it.
+        and closed it.
       - Closed issue 1.
       - Updated 'implementation dependent state' section.
       - Renamed MAX_VERTEX_UNIFORM_FLOATS_GL2 to
-	MAX_VERTEX_UNIFORM_WORDS_GL2.
+        MAX_VERTEX_UNIFORM_WORDS_GL2.
       - Consistently used 'texture coordinate set' instead of 'texture
-	coordinate unit'.
+        coordinate unit'.
       - Distributed to HP
     Revision: 0.67 2/13/2003
       - Added wording about interaction with ARB_matrix_palette. Same
-	applies as the interaction with ARB_vertex_blend.
+        applies as the interaction with ARB_vertex_blend.
       - Sixth working group distribution
     Revision: 0.68 2/20/2003
       - Renamed MAX_FRAGMENT_TEXTURE_UNITS_GL2 to
-	MAX_TEXTURE_IMAGE_UNITS_ARB
+        MAX_TEXTURE_IMAGE_UNITS_ARB
       - Renamed MAX_VERTEX_TEXTURE_UNITS_GL2 to
-	MAX_VERTEX_TEXTURE_IMAGE_UNITS_GL2
+        MAX_VERTEX_TEXTURE_IMAGE_UNITS_GL2
       - Renamed MAX_TEXTURE_IMAGE_UNITS_GL2 to
-	MAX_COMBINED_TEXTURE_IMAGE_UNITS_GL2
+        MAX_COMBINED_TEXTURE_IMAGE_UNITS_GL2
       - Added wording to issue 12) explaining how LOD calculation works.
       - Updated section 2.15.5 with respect to LOD calculations.
       - Updated section 2.15.5. Accessing the same texture image unit from a
-	vertex shader and fragment processing counts as using two image
-	units against the limit MAX_COMBINED_TEXTURE_IMAGE_UNITS_GL2.
+        vertex shader and fragment processing counts as using two image
+        units against the limit MAX_COMBINED_TEXTURE_IMAGE_UNITS_GL2.
       - Updated the interactions with ARB_vertex and fragment_program
-	section.
+        section.
       - Added the 'interactions with ARB_fragment_program' section.
     Revision: 0.69 2/27/2003
       - Updated the interactions with ARB_vertex and fragment_program
-	section, again.
+        section, again.
       - Updated the texture access section 2.15.5. It is more carefully
-	worded and references the relevant texturing sections in chapter 3.
+        worded and references the relevant texturing sections in chapter 3.
       - Closed issues 2, 3 and 4. Attribute handling.
       - Closed issue 9 and modified section 3.3 to reflect the resolution.
       - Updated texture coordinates to full citizens with respect to their
-	dynamic range. Section 2.1.1. ARB_fragment_program already does
-	this.
+        dynamic range. Section 2.1.1. ARB_fragment_program already does
+        this.
     Revision: 0.70 3/3/2003
       - Treatment of PointSize wasn't complete with respect to point
-	attenuation and point fade. Section 3.3.
+        attenuation and point fade. Section 3.3.
       - Added issue 17 explaining what happens to point distance attenuation
-	and point fade.
+        and point fade.
       - Texture access now takes the texture object and texture unit bias
-	into account as well. See sections 2.15.5 and Section 3.8.8.
+        into account as well. See sections 2.15.5 and Section 3.8.8.
       - Fixed numerous small typos and tried to clarify wording here and
-	there.
+        there.
       - It is no longer a requirement to load and/or compile a vertex shader
-	before specifying its attribute bindings.
+        before specifying its attribute bindings.
       - Added section 2.15.8 Required State.
       - Rewrote the overview section.
     Revision: 0.71 3/3/2003
       - Upgraded colors to be full floating point citizens, section 2.1.1.
       - Added language about undefined results if a vertex shader does not
-	clamp when fixed-function fragment processing is used or an
-	ARB_fragment_program target is active. Section 2.15.7.
+        clamp when fixed-function fragment processing is used or an
+        ARB_fragment_program target is active. Section 2.15.7.
       - Added issue number 18, explaining color clamping and conversion to
-	fixed-point.
+        fixed-point.
     Revision: 0.72 3/31/2003
       - Updated PointSize. Its value is undefined unless written by the
-	shader.
+        shader.
       - Changed issue 9. We will have a point size enable after all.
       - Updated IP Status section to point to the contributors agreement.
       - Renamed BindAttributeLocation to BindAttribLocation to be in line
-	with the rest of the vertex attribute naming (VertexAttrib etc).
+        with the rest of the vertex attribute naming (VertexAttrib etc).
       - Renamed GetActiveAttributes to GetActiveAttribs for the same reason.
     Revision: 0.73 4/9/2003
       - Added to the example usage section. Shows how to use
-	GetActiveAttribs.
+        GetActiveAttribs.
       - GetActiveAttribs no longer returns the length of the strings. They
-	are always null terminated, a length parameter is no longer needed.
+        are always null terminated, a length parameter is no longer needed.
       - GetActiveAttribs no longer returns a Boolean. It was never set.
       - Added life time to the pointer returned by GetActiveAttribs.
       - GetActiveAttribs now also returns the type of each attribute.
       - It is no longer a link error if generic attributes are not bound yet
-	using BindAttribute.
+        using BindAttribute.
       - Renamed "handle" to "handleGL2".
       - Updated section 2.15.8
     Revision: 0.74 4/17/2003
       - Added issues 19, 20 and 21.
       - Re-ordered section 2.15.2. Vertex Attributes
       - The GL will assign an index for an attribute variable in a vertex
-	shader. This index is queriable using the new GetAttribLocationGL2
-	command.
+        shader. This index is queriable using the new GetAttribLocationGL2
+        command.
       - Clarified BindAttribLocationGL2. It can override any binding
-	assigned by the GL. It can be called at any time. Binding takes
-	effect once a program object is (re)linked.
+        assigned by the GL. It can be called at any time. Binding takes
+        effect once a program object is (re)linked.
       - Added text that clarifies how to load and bind attributes declared
-	as a matrix to section 2.7 and 2.15.2.
+        as a matrix to section 2.7 and 2.15.2.
       - Clarified issues 1, 7, 8, 9, 11, 18 based on Pat's feedback. I
-	didn't change their resolution, just tried to make them clearer.
+        didn't change their resolution, just tried to make them clearer.
       - Numerous other small clarifications based on Pat's feedback.
     Revision: 0.75 4/18/2003
       - Made BindAttribLocationGL2 display-listable.
       - Query of active attributes is still allowed after a failed link.
-	After all the link could fail because there were too many active
-	attributes.
+        After all the link could fail because there were too many active
+        attributes.
       - Added a size parameter to GetActiveAttribsGL2.
       - Clarified when the linker can generate errors based on incorrect
-	user bindings of attributes.
+        user bindings of attributes.
       - More clarification's based on Pat's feedback, most of them in
-	section 2.15.2 Vertex Attributes.
+        section 2.15.2 Vertex Attributes.
       - Re-did section 2.13.1, two sided lighting with a vertex shader
-	enabled.
+        enabled.
       - Refined the section about aliasing attributes in section 2.15.2.
       - Changed MAX_VERTEX_UNIFORM_WORDS_GL2 to
-	MAX_VERTEX_UNIFORM_COMPONENTS_GL2
+        MAX_VERTEX_UNIFORM_COMPONENTS_GL2
     Revision: 0.76 4/21/2003
       - Changed a few occurances of "char" to charGL2.
       - GetAttribLocation and BindAttribLocation no longer take a length,
-	just like GetUniformLocation.
+        just like GetUniformLocation.
       - Updated the example section to reflect the latest API changes.
       - Changed the location of the Contributors License to a publicly
-	accessible place on www.3dlabs.com.
+        accessible place on www.3dlabs.com.
       - Version approved by the ARB-GL2 working group.
     Revision: 0.77 5/09/2003
       - Fixed issues 17 and 19 where some language was out of sync with the
-	actual resolution in the spec.
+        actual resolution in the spec.
       - Change 'zero' to NULL in the text describing GetActiveAttribsGL2.
       - Fixed typo in one of the comments in the example section and in the
-	revision history.
+        revision history.
       - Removed the VertexAttribMatrix*GL2 entry points from the 'new
-	procedures and functions' section. These were never intended to be
-	part of the spec.
+        procedures and functions' section. These were never intended to be
+        part of the spec.
       - Added Kent Lin to the list of contributors.
       - Added state tables. Not all state defined in the spec was present in
-	the tables.
+        the tables.
       - Section 2.15.8, required state for program objects was incorrect.
       - Clarified the lifetime of the pointers returned by
-	GetActiveAttribsGL2.
+        GetActiveAttribsGL2.
       - Clarified that you need to pass in three NULL pointers to
-	GetActiveAttribsGL2, to only get the count of active attributes.
+        GetActiveAttribsGL2, to only get the count of active attributes.
       - Listed (already defined in the Errors section) error conditions to
-	GetActiveUniformsGL2, GetAttribLocationGL2 and
-	BindAttribLocationGL2.
+        GetActiveUniformsGL2, GetAttribLocationGL2 and
+        BindAttribLocationGL2.
       - Updated example section to reflect the latest API names.
       - The first error rule should have been INVALID_VALUE (consistent with
-	GL2_shader_objects).
+        GL2_shader_objects).
       - Added Jon Leech, Evan Hart, Benjamin Lipchak and Jeremy Sandmel to
-	the list of contributors.
+        the list of contributors.
       - Removed the two rules from Appendix A (invariance) and updated Issue
-	1 to reflect this. Added the same repeatability rule as the fragment
-	shader.
+        1 to reflect this. Added the same repeatability rule as the fragment
+        shader.
       - Assigned enum values.
     Revision: 0.78 5/15/2003
       - Deleted reference to AppendShader (this call no longer exist).
@@ -2288,65 +2288,65 @@ Revision History
       - Added SHADER_OBJECT_ARB to the list of new tokens.
       - Fixed typos.
       - Added to the contributors list. If anyone is still left out, let
-	Bill Licea Kane, Jon Leech or myself know.
+        Bill Licea Kane, Jon Leech or myself know.
     Revision: 0.79 6/24/2003
       - Changed MAX_VERTEX_TEXTURE_IMAGE_UNITS minimum value to 0 (from 1).
-	Updated issue 15 to reflect this.
+        Updated issue 15 to reflect this.
       - Updates issue 18 (color clamping). As a result, updated Section
-	2.1.1 and 2.15.7.
+        2.1.1 and 2.15.7.
       - Changed GetActiveAttrib to no longer return a pointer to GL memory.
-	This call now returns data for one active attribute, instead of all
-	active attributes. As a results, added error conditions to the
-	Errors section.
+        This call now returns data for one active attribute, instead of all
+        active attributes. As a results, added error conditions to the
+        Errors section.
       - BindAttribLocationARB is not display-listable.
       - Added OBJECT_ACTIVE_ATTRIBUTE_MAX_LENGTH_ARB and
-	OBJECT_ACTIVE_ATTRIBUTES_ARB as a queriable parameter to
-	GetObjectParameter{if}vARB. As a result, changed the New State
-	section, and the Required State section.
+        OBJECT_ACTIVE_ATTRIBUTES_ARB as a queriable parameter to
+        GetObjectParameter{if}vARB. As a result, changed the New State
+        section, and the Required State section.
       - Ordered the Errors section in the order of API commands described in
-	the spec. Also split errors in one error per API command.
+        the spec. Also split errors in one error per API command.
       - Updated the examples section.
       - General language cleanup.
       - ARB approved version.
     Revision: 0.80 3/16/2004
       - Section 2.15.5 changed that zero or more, and not one or more,
-	texture image units are available to a vertex shader.
+        texture image units are available to a vertex shader.
       - Section 2.15.5 Added language (copied from the fragment shader spec)
-	about samplers and depth textures and undefined behavior. Also
-	copied the language that specifies what happens when a texture
-	object is incomplete. Also copied the language that specifies what
-	stays the same with texture operations.
+        about samplers and depth textures and undefined behavior. Also
+        copied the language that specifies what happens when a texture
+        object is incomplete. Also copied the language that specifies what
+        stays the same with texture operations.
       - Added ARB extension number (31) and edited the status paragraph.
       - Removed SHADER_OBJECT_ARB, OBJECT_TYPE_ARB and OBJECT_SUBTYPE_ARB
-	tokens from the New Tokens section. They are already defined in
-	ARB_shader_objects. Also removed references to these in Chapter 6,
-	GetObjectParameter{fi}v and the Errors section.
+        tokens from the New Tokens section. They are already defined in
+        ARB_shader_objects. Also removed references to these in Chapter 6,
+        GetObjectParameter{fi}v and the Errors section.
       - Changed MAX_COMBINED_TEXTURE_IMAGE_UNITS_ARB to 2 (from 3).
       - Changed a typo: OBJECT_ACTIVE_ATTRIBUTES_MAX_LENGTH_ARB should be
-	OBJECT_ACTIVE_ATTRIBUTE_MAX_LENGTH_ARB (without the 'S')
+        OBJECT_ACTIVE_ATTRIBUTE_MAX_LENGTH_ARB (without the 'S')
       - Specified that the return parameters for GetACtiveAttribARB are
-	unmodified when a GL error occurs.
+        unmodified when a GL error occurs.
       - Section 2.13.8. Varying variables, not generic vertex attributes, are
-	clipped.
+        clipped.
       - GetAttribLocationARB() in the 'New Procedures and Functions' section
-	takes a handleARB not a handle.
+        takes a handleARB not a handle.
       - Explained the meaning of the parameters to GetVertexAttrib*ARB.
       - Added that the current values of secondary color, fog coord and generic
-	attributes are undefined after a call to DrawArrays or DrawElements, if
-	the respective arrays are enabled.
+        attributes are undefined after a call to DrawArrays or DrawElements, if
+        the respective arrays are enabled.
       - Added resolution 22.
       - Added a paragraph to section 2.15.2 that makes it a link error to have
-	both gl_Vertex an a generic attribute bound to index zero be used in a
-	vertex shader.
+        both gl_Vertex an a generic attribute bound to index zero be used in a
+        vertex shader.
     Revision: 0.81 3/30/2004
       - Removed ARB from DEPTH_COMPONENT_ARB
       - GetObjectParameter{if}vARB instead of GetObjectParameter{fi}vARB.
       - Updated the version of the Shading Language document referenced to
-	100.53
+        100.53
       - Updated description of MAX_VERTEX_UNIFORM_COMPONENTS_ARB in the
-	state tables.
+        state tables.
       - Moved spec language related to texture operations not affected by a
-	vertex shader to issue 23.
+        vertex shader to issue 23.
       - ARB-GL2 workgroup approved version.
     Revision 0.82, 12/12/2006
       - Fixed spelling of glGetObjectParameterivARB in sample code.

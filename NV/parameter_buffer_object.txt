@@ -17,8 +17,8 @@ Status
 
 Version
 
-    Last Modified Date:         02/07/2007
-    NVIDIA Revision:            6
+    Last Modified Date:         04/18/2007
+    NVIDIA Revision:            7
 
 Number
 
@@ -245,17 +245,21 @@ New State
     (Modify ARB_vertex_program, Table X.6 -- Program State)
 
                                                       Initial
-    Get Value                    Type    Get Command  Value   Description       Sec.    Attribute
-    ---------                    ------- -----------  ------- ----------------  ------  ---------
-    VERTEX_PROGRAM_PARAMETER_    Z+      GetIntegerv  0       Active vertex     2.14.1  -
-      BUFFER_NV                                               program buffer
-                                                              object
-    GEOMETRY_PROGRAM_PARAMETER_  Z+      GetIntegerv  0       Active geometry   2.14.1  -
-      BUFFER_NV                                               program buffer
-                                                              object
-    FRAGMENT_PROGRAM_PARAMETER_  Z+      GetIntegerv  0       Active fragment   2.14.1  -
-      BUFFER_NV                                               program buffer
-                                                              object
+    Get Value                    Type    Get Command  Value   Description               Sec.    Attribute
+    ---------                    ------- -----------  ------- ------------------------  ------  ---------
+    VERTEX_PROGRAM_PARAMETER_    Z+      GetIntegerv  0       Active vertex program     2.14.1  -
+      BUFFER_NV                                               buffer object binding
+    VERTEX_PROGRAM_PARAMETER_    nxZ+    GetInteger-  0       Buffer objects bound for  2.14.1  -
+      BUFFER_NV                          IndexedvEXT          vertex program use
+    GEOMETRY_PROGRAM_PARAMETER_  Z+      GetIntegerv  0       Active geometry program   2.14.1  -
+      BUFFER_NV                                               buffer object binding
+    GEOMETRY_PROGRAM_PARAMETER_  nxZ+    GetInteger-  0       Buffer objects bound for  2.14.1  -
+      BUFFER_NV                          IndexedvEXT          geometry program use
+    FRAGMENT_PROGRAM_PARAMETER_  Z+      GetIntegerv  0       Active fragment program   2.14.1  -
+      BUFFER_NV                                               buffer object binding
+    FRAGMENT_PROGRAM_PARAMETER_  nxZ+    GetInteger-  0       Buffer objects bound for  2.14.1  -
+      BUFFER_NV                          IndexedvEXT          fragment program use
+
 New Implementation Dependent State
 
                                                       Minimum
@@ -366,6 +370,9 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     7    04/18/07  pbrown    Fixed state table to include the buffer
+                              object binding array for each program type.
+
      6    02/07/07  ewerness  Updated inconsistent prototypes in spec -
                               <count> for ProgramBufferParameters* is
                               a <sizei>, not a <uint>.

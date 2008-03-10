@@ -26,15 +26,15 @@ Overview
     A new texture environment is defined which supports the
     following equations:
 
-			Cv = Cf			COPY
-			Cv = Ct			REPLACE
-			Cv = Cf * Ct		MODULATE
-			Cv = Cf + Ct		ADD
-			Cv = Cf - Ct		SUBTRACT
-			Cv = Ct - Cf		REVERSE_SUBTRACT
-			Cv = aCf + (1-a)Ct	BLEND
-			Cv = aCt + (1-a)Cf	REVERSE_BLEND
-	where a is the incoming fragment's alpha value
+                        Cv = Cf                 COPY
+                        Cv = Ct                 REPLACE
+                        Cv = Cf * Ct            MODULATE
+                        Cv = Cf + Ct            ADD
+                        Cv = Cf - Ct            SUBTRACT
+                        Cv = Ct - Cf            REVERSE_SUBTRACT
+                        Cv = aCf + (1-a)Ct      BLEND
+                        Cv = aCt + (1-a)Cf      REVERSE_BLEND
+        where a is the incoming fragment's alpha value
 
     These functions may be independently selected for color and alpha
     processing.  The BLEND function is not available for alpha processing.
@@ -97,45 +97,45 @@ Issues
 
   * Possible add-on extensions (in the context of multitexture):
 
-	1) source and blend factor specification for the BLEND/REVERSE_BLEND
-	   functions by generalizing BLEND/REVERSE_BLEND to 
-		x*Cf + y*Ct   /    x*Ct + y*Cf
-	   and allow x to be specified by TEXTURE_ENV_SRC_FACTOR and
-	   y by TEXTURE_ENV_DST_FACTOR with possible src and dst factors
-	   ONE
-	   ZERO
-	   FRAGMENT_ALPHA    alpha from previous environment stage
-	   TEXTURE_ALPHA     alpha from texture
-	   PRETEXTURE_ALPHA  original pre-texture alpha value
-	   FRAGMENT_ALPHA_MINUS_ONE
-	   TEXTURE_ALPHA_MINUS_ONE
-	   PRETEXTURE_ALPHA_MINUS_ONE
-	
-	2) Add some muxing to the inputs of the equations.
-	   The basic equation set is
-		Cf            (copy)
-		Cf*Ct         (modulate)
-		Cf+Ct         (add/sub/rsub)
-		a*Cf+(1-a)*Ct (blend/rblend)
-	    
-	    so allow a more flexible binding on Cf & Ct
-	    TEXTURE_ENV_SRC  (default is FRAGMENT)
-	    TEXTURE_ENV_DST  (default is TEXTURE)
-	        choices:
-		    FRAGMENT
-		    TEXTURE
-		    PRETEXTURE
+        1) source and blend factor specification for the BLEND/REVERSE_BLEND
+           functions by generalizing BLEND/REVERSE_BLEND to 
+                x*Cf + y*Ct   /    x*Ct + y*Cf
+           and allow x to be specified by TEXTURE_ENV_SRC_FACTOR and
+           y by TEXTURE_ENV_DST_FACTOR with possible src and dst factors
+           ONE
+           ZERO
+           FRAGMENT_ALPHA    alpha from previous environment stage
+           TEXTURE_ALPHA     alpha from texture
+           PRETEXTURE_ALPHA  original pre-texture alpha value
+           FRAGMENT_ALPHA_MINUS_ONE
+           TEXTURE_ALPHA_MINUS_ONE
+           PRETEXTURE_ALPHA_MINUS_ONE
+        
+        2) Add some muxing to the inputs of the equations.
+           The basic equation set is
+                Cf            (copy)
+                Cf*Ct         (modulate)
+                Cf+Ct         (add/sub/rsub)
+                a*Cf+(1-a)*Ct (blend/rblend)
+            
+            so allow a more flexible binding on Cf & Ct
+            TEXTURE_ENV_SRC  (default is FRAGMENT)
+            TEXTURE_ENV_DST  (default is TEXTURE)
+                choices:
+                    FRAGMENT
+                    TEXTURE
+                    PRETEXTURE
 
-	 3) extension 2) gives a good chunk of the functionality of 1)
-	    perhaps we could avoid 1) altogether or change 1) to allow
-	    a more restrictive selection of the blend factor (simultaneously
-	    choosing both a and (1-a):
+         3) extension 2) gives a good chunk of the functionality of 1)
+            perhaps we could avoid 1) altogether or change 1) to allow
+            a more restrictive selection of the blend factor (simultaneously
+            choosing both a and (1-a):
 
-	    TEXTURE_ENV_BLEND_FACTOR
-		choices:
-		    FRAGMENT
-		    TEXTURE
-		    PRETEXTURE
+            TEXTURE_ENV_BLEND_FACTOR
+                choices:
+                    FRAGMENT
+                    TEXTURE
+                    PRETEXTURE
 
 
 New Procedures and Functions
@@ -148,15 +148,15 @@ New Tokens
     GetTexEnviv, GetTexEnvfv, GetBooleanv, GetIntegerv, GetFloatv, GetDoublev,
     and the <cap> parameter of Enable, Disable, and IsEnabled
 
-    TEXTURE_ENV0_EXT		0x????
-    TEXTURE_ENV1_EXT		TEXTURE_ENV0_EXT+1
+    TEXTURE_ENV0_EXT            0x????
+    TEXTURE_ENV1_EXT            TEXTURE_ENV0_EXT+1
     <leave room for 14 more environments>
 
     Accepted by the <pname> parameter of TexEnvf, TexEnvi, TexEnvfv, TexEnvfi,
     GetTexEnviv and GetTexEnvfv when the <target> parameter value is
     TEXTURE_ENV1_EXT
 
-    TEXTURE_ENV_MODE_ALPHA_EXT	0x????
+    TEXTURE_ENV_MODE_ALPHA_EXT  0x????
 
 
     Accepted by the <params> parameter of TexEnvf, TexEnvi, TexEnvfv, and
@@ -164,104 +164,104 @@ New Tokens
     <pname> parameter value is TEXTURE_ENV_MODE or
     TEXTURE_ENV_MODE_ALPHA_EXT
 
-    ENV_COPY_EXT		0x????
-    ENV_REPLACE_EXT		0x????
-    ENV_MODULATE_EXT		0x????
-    ENV_ADD_EXT			0x????
-    ENV_SUBTRACT_EXT		0x????
-    ENV_REVERSE_SUBTRACT_EXT	0x????
-    ENV_BLEND_EXT		0x????
-    ENV_REVERSE_BLEND_EXT	0x????
+    ENV_COPY_EXT                0x????
+    ENV_REPLACE_EXT             0x????
+    ENV_MODULATE_EXT            0x????
+    ENV_ADD_EXT                 0x????
+    ENV_SUBTRACT_EXT            0x????
+    ENV_REVERSE_SUBTRACT_EXT    0x????
+    ENV_BLEND_EXT               0x????
+    ENV_REVERSE_BLEND_EXT       0x????
 
     Accepted by the <pname> parameter of TexEnvf, TexEnvi, TexEnvfv, 
     TexEnvfi, GetTexEnviv, and GetTexEnvfv
 
-    TEXTURE_ENV_SHIFT_EXT	0x????
+    TEXTURE_ENV_SHIFT_EXT       0x????
 
 
 
 Additions to Chapter 2 of the GL Specification (OpenGL Operation)
 
-	None
+        None
 
 Additions to Chapter 3 of the GL Specification (Rasterization)
 
 
 
 
-				Texture Environment 1
-				----------------------
+                                Texture Environment 1
+                                ----------------------
 
-	Base Texture Format	COPY  REPLACE  MODULATE  ADD
-	-------------------	----  -------  --------  ---
+        Base Texture Format     COPY  REPLACE  MODULATE  ADD
+        -------------------     ----  -------  --------  ---
 
-	ALPHA			 Rf     0        Rf*0    Rf+0
-				 Gf     0        Gf*0    Rf+0
-				 Bf     0        Bf*0    Rf+0
-				 Af     At       Af*At   Af+At
+        ALPHA                    Rf     0        Rf*0    Rf+0
+                                 Gf     0        Gf*0    Rf+0
+                                 Bf     0        Bf*0    Rf+0
+                                 Af     At       Af*At   Af+At
 
-	LUMINANCE		 Rf     Lt       Rf*Lt   Rf+Lt
-				 Gf     Lt       Gf*Lt   Gf+Lt
-				 Bf     Lt       Bf*Lt   Bf+Lt
-				 Af     1        Af*1    Af+1
+        LUMINANCE                Rf     Lt       Rf*Lt   Rf+Lt
+                                 Gf     Lt       Gf*Lt   Gf+Lt
+                                 Bf     Lt       Bf*Lt   Bf+Lt
+                                 Af     1        Af*1    Af+1
 
-	LUMINANCE_ALPHA		 Rf     Lt       Rf*Lt   Rf+Lt
-				 Gf     Lt       Gf*Lt   Gf+Lt
-				 Bf     Lt       Bf*Lt   Bf+Lt
-				 Af     At       Af*At   Af+At
+        LUMINANCE_ALPHA          Rf     Lt       Rf*Lt   Rf+Lt
+                                 Gf     Lt       Gf*Lt   Gf+Lt
+                                 Bf     Lt       Bf*Lt   Bf+Lt
+                                 Af     At       Af*At   Af+At
 
-	INTENSITY		 Rf     It       Rf*It   Rf+It
-				 Gf     It       Gf*It   Gf+It
-				 Bf     It       Bf*It   Bf+It
-				 Af     It       Af*It   Af+It
+        INTENSITY                Rf     It       Rf*It   Rf+It
+                                 Gf     It       Gf*It   Gf+It
+                                 Bf     It       Bf*It   Bf+It
+                                 Af     It       Af*It   Af+It
 
-	RGB			 Rf     Rt       Rf*Rt   Rf+Rt
-				 Gf     Gt       Gf*Gt   Gf+Gt
-				 Bf     Bt       Bf*Bt   Bf+Bt
-				 Af     1        Af*1    Af+1
+        RGB                      Rf     Rt       Rf*Rt   Rf+Rt
+                                 Gf     Gt       Gf*Gt   Gf+Gt
+                                 Bf     Bt       Bf*Bt   Bf+Bt
+                                 Af     1        Af*1    Af+1
 
-	RGBA			 Rf     Rt       Rf*Rt   Rf+Rt
-				 Gf     Gt       Gf*Gt   Gf+Gt
-				 Bf     Bt       Bf*Bt   Bf+Bt
-				 Af     At       Af*At   Af+At
-
-
-	Base Texture Format  SUBTRACT  REVERSE_      BLEND        REVERSE_
-				       SUBTRACT                   BLEND
-	-------------------  --------  --------  ---------------  -------------
-
-	ALPHA		     Rf-0      0-Rf     Af*Rf+(1-Af)*0   Af*0+(1-Af)*Rf
-			     Gf-0      0-Gf     Af*Gf+(1-Af)*0   Af*0+(1-Af)*Gf
-			     Bf-0      0-Bf     Af*Bf+(1-Af)*0   Af*0+(1-Af)*Bf
-			     Af-At     At-Af    N/A              N/A
-
-	LUMINANCE	     Rf-Lt     Lt-Rf    Af*Rf+(1-Af)*Lt  Af*Lt+(1-Af)*Rf
-			     Gf-Lt     Lt-Gf    Af*Gf+(1-Af)*Lt  Af*Lt+(1-Af)*Gf
-			     Bf-Lt     Lt-Bf    Af*Bf+(1-Af)*Lt  Af*Lt+(1-Af)*Bf
-			     Af-1      1-Af     N/A              N/A
-
-	LUMINANCE_ALPHA	     Rf-Lt     Lt-Rf    Af*Rf+(1-Af)*Lt  Af*Lt+(1-Af)*Rf
-			     Gf-Lt     Lt-Gf    Af*Gf+(1-Af)*Lt  Af*Lt+(1-Af)*Gf
-			     Bf-Lt     Lt-Bf    Af*Bf+(1-Af)*Lt  Af*Lt+(1-Af)*Bf
-			     Af-At     At-Af    N/A              N/A
-
-	INTENSITY	     Rf-It     It-Rf    Af*Rf+(1-Af)*It  Af*It+(1-Af)*Rf
-			     Gf-It     It-Gf    Af*Gf+(1-Af)*It  Af*It+(1-Af)*Gf
-			     Bf-It     It-Bf    Af*Bf+(1-Af)*It  Af*It+(1-Af)*Bf
-			     Af-It     It-Af    N/A              N/A
-
-	RGB		     Rf-Rt     Rt-Rf    Af*Rf+(1-Af)*Rt  Af*Rt+(1-Af)*Rf
-			     Gf-Gt     Gt-Gf    Af*Gf+(1-Af)*Gt  Af*Gt+(1-Af)*Gf
-			     Bf-Bt     Bt-Bf    Af*Bf+(1-Af)*Bt  Af*Bt+(1-Af)*Bf
-			     Af-1      1-Af     N/A              N/A
-
-	RGBA		     Rf-Rt     Rt-Rf    Af*Rf+(1-Af)*Rt  Af*Rt+(1-Af)*Rf
-			     Gf-Gt     Gt-Gf    Af*Gf+(1-Af)*Gt  Af*Gt+(1-Af)*Gf
-			     Bf-Bt     Bt-Bf    Af*Bf+(1-Af)*Bt  Af*Bt+(1-Af)*Bf
-			     Af-At     At-Af    N/A              N/A
+        RGBA                     Rf     Rt       Rf*Rt   Rf+Rt
+                                 Gf     Gt       Gf*Gt   Gf+Gt
+                                 Bf     Bt       Bf*Bt   Bf+Bt
+                                 Af     At       Af*At   Af+At
 
 
-	Tables 3.12 and 3.13: Texture functions for TEXTURE_ENV1.
+        Base Texture Format  SUBTRACT  REVERSE_      BLEND        REVERSE_
+                                       SUBTRACT                   BLEND
+        -------------------  --------  --------  ---------------  -------------
+
+        ALPHA                Rf-0      0-Rf     Af*Rf+(1-Af)*0   Af*0+(1-Af)*Rf
+                             Gf-0      0-Gf     Af*Gf+(1-Af)*0   Af*0+(1-Af)*Gf
+                             Bf-0      0-Bf     Af*Bf+(1-Af)*0   Af*0+(1-Af)*Bf
+                             Af-At     At-Af    N/A              N/A
+
+        LUMINANCE            Rf-Lt     Lt-Rf    Af*Rf+(1-Af)*Lt  Af*Lt+(1-Af)*Rf
+                             Gf-Lt     Lt-Gf    Af*Gf+(1-Af)*Lt  Af*Lt+(1-Af)*Gf
+                             Bf-Lt     Lt-Bf    Af*Bf+(1-Af)*Lt  Af*Lt+(1-Af)*Bf
+                             Af-1      1-Af     N/A              N/A
+
+        LUMINANCE_ALPHA      Rf-Lt     Lt-Rf    Af*Rf+(1-Af)*Lt  Af*Lt+(1-Af)*Rf
+                             Gf-Lt     Lt-Gf    Af*Gf+(1-Af)*Lt  Af*Lt+(1-Af)*Gf
+                             Bf-Lt     Lt-Bf    Af*Bf+(1-Af)*Lt  Af*Lt+(1-Af)*Bf
+                             Af-At     At-Af    N/A              N/A
+
+        INTENSITY            Rf-It     It-Rf    Af*Rf+(1-Af)*It  Af*It+(1-Af)*Rf
+                             Gf-It     It-Gf    Af*Gf+(1-Af)*It  Af*It+(1-Af)*Gf
+                             Bf-It     It-Bf    Af*Bf+(1-Af)*It  Af*It+(1-Af)*Bf
+                             Af-It     It-Af    N/A              N/A
+
+        RGB                  Rf-Rt     Rt-Rf    Af*Rf+(1-Af)*Rt  Af*Rt+(1-Af)*Rf
+                             Gf-Gt     Gt-Gf    Af*Gf+(1-Af)*Gt  Af*Gt+(1-Af)*Gf
+                             Bf-Bt     Bt-Bf    Af*Bf+(1-Af)*Bt  Af*Bt+(1-Af)*Bf
+                             Af-1      1-Af     N/A              N/A
+
+        RGBA                 Rf-Rt     Rt-Rf    Af*Rf+(1-Af)*Rt  Af*Rt+(1-Af)*Rf
+                             Gf-Gt     Gt-Gf    Af*Gf+(1-Af)*Gt  Af*Gt+(1-Af)*Gf
+                             Bf-Bt     Bt-Bf    Af*Bf+(1-Af)*Bt  Af*Bt+(1-Af)*Bf
+                             Af-At     At-Af    N/A              N/A
+
+
+        Tables 3.12 and 3.13: Texture functions for TEXTURE_ENV1.
 
     Section 3.8.5 Texture Environments and Texture Functions
 
@@ -290,7 +290,7 @@ Additions to Chapter 3 of the GL Specification (Rasterization)
     number of supported texture coordinate sets.  If floating-point values
     are supplied, they are rounded to the nearest integer.
 
-	The value of TEXTURE_ENV_MODE specifies a texture function.  The result
+        The value of TEXTURE_ENV_MODE specifies a texture function.  The result
     of this function depends on the fragment and the texture array value.  The
     precise form of the function depends on the base internal formats of the
     texture arrays that were last specified.  In the following two
@@ -302,17 +302,17 @@ Additions to Chapter 3 of the GL Specification (Rasterization)
     texture functions are specified in Table 3.10, and the DECAL and BLEND
     texture functions are specified in Table 3.11.
 
-	The value of TEXTURE_ENV_COORD_SET_EXT specifies which set of fragment
+        The value of TEXTURE_ENV_COORD_SET_EXT specifies which set of fragment
     texture coordinates are used to determine the texture value used in the
     texture function.  The same set of texture coordinates may be
     simultaneously used by multiple textures.
 
-	Specifying Enable with a <cap> parameter of TEXTURE_ENV1_EXT selects an
+        Specifying Enable with a <cap> parameter of TEXTURE_ENV1_EXT selects an
     alternate texture environment with a different set of texture functions.
     When TEXTURE_ENV1_EXT is enabled this environment supersedes texture
     environment zero.
 
-	Specifying TexEnv with a <target> parameter of TEXTURE_ENV1_EXT
+        Specifying TexEnv with a <target> parameter of TEXTURE_ENV1_EXT
     selects the TEXTURE_ENV1_EXT environment for modification.  The possible
     environment parameters for TEXTURE_ENV1_EXT are TEXTURE_ENV_MODE,
     TEXTURE_ENV_MODE_ALPHA_EXT, TEXTURE_ENV_SHIFT_EXT, and
@@ -329,15 +329,15 @@ Additions to Chapter 3 of the GL Specification (Rasterization)
     specified for either TEXTURE_ENV_SHIFT_EXT or TEXTURE_ENV_COORD_SET_EXT
     they are rounded to the nearest integer.
 
-	The value TEXTURE_ENV_MODE specifies a texture function for the R, G,
+        The value TEXTURE_ENV_MODE specifies a texture function for the R, G,
     and B components and the value of TEXTURE_ENV_MODE_ALPHA_EXT specifies a
     texture function for the A component.  The computed color components Rv,
     Gv, Bv, and Av are given by the equations:
 
-	    Rv = Rx*(2^Rs),
-	    Gv = Gx*(2^Gs),
-	    Bv = Bx*(2^Bs) and
-	    Av = Ax*(2^As),
+            Rv = Rx*(2^Rs),
+            Gv = Gx*(2^Gs),
+            Bv = Bx*(2^Bs) and
+            Av = Ax*(2^As),
 
     where the functions for Rx, Gx, Bx, and Ax are specified in Tables 3.12
     and 3.13,  and Rs, Gs, Bs, and As are the scaling factors specified with
@@ -346,7 +346,7 @@ Additions to Chapter 3 of the GL Specification (Rasterization)
     and the ENV_SUBTRACT_EXT, ENV_REVERSE_SUBTRACT_EXT, ENV_BLEND_EXT, and
     ENV_REVERSE_BLEND_EXT functions are specified in Table 3.13.
 
-	The state required for texture environment TEXTURE_ENV0_EXT consists of
+        The state required for texture environment TEXTURE_ENV0_EXT consists of
     the four-valued integer indicating the texture function, four floating-
     point TEXTURE_ENV_COLOR values and one MAX_TEXTURE_COORD_SETS_EXT-valued
     integer indicating the texture coordinate set binding.  The state required
@@ -381,7 +381,7 @@ Additions to Chapter 3 of the GL Specification (Rasterization)
     R, G, B, and A values.  These are the color values passed to subsequent
     operations.  Other data associated with the incoming fragment remain
     unchanged, except that the texture coordinates may be discarded.
-	The required state us two bits indicating whether each of one- or
+        The required state us two bits indicating whether each of one- or
     two-dimensional texturing is enabled or disabled.  In the initial state,
     all texturing is disabled.
 
@@ -452,11 +452,11 @@ Errors
 
 New State
 
-    Get Value		    Get Command	 Type	Initial Value	Attribute
-    ---------               -----------	 ----	-------------	---------
-    TEXTURE_ENV1_EXT	    IsEnabled	  B     FALSE		enable/texture
-    TEXTURE_ENV_SHIFT_EXT   GetTexEnviv	  Z4	(0, 0, 0, 0)    texture
-    TEXTURE_ENV1,MODE	    GetTexEnviv   Z7    MODULATE        texture
+    Get Value               Get Command  Type   Initial Value   Attribute
+    ---------               -----------  ----   -------------   ---------
+    TEXTURE_ENV1_EXT        IsEnabled     B     FALSE           enable/texture
+    TEXTURE_ENV_SHIFT_EXT   GetTexEnviv   Z4    (0, 0, 0, 0)    texture
+    TEXTURE_ENV1,MODE       GetTexEnviv   Z7    MODULATE        texture
     TEXTURE_ENV1,MODE_ALPHA GetTexEnviv   Z5    MODULATE        texture
 
 

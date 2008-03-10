@@ -69,7 +69,7 @@ Issues
 
     *  Add mechanism to allow out-of-order rendering, etc.
 
-	No.
+        No.
 
 New Procedures and Functions
 
@@ -81,12 +81,12 @@ New Tokens
     Accepted by the <attribList> parameter of glXChooseVisual, and by the
     <attrib> parameter of glXGetConfig:
 
-	GLX_SCENE_REQUIRED_EXT
+        GLX_SCENE_REQUIRED_EXT
 
     Accepted by the <pname> parameters of GetBooleanv, GetIntegerv,
     GetFloatv, and GetDoublev:
 
-	SCENE_REQUIRED_EXT
+        SCENE_REQUIRED_EXT
 
 Additions to Chapter 2 of the 1.1 Specification (OpenGL Operation)
 
@@ -182,9 +182,9 @@ Errors
 
 New State
 
-    Get Value		Get Command	Type	Initial Value	Attribute
-    ---------		-----------	----	-------------	---------
-    SCENE_REQUIRED_EXT	GetBooleanv	B	-		-
+    Get Value           Get Command     Type    Initial Value   Attribute
+    ---------           -----------     ----    -------------   ---------
+    SCENE_REQUIRED_EXT  GetBooleanv     B       -               -
 
 New Implementation Dependent State
 

@@ -42,13 +42,13 @@ New Tokens
     and by the <pname> parameter of GetBooleanv, GetIntegerv,
     GetFloatv, and GetDoublev:
 
-	INDEX_MATERIAL_EXT
+        INDEX_MATERIAL_EXT
 
     Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
     GetFloatv, and GetDoublev:
 
-	INDEX_MATERIAL_PARAMETER_EXT
-	INDEX_MATERIAL_FACE_EXT
+        INDEX_MATERIAL_PARAMETER_EXT
+        INDEX_MATERIAL_FACE_EXT
 
 Additions to Chapter 2 of the 1.1 Specification (OpenGL Operation)
 
@@ -76,7 +76,7 @@ Additions to Chapter 2 of the 1.1 Specification (OpenGL Operation)
     the symbolic constant INDEX_MATERIAL_EXT.  The command that controls
     which of these modes is selected is
 
-	void IndexMaterial (enum face, enum mode);
+        void IndexMaterial (enum face, enum mode);
     
     <face> is one of FRONT, BACK, or FRONT_AND_BACK, indicating whether
     the front material, back material, or both are affected by the current
@@ -130,15 +130,15 @@ Errors
 
 New State
 
-								Initial
-    Get Value				Get Command	Type	Value			Attrib
-    ---------				-----------	----	-------			------
+                                                                Initial
+    Get Value                           Get Command     Type    Value                   Attrib
+    ---------                           -----------     ----    -------                 ------
 
-    INDEX_MATERIAL_EXT			IsEnabled	B	False			lighting/enable
-    INDEX_MATERIAL_PARAMETER_EXT	GetIntegerv	Z1	INDEX_OFFSET		lighting
-    INDEX_MATERIAL_FACE_EXT		GetIntegerv	Z3	FRONT_AND_BACK		lighting
-    INDEX_SHIFT				GetMaterialfv	2 x R	0			lighting
-    INDEX_OFFSET			GetMaterialfv	2 x R	0			lighting
+    INDEX_MATERIAL_EXT                  IsEnabled       B       False                   lighting/enable
+    INDEX_MATERIAL_PARAMETER_EXT        GetIntegerv     Z1      INDEX_OFFSET            lighting
+    INDEX_MATERIAL_FACE_EXT             GetIntegerv     Z3      FRONT_AND_BACK          lighting
+    INDEX_SHIFT                         GetMaterialfv   2 x R   0                       lighting
+    INDEX_OFFSET                        GetMaterialfv   2 x R   0                       lighting
 
 New Implementation Dependent State
 

@@ -62,7 +62,7 @@ Issues
       ( ambient + diffuseShade * diffuse) * decal + specular * shade
 
       where diffuseShade = dimming + ( 1.0 - dimming ) * shade, and
-      shade is the result of the shadow test in [0,1].	dimming
+      shade is the result of the shadow test in [0,1].  dimming
       expresses the scattered light in a scene.
 
       If we limit shade to the range [<dimming>, 1] (where <dimming> is
@@ -106,7 +106,7 @@ Issues
     (6) Should TEXTURE_COMPARE_FAIL_VALUE_ARB be an alias for
       GL_SHADOW_AMBIENT_SGIX (from GL_SGIX_shadow_ambient)?
 
-      RESOLUTION: Yes.	It serves the same purpose and avoids adding
+      RESOLUTION: Yes.  It serves the same purpose and avoids adding
       yet more state to texture objects.
 
 New Procedures and Functions
@@ -129,48 +129,48 @@ Additions to Chapter 3 of the 1.3 Specification (Rasterization)
     Section 3.8.4, Texture Parameters, p. 133, append table 3.19 with the
     following:
 
-	Name				Type   Legal Values
-	------------------------------	-----  --------------------
-	TEXTURE_COMPARE_FAIL_VALUE_ARB	float	any value in [0, 1]
+        Name                            Type   Legal Values
+        ------------------------------  -----  --------------------
+        TEXTURE_COMPARE_FAIL_VALUE_ARB  float   any value in [0, 1]
 
     Section 3.8.4, Texture Parameters, append last paragraph with:
 
-	"The value set by TEXTURE_COMPARE_FAIL_VALUE_ARB is clamped to
-	lie in [0, 1]."
+        "The value set by TEXTURE_COMPARE_FAIL_VALUE_ARB is clamped to
+        lie in [0, 1]."
 
     Modify section 3.8.13.1, defined in the GL_ARB_shadow specification,
     as follows:
 
-	"3.8.13.1 Depth Texture Comparison Mode
+        "3.8.13.1 Depth Texture Comparison Mode
 
-	[...]
-	else if TEXTURE_COMPARE_MODE_ARB = COMPARE_R_TO_TEXTURE_ARB
+        [...]
+        else if TEXTURE_COMPARE_MODE_ARB = COMPARE_R_TO_TEXTURE_ARB
 
-	    if TEXTURE_COMPARE_FUNC_ARB = LEQUAL
+            if TEXTURE_COMPARE_FUNC_ARB = LEQUAL
 
-		     { 1.0,				if R <= Dt
-		 r = {
-		     { TEXTURE_COMPARE_FAIL_VALUE_ARB,	if R > Dt
+                     { 1.0,                             if R <= Dt
+                 r = {
+                     { TEXTURE_COMPARE_FAIL_VALUE_ARB,  if R > Dt
 
-	    else, if TEXTURE_COMPARE_FUNC_ARB = GEQUAL
+            else, if TEXTURE_COMPARE_FUNC_ARB = GEQUAL
 
-		     { 1.0,				if R >= Dt
-		 r = {
-		     { TEXTURE_COMPARE_FAIL_VALUE_ARB,	if R < Dt
+                     { 1.0,                             if R >= Dt
+                 r = {
+                     { TEXTURE_COMPARE_FAIL_VALUE_ARB,  if R < Dt
 
-	    endif
+            endif
 
-	[...]
+        [...]
 
-	If TEXTURE_MAG_FILTER is not NEAREST or TEXTURE_MIN_FILTER is
-	not NEAREST or NEAREST_MIPMAP_NEAREST then r may be computed by
-	comparing more than one depth texture value and texture R
-	coordinate.  The details of this are implementation-dependent
-	but r should be a value in the range
-	[TEXTURE_COMPARE_FAIL_VALUE_ARB, 1] and proportional to the
-	number of comparison passes or failures.
+        If TEXTURE_MAG_FILTER is not NEAREST or TEXTURE_MIN_FILTER is
+        not NEAREST or NEAREST_MIPMAP_NEAREST then r may be computed by
+        comparing more than one depth texture value and texture R
+        coordinate.  The details of this are implementation-dependent
+        but r should be a value in the range
+        [TEXTURE_COMPARE_FAIL_VALUE_ARB, 1] and proportional to the
+        number of comparison passes or failures.
 
-	[...]
+        [...]
 
 Additions to Chapter 4 of the 1.3 Specification (Per-Fragment Operations
 and the Frame Buffer)
@@ -204,9 +204,9 @@ New State
 
     In table 6.16, Texture Objects, p. 224, add the following:
 
-    Get Value			   Type   Get Command	       Init Val Description		   Sec.   Attribute
+    Get Value                      Type   Get Command          Init Val Description                Sec.   Attribute
     ------------------------------ ------ -------------------- -------- -------------------------- ------ ---------
-    TEXTURE_COMPARE_FAIL_VALUE_ARB R[0,1] GetTexParameter[if]v	 0.0	texture compare fail value 3.8.13 texture
+    TEXTURE_COMPARE_FAIL_VALUE_ARB R[0,1] GetTexParameter[if]v   0.0    texture compare fail value 3.8.13 texture
 
 New Implementation Dependent State
 
@@ -215,19 +215,19 @@ New Implementation Dependent State
 Revision History
 
     16 April 2001
-	- initial version
+        - initial version
     22 April 2001
-	- rename TEXTURE_FAIL_LUMINANCE_ARB to TEXTURE_FAIL_VALUE_ARB.
+        - rename TEXTURE_FAIL_LUMINANCE_ARB to TEXTURE_FAIL_VALUE_ARB.
     23 April 2001
-	- minor tweaks
+        - minor tweaks
     16 November 2001
-	- rename TEXTURE_FAIL_VALUE_ARB to TEXTURE_COMPARE_FAIL_VALUE_ARB
+        - rename TEXTURE_FAIL_VALUE_ARB to TEXTURE_COMPARE_FAIL_VALUE_ARB
     17 November 2001
-	- adjusted 3.8.7.1 section number
+        - adjusted 3.8.7.1 section number
     18 November 2001
-	- Clarify that TEXTURE_COMPARE_FAIL_VALUE_ARB is clamped to [0,1]
-	- added issue 6
-	- let TEXTURE_COMPARE_FAIL_VALUE_ARB be the same as SHADOW_AMBIENT_SGIX
+        - Clarify that TEXTURE_COMPARE_FAIL_VALUE_ARB is clamped to [0,1]
+        - added issue 6
+        - let TEXTURE_COMPARE_FAIL_VALUE_ARB be the same as SHADOW_AMBIENT_SGIX
     12 December 2001
-	- rewritten against the OpenGL 1.3 spec
-	- fixed some typos
+        - rewritten against the OpenGL 1.3 spec
+        - fixed some typos

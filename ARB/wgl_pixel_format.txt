@@ -100,25 +100,25 @@ Issues and Notes
 New Procedures and Functions
 
     BOOL wglGetPixelFormatAttribivARB(HDC hdc,
-				      int iPixelFormat,
-				      int iLayerPlane,
-				      UINT nAttributes,
-				      const int *piAttributes,
-				      int *piValues);
+                                      int iPixelFormat,
+                                      int iLayerPlane,
+                                      UINT nAttributes,
+                                      const int *piAttributes,
+                                      int *piValues);
 
     BOOL wglGetPixelFormatAttribfvARB(HDC hdc,
-				      int iPixelFormat,
-				      int iLayerPlane,
-				      UINT nAttributes,
-				      const int *piAttributes,
-				      FLOAT *pfValues);
+                                      int iPixelFormat,
+                                      int iLayerPlane,
+                                      UINT nAttributes,
+                                      const int *piAttributes,
+                                      FLOAT *pfValues);
 
     BOOL wglChoosePixelFormatARB(HDC hdc,
-				 const int *piAttribIList,
-				 const FLOAT *pfAttribFList,
-				 UINT nMaxFormats,
-				 int *piFormats,
-				 UINT *nNumFormats);
+                                 const int *piAttribIList,
+                                 const FLOAT *pfAttribFList,
+                                 UINT nMaxFormats,
+                                 int *piFormats,
+                                 UINT *nNumFormats);
 
 New Tokens
 
@@ -127,63 +127,63 @@ New Tokens
     as a type in the <piAttribIList> and <pfAttribFList> parameter
     arrays of wglChoosePixelFormatARB:
 
-	WGL_NUMBER_PIXEL_FORMATS_ARB		0x2000
-	WGL_DRAW_TO_WINDOW_ARB			0x2001
-	WGL_DRAW_TO_BITMAP_ARB			0x2002
-	WGL_ACCELERATION_ARB			0x2003
-	WGL_NEED_PALETTE_ARB			0x2004
-	WGL_NEED_SYSTEM_PALETTE_ARB		0x2005
-	WGL_SWAP_LAYER_BUFFERS_ARB		0x2006
-	WGL_SWAP_METHOD_ARB			0x2007
-	WGL_NUMBER_OVERLAYS_ARB			0x2008
-	WGL_NUMBER_UNDERLAYS_ARB		0x2009
-	WGL_TRANSPARENT_ARB			0x200A
-	WGL_TRANSPARENT_RED_VALUE_ARB		0x2037
-	WGL_TRANSPARENT_GREEN_VALUE_ARB		0x2038
-	WGL_TRANSPARENT_BLUE_VALUE_ARB		0x2039
-	WGL_TRANSPARENT_ALPHA_VALUE_ARB		0x203A
-	WGL_TRANSPARENT_INDEX_VALUE_ARB		0x203B
-	WGL_SHARE_DEPTH_ARB			0x200C
-	WGL_SHARE_STENCIL_ARB			0x200D
-	WGL_SHARE_ACCUM_ARB			0x200E
-	WGL_SUPPORT_GDI_ARB			0x200F
-	WGL_SUPPORT_OPENGL_ARB			0x2010
-	WGL_DOUBLE_BUFFER_ARB			0x2011
-	WGL_STEREO_ARB				0x2012
-	WGL_PIXEL_TYPE_ARB			0x2013
-	WGL_COLOR_BITS_ARB			0x2014
-	WGL_RED_BITS_ARB			0x2015
-	WGL_RED_SHIFT_ARB			0x2016
-	WGL_GREEN_BITS_ARB			0x2017
-	WGL_GREEN_SHIFT_ARB			0x2018
-	WGL_BLUE_BITS_ARB			0x2019
-	WGL_BLUE_SHIFT_ARB			0x201A
-	WGL_ALPHA_BITS_ARB			0x201B
-	WGL_ALPHA_SHIFT_ARB			0x201C
-	WGL_ACCUM_BITS_ARB			0x201D
-	WGL_ACCUM_RED_BITS_ARB			0x201E
-	WGL_ACCUM_GREEN_BITS_ARB		0x201F
-	WGL_ACCUM_BLUE_BITS_ARB			0x2020
-	WGL_ACCUM_ALPHA_BITS_ARB		0x2021
-	WGL_DEPTH_BITS_ARB			0x2022
-	WGL_STENCIL_BITS_ARB			0x2023
-	WGL_AUX_BUFFERS_ARB			0x2024
+        WGL_NUMBER_PIXEL_FORMATS_ARB            0x2000
+        WGL_DRAW_TO_WINDOW_ARB                  0x2001
+        WGL_DRAW_TO_BITMAP_ARB                  0x2002
+        WGL_ACCELERATION_ARB                    0x2003
+        WGL_NEED_PALETTE_ARB                    0x2004
+        WGL_NEED_SYSTEM_PALETTE_ARB             0x2005
+        WGL_SWAP_LAYER_BUFFERS_ARB              0x2006
+        WGL_SWAP_METHOD_ARB                     0x2007
+        WGL_NUMBER_OVERLAYS_ARB                 0x2008
+        WGL_NUMBER_UNDERLAYS_ARB                0x2009
+        WGL_TRANSPARENT_ARB                     0x200A
+        WGL_TRANSPARENT_RED_VALUE_ARB           0x2037
+        WGL_TRANSPARENT_GREEN_VALUE_ARB         0x2038
+        WGL_TRANSPARENT_BLUE_VALUE_ARB          0x2039
+        WGL_TRANSPARENT_ALPHA_VALUE_ARB         0x203A
+        WGL_TRANSPARENT_INDEX_VALUE_ARB         0x203B
+        WGL_SHARE_DEPTH_ARB                     0x200C
+        WGL_SHARE_STENCIL_ARB                   0x200D
+        WGL_SHARE_ACCUM_ARB                     0x200E
+        WGL_SUPPORT_GDI_ARB                     0x200F
+        WGL_SUPPORT_OPENGL_ARB                  0x2010
+        WGL_DOUBLE_BUFFER_ARB                   0x2011
+        WGL_STEREO_ARB                          0x2012
+        WGL_PIXEL_TYPE_ARB                      0x2013
+        WGL_COLOR_BITS_ARB                      0x2014
+        WGL_RED_BITS_ARB                        0x2015
+        WGL_RED_SHIFT_ARB                       0x2016
+        WGL_GREEN_BITS_ARB                      0x2017
+        WGL_GREEN_SHIFT_ARB                     0x2018
+        WGL_BLUE_BITS_ARB                       0x2019
+        WGL_BLUE_SHIFT_ARB                      0x201A
+        WGL_ALPHA_BITS_ARB                      0x201B
+        WGL_ALPHA_SHIFT_ARB                     0x201C
+        WGL_ACCUM_BITS_ARB                      0x201D
+        WGL_ACCUM_RED_BITS_ARB                  0x201E
+        WGL_ACCUM_GREEN_BITS_ARB                0x201F
+        WGL_ACCUM_BLUE_BITS_ARB                 0x2020
+        WGL_ACCUM_ALPHA_BITS_ARB                0x2021
+        WGL_DEPTH_BITS_ARB                      0x2022
+        WGL_STENCIL_BITS_ARB                    0x2023
+        WGL_AUX_BUFFERS_ARB                     0x2024
 
     Accepted as a value in the <piAttribIList> and <pfAttribFList>
     parameter arrays of wglChoosePixelFormatARB, and returned in the
     <piValues> parameter array of wglGetPixelFormatAttribivARB, and the
     <pfValues> parameter array of wglGetPixelFormatAttribfvARB:
 
-	WGL_NO_ACCELERATION_ARB			0x2025
-	WGL_GENERIC_ACCELERATION_ARB		0x2026
-	WGL_FULL_ACCELERATION_ARB		0x2027
+        WGL_NO_ACCELERATION_ARB                 0x2025
+        WGL_GENERIC_ACCELERATION_ARB            0x2026
+        WGL_FULL_ACCELERATION_ARB               0x2027
 
-	WGL_SWAP_EXCHANGE_ARB			0x2028
-	WGL_SWAP_COPY_ARB			0x2029
-	WGL_SWAP_UNDEFINED_ARB			0x202A
+        WGL_SWAP_EXCHANGE_ARB                   0x2028
+        WGL_SWAP_COPY_ARB                       0x2029
+        WGL_SWAP_UNDEFINED_ARB                  0x202A
 
-	WGL_TYPE_RGBA_ARB			0x202B
-	WGL_TYPE_COLORINDEX_ARB			0x202C
+        WGL_TYPE_RGBA_ARB                       0x202B
+        WGL_TYPE_COLORINDEX_ARB                 0x202C
 
 Additions to Chapter 2 of the 1.2 Specification (OpenGL Operation)
 
@@ -229,11 +229,11 @@ Additions to the WGL Specification
     plane and layer planes of a given pixel format.
 
     BOOL wglGetPixelFormatAttribivARB(HDC hdc,
-				      int iPixelFormat,
-				      int iLayerPlane,
-				      UINT nAttributes,
-				      const int *piAttributes,
-				      int *piValues);
+                                      int iPixelFormat,
+                                      int iLayerPlane,
+                                      UINT nAttributes,
+                                      const int *piAttributes,
+                                      int *piValues);
 
     <hdc> specifies the device context on which the pixel format is
     supported.
@@ -256,175 +256,175 @@ Additions to the WGL Specification
     identifiers which specify the attributes to be queried. The
     following values are accepted:
 
-	WGL_NUMBER_PIXEL_FORMATS_ARB
-	The number of pixel formats for the device context. The
-	<iLayerPlane> and <iPixelFormat> parameters are ignored if this
-	attribute is specified.
+        WGL_NUMBER_PIXEL_FORMATS_ARB
+        The number of pixel formats for the device context. The
+        <iLayerPlane> and <iPixelFormat> parameters are ignored if this
+        attribute is specified.
 
-	WGL_DRAW_TO_WINDOW_ARB
-	True if the pixel format can be used with a window. The
-	<iLayerPlane> parameter is ignored if this attribute is
-	specified.
+        WGL_DRAW_TO_WINDOW_ARB
+        True if the pixel format can be used with a window. The
+        <iLayerPlane> parameter is ignored if this attribute is
+        specified.
 
-	WGL_DRAW_TO_BITMAP_ARB
-	True if the pixel format can be used with a memory bitmap. The
-	<iLayerPlane> parameter is ignored if this attribute is
-	specified.
+        WGL_DRAW_TO_BITMAP_ARB
+        True if the pixel format can be used with a memory bitmap. The
+        <iLayerPlane> parameter is ignored if this attribute is
+        specified.
 
-	WGL_ACCELERATION_ARB
-	Indicates whether the pixel format is supported by the driver.
-	If this is set to WGL_NO_ACCELERATION_ARB then only the software
-	renderer supports this pixel format; if this is set to
-	WGL_GENERIC_ACCELERATION_ARB then the pixel format is supported
-	by an MCD driver; if this is set to WGL_FULL_ACCELERATION_ARB
-	then the pixel format is supported by an ICD driver.
+        WGL_ACCELERATION_ARB
+        Indicates whether the pixel format is supported by the driver.
+        If this is set to WGL_NO_ACCELERATION_ARB then only the software
+        renderer supports this pixel format; if this is set to
+        WGL_GENERIC_ACCELERATION_ARB then the pixel format is supported
+        by an MCD driver; if this is set to WGL_FULL_ACCELERATION_ARB
+        then the pixel format is supported by an ICD driver.
 
-	WGL_NEED_PALETTE_ARB
-	A logical palette is required to achieve the best results for
-	this pixel format. The <iLayerPlane> parameter is ignored if
-	this attribute is specified.
+        WGL_NEED_PALETTE_ARB
+        A logical palette is required to achieve the best results for
+        this pixel format. The <iLayerPlane> parameter is ignored if
+        this attribute is specified.
 
-	WGL_NEED_SYSTEM_PALETTE_ARB
-	The hardware supports one hardware palette in 256-color mode
-	only. The <iLayerPlane> parameter is ignored if this attribute
-	is specified.
+        WGL_NEED_SYSTEM_PALETTE_ARB
+        The hardware supports one hardware palette in 256-color mode
+        only. The <iLayerPlane> parameter is ignored if this attribute
+        is specified.
 
-	WGL_SWAP_LAYER_BUFFERS_ARB
-	True if the pixel format supports swapping layer planes
-	independently of the main planes. If the pixel format does not
-	support a back buffer then this is set to FALSE. The
-	<iLayerPlane> parameter is ignored if this attribute is
-	specified.
+        WGL_SWAP_LAYER_BUFFERS_ARB
+        True if the pixel format supports swapping layer planes
+        independently of the main planes. If the pixel format does not
+        support a back buffer then this is set to FALSE. The
+        <iLayerPlane> parameter is ignored if this attribute is
+        specified.
 
-	WGL_SWAP_METHOD_ARB
-	If the pixel format supports a back buffer, then this indicates
-	how they are swapped. If this attribute is set to
-	WGL_SWAP_EXCHANGE_ARB then swapping exchanges the front and back
-	buffer contents; if it is set to WGL_SWAP_COPY_ARB then swapping
-	copies the back buffer contents to the front buffer; if it is
-	set to WGL_SWAP_UNDEFINED_ARB then the back buffer contents are
-	copied to the front buffer but the back buffer contents are
-	undefined after the operation. If the pixel format does not
-	support a back buffer then this parameter is set to
-	WGL_SWAP_UNDEFINED_ARB. The <iLayerPlane> parameter is ignored
-	if this attribute is specified.
+        WGL_SWAP_METHOD_ARB
+        If the pixel format supports a back buffer, then this indicates
+        how they are swapped. If this attribute is set to
+        WGL_SWAP_EXCHANGE_ARB then swapping exchanges the front and back
+        buffer contents; if it is set to WGL_SWAP_COPY_ARB then swapping
+        copies the back buffer contents to the front buffer; if it is
+        set to WGL_SWAP_UNDEFINED_ARB then the back buffer contents are
+        copied to the front buffer but the back buffer contents are
+        undefined after the operation. If the pixel format does not
+        support a back buffer then this parameter is set to
+        WGL_SWAP_UNDEFINED_ARB. The <iLayerPlane> parameter is ignored
+        if this attribute is specified.
 
-	WGL_NUMBER_OVERLAYS_ARB
-	The number of overlay planes. The <iLayerPlane> parameter is
-	ignored if this attribute is specified.
+        WGL_NUMBER_OVERLAYS_ARB
+        The number of overlay planes. The <iLayerPlane> parameter is
+        ignored if this attribute is specified.
 
-	WGL_NUMBER_UNDERLAYS_ARB
-	The number of underlay planes. The <iLayerPlane> parameter is
-	ignored if this attribute is specified.
+        WGL_NUMBER_UNDERLAYS_ARB
+        The number of underlay planes. The <iLayerPlane> parameter is
+        ignored if this attribute is specified.
 
-	WGL_TRANSPARENT_ARB
-	True if transparency is supported.
+        WGL_TRANSPARENT_ARB
+        True if transparency is supported.
 
-	WGL_TRANSPARENT_RED_VALUE_ARB
-	Specifies the transparent red color value. Typically this value
-	is the same for all layer planes. This value is undefined if
-	transparency is not supported.
+        WGL_TRANSPARENT_RED_VALUE_ARB
+        Specifies the transparent red color value. Typically this value
+        is the same for all layer planes. This value is undefined if
+        transparency is not supported.
 
-	WGL_TRANSPARENT_GREEN_VALUE_ARB
-	Specifies the transparent green value. Typically this value is
-	the same for all layer planes. This value is undefined if
-	transparency is not supported.
+        WGL_TRANSPARENT_GREEN_VALUE_ARB
+        Specifies the transparent green value. Typically this value is
+        the same for all layer planes. This value is undefined if
+        transparency is not supported.
 
-	WGL_TRANSPARENT_BLUE_VALUE_ARB
-	Specifies the transparent blue color value. Typically this value
-	is the same for all layer planes. This value is undefined if
-	transparency is not supported.
+        WGL_TRANSPARENT_BLUE_VALUE_ARB
+        Specifies the transparent blue color value. Typically this value
+        is the same for all layer planes. This value is undefined if
+        transparency is not supported.
 
-	WGL_TRANSPARENT_ALPHA_VALUE_ARB
-	Specifies the transparent alpha value. This is reserved for
-	future use.
+        WGL_TRANSPARENT_ALPHA_VALUE_ARB
+        Specifies the transparent alpha value. This is reserved for
+        future use.
 
-	WGL_TRANSPARENT_INDEX_VALUE_ARB
-	Specifies the transparent color index value. Typically this
-	value is the same for all layer planes. This value is undefined
-	if transparency is not supported.
+        WGL_TRANSPARENT_INDEX_VALUE_ARB
+        Specifies the transparent color index value. Typically this
+        value is the same for all layer planes. This value is undefined
+        if transparency is not supported.
 
-	WGL_SHARE_DEPTH_ARB
-	True if the layer plane shares the depth buffer with the main
-	planes. If <iLayerPlane> is zero, this is always true.
+        WGL_SHARE_DEPTH_ARB
+        True if the layer plane shares the depth buffer with the main
+        planes. If <iLayerPlane> is zero, this is always true.
 
-	WGL_SHARE_STENCIL_ARB
-	True if the layer plane shares the stencil buffer with the main
-	planes. If <iLayerPlane> is zero, this is always true.
+        WGL_SHARE_STENCIL_ARB
+        True if the layer plane shares the stencil buffer with the main
+        planes. If <iLayerPlane> is zero, this is always true.
 
-	WGL_SHARE_ACCUM_ARB
-	True if the layer plane shares the accumulation buffer with the
-	main planes. If <iLayerPlane> is zero, this is always true.
+        WGL_SHARE_ACCUM_ARB
+        True if the layer plane shares the accumulation buffer with the
+        main planes. If <iLayerPlane> is zero, this is always true.
 
-	WGL_SUPPORT_GDI_ARB
-	True if GDI rendering is supported.
+        WGL_SUPPORT_GDI_ARB
+        True if GDI rendering is supported.
 
-	WGL_SUPPORT_OPENGL_ARB
-	True if OpenGL is supported.
+        WGL_SUPPORT_OPENGL_ARB
+        True if OpenGL is supported.
 
-	WGL_DOUBLE_BUFFER_ARB
-	True if the color buffer has back/front pairs.
+        WGL_DOUBLE_BUFFER_ARB
+        True if the color buffer has back/front pairs.
 
-	WGL_STEREO_ARB
-	True if the color buffer has left/right pairs.
+        WGL_STEREO_ARB
+        True if the color buffer has left/right pairs.
 
-	WGL_PIXEL_TYPE_ARB
-	The type of pixel data. This can be set to WGL_TYPE_RGBA_ARB or
-	WGL_TYPE_COLORINDEX_ARB.
+        WGL_PIXEL_TYPE_ARB
+        The type of pixel data. This can be set to WGL_TYPE_RGBA_ARB or
+        WGL_TYPE_COLORINDEX_ARB.
 
-	WGL_COLOR_BITS_ARB
-	The number of color bitplanes in each color buffer. For RGBA
-	pixel types, it is the size of the color buffer, excluding the
-	alpha bitplanes. For color-index pixels, it is the size of the
-	color index buffer.
+        WGL_COLOR_BITS_ARB
+        The number of color bitplanes in each color buffer. For RGBA
+        pixel types, it is the size of the color buffer, excluding the
+        alpha bitplanes. For color-index pixels, it is the size of the
+        color index buffer.
 
-	WGL_RED_BITS_ARB
-	The number of red bitplanes in each RGBA color buffer.
+        WGL_RED_BITS_ARB
+        The number of red bitplanes in each RGBA color buffer.
 
-	WGL_RED_SHIFT_ARB
-	The shift count for red bitplanes in each RGBA color buffer.
+        WGL_RED_SHIFT_ARB
+        The shift count for red bitplanes in each RGBA color buffer.
 
-	WGL_GREEN_BITS_ARB
-	The number of green bitplanes in each RGBA color buffer.
+        WGL_GREEN_BITS_ARB
+        The number of green bitplanes in each RGBA color buffer.
 
-	WGL_GREEN_SHIFT_ARB
-	The shift count for green bitplanes in each RGBA color buffer.
+        WGL_GREEN_SHIFT_ARB
+        The shift count for green bitplanes in each RGBA color buffer.
 
-	WGL_BLUE_BITS_ARB
-	The number of blue bitplanes in each RGBA color buffer.
+        WGL_BLUE_BITS_ARB
+        The number of blue bitplanes in each RGBA color buffer.
 
-	WGL_BLUE_SHIFT_ARB
-	The shift count for blue bitplanes in each RGBA color buffer.
+        WGL_BLUE_SHIFT_ARB
+        The shift count for blue bitplanes in each RGBA color buffer.
 
-	WGL_ALPHA_BITS_ARB
-	The number of alpha bitplanes in each RGBA color buffer.
+        WGL_ALPHA_BITS_ARB
+        The number of alpha bitplanes in each RGBA color buffer.
 
-	WGL_ALPHA_SHIFT_ARB
-	The shift count for alpha bitplanes in each RGBA color buffer.
+        WGL_ALPHA_SHIFT_ARB
+        The shift count for alpha bitplanes in each RGBA color buffer.
 
-	WGL_ACCUM_BITS_ARB
-	The total number of bitplanes in the accumulation buffer.
+        WGL_ACCUM_BITS_ARB
+        The total number of bitplanes in the accumulation buffer.
 
-	WGL_ACCUM_RED_BITS_ARB
-	The number of red bitplanes in the accumulation buffer.
+        WGL_ACCUM_RED_BITS_ARB
+        The number of red bitplanes in the accumulation buffer.
 
-	WGL_ACCUM_GREEN_BITS_ARB
-	The number of green bitplanes in the accumulation buffer.
+        WGL_ACCUM_GREEN_BITS_ARB
+        The number of green bitplanes in the accumulation buffer.
 
-	WGL_ACCUM_BLUE_BITS_ARB
-	The number of blue bitplanes in the accumulation buffer.
+        WGL_ACCUM_BLUE_BITS_ARB
+        The number of blue bitplanes in the accumulation buffer.
 
-	WGL_ACCUM_ALPHA_BITS_ARB
-	The number of alpha bitplanes in the accumulation buffer.
+        WGL_ACCUM_ALPHA_BITS_ARB
+        The number of alpha bitplanes in the accumulation buffer.
 
-	WGL_DEPTH_BITS_ARB
-	The depth of the depth (z-axis) buffer.
+        WGL_DEPTH_BITS_ARB
+        The depth of the depth (z-axis) buffer.
 
-	WGL_STENCIL_BITS_ARB
-	The depth of the stencil buffer.
+        WGL_STENCIL_BITS_ARB
+        The depth of the stencil buffer.
 
-	WGL_AUX_BUFFERS_ARB
-	The number of auxiliary buffers.
+        WGL_AUX_BUFFERS_ARB
+        The number of auxiliary buffers.
 
     <piValues> points to a buffer into which the results of the query
     will be placed. Floating point attribute values are rounded to the
@@ -443,11 +443,11 @@ Additions to the WGL Specification
     If FALSE is returned, the contents of <piValues> are undefined.
 
     BOOL wglGetPixelFormatAttribfvARB(HDC hdc,
-				      int iPixelFormat,
-				      int iLayerPlane,
-				      UINT nAttributes,
-				      const int *piAttributes,
-				      FLOAT *pfValues);
+                                      int iPixelFormat,
+                                      int iLayerPlane,
+                                      UINT nAttributes,
+                                      const int *piAttributes,
+                                      FLOAT *pfValues);
 
     <hdc> specifies the device context on which the pixel format is
     supported.
@@ -533,11 +533,11 @@ Additions to the WGL Specification
     at the start of the list (order is device dependent).
 
     BOOL wglChoosePixelFormatARB(HDC hdc,
-				 const int *piAttribIList,
-				 const FLOAT *pfAttribFList,
-				 UINT nMaxFormats,
-				 int *piFormats,
-				 UINT *nNumFormats);
+                                 const int *piAttribIList,
+                                 const FLOAT *pfAttribFList,
+                                 UINT nMaxFormats,
+                                 int *piFormats,
+                                 UINT *nNumFormats);
 
     <hdc> specifies the device context.
 
@@ -580,38 +580,38 @@ Additions to the WGL Specification
     specified value. See the table below for details.
 
 
-     Attribute			    Type	Match Criteria
+     Attribute                      Type        Match Criteria
 
-     WGL_DRAW_TO_WINDOW_ARB	    boolean	exact
-     WGL_DRAW_TO_BITMAP_ARB	    boolean	exact
-     WGL_ACCELERATION_ARB	    enum	exact
-     WGL_NEED_PALETTE_ARB	    boolean	exact
-     WGL_NEED_SYSTEM_PALETTE_ARB    boolean	exact
-     WGL_SWAP_LAYER_BUFFERS_ARB     boolean	exact
-     WGL_SWAP_METHOD_ARB	    enum	exact
-     WGL_NUMBER_OVERLAYS_ARB	    integer	minimum
-     WGL_NUMBER_UNDERLAYS_ARB	    integer	minimum
-     WGL_SHARE_DEPTH_ARB	    boolean	exact
-     WGL_SHARE_STENCIL_ARB	    boolean	exact
-     WGL_SHARE_ACCUM_ARB	    boolean	exact
-     WGL_SUPPORT_GDI_ARB	    boolean	exact
-     WGL_SUPPORT_OPENGL_ARB	    boolean	exact
-     WGL_DOUBLE_BUFFER_ARB	    boolean	exact
-     WGL_STEREO_ARB		    boolean	exact
-     WGL_PIXEL_TYPE_ARB		    enum	exact
-     WGL_COLOR_BITS_ARB		    integer	minimum
-     WGL_RED_BITS_ARB		    integer	minimum
-     WGL_GREEN_BITS_ARB		    integer	minimum
-     WGL_BLUE_BITS_ARB		    integer	minimum
-     WGL_ALPHA_BITS_ARB		    integer	minimum
-     WGL_ACCUM_BITS_ARB		    integer	minimum
-     WGL_ACCUM_RED_BITS_ARB	    integer	minimum
-     WGL_ACCUM_GREEN_BITS_ARB	    integer	minimum
-     WGL_ACCUM_BLUE_BITS_ARB	    integer	minimum
-     WGL_ACCUM_ALPHA_BITS_ARB	    integer	minimum
-     WGL_DEPTH_BITS_ARB		    integer	minimum
-     WGL_STENCIL_BITS_ARB	    integer	minimum
-     WGL_AUX_BUFFERS_ARB	    integer	minimum
+     WGL_DRAW_TO_WINDOW_ARB         boolean     exact
+     WGL_DRAW_TO_BITMAP_ARB         boolean     exact
+     WGL_ACCELERATION_ARB           enum        exact
+     WGL_NEED_PALETTE_ARB           boolean     exact
+     WGL_NEED_SYSTEM_PALETTE_ARB    boolean     exact
+     WGL_SWAP_LAYER_BUFFERS_ARB     boolean     exact
+     WGL_SWAP_METHOD_ARB            enum        exact
+     WGL_NUMBER_OVERLAYS_ARB        integer     minimum
+     WGL_NUMBER_UNDERLAYS_ARB       integer     minimum
+     WGL_SHARE_DEPTH_ARB            boolean     exact
+     WGL_SHARE_STENCIL_ARB          boolean     exact
+     WGL_SHARE_ACCUM_ARB            boolean     exact
+     WGL_SUPPORT_GDI_ARB            boolean     exact
+     WGL_SUPPORT_OPENGL_ARB         boolean     exact
+     WGL_DOUBLE_BUFFER_ARB          boolean     exact
+     WGL_STEREO_ARB                 boolean     exact
+     WGL_PIXEL_TYPE_ARB             enum        exact
+     WGL_COLOR_BITS_ARB             integer     minimum
+     WGL_RED_BITS_ARB               integer     minimum
+     WGL_GREEN_BITS_ARB             integer     minimum
+     WGL_BLUE_BITS_ARB              integer     minimum
+     WGL_ALPHA_BITS_ARB             integer     minimum
+     WGL_ACCUM_BITS_ARB             integer     minimum
+     WGL_ACCUM_RED_BITS_ARB         integer     minimum
+     WGL_ACCUM_GREEN_BITS_ARB       integer     minimum
+     WGL_ACCUM_BLUE_BITS_ARB        integer     minimum
+     WGL_ACCUM_ALPHA_BITS_ARB       integer     minimum
+     WGL_DEPTH_BITS_ARB             integer     minimum
+     WGL_STENCIL_BITS_ARB           integer     minimum
+     WGL_AUX_BUFFERS_ARB            integer     minimum
 
     All attributes except WGL_NUMBER_OVERLAYS_ARB, WGL_NUMBER_UNDERLAYS_ARB,
     WGL_SHARE_DEPTH_ARB, WGL_SHARE_STENCIL_ARB, and WGL_SHARE_ACCUM_ARB
@@ -702,5 +702,5 @@ Changes from EXT_pixel_format:
      format calls, wglChoosePixelFormatARB and wglGetPixelFormat*vARB.
    * Add dependency on WGL_ARB_extensions_string
 
-    03/12/2002	1.1
-	- Updated contact information.
+    03/12/2002  1.1
+        - Updated contact information.

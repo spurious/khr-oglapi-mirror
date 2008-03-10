@@ -32,25 +32,25 @@ Overview
 New Procedures and Functions
 
     void TexImage3DEXT(enum target,
-		       int level,
-		       enum internalformat,
-		       sizei width,
-		       sizei height,
-		       sizei depth,
-		       int border,
-		       enum format,
-		       enum type,
-		       const void* pixels);
+                       int level,
+                       enum internalformat,
+                       sizei width,
+                       sizei height,
+                       sizei depth,
+                       int border,
+                       enum format,
+                       enum type,
+                       const void* pixels);
 
 New Tokens
 
     Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
     GetFloatv, and GetDoublev, and by the <pname> parameter of PixelStore:
 
-	PACK_SKIP_IMAGES_EXT             0x806B
-	PACK_IMAGE_HEIGHT_EXT            0x806C
-	UNPACK_SKIP_IMAGES_EXT           0x806D
-	UNPACK_IMAGE_HEIGHT_EXT          0x806E
+        PACK_SKIP_IMAGES_EXT             0x806B
+        PACK_IMAGE_HEIGHT_EXT            0x806C
+        UNPACK_SKIP_IMAGES_EXT           0x806D
+        UNPACK_IMAGE_HEIGHT_EXT          0x806E
 
     Accepted by the <cap> parameter of Enable, Disable, and IsEnabled, by
     the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv, and
@@ -58,27 +58,27 @@ New Tokens
     GetTexLevelParameteriv, GetTexLevelParameterfv, GetTexParameteriv, and
     GetTexParameterfv:
 
-	TEXTURE_3D_EXT                   0x806F
+        TEXTURE_3D_EXT                   0x806F
 
     Accepted by the <target> parameter of TexImage3DEXT,
     GetTexLevelParameteriv, and GetTexLevelParameterfv:
 
-	PROXY_TEXTURE_3D_EXT             0x8070
+        PROXY_TEXTURE_3D_EXT             0x8070
 
     Accepted by the <pname> parameter of GetTexLevelParameteriv and
     GetTexLevelParameterfv:
 
-	TEXTURE_DEPTH_EXT                0x8071
+        TEXTURE_DEPTH_EXT                0x8071
 
     Accepted by the <pname> parameter of TexParameteriv, TexParameterfv,
     GetTexParameteriv, and GetTexParameterfv:
 
-	TEXTURE_WRAP_R_EXT               0x8072
+        TEXTURE_WRAP_R_EXT               0x8072
 
     Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
     GetFloatv, and GetDoublev:
 
-	MAX_3D_TEXTURE_SIZE_EXT          0x8073
+        MAX_3D_TEXTURE_SIZE_EXT          0x8073
 
 Additions to Chapter 2 of the GL Specification (OpenGL Operation)
 
@@ -89,19 +89,19 @@ Additions to Chapter 3 of the GL Specification (Rasterization)
     The pixel storage modes are augmented to support 3D image formats in
     memory.  Table 3.1 is replaced with the table below:
 
-	Parameter Name		Type		Initial Value	Valid Range
-	--------------		----		-------------	-----------
-	UNPACK_SWAP_BYTES	boolean		FALSE		TRUE/FALSE
-	UNPACK_LSB_FIRST	boolean		FALSE		TRUE/FALSE
-	UNPACK_ROW_LENGTH	integer		0		[0, infinity]
-	UNPACK_SKIP_ROWS	integer		0		[0, infinity]
-	UNPACK_SKIP_PIXELS	integer		0		[0, infinity]
-	UNPACK_ALIGNMENT	integer		4		1, 2, 4, 8
-	UNPACK_IMAGE_HEIGHT_EXT	integer		0		[0, infinity]
-	UNPACK_SKIP_IMAGES_EXT	integer		0		[0, infinity]
+        Parameter Name          Type            Initial Value   Valid Range
+        --------------          ----            -------------   -----------
+        UNPACK_SWAP_BYTES       boolean         FALSE           TRUE/FALSE
+        UNPACK_LSB_FIRST        boolean         FALSE           TRUE/FALSE
+        UNPACK_ROW_LENGTH       integer         0               [0, infinity]
+        UNPACK_SKIP_ROWS        integer         0               [0, infinity]
+        UNPACK_SKIP_PIXELS      integer         0               [0, infinity]
+        UNPACK_ALIGNMENT        integer         4               1, 2, 4, 8
+        UNPACK_IMAGE_HEIGHT_EXT integer         0               [0, infinity]
+        UNPACK_SKIP_IMAGES_EXT  integer         0               [0, infinity]
 
-	Table 3.1: PixelStore parameters pertaining to one or more of
-	DrawPixels, TexImage1D, TexImage2D, and TexImage3DEXT.
+        Table 3.1: PixelStore parameters pertaining to one or more of
+        DrawPixels, TexImage1D, TexImage2D, and TexImage3DEXT.
 
     When TexImage3DEXT is called, the groups in memory are treated as being
     arranged in a sequence of adjacent rectangles.  Each rectangle is a
@@ -130,11 +130,11 @@ Additions to Chapter 3 of the GL Specification (Rasterization)
     zero, each resulting Nth texel is assigned internal integer coordinates
     [i,j,k], where
 
-	i = (N mod width) - border
+        i = (N mod width) - border
 
-	j = ((N div width) mod height) - border
+        j = ((N div width) mod height) - border
 
-	k = ((N div (width * height)) mod depth) - border
+        k = ((N div (width * height)) mod depth) - border
 
     and the div operator performs integer division with truncation.  Thus
     the last 2-dimensional image of the 3-dimensional image is indexed with
@@ -143,11 +143,11 @@ Additions to Chapter 3 of the GL Specification (Rasterization)
     represent the base-2 logarithm of these dimensions are n, m, and l,
     defined such that
 
-	width = 2**n + (2 * border)
+        width = 2**n + (2 * border)
 
-	height = 2**m + (2 * border)
+        height = 2**m + (2 * border)
 
-	depth = 2**l + (2 * border)
+        depth = 2**l + (2 * border)
     
     It is acceptable for an implementation to vary its allocation of
     internal component resolution based any TexImage3DEXT parameter, but the
@@ -165,20 +165,20 @@ Additions to Chapter 3 of the GL Specification (Rasterization)
     TexParameteri, TexParameterv, TexParameteriv, and TexParameterfv,
     causing table 3.7 to be replaced with the table below:
 
-	Name				Type		Legal Values
-	----				----		------------
-	TEXTURE_WRAP_S			integer		CLAMP, REPEAT
-	TEXTURE_WRAP_T			integer		CLAMP, REPEAT
-	TEXTURE_WRAP_R_EXT		integer		CLAMP, REPEAT
-	TEXTURE_MIN_FILTER		integer		NEAREST, LINEAR,
-							NEAREST_MIPMAP_NEAREST,
-							NEAREST_MIPMAP_LINEAR,
-							LINEAR_MIPMAP_NEAREST,
-							LINEAR_MIPMAP_LINEAR
-	TEXTURE_MAG_FILTER		integer		NEAREST, LINEAR
-	TEXTURE_BORDER_COLOR		4 floats	any 4 values in [0,1]
+        Name                            Type            Legal Values
+        ----                            ----            ------------
+        TEXTURE_WRAP_S                  integer         CLAMP, REPEAT
+        TEXTURE_WRAP_T                  integer         CLAMP, REPEAT
+        TEXTURE_WRAP_R_EXT              integer         CLAMP, REPEAT
+        TEXTURE_MIN_FILTER              integer         NEAREST, LINEAR,
+                                                        NEAREST_MIPMAP_NEAREST,
+                                                        NEAREST_MIPMAP_LINEAR,
+                                                        LINEAR_MIPMAP_NEAREST,
+                                                        LINEAR_MIPMAP_LINEAR
+        TEXTURE_MAG_FILTER              integer         NEAREST, LINEAR
+        TEXTURE_BORDER_COLOR            4 floats        any 4 values in [0,1]
 
-	Table 3.7: Texture parameters and their values.
+        Table 3.7: Texture parameters and their values.
 
     If TEXTURE_WRAP_R_EXT is set to REPEAT, then the GL ignores the integer
     part of R coordinates, using only the fractional part.  CLAMP causes R
@@ -204,59 +204,59 @@ Additions to Chapter 3 of the GL Specification (Rasterization)
     Equation 3.8 has ((dw/dx * Dx + dw/dy * Dy)**2 added to the two terms
     under the square root.  The requirements for the function f(x,y) become
 
-	1.  f(x, y) is continuous and monotonically increasing in each of
-	    |du/dx|, |du/dy|, |dv/dx|, |dv/dy|, |dw/dx|, and |dw/dy|.
+        1.  f(x, y) is continuous and monotonically increasing in each of
+            |du/dx|, |du/dy|, |dv/dx|, |dv/dy|, |dw/dx|, and |dw/dy|.
 
-	2.  Let
+        2.  Let
 
-		m_u = max(|du/dx|, |du/dy|)
-		m_v = max(|dv/dx|, |dv/dy|)
-		m_w = max(|dw/dx|, |dw/dy|)
+                m_u = max(|du/dx|, |du/dy|)
+                m_v = max(|dv/dx|, |dv/dy|)
+                m_w = max(|dw/dx|, |dw/dy|)
 
-	    Then
+            Then
 
-		max(m_u, m_v, m_w) <= f(x, y) <= m_u + m_v + m_w
+                max(m_u, m_v, m_w) <= f(x, y) <= m_u + m_v + m_w
 
     The i and j coordinates of the texel selected for NEAREST filtering are
     as defined in equations 3.9 and 3.10 of the GL Specification.
     Coordinate k is computed as
 
-	     /  floor(w),	r < 1
-	k = (
-	     \	2**l - 1,	r = 1
+             /  floor(w),       r < 1
+        k = (
+             \  2**l - 1,       r = 1
 
     A 2x2x2 cube of texels is selected for LINEAR filtering.  The i and j
     coordinates of these texels are computed as defined in the GL
     Specification for 2-dimensional images.  The k coordinates are
     computed as
 
-	      /	floor(w - 1/2) mod 2**l,	TEXTURE_WRAP_R_EXT is REPEAT
-	k0 = (
-	      \	floor(w - 1/2),			TEXTURE_WRAP_R_EXT is CLAMP
+              / floor(w - 1/2) mod 2**l,        TEXTURE_WRAP_R_EXT is REPEAT
+        k0 = (
+              \ floor(w - 1/2),                 TEXTURE_WRAP_R_EXT is CLAMP
 
 
-	      /	(k0 + 1) mod 2**l,	TEXTURE_WRAP_R_EXT is REPEAT
-	k1 = (
-	      \	k0 + 1,			TEXTURE_WRAP_R_EXT is CLAMP
+              / (k0 + 1) mod 2**l,      TEXTURE_WRAP_R_EXT is REPEAT
+        k1 = (
+              \ k0 + 1,                 TEXTURE_WRAP_R_EXT is CLAMP
 
     Let
 
-	A = frac(u - 1/2)
-	B = frac(v - 1/2)
-	C = frac(w - 1/2)
+        A = frac(u - 1/2)
+        B = frac(v - 1/2)
+        C = frac(w - 1/2)
 
     where frac(x) denotes the fractional part of x.  Let T[i,j,k] be the
     texel at location [i,j,k] in the texture image.  Then the texture value,
     T, is found as
 
-	T = (1-A) * (1-B) * (1-C) * T[i0,j0,k0] +
-	      A   * (1-B) * (1-C) * T[i1,j0,k0] +
-	    (1-A) *   B   * (1-C) * T[i0,j1,k0] +
-	      A   *   B   * (1-C) * T[i1,j1,k0] +
-	    (1-A) * (1-B) *   C   * T[i0,j0,k1] +
-	      A   * (1-B) *   C   * T[i1,j0,k1] +
-	    (1-A) *   B   *   C   * T[i0,j1,k1] +
-	      A   *   B   *   C   * T[i1,j1,k1]
+        T = (1-A) * (1-B) * (1-C) * T[i0,j0,k0] +
+              A   * (1-B) * (1-C) * T[i1,j0,k0] +
+            (1-A) *   B   * (1-C) * T[i0,j1,k0] +
+              A   *   B   * (1-C) * T[i1,j1,k0] +
+            (1-A) * (1-B) *   C   * T[i0,j0,k1] +
+              A   * (1-B) *   C   * T[i1,j0,k1] +
+            (1-A) *   B   *   C   * T[i0,j1,k1] +
+              A   *   B   *   C   * T[i1,j1,k1]
 
     for a 3-dimensional texture.  If any of the selected T[i,j,k] in the
     above equation refer to a border texel with unspecified value, then the
@@ -274,17 +274,17 @@ Additions to Chapter 3 of the GL Specification (Rasterization)
     2**n x 2**m x 2**l, then there are exactly max(n, m, l) + 1 mipmap
     arrays.  Each subsequent array has dimensions
 
-	size(i-1) x size(j-1) x size(k-1)
+        size(i-1) x size(j-1) x size(k-1)
     
     where the dimensions of the previous array are
 
-	size(i) x size(j) x size(k)
+        size(i) x size(j) x size(k)
 
     and
 
-		   /  2**x + 2*border,   x > 0
-	size(x) = (
-		   \  1 + 2*border,      x <= 0
+                   /  2**x + 2*border,   x > 0
+        size(x) = (
+                   \  1 + 2*border,      x <= 0
 
     Each array in a 3-dimensional mipmap is transmitted to the GL using
     TexImage3DEXT; the array being set is indicated with the <level>
@@ -372,38 +372,38 @@ GLX Protocol
         TexImage3DEXT
             2           84+n+p          rendering command length
             2           4114            rendering command opcode
- 	    1		BOOL		swap_bytes
-	    1		BOOL		lsb_first
-	    2 				unused
-	    4		CARD32		row_length
-	    4		CARD32		image_height
-	    4		CARD32		image_depth
-	    4		CARD32		skip_rows
-	    4		CARD32		skip_images
-	    4		CARD32		skip_volumes
-	    4		CARD32		skip_pixels
-	    4		CARD32		alignment
-            4		ENUM		target
-	    4		INT32		level
-            4		ENUM		internalformat
-            4		INT32		width
-            4		INT32		height
-            4		INT32		depth
-            4		INT32		size4d
-            4		INT32		border
-            4		ENUM		format
-            4		ENUM		type
-	    4		CARD32		null_image
+            1           BOOL            swap_bytes
+            1           BOOL            lsb_first
+            2                           unused
+            4           CARD32          row_length
+            4           CARD32          image_height
+            4           CARD32          image_depth
+            4           CARD32          skip_rows
+            4           CARD32          skip_images
+            4           CARD32          skip_volumes
+            4           CARD32          skip_pixels
+            4           CARD32          alignment
+            4           ENUM            target
+            4           INT32           level
+            4           ENUM            internalformat
+            4           INT32           width
+            4           INT32           height
+            4           INT32           depth
+            4           INT32           size4d
+            4           INT32           border
+            4           ENUM            format
+            4           ENUM            type
+            4           CARD32          null_image
             n           LISTofBYTE      pixels
             p                           unused, p=pad(n)
 
             If the command is encoded in a glXRenderLarge request, the command 
             opcode and command length fields above are expanded to 4 bytes each:
 
-	    4           88+n+p          rendering command length
+            4           88+n+p          rendering command length
             4           4114            rendering command opcode
 
-	If <width> < 0, <height> < 0, <depth> < 0, <format> is invalid or <type> is 
+        If <width> < 0, <height> < 0, <depth> < 0, <format> is invalid or <type> is 
         invalid, then the command is erroneous and n=0.
 
         <pixels> is arranged as a sequence of adjacent rectangles. Each rectangle is a
@@ -471,38 +471,38 @@ Errors
 
 New State
 
-    Get Value				Get Command		Type			Initial Value		Attribute
-    ---------				-----------		----			-------------		---------
-    UNPACK_SKIP_IMAGES_EXT		GetIntegerv		Z+			0			    -
-    UNPACK_IMAGE_HEIGHT_EXT		GetIntegerv		Z+			0			    -
-    PACK_SKIP_IMAGES_EXT		GetIntegerv		Z+			0			    -
-    PACK_IMAGE_HEIGHT_EXT		GetIntegerv		Z+			0			    -
-    TEXTURE_3D_EXT			IsEnabled		B			FALSE			texture/enable
-    TEXTURE_WRAP_R_EXT			GetTexParameteriv	1 x Z2			REPEAT			texture
-    TEXTURE_DEPTH_EXT			GetTexLevelParameteriv	1 x 2 x levels x Z+	0			    -
+    Get Value                           Get Command             Type                    Initial Value           Attribute
+    ---------                           -----------             ----                    -------------           ---------
+    UNPACK_SKIP_IMAGES_EXT              GetIntegerv             Z+                      0                           -
+    UNPACK_IMAGE_HEIGHT_EXT             GetIntegerv             Z+                      0                           -
+    PACK_SKIP_IMAGES_EXT                GetIntegerv             Z+                      0                           -
+    PACK_IMAGE_HEIGHT_EXT               GetIntegerv             Z+                      0                           -
+    TEXTURE_3D_EXT                      IsEnabled               B                       FALSE                   texture/enable
+    TEXTURE_WRAP_R_EXT                  GetTexParameteriv       1 x Z2                  REPEAT                  texture
+    TEXTURE_DEPTH_EXT                   GetTexLevelParameteriv  1 x 2 x levels x Z+     0                           -
 
     (old state with new type information)
 
-    TEXTURE				GetTexImage		3 x 1 x levels x I	null			    -
-    TEXTURE_RED_SIZE_EXT		GetTexLevelParameteriv	3 x 2 x levels x Z+	0			    -
-    TEXTURE_GREEN_SIZE_EXT		GetTexLevelParameteriv	3 x 2 x levels x Z+	0			    -
-    TEXTURE_BLUE_SIZE_EXT		GetTexLevelParameteriv	3 x 2 x levels x Z+	0			    -
-    TEXTURE_ALPHA_SIZE_EXT		GetTexLevelParameteriv	3 x 2 x levels x Z+	0			    -
-    TEXTURE_LUMINANCE_SIZE_EXT		GetTexLevelParameteriv	3 x 2 x levels x Z+	0			    -
-    TEXTURE_INTENSITY_SIZE_EXT		GetTexLevelParameteriv	3 x 2 x levels x Z+	0			    -
-    TEXTURE_WIDTH			GetTexLevelParameteriv	3 x 2 x levels x Z+	0			    -
-    TEXTURE_HEIGHT			GetTexLevelParameteriv	2 x 2 x levels x Z+	0			    -
-    TEXTURE_BORDER			GetTexLevelParameteriv	3 x 2 x levels x Z+	0			    -
-    TEXTURE_COMPONENTS (1D and 2D)	GetTexLevelParameteriv	2 x 2 x levels x Z42	1			    -
-    TEXTURE_COMPONENTS (3D)		GetTexLevelParameteriv	1 x 2 x levels x Z38	LUMINANCE		    -
-    TEXTURE_BORDER_COLOR		GetTexParameteriv	3 x C			0, 0, 0, 0		texture
-    TEXTURE_MIN_FILTER			GetTexParameteriv	3 x Z6			NEAREST_MIPMAP_LINEAR	texture
-    TEXTURE_MAG_FILTER			GetTexParameteriv	3 x Z2			LINEAR			texture
-    TEXTURE_WRAP_S			GetTexParameteriv	3 x Z2			REPEAT			texture
-    TEXTURE_WRAP_T			GetTexParameteriv	2 x Z2			REPEAT			texture
+    TEXTURE                             GetTexImage             3 x 1 x levels x I      null                        -
+    TEXTURE_RED_SIZE_EXT                GetTexLevelParameteriv  3 x 2 x levels x Z+     0                           -
+    TEXTURE_GREEN_SIZE_EXT              GetTexLevelParameteriv  3 x 2 x levels x Z+     0                           -
+    TEXTURE_BLUE_SIZE_EXT               GetTexLevelParameteriv  3 x 2 x levels x Z+     0                           -
+    TEXTURE_ALPHA_SIZE_EXT              GetTexLevelParameteriv  3 x 2 x levels x Z+     0                           -
+    TEXTURE_LUMINANCE_SIZE_EXT          GetTexLevelParameteriv  3 x 2 x levels x Z+     0                           -
+    TEXTURE_INTENSITY_SIZE_EXT          GetTexLevelParameteriv  3 x 2 x levels x Z+     0                           -
+    TEXTURE_WIDTH                       GetTexLevelParameteriv  3 x 2 x levels x Z+     0                           -
+    TEXTURE_HEIGHT                      GetTexLevelParameteriv  2 x 2 x levels x Z+     0                           -
+    TEXTURE_BORDER                      GetTexLevelParameteriv  3 x 2 x levels x Z+     0                           -
+    TEXTURE_COMPONENTS (1D and 2D)      GetTexLevelParameteriv  2 x 2 x levels x Z42    1                           -
+    TEXTURE_COMPONENTS (3D)             GetTexLevelParameteriv  1 x 2 x levels x Z38    LUMINANCE                   -
+    TEXTURE_BORDER_COLOR                GetTexParameteriv       3 x C                   0, 0, 0, 0              texture
+    TEXTURE_MIN_FILTER                  GetTexParameteriv       3 x Z6                  NEAREST_MIPMAP_LINEAR   texture
+    TEXTURE_MAG_FILTER                  GetTexParameteriv       3 x Z2                  LINEAR                  texture
+    TEXTURE_WRAP_S                      GetTexParameteriv       3 x Z2                  REPEAT                  texture
+    TEXTURE_WRAP_T                      GetTexParameteriv       2 x Z2                  REPEAT                  texture
 
 New Implementation Dependent State
 
-    Get Value				Get Command		Type		Minimum Value
-    ---------				-----------		----		-------------
-    MAX_3D_TEXTURE_SIZE_EXT		GetIntegerv		Z+		16
+    Get Value                           Get Command             Type            Minimum Value
+    ---------                           -----------             ----            -------------
+    MAX_3D_TEXTURE_SIZE_EXT             GetIntegerv             Z+              16

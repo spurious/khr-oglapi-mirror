@@ -19,8 +19,8 @@ Status
 
 Version
 
-    Last Modified Date:         01/23/2007
-    Author revision:            10
+    Last Modified Date:         02/04/2008
+    Author revision:            12
 
 Number
 
@@ -128,7 +128,7 @@ Overview
                to buffers using the existing DrawBuffer or DrawBuffers API
                commands.
 
-       * Added new built-in functions trunctate() and round() to the shading
+       * Added new built-in functions truncate() and round() to the shading
          language.
 
        * A new built-in variable accessible from within vertex shaders that
@@ -631,7 +631,7 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
                                          otherwise
       CLAMP_TO_EDGE               u'' = clamp(u', 0.5, w_t-0.5)
       CLAMP_TO_BORDER             u'' = clamp(u', -0.5, w_t+0.5)
-      REPEAT                      u'' = fmod(u', w_t)
+      REPEAT                      u'' = clamp(fmod(u', w_t), 0.5, w_t-0.5)
       MIRROR_CLAMP_EXT            u'' = clamp(fabs(u'), 0.5, w_t-0.5),
                                          if NEAREST filtering, or
                                       = clamp(fabs(u'), 0.5, w_t),
@@ -689,9 +689,11 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
           i_1   = i_0 + 1,
           j_1   = j_0 + 1,
           k_1   = k_0 + 1,
-          alpha = u'' - i_0,
-          beta  = v'' - j_0, and
-          gamma = w'' - k_0.
+          alpha = frac(u'' - 0.5),
+          beta  = frac(v'' - 0.5), and
+          gamma = frac(w'' - 0.5),
+
+    where frac(<x>) denotes the fractional part of <x>.
 
     For a three-dimensional texture, the texture value tau is found as...
 
@@ -907,9 +909,9 @@ Additions to Chapter 5 of the OpenGL 2.0 Specification (Special Functions)
 
     Change section 5.4 Display Lists, p. 237
 
-    Add the command BindFragDataLocationEXT to the list of commands that are
-    not compiled into a display list, but executed immediately, under "Program
-    and Shader Objects", p. 241
+    Add the commands VertexAttribIPointerEXT and BindFragDataLocationEXT to
+    the list of commands that are not compiled into a display list, but
+    executed immediately, under "Program and Shader Objects", p. 241
 
 Additions to Chapter 6 of the OpenGL 2.0 Specification (State and State
 Requests)
@@ -2259,6 +2261,14 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     12   02/04/08  pbrown    Fix errors in texture wrap mode handling.
+                              Added a missing clamp to avoid sampling border
+                              in REPEAT mode.  Fixed incorrectly specified
+                              weights for LINEAR filtering.
+
+     11   05/08/07  pbrown    Add VertexAttribIPointerEXT to the list of
+                              commands that can't go in display lists.
+
      10   01/23/07  pbrown    Fix prototypes for a variety of functions 
                               that were specified with an incorrect sampler
                               type.

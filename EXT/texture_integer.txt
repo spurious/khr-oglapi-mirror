@@ -17,7 +17,7 @@ Status
 
 Version
 
-    Last Modified Date:         7/12/2007
+    Last Modified Date:         07/15/2006
     NVIDIA Revision:            5
 
 Number
@@ -740,4 +740,10 @@ Issues
 
 Revision History
 
-    None
+    Rev.    Date    Author    Changes
+    ----  --------  --------  -----------------------------------------
+      5   07/15/07  pbrown    Fix typo in GetTexParameterIuivEXT function
+                              name in "New Procedures and Functions".
+
+      4      --               Pre-release revisions.
+

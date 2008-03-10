@@ -20,7 +20,7 @@ Version
     Author Revision: 1.1
 
     Based on:  WGL_EXT_pbuffer specification
-	       Date: 3/1/1999	Version: 1.5
+               Date: 3/1/1999   Version: 1.5
 
 Number
 
@@ -39,8 +39,8 @@ Overview
 New Procedures and Functions
 
     BOOL wglMakeContextCurrentARB(HDC hDrawDC,
-				  HDC hReadDC,
-				  HGLRC hglrc);
+                                  HDC hReadDC,
+                                  HGLRC hglrc);
 
     HDC wglGetCurrentReadDCARB(VOID);
 
@@ -48,8 +48,8 @@ New Tokens
 
     New errors returned by GetLastError:
 
-      ERROR_INVALID_PIXEL_TYPE_ARB		0x2043
-      ERROR_INCOMPATIBLE_DEVICE_CONTEXTS_ARB	0x2054
+      ERROR_INVALID_PIXEL_TYPE_ARB              0x2043
+      ERROR_INCOMPATIBLE_DEVICE_CONTEXTS_ARB    0x2054
 
 Additions to Chapter 2 of the 1.2 GL Specification (OpenGL Operation)
 
@@ -102,19 +102,19 @@ Additions to the WGL specification
     for reads than for draws, the "read" device will be used for the
     following OpenGL operations:
 
-    1.	Any pixel data that are sourced based on the value of READ_BUFFER.
-	Note, that accumulation operations use the value of READ_BUFFER,
-	but are not allowed when a different device context is used
-	for reads.  In this case, the accumulation operation will
-	generate INVALID_OPERATION.
+    1.  Any pixel data that are sourced based on the value of READ_BUFFER.
+        Note, that accumulation operations use the value of READ_BUFFER,
+        but are not allowed when a different device context is used
+        for reads.  In this case, the accumulation operation will
+        generate INVALID_OPERATION.
 
-    2.	Any depth values that are retrieved by ReadPixels, CopyPixels,
-	or any OpenGL extension that sources depth images from the frame
-	buffer in the manner of ReadPixels and CopyPixels.
+    2.  Any depth values that are retrieved by ReadPixels, CopyPixels,
+        or any OpenGL extension that sources depth images from the frame
+        buffer in the manner of ReadPixels and CopyPixels.
 
-    3.	Any stencil values that are retrieved by ReadPixels, CopyPixels,
-	or any OpenGL extension that sources stencil images from the
-	framebuffer in the manner of ReadPixels and CopyPixels.
+    3.  Any stencil values that are retrieved by ReadPixels, CopyPixels,
+        or any OpenGL extension that sources stencil images from the
+        framebuffer in the manner of ReadPixels and CopyPixels.
 
     These frame buffer values are taken from the surface associated with
     the device context specified by <hReadDC>.
@@ -143,29 +143,29 @@ Additions to the WGL specification
     error information, call GetLastError.  Possible errors are as follows:
 
       ERROR_INVALID_PIXEL_FORMAT     The pixel format associated with
-				     <hDrawDC> does not match the pixel
-				     format associated with the render
-				     context.
+                                     <hDrawDC> does not match the pixel
+                                     format associated with the render
+                                     context.
 
       ERROR_INVALID_PIXEL_TYPE_ARB   The pixel type for <hReadDC> is
-				     different than the pixel type
-				     associated with the <hdc> that was
-				     passed to wglCreateContext.
+                                     different than the pixel type
+                                     associated with the <hdc> that was
+                                     passed to wglCreateContext.
 
       ERROR_INCOMPATIBLE_DEVICE_CONTEXTS_ARB
-				     The device contexts specified by
-				     <hReadDC> and <hDrawDC> are not
-				     compatible.  This can occur if the
-				     device contexts are managed by
-				     different drivers or possibly on
-				     different graphics adapters.
+                                     The device contexts specified by
+                                     <hReadDC> and <hDrawDC> are not
+                                     compatible.  This can occur if the
+                                     device contexts are managed by
+                                     different drivers or possibly on
+                                     different graphics adapters.
 
-      ERROR_DC_NOT_FOUND	     <hReadDC> or <hDrawDC> is not a valid
-				     device context.
+      ERROR_DC_NOT_FOUND             <hReadDC> or <hDrawDC> is not a valid
+                                     device context.
 
       ERROR_NO_SYSTEM_RESOURCES      The device contexts specified by
-				     <hReadDC> and <hDrawDC> cannot exist
-				     in the framebuffer simultaneously.
+                                     <hReadDC> and <hDrawDC> cannot exist
+                                     in the framebuffer simultaneously.
 
     wglGetCurrentReadDC returns a handle to the "read" device context that
     is associated with the current OpenGL rendering context of the calling
@@ -176,7 +176,7 @@ Dependencies on WGL_ARB_extensions_string
 
     Because there is no way to extend wgl, these calls are defined in
     the ICD and can be called by obtaining the address with
-    wglGetProcAddress.	Because this extension is a WGL extension, it
+    wglGetProcAddress.  Because this extension is a WGL extension, it
     is not included in the GL_EXTENSIONS string.  Its existence can be
     determined with the WGL_ARB_extensions_string extension.
 
@@ -203,21 +203,21 @@ Conformance Testing
 
 Revision History
 
-    12/16/1999	0.1
-	- First ARB draft based on the EXT specification.
+    12/16/1999  0.1
+        - First ARB draft based on the EXT specification.
 
-    03/15/2000	0.2
-	- Removed the changes to Chapter 4.
-	- Added a discussion that accumulation operations may
-	  generate INVALID_OPERATION.
-	- PopAttrib may (not will) generate an error.
-	- Added an error if the read and draw DCs are not managed
-	  on the same driver.
+    03/15/2000  0.2
+        - Removed the changes to Chapter 4.
+        - Added a discussion that accumulation operations may
+          generate INVALID_OPERATION.
+        - PopAttrib may (not will) generate an error.
+        - Added an error if the read and draw DCs are not managed
+          on the same driver.
 
-    03/22/2000	1.0
-	- Changed rendering context to device context.
-	- Added the new error conditions values.
-	- Approved by ARB: 10-0-0.
+    03/22/2000  1.0
+        - Changed rendering context to device context.
+        - Added the new error conditions values.
+        - Approved by ARB: 10-0-0.
 
-    03/12/2002	1.1
-	- Updated contact information.
+    03/12/2002  1.1
+        - Updated contact information.

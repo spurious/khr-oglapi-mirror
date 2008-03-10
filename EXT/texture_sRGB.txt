@@ -31,8 +31,8 @@ Status
 
 Version
 
-    Date: August 8, 2005
-    Revision: 0.7
+    Date: January 24, 2007
+    Revision: 0.8
 
 Number
 
@@ -529,6 +529,37 @@ Issues
         are stored converted, that means they must be reverse-converted
         when returned by glGetTexImage.
 
+    24) How should mipmap generation work for sRGB textures?
+
+        RESOLVED:  The best way to perform mipmap generation for sRGB
+        textures is by downsampling the sRGB image in a linear color
+        space.
+
+        This involves converting the RGB components of sRGB texels
+        in a given texture image level to linear RGB space, filtering
+        appropriately in that linear RGB space, and then converting the
+        linear RGB values to sRGB for storage in the downsampled texture
+        level image.
+
+        (Remember alpha, when present, is linear even in sRGB texture
+        formats.)
+
+        The OpenGL specification says "No particular filter algorithm
+        is required, though a box filter is recommended as the default
+        filter" meaning there is no requirement for how even non-sRGB
+        mipmaps should be generated.  So while the resolution to this
+        issue is technically a recommendation, it is however a strongly
+        advised recommendation.
+
+        The rationale for why sRGB textures should be converted to
+        linear space prior to filtering and converted back to sRGB after
+        filtering is clear.  If an implementation naively simply performed
+        linear filtering on (non-linear) sRGB components as if they were
+        in a linear space, the result tends to be a subtle darkening of
+        the texture images as mipmap generation continues recursively.
+        This darkening is an inappropriate basis that the resolved
+        "best way" above would avoid.
+
 New Procedures and Functions
 
     None
@@ -785,6 +816,8 @@ NVIDIA Implementation Details
     post-filtering.
 
 Revision History
+
+    0.8:  Add issue 24 with recommendation for sRGB mipmap generation.
 
     0.7:  Add issue 23 about alternative implementation based on
           either GL_RGB12 or GL_RGB16 based on discussions with Jeremy

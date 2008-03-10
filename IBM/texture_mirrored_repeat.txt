@@ -48,7 +48,7 @@ New Tokens
     their <pname> parameter is TEXTURE_WRAP_S, TEXTURE_WRAP_T, or
     TEXTURE_WRAP_R_EXT:
 
-      GL_MIRRORED_REPEAT_IBM	       0x8370
+      GL_MIRRORED_REPEAT_IBM           0x8370
 
 Additions to Chapter 2 of the GL Specification (OpenGL Operation)
 
@@ -66,16 +66,16 @@ and the Framebuffer)
     If TEXTURE_WRAP_S, TEXTURE_WRAP_T, or TEXTURE_WRAP_R_EXT is set to
     MIRRORED_REPEAT_IBM, the s (or t or r) coordinate is converted to:
 
-	s - floor(s),		if floor(s) is even, or
-	1 - (s - floor(s)),	if floor(s) is odd.
+        s - floor(s),           if floor(s) is even, or
+        1 - (s - floor(s)),     if floor(s) is odd.
 
 
   Change to Section 3.8.1, Texture Minification
 
     Let:
-	u(x,y) = 2^n * s(x,y),
-	v(x,y) = 2^m * t(x,y), and
-	w(x,y) = 2^l * r(x,y).
+        u(x,y) = 2^n * s(x,y),
+        v(x,y) = 2^m * t(x,y), and
+        w(x,y) = 2^l * r(x,y).
 
     If the TEXTURE_WRAP_S, TEXTURE_WRAP_T, or TEXTURE_WRAP_R_EXT is set to
     either MIRRORED_REPEAT_IBM or CLAMP_TO_EDGE_IBM, the resulting u, v, or
@@ -116,11 +116,11 @@ New State
 
     Only the type information changes for these parameters:
 
-    Get Value		Get Command		Type	Initial Value	Attrib
-    ---------		-----------		----	-------------	------
-    TEXTURE_WRAP_S	GetTexParameteriv	n x Z5	REPEAT		texture
-    TEXTURE_WRAP_T	GetTexParameteriv	n x Z5	REPEAT		texture
-    TEXTURE_WRAP_R_EXT	GetTexParameteriv	n x Z5	REPEAT		texture
+    Get Value           Get Command             Type    Initial Value   Attrib
+    ---------           -----------             ----    -------------   ------
+    TEXTURE_WRAP_S      GetTexParameteriv       n x Z5  REPEAT          texture
+    TEXTURE_WRAP_T      GetTexParameteriv       n x Z5  REPEAT          texture
+    TEXTURE_WRAP_R_EXT  GetTexParameteriv       n x Z5  REPEAT          texture
 
 New Implementation Dependent State
 

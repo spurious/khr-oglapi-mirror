@@ -7293,7 +7293,7 @@ Issues
 
 Revision History
     #119, February 13, 2007: Jon Leech
-	- Corrected typos in 'GenerateMipmap'.
+        - Corrected typos in 'GenerateMipmap'.
     #118, April 5, 2006:  jjuliano
         - Improve language related to which formats are
           color-renderable, and describe format conversions when reading

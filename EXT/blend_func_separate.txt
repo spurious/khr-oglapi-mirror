@@ -121,7 +121,7 @@ GLX Protocol
     A new GL rendering command is added. The following command is sent
     to the server as part of a glXRender request:
 
-        BlendFuncSeperateEXT
+        BlendFuncSeparateEXT
             2           20              rendering command length
             2           4134            rendering command opcode
             4           ENUM            sfactorRGB

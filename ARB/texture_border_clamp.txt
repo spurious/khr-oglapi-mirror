@@ -68,7 +68,7 @@ New Tokens
     by the <params> parameter of TexParameteriv and TexParameterfv, when their
     <pname> parameter is TEXTURE_WRAP_S, TEXTURE_WRAP_T, or TEXTURE_WRAP_R:
 
-	CLAMP_TO_BORDER_ARB                             0x812D
+        CLAMP_TO_BORDER_ARB                             0x812D
 
 Additions to Chapter 2 of the OpenGL 1.2.1 Specification (OpenGL Operation)
 
@@ -148,9 +148,9 @@ New State
     Only the type information changes for these parameters.
 
     (table 6.13, p. 203)
-								Initial
-    Get Value				Type	Get Command	Value	Description Sec.    Attribute
-    ---------				----	-----------	------- ----------- ----    ---------
+                                                                Initial
+    Get Value                           Type    Get Command     Value   Description Sec.    Attribute
+    ---------                           ----    -----------     ------- ----------- ----    ---------
     TEXTURE_WRAP_S                      3+ x Z4 GetTexParameter  REPEAT Texture wrap  3.8   texture
     TEXTURE_WRAP_T                      3+ x Z4 GetTexParameter  REPEAT Texture wrap  3.8   texture
     TEXTURE_WRAP_R                      3+ x Z4 GetTexParameter  REPEAT Texture wrap  3.8   texture

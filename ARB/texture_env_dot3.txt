@@ -66,7 +66,6 @@ New Tokens
 
     Accepted by the <params> parameter of TexEnvf, TexEnvi, TexEnvfv,
     and TexEnviv when the <pname> parameter value is COMBINE_RGB_ARB
-    or COMBINE_ALPHA_ARB
 
         DOT3_RGB_ARB                                    0x86AE
         DOT3_RGBA_ARB                                   0x86AF
@@ -134,6 +133,10 @@ New Implementation Dependent State
 
 Revision History
     06/11/04  benj      Updated contact info after ATI/AMD merger.
+
+    01/05/15  bpoddar   Fixed a mistake in the spec - DOT3_RGB_ARB and
+                        DOT3_RGBA_ARB are not valid arguments when
+                        <pname> parameter is COMBINE_ALPHA_ARB
 
     01/02/02  bpoddar   Added original EXT/ARB contributors to the contact
                         list

@@ -31,20 +31,20 @@ Overview
 New Procedures and Functions
 
     void PixelTransformParameteriEXT(enum target,
-				     enum pname,
-				     const int param)
+                                     enum pname,
+                                     const int param)
 
     void PixelTransformParameterfEXT(enum target,
-				     enum pname,
-				     const float param)
+                                     enum pname,
+                                     const float param)
 
     void PixelTransformParameterivEXT(enum target,
-				      enum pname,
-				      const int* params)
+                                      enum pname,
+                                      const int* params)
 
     void PixelTransformParameterfvEXT(enum target,
-				      enum pname,
-				      const float* params)
+                                      enum pname,
+                                      const float* params)
 
     These routines are used to set pixel transformation attributes.
     The only allowable value for <target> at this time is
@@ -52,12 +52,12 @@ New Procedures and Functions
     PIXEL_MAG_FILTER_EXT, PIXEL_MIN_FILTER_EXT, and PIXEL_CUBIC_WEIGHT_EXT.
 
     void GetPixelTransformParameterivEXT(enum target,
-				         enum pname,
-				         const int* params)
+                                         enum pname,
+                                         const int* params)
 
     void GetPixelTransformParameterfvEXT(enum target,
-				         enum pname,
-				         const float* params)
+                                         enum pname,
+                                         const float* params)
 
     These routines are used to query pixel transformation attributes.
     The only allowable value for <target> at this time is
@@ -71,29 +71,29 @@ New Tokens
     PixelTransformParameterfv, GetPixelTransformParameteriv and
     GetPixelTransformParameterfv:
 
-	PIXEL_MAG_FILTER_EXT                           0x8331
-	PIXEL_MIN_FILTER_EXT                           0x8332
-    	PIXEL_CUBIC_WEIGHT_EXT                         0x8333
+        PIXEL_MAG_FILTER_EXT                           0x8331
+        PIXEL_MIN_FILTER_EXT                           0x8332
+        PIXEL_CUBIC_WEIGHT_EXT                         0x8333
 
     Accepted by the <params> parameter of PixelTransformParameteriEXT,
     PixelTransformParameterfEXT, PixelTransformParameterivEXT, and
     PixelTransformParameterfvEXT when <pname> is PIXEL_MAG_FILTER_EXT
     or PIXEL_MIN_FILTER_EXT:
 
-	CUBIC_EXT                                      0x8334
+        CUBIC_EXT                                      0x8334
 
     Accepted by the <params> parameter of PixelTransformParameteriEXT,
     PixelTransformParameterfEXT, PixelTransformParameterivEXT, and
     PixelTransformParameterfvEXT when <pname> is PIXEL_MIN_FILTER_EXT:
 
-	AVERAGE_EXT                                    0x8335
+        AVERAGE_EXT                                    0x8335
 
     Accepted by the <mode> parameter of MatrixMode,
     and by the <target> parameter of PixelTransformParameterivEXT,
     PixelTransformParameterfvEXT, GetPixelTransformParameterivEXT,
     and GetPixelTransformParameterfvEXT:
 
-	PIXEL_TRANSFORM_2D_EXT                         0x8330
+        PIXEL_TRANSFORM_2D_EXT                         0x8330
 
     Accepted by the <pname> parameter of GetIntegerv, GetFloatv, 
     and GetDoublev: 
@@ -191,7 +191,7 @@ Additions to Chapter 3 of the 1.1 Specification (Rasterization)
 
     The function
 
-	void PixelZoom( float zx, float zy ) ;
+        void PixelZoom( float zx, float zy ) ;
 
     will set the current pixel transformation matrix (the current top
     of the pixel transformation matrix stack) to the scaling matrix:
@@ -406,20 +406,20 @@ Errors
     Begin and the corresponding execution of End.
 
 New State
-											Initial
-    Get Value					Get Command			Type	Value 	  Attrib
-    ---------					-----------			----	-------   ------
-    PIXEL_TRANSFORM_2D_STACK_DEPTH_EXT          GetIntegerv			 I          1       -
-    PIXEL_TRANSFORM_2D_STACK_DEPTH_EXT          GetFloatv			 R          1       -
-    PIXEL_TRANSFORM_2D_STACK_DEPTH_EXT          GetDoublev			 D          1       -
-    MAX_PIXEL_TRANSFORM_2D_STACK_DEPTH_EXT	GetIntegerv			 I	   32       -
-    MAX_PIXEL_TRANSFORM_2D_STACK_DEPTH_EXT	GetFloatv			 R	   32       -
-    MAX_PIXEL_TRANSFORM_2D_STACK_DEPTH_EXT	GetDoublev			 D	   32       -
-    PIXEL_TRANSFORM_2D_MATRIX_EXT		GetFloatv		       16 x R   Identity    -
-    PIXEL_TRANSFORM_2D_MATRIX_EXT		GetDoublev		       16 x D   Identity    -
-    PIXEL_MAG_FILTER_EXT			GetPixelTransformParameteri	 Z3	NEAREST   pixel
-    PIXEL_MIN_FILTER_EXT			GetPixelTransformParameteri	 Z4	NEAREST   pixel
-    PIXEL_CUBIC_WEIGHT_EXT			GetPixelTransformParameterf	 R	   -1 	  pixel
+                                                                                        Initial
+    Get Value                                   Get Command                     Type    Value     Attrib
+    ---------                                   -----------                     ----    -------   ------
+    PIXEL_TRANSFORM_2D_STACK_DEPTH_EXT          GetIntegerv                      I          1       -
+    PIXEL_TRANSFORM_2D_STACK_DEPTH_EXT          GetFloatv                        R          1       -
+    PIXEL_TRANSFORM_2D_STACK_DEPTH_EXT          GetDoublev                       D          1       -
+    MAX_PIXEL_TRANSFORM_2D_STACK_DEPTH_EXT      GetIntegerv                      I         32       -
+    MAX_PIXEL_TRANSFORM_2D_STACK_DEPTH_EXT      GetFloatv                        R         32       -
+    MAX_PIXEL_TRANSFORM_2D_STACK_DEPTH_EXT      GetDoublev                       D         32       -
+    PIXEL_TRANSFORM_2D_MATRIX_EXT               GetFloatv                      16 x R   Identity    -
+    PIXEL_TRANSFORM_2D_MATRIX_EXT               GetDoublev                     16 x D   Identity    -
+    PIXEL_MAG_FILTER_EXT                        GetPixelTransformParameteri      Z3     NEAREST   pixel
+    PIXEL_MIN_FILTER_EXT                        GetPixelTransformParameteri      Z4     NEAREST   pixel
+    PIXEL_CUBIC_WEIGHT_EXT                      GetPixelTransformParameterf      R         -1     pixel
 
 
 New Implementation Dependent State

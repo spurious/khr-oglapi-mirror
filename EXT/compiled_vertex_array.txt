@@ -67,8 +67,8 @@ New Tokens
     Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
     GetFloatv, and GetDoublev:
 
-	ARRAY_ELEMENT_LOCK_FIRST_EXT
-	ARRAY_ELEMENT_LOCK_COUNT_EXT
+        ARRAY_ELEMENT_LOCK_FIRST_EXT        0x81A8
+        ARRAY_ELEMENT_LOCK_COUNT_EXT        0x81A9
 
 Additions to Chapter 2 of the 1.1 Specification (OpenGL Operation)
 
@@ -136,12 +136,12 @@ Errors
     between execution of Begin and the corresponding execution of End.
 
 New State
-								Initial
-    Get Value				Get Command	Type	Value	Attrib
-    ---------				-----------	----	-------	------
+                                                                Initial
+    Get Value                           Get Command     Type    Value   Attrib
+    ---------                           -----------     ----    ------- ------
 
-    ARRAY_ELEMENT_LOCK_FIRST_EXT	GetIntegerv	Z+	0	client-vertex-array
-    ARRAY_ELEMENT_LOCK_COUNT_EXT	GetIntegerv	Z+	0	client-vertex-array
+    ARRAY_ELEMENT_LOCK_FIRST_EXT        GetIntegerv     Z+      0       client-vertex-array
+    ARRAY_ELEMENT_LOCK_COUNT_EXT        GetIntegerv     Z+      0       client-vertex-array
 
 New Implementation Dependent State
 

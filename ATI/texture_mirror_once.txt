@@ -74,8 +74,8 @@ Additions to Chapter 3 if the OpenGL 1.2.1 Specification (Rasterization):
      MIRROR_CLAMP_ATI or MIRROR_CLAMP_TO_EDGE_ATI, the s (or t or r) 
      coordinate is clamped to [-1, 1] and then converted to:
 
-	 s      0  <= s <= 1
-	-s     -1  <= s <  0
+         s      0  <= s <= 1
+        -s     -1  <= s <  0
 
      Like the CLAMP wrap mode, with MIRROR_CLAMP_ATI the texels from 
      the border can be used by the texture filter.  MIRROR_CLAMP_TO_EDGE_ATI 
@@ -127,11 +127,11 @@ New State
 
     Only the type information changes for these parameters:
 
-    Get Value		Get Command		Type	Initial Value	Attrib
-    ---------		-----------		----	-------------	------
-    TEXTURE_WRAP_S	GetTexParameteriv	n x Z5	REPEAT		texture
-    TEXTURE_WRAP_T	GetTexParameteriv	n x Z5	REPEAT		texture
-    TEXTURE_WRAP_R_EXT	GetTexParameteriv	n x Z5	REPEAT		texture
+    Get Value           Get Command             Type    Initial Value   Attrib
+    ---------           -----------             ----    -------------   ------
+    TEXTURE_WRAP_S      GetTexParameteriv       n x Z5  REPEAT          texture
+    TEXTURE_WRAP_T      GetTexParameteriv       n x Z5  REPEAT          texture
+    TEXTURE_WRAP_R_EXT  GetTexParameteriv       n x Z5  REPEAT          texture
 
 New Implementation Dependent State
 

@@ -20,7 +20,7 @@ Version
     Version: 0.5
 
     Based on:  EXT_point_parameters
-	       $Date: 1997/08/21 21:26:36 $ $Revision: 1.6 $
+               $Date: 1997/08/21 21:26:36 $ $Revision: 1.6 $
 
 Number
 
@@ -59,24 +59,24 @@ Overview
     This extension defines a derived point size to be closely related to
     point brightness. The brightness of a point is given by:
 
-			1
-	dist_atten(d) = -------------------
-			a + b * d + c * d^2
+                        1
+        dist_atten(d) = -------------------
+                        a + b * d + c * d^2
 
-	brightness(Pe) = Brightness * dist_atten(|Pe|)
+        brightness(Pe) = Brightness * dist_atten(|Pe|)
 
     where 'Pe' is the point in eye coordinates, and 'Brightness' is some
     initial value proportional to the square of the size provided with
     PointSize. Here we simplify the raster brightness to be a function
     of the rasterized point area and point transparency.
 
-		    brightness(Pe)	 brightness(Pe) >= Threshold_Area
-	area(Pe) =
-		    Threshold_Area	 Otherwise
+                    brightness(Pe)       brightness(Pe) >= Threshold_Area
+        area(Pe) =
+                    Threshold_Area       Otherwise
 
-	factor(Pe) = brightness(Pe)/Threshold_Area
+        factor(Pe) = brightness(Pe)/Threshold_Area
 
-	alpha(Pe) = Alpha * factor(Pe)
+        alpha(Pe) = Alpha * factor(Pe)
 
     where 'Alpha' comes with the point color (possibly modified by
     lighting).
@@ -139,13 +139,13 @@ Issues
 
       factor = (derived_size/threshold)^2
 
-		      factor		      clamp <= factor 
+                      factor                  clamp <= factor 
       clamped_value = 
-		      clamp		      factor < clamp
+                      clamp                   factor < clamp
 
-	       1.0			      derived_size >= threshold
+               1.0                            derived_size >= threshold
       alpha *=
-	       clamped_value		      Otherwise
+               clamped_value                  Otherwise
 
       where clamp is defined by the POINT_FADE_ALPHA_CLAMP_ARB new
       parameter.
@@ -153,26 +153,26 @@ Issues
 New Procedures and Functions
 
     void PointParameterfARB(enum pname,
-			    float param);
+                            float param);
     void PointParameterfvARB(enum pname,
-			     float *params);
+                             float *params);
 
 New Tokens
 
     Accepted by the <pname> parameter of PointParameterfARB, and the
     <pname> of Get:
 
-	POINT_SIZE_MIN_ARB
-	POINT_SIZE_MAX_ARB
-	POINT_FADE_THRESHOLD_SIZE_ARB
+        POINT_SIZE_MIN_ARB
+        POINT_SIZE_MAX_ARB
+        POINT_FADE_THRESHOLD_SIZE_ARB
 
     Accepted by the <pname> parameter of PointParameterfvARB, and the
     <pname> of Get:
 
-	POINT_SIZE_MIN_ARB		0x8126
-	POINT_SIZE_MAX_ARB		0x8127
-	POINT_FADE_THRESHOLD_SIZE_ARB	0x8128
-	POINT_DISTANCE_ATTENUATION_ARB	0x8129
+        POINT_SIZE_MIN_ARB              0x8126
+        POINT_SIZE_MAX_ARB              0x8127
+        POINT_FADE_THRESHOLD_SIZE_ARB   0x8128
+        POINT_DISTANCE_ATTENUATION_ARB  0x8129
 
 Additions to Chapter 2 of the OpenGL 1.2.1 Specification (OpenGL Operation)
 
@@ -186,13 +186,13 @@ Additions to Chapter 3 of the OpenGL 1.2.1 Specification (Rasterization)
     The point size is multiplied with a distance attenuation factor
     and clamped as follows:
 
-	derived_size = Clamp(size * sqrt(dist_atten(dist)))
+        derived_size = Clamp(size * sqrt(dist_atten(dist)))
 
     where dist_atten is specified as
 
-			         1
-	dist_atten(d) = -------------------
-			a + b * d + c * d^2
+                                 1
+        dist_atten(d) = -------------------
+                        a + b * d + c * d^2
 
     and 'd' is the eye-coordinate distance from the eye, (0, 0, 0, 1) in
     eye coordinates, to the vertex.
@@ -205,15 +205,15 @@ Additions to Chapter 3 of the OpenGL 1.2.1 Specification (Rasterization)
     below a given threshold.  In this case, the diameter of the
     rasterized point is
 
-		   derived_size			derived_size >= threshold
-	diameter = 
-		   threshold			Otherwise
+                   derived_size                 derived_size >= threshold
+        diameter = 
+                   threshold                    Otherwise
 
     and the fade factor is computed as follows:
 
-		 1				derived_size >= threshold
-	fade =
-		 (derived_size/threshold)^2	Otherwise
+                 1                              derived_size >= threshold
+        fade =
+                 (derived_size/threshold)^2     Otherwise
 
     The distance attenuation function coefficients, 'a', 'b', and 'c',
     the bounds of the clamp, and the point fade 'threshold', are
@@ -283,15 +283,15 @@ GLX Protocol
                         0x8128    n=1   POINT_FADE_THRESHOLD_SIZE_ARB
             4           FLOAT32         param
 
-	PointParameterfvARB
-	    2		8+4*n		rendering command length
+        PointParameterfvARB
+            2           8+4*n           rendering command length
             2           2066            rendering command opcode
-	    4		ENUM		pname
-			0x8126	  n=1	POINT_SIZE_MIN_ARB
-			0x8127	  n=1	POINT_SIZE_MAX_ARB
-			0x8128	  n=1	POINT_FADE_THRESHOLD_SIZE_ARB
-			0x8129	  n=3	POINT_DISTANCE_ATTENUATION_ARB
-	    4*n		LISTofFLOAT32	params
+            4           ENUM            pname
+                        0x8126    n=1   POINT_SIZE_MIN_ARB
+                        0x8127    n=1   POINT_SIZE_MAX_ARB
+                        0x8128    n=1   POINT_FADE_THRESHOLD_SIZE_ARB
+                        0x8129    n=3   POINT_DISTANCE_ATTENUATION_ARB
+            4*n         LISTofFLOAT32   params
 
 Dependencies on ARB_multisample
 
@@ -311,34 +311,34 @@ Errors
     INVALID_VALUE is generated when values are out of range according
     to:
 
-    <pname>				    valid range
-    --------				    -----------
-    POINT_SIZE_MIN_ARB			    >= 0
-    POINT_SIZE_MAX_ARB			    >= 0
-    POINT_FADE_THRESHOLD_SIZE_ARB	    >= 0
+    <pname>                                 valid range
+    --------                                -----------
+    POINT_SIZE_MIN_ARB                      >= 0
+    POINT_SIZE_MAX_ARB                      >= 0
+    POINT_FADE_THRESHOLD_SIZE_ARB           >= 0
 
 
 New State
 
 (table 6.11, p. 201)
-								Initial
-    Get Value				Type	Get Command	Value	Description Sec.    Attribute
-    ---------				----	-----------	------- ----------- ----    ---------
-    POINT_SIZE_MIN_ARB			R+	GetFloatv	0.0	Attenuated  3.3	    point
-									Min point
-									size
+                                                                Initial
+    Get Value                           Type    Get Command     Value   Description Sec.    Attribute
+    ---------                           ----    -----------     ------- ----------- ----    ---------
+    POINT_SIZE_MIN_ARB                  R+      GetFloatv       0.0     Attenuated  3.3     point
+                                                                        Min point
+                                                                        size
 
-    POINT_SIZE_MAX_ARB			R+	GetFloatv	M	Attenuated  3.3	    point
-									Max point
-									size
+    POINT_SIZE_MAX_ARB                  R+      GetFloatv       M       Attenuated  3.3     point
+                                                                        Max point
+                                                                        size
 
-    POINT_FADE_THRESHOLD_SIZE_ARB	R+	GetFloatv	1.0	Threshold   3.3	    point
-									for alpha
-									attenuation
+    POINT_FADE_THRESHOLD_SIZE_ARB       R+      GetFloatv       1.0     Threshold   3.3     point
+                                                                        for alpha
+                                                                        attenuation
 
-    POINT_DISTANCE_ATTENUATION_ARB	3xR	GetFloatv	(1.0,0.0,0.0)	    3.3	    point
-									Attenuation
-									coefficients
+    POINT_DISTANCE_ATTENUATION_ARB      3xR     GetFloatv       (1.0,0.0,0.0)       3.3     point
+                                                                        Attenuation
+                                                                        coefficients
 
     M is the larger of the max antialiased and non antialiased point
     sizes.
@@ -349,16 +349,16 @@ New Implementation Dependent State
 
 Revision History
 
-    11/09/1999	0.1
-	- First ARB draft based on the original SGI and EXT drafts.
+    11/09/1999  0.1
+        - First ARB draft based on the original SGI and EXT drafts.
 
-    12/07/1999	0.2
-	- clarified behavior when POINT_SIZE_MIN exceeds POINT_SIZE_MAX
-	- clarified when the point size is clamped to the supported range
-	- removed issues from "Errors" section
-	- fixed various typos
-	- Updated to new extension template
-	- added GLX protocol
+    12/07/1999  0.2
+        - clarified behavior when POINT_SIZE_MIN exceeds POINT_SIZE_MAX
+        - clarified when the point size is clamped to the supported range
+        - removed issues from "Errors" section
+        - fixed various typos
+        - Updated to new extension template
+        - added GLX protocol
 
     04/20/2000  0.3
         - rewritten to fit within the context of the 1.2 specification

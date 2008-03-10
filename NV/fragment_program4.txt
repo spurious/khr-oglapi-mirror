@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Date:         11/06/2006
-    NVIDIA Revision:            3
+    Last Modified Date:         11/06/2007
+    NVIDIA Revision:            4
 
 Number
 
@@ -166,7 +166,9 @@ Additions to Chapter 2 of the OpenGL 2.0 Specification (OpenGL Operation)
     described in Section 2.14.7.  If "FLAT" is not specified, attributes will
     be interpolated as described in Chapter 3, with the exception that
     attribute variables bound to colors will still be flat-shaded if the shade
-    model (section 2.14.7) is FLAT.
+    model (section 2.14.7) is FLAT.  If an attribute variable declared as
+    "FLAT" corresponds to a texture coordinate replaced by a point sprite
+    (s,t) value (section 3.3.1), the value of the attribute is undefined.
 
     An attribute variable declared as "CENTROID" will be interpolated using a
     point on or inside the primitive, if possible, when doing multisample line
@@ -779,6 +781,22 @@ Issues
 
       RESOLVED:  Zero.
 
+    (9) How does the FLAT interpolation modifier interact with point sprite
+    coordinate replacement?
+
+      RESOLVED:  The value of such attributes are undefined.  Specifying these
+      two operations together is self-contradictory -- FLAT asks for an
+      interpolant that is constant over a primitive, and point sprite
+      coordinate interpolation asks for an interpolant that is non-constant
+      over a point sprite.
+
+
 Revision History
 
-    None
+    Rev.    Date    Author    Changes
+    ----  --------  --------  --------------------------------------------
+     4    11/06/07  pbrown    Documented interaction between the FLAT 
+                              interpolation modifier and point sprite
+                              coordinate replacement.
+
+    1-3             pbrown    Internal spec development.
