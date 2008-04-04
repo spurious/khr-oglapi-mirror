@@ -17,8 +17,8 @@ Status
 
 Version
 
-    Last Modified Date:         02/14/2008
-    Author revision:            14
+    Last Modified Date:         04/04/2008
+    Author revision:            15
 
 Number
 
@@ -377,6 +377,15 @@ Errors
 
 New State
 
+                                                 Initial
+    Get Value                  Type  Get Command  Value  Description                Sec    Attribute
+    -------------------------- ----  -----------  -----  -------------------------  -----  ---------
+    UNIFORM_BUFFER_BINDING_EXT  Z+   GetIntegerv    0    Uniform buffer bound to    2.15   -
+                                                         the context for buffer
+                                                         object manipulation.
+
+New Implementation Dependent State
+
                                             Minimum
     Get Value              Type Get Command  Value   Description             Section Attrib
     ---------------------- ---- -----------  -----  ---------------------    ------- ------
@@ -392,15 +401,6 @@ New State
     MAX_BINDABLE_UNIFORM_  Z+   GetIntegerv  16384  Maximum size (in bytes)  2.15    -
       SIZE_EXT                                      for bindable uniform
                                                     storage.
-
-New Implementation Dependent State
-
-                                                 Initial
-    Get Value                  Type  Get Command  Value  Description                Sec    Attribute
-    -------------------------- ----  -----------  -----  -------------------------  -----  ---------
-    UNIFORM_BUFFER_BINDING_EXT  Z+   GetIntegerv    0    Uniform buffer bound to    2.15   -
-                                                         the context for buffer
-                                                         object manipulation.
 
 Modifications to The OpenGL Shading Language Specification, Version
 1.10.59
@@ -718,6 +718,8 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     15   04/04/08  aeddy     Moved state sections into the proper order.
+
      14   02/14/08  pbrown    Clarify some confusing language about the memory
                               layout restrictions and GetUniformOffsetEXT.
 
