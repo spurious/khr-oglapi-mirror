@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Date:         10/30/2007
-    NVIDIA Revision:            4
+    Last Modified Date:         04/16/2008
+    NVIDIA Revision:            5
 
 Number
 
@@ -27,7 +27,7 @@ Dependencies
 
     OpenGL 2.0 is required.
 
-    NV_gpu_program4 is required.
+    NV_gpu_program4 or EXT_gpu_shader4 is required.
 
     This extension is written against the OpenGL 2.0 specification.
 
@@ -62,8 +62,8 @@ Overview
     floating-point texture coordinates, and texture filtering of any sort, and
     may not be used in fixed-function fragment processing.  They can be
     accessed via single texel fetch operations in programmable shaders.  For
-    assembly shaders (NV_gpu_program4), the TXF instruction is used.  For
-    GLSL, a new sampler type and texel fetch function are used.
+    assembly shaders (NV_gpu_program4), the TXF instruction is used.  For GLSL
+    (EXT_gpu_shader4), a new sampler type and texel fetch function are used.
 
     While buffer textures can be substantially larger than equivalent
     one-dimensional textures; the maximum texture size supported for buffer
@@ -703,6 +703,10 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+      5   04/16/08  pbrown    Clarify that either NV_gpu_program4 or 
+                              EXT_gpu_shader4 is required, not simply
+                              NV_gpu_program4.
+
       4   10/30/07  ewerness  Add resolutions to various issues
 
       3      --               Pre-release revisions.
