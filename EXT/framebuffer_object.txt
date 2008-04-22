@@ -55,8 +55,8 @@ Status
 
 Version
 
-    Last Modified Date: February 13, 2007
-    Revision: #119
+    Last Modified Date: April 22, 2008
+    Revision: #120
 
 Number
 
@@ -1882,34 +1882,37 @@ Errors
 
     The error INVALID_OPERATION is generated if
     FramebufferRenderbufferEXT is called and <renderbuffer> is not the
-    name of a renderbuffer object.
+    name of a renderbuffer object or zero.
 
     The error INVALID_OPERATION is generated if
     FramebufferTexture{1D|2D|3D}EXT is called and <texture> is not the
-    name of a texture object.
+    name of a texture object or zero.
 
     The error INVALID_VALUE is generated if
     FramebufferTexture{1D|2D|3D}EXT is called with a <level> that is
-    less than zero.
+    less than zero and <texture> is not zero.
 
     The error INVALID_VALUE is generated if FramebufferTexture2DEXT is
     called with a <level> that is not zero and <textarget> is
-    TEXTURE_RECTANGLE_ARB.
+    TEXTURE_RECTANGLE_ARB and <texture> is not zero.
 
     The error INVALID_VALUE is generated if FramebufferTexture{1D|2D}EXT
     is called with a <level> that is greater than the log base 2 of
-    MAX_TEXTURE_SIZE and <texture> is a 1D or 2D texture. 
+    MAX_TEXTURE_SIZE and <texture> is respectively a non-zero 1D or 2D
+    texture object name.
 
     The error INVALID_VALUE is generated if FramebufferTexture2DEXT
     is called with a <level> that is greater than the log base 2 of
-    MAX_CUBE_MAP_TEXTURE_SIZE and <texture> is a cubemap texture. 
+    MAX_CUBE_MAP_TEXTURE_SIZE and <texture> is a non-zero cubemap
+    texture object name.
 
     The error INVALID_VALUE is generated if FramebufferTexture3DEXT is
     called with a <level> greater than the log base 2 of the
-    MAX_3D_TEXTURE_SIZE.
+    MAX_3D_TEXTURE_SIZE and <texture> is not zero.
 
     The error INVALID_VALUE is generated if FramebufferTexture3DEXT is
-    called with a <zoffset> that is larger than MAX_3D_TEXTURE_SIZE-1.
+    called with a <zoffset> that is larger than MAX_3D_TEXTURE_SIZE-1
+    and <texture> is not zero.
 
     The error INVALID_ENUM is generated if CheckFramebufferStatusEXT is
     called and <target> is not FRAMEBUFFER_EXT.
@@ -7292,6 +7295,9 @@ Issues
          violated.
 
 Revision History
+    #120, April 22, 2008: Jeremy Sandmel & Jon Leech
+        - Update errors section so detaching renderbuffers and textures
+          using object name zero is not an error.
     #119, February 13, 2007: Jon Leech
         - Corrected typos in 'GenerateMipmap'.
     #118, April 5, 2006:  jjuliano
