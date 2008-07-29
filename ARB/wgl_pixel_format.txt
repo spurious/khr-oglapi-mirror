@@ -8,7 +8,8 @@ Name Strings
 
 Contact
 
-    Paula Womack, NVIDIA, pwomack 'at' nvidia.com
+    Pat Brown, NVIDIA (pbrown 'at' nvidia.com)
+    Paula Womack
 
 Status
 
@@ -16,8 +17,8 @@ Status
 
 Version
 
-    Last Modified Date: March 12, 2002
-    Author Revision: 1.1
+    Last Modified Date: July 29, 2008
+    Author Revision: 1.2
 
 Number
 
@@ -703,4 +704,7 @@ Changes from EXT_pixel_format:
    * Add dependency on WGL_ARB_extensions_string
 
     03/12/2002  1.1
+        - Updated contact information.
+
+    07/29/2008  1.2
         - Updated contact information.

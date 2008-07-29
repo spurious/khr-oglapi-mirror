@@ -22,8 +22,8 @@ Status
 
 Version 
 
-    Last Modified Date:         9/27/07 
-    Revision:                   6
+    Last Modified Date:         4/17/08
+    Revision:                   7
 
 Number 
 
@@ -126,8 +126,8 @@ Additions to the AGL/GLX/WGL Specifications
 
 GLX Protocol 
 
-    Four new GL commands are added.  The following commands are sent to the 
-    server as part of a glXRender request: 
+    Two new GL commands are added.  The following commands are sent to the
+    server as part of a glXRender request:
 
         ProgramEnvParameters4fvEXT 
             2           16+16*n         rendering command length 
@@ -206,6 +206,9 @@ Revision History
 
     Rev.    Date    Author    Changes 
     ----  --------  --------  -------------------------------------------- 
+    7     04/17/08  pbrown    Fix GLX protocol section to indicate two
+                              functions instead of four.
+
     6     09/27/07  pbrown    Change the spec to indicate that it's not
                               illegal to load zero parameters, just
                               pointless.

@@ -19,8 +19,8 @@ Status
 
 Version
 
-    Last Modified Date:         04/04/2008
-    Author revision:            13
+    Last Modified Date:         07/29/2008
+    Author revision:            14
 
 Number
 
@@ -582,97 +582,116 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
     PROXY_TEXTURE_RECTANGLE_ARB. Using this format in conjunction with any
     other target will result in an INVALID_OPERATION error.
 
+
+    Delete Section 3.8.7, Texture Wrap Modes.  (The language in this section
+    is folded into updates to the following section, and is no longer needed
+    here.)
+
+
     Modify Section 3.8.8, Texture Minification:
 
     (replace the last paragraph, p. 171):  Let s(x,y) be the function that
     associates an s texture coordinate with each set of window coordinates
     (x,y) that lie within a primitive; define t(x,y) and r(x,y) analogously.
-
     Let
 
-          u(x,y) = w_t * s(x,y)
-          v(x,y) = h_t * t(x,y)    (3.20a)
-          w(x,y) = d_t * r(x,y)
+      u(x,y) = w_t * s(x,y) + offsetu_shader,
+      v(x,y) = h_t * t(x,y) + offsetv_shader, 
+      w(x,y) = d_t * r(x,y) + offsetw_shader, and
 
     where w_t, h_t, and d_t are as defined by equations 3.15, 3.16, and 3.17
     with w_s, h_s, and d_s equal to the width, height, and depth of the image
-    array whose level is level_base. For a one-dimensional texture, define
-    v(x,y) == 0 and w(x,y) == 0; for two-dimensional textures, define w(x,y)
-    == 0.
+    array whose level is level_base.  (offsetu_shader, offsetv_shader,
+    offsetw_shader) is the texel offset specified in the OpenGL Shading
+    Language texture lookup functions that support offsets. If the texture
+    function used does not support offsets, or for fixed-function texture
+    accesses, all three shader offsets are taken to be zero.  For
+    fixed-function texture accesses, all three shader offsets are taken to be
+    zero.  For a one-dimensional texture, define v(x,y) == 0 and w(x,y) === 0;
+    for two-dimensional textures, define w(x,y) == 0.
+
+    After u(x,y), v(x,y), and w(x,y) are generated, they are clamped if the
+    corresponding texture wrap modes are CLAMP or MIRROR_CLAMP_EXT.  Let
+
+      u'(x,y) = clamp(u(x,y), 0, w_t),      if TEXTURE_WRAP_S is CLAMP
+                clamp(u(x,y), -w_t, w_t),   if TEXTURE_WRAP_S is
+                                              MIRROR_CLAMP_EXT, or
+                u(x,y),                     otherwise
+      v'(x,y) = clamp(v(x,y), 0, w_t),      if TEXTURE_WRAP_T is CLAMP
+                clamp(v(x,y), -w_t, w_t),   if TEXTURE_WRAP_T is
+                                              MIRROR_CLAMP_EXT, or
+                v(x,y),                     otherwise
+      w'(x,y) = clamp(w(x,y), 0, w_t),      if TEXTURE_WRAP_R is CLAMP
+                clamp(w(x,y), -w_t, w_t),   if TEXTURE_WRAP_R is
+                                              MIRROR_CLAMP_EXT, or
+                w(x,y),                     otherwise,
+
+    where clamp(<a>,<b>,<c>) returns <b> if <a> is less than <b>, <c> if a is
+    greater than <c>, and <a> otherwise.
 
     (start a new paragraph with "For a polygon, rho is given at a fragment
     with window coordinates...", and then continue with the original spec
     text.)
 
-    (replace text starting with the last paragraph on p. 172,
-    continuing to the end of p. 174)
-
-    The (u,v,w) coordinates are then modified, as follows:
-
-          u'(x,y) = u(x,y) + offsetu_shader,
-          v'(x,y) = v(x,y) + offsetv_shader,
-          w'(x,y) = w(x,y) + offsetw_shader
-
-    where (offsetu_shader, offsetv_shader, offsetw_shader) is the texel offset
-    specified in the OpenGL Shading Language texture lookup functions that
-    support offsets. If the texture function used does not support offsets, or
-    for fixed-function texture accesses, all three shader offsets are taken to
-    be zero.
-
-    The (u',v',w') coordinates are then further modified according the texture
-    wrap modes, as specified in Table X.19, to generate a new set of
-    coordinates (u'',v'',w'').
-
-      TEXTURE_WRAP_S              Coordinate Transformation
-      --------------------------  ---------------------------------------
-      CLAMP                       u'' = clamp(u', 0, w_t-0.5),
-                                         if NEAREST filtering,
-                                        clamp(u', 0, w_t),
-                                         otherwise
-      CLAMP_TO_EDGE               u'' = clamp(u', 0.5, w_t-0.5)
-      CLAMP_TO_BORDER             u'' = clamp(u', -0.5, w_t+0.5)
-      REPEAT                      u'' = clamp(fmod(u', w_t), 0.5, w_t-0.5)
-      MIRROR_CLAMP_EXT            u'' = clamp(fabs(u'), 0.5, w_t-0.5),
-                                         if NEAREST filtering, or
-                                      = clamp(fabs(u'), 0.5, w_t),
-                                         otherwise
-      MIRROR_CLAMP_TO_EDGE_EXT    u'' = clamp(fabs(u'), 0.5, w_t-0.5)
-      MIRROR_CLAMP_TO_BORDER_EXT  u'' = clamp(fabs(u'), 0.5, w_t+0.5)
-      MIRRORED_REPEAT             u'' = w_t -
-                                        clamp(fabs(w_t - fmod(u', 2*w_t)),
-                                             0.5, w_t-0.5)
-  
-      Table X.19:  Texel coordinate wrap mode application.  clamp(a,b,c)
-      returns b if a<b, c if a>c, and a otherwise.  fmod(a,b) returns a-
-      b*floor(a/b), and fabs(a) returns the absolute value of a.  For the v
-      and w coordinates, TEXTURE_WRAP_T and h_t, and TEXTURE_WRAP_R and d_t,
-      respectively, are used.
+    (replace text starting with the last paragraph on p. 172, continuing to
+    the end of p. 174)
 
     When lambda indicates minification, the value assigned to
     TEXTURE_MIN_FILTER is used to determine how the texture value for a
     fragment is selected.
 
-    When TEXTURE_MIN_FILTER is NEAREST the texel in the image array of level
-    level_base that is nearest (in Manhattan distance) to (u'',v'',w'') is
-    obtained. The coordinate (i,j,k) is then computed as (floor(u''),
-    floor(v''), floor(w'')).
+    When TEXTURE_MIN_FILTER is NEAREST, the texel in the image array of level
+    level_base that is nearest (in Manhattan distance) to that specified by
+    (s,t,r) is obtained.  Let i, j, and k be integers such that:
 
+      i = apply_wrap(floor(u'(x,y))),
+      j = apply_wrap(floor(v'(x,y))), and
+      k = apply_wrap(floor(w'(x,y))),
+
+    where the coordinate returned by apply_wrap() is as defined by Table X.19.
+    The values of i, j, and k are then modified according to the texture wrap
+    modes, as described in Table 3.19, to produce new values (i', j', and k').
     For a three-dimensional texture, the texel at location (i,j,k) becomes the
     texture value.  For a two-dimensional texture, k is irrelevant, and the
     texel at location (i,j) becomes the texture value.  For a one-dimensional
     texture, j and k are irrelevant, and the texel at location i becomes the
     texture value.
 
+      Wrap mode                   Result
+      --------------------------  ------------------------------------------
+      CLAMP_TO_EDGE               clamp(coord, 0, size-1)
+      CLAMP_TO_BORDER             clamp(coord, -1, size)
+      CLAMP                       { clamp(coord, 0, size-1), 
+                                  {         for NEAREST filtering
+                                  { clamp(coord, -1, size), 
+                                  {         for LINEAR filtering
+      REPEAT                      mod(coord, size)
+      MIRROR_CLAMP_TO_EDGE_EXT    clamp(mirror(coord), 0, size-1)
+      MIRROR_CLAMP_TO_BORDER_EXT  clamp(mirror(size), 0, size)
+      MIRROR_CLAMP_EXT            { clamp(mirror(coord), 0, size-1), 
+                                  {         for NEAREST filtering
+                                  { clamp(mirror(size), 0, size), 
+                                  {         for LINEAR filtering
+      MIRRORED_REPEAT             (size-1) - mirror(mod(coord, 2*size)-size)
+
+      Table X.19:  Texel location wrap mode application.  mod(<a>,<b>) is
+      defined to return <a>-<b>*floor(<a>/<b>), and mirror(<a>) is defined to
+      return <a> if <a> is greater than or equal to zero or -(1+<a>)
+      otherwise.  The values of "wrap mode" and size are TEXTURE_WRAP_S and
+      w_t, TEXTURE_WRAP_T and h_t, and TEXTURE_WRAP_R and d_t, for i, j, and k
+      coordinates, respectively.  The coordinate clamp and MIRROR_CLAMP_EXT
+      depends on the filtering mode (NEAREST or LINEAR).
+
     If the selected (i,j,k), (i,j), or i location refers to a border texel
     that satisfies any of the following conditions:
 
-          i < -b_s,
-          j < -b_s,
-          k < -b_s,
-          i >= w_l + b_s,
-          j >= h_l + b_s, or
-          j >= d_l + b_s,
-
+      i < -b_s,
+      j < -b_s, 
+      k < -b_s, 
+      i >= w_t + b_s, 
+      j >= h_t + b_s, or
+      j >= d_t + b_s,
+ 
     then the border values defined by TEXTURE_BORDER_COLOR are used in place
     of the non-existent texel. If the texture contains color components, the
     values of TEXTURE_BORDER_COLOR are interpreted as an RGBA color to match
@@ -683,15 +702,15 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
     When TEXTURE_MIN_FILTER is LINEAR, a 2x2x2 cube of texels in the image
     array of level level_base is selected.  Let:
 
-          i_0   = floor(u'' - 0.5),
-          j_0   = floor(v'' - 0.5),
-          k_0   = floor(w'' - 0.5),
-          i_1   = i_0 + 1,
-          j_1   = j_0 + 1,
-          k_1   = k_0 + 1,
-          alpha = frac(u'' - 0.5),
-          beta  = frac(v'' - 0.5), and
-          gamma = frac(w'' - 0.5),
+      i_0   = apply_wrap(floor(u' - 0.5)),
+      j_0   = apply_wrap(floor(v' - 0.5)),
+      k_0   = apply_wrap(floor(w' - 0.5)),
+      i_1   = apply_wrap(floor(u' - 0.5) + 1),
+      j_1   = apply_wrap(floor(v' - 0.5) + 1),
+      k_1   = apply_wrap(floor(w' - 0.5) + 1),
+      alpha = frac(u' - 0.5),
+      beta  = frac(v' - 0.5),
+      gamma = frac(w' - 0.5),
 
     where frac(<x>) denotes the fractional part of <x>.
 
@@ -700,19 +719,6 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
     (replace last paragraph, p.174) For any texel in the equation above that
     refers to a border texel outside the defined range of the image, the texel
     value is taken from the texture border color as with NEAREST filtering.
-
-    Rename section 3.8.9 "Texture Magnification" to section 3.8.8
-
-    modify the first paragraph of section 3.8.8 "Texture
-    Magnification" as follows:
-
-    When lambda indicates magnification, the value assigned to
-    TEXTURE_MAG_FILTER determines how the texture value is obtained. There are
-    two possible values for TEXTURE_MAG_FILTER: NEAREST and LINEAR.  NEAREST
-    behaves exactly as NEAREST for TEXTURE_MIN_FILTER and LINEAR behaves
-    exactly as LINEAR for TEXTURE_MIN_FILTER, as described in the previous
-    section, including the wrapping calculations. The level-of-detail
-    level_base texture array is always used for magnification.
 
     modify the last paragraph of section 3.8.8, p. 175, as follows:
 
@@ -731,6 +737,17 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
     (u', v', w') is computed as in equation 3.20a, with w_s, h_s, and d_s
     equal to the width, height, and depth of the image array whose level is
     'd2'.
+
+    Modify the first paragraph of section 3.8.9 "Texture Magnification" as
+    follows:
+
+    When lambda indicates magnification, the value assigned to
+    TEXTURE_MAG_FILTER determines how the texture value is obtained. There are
+    two possible values for TEXTURE_MAG_FILTER: NEAREST and LINEAR.  NEAREST
+    behaves exactly as NEAREST for TEXTURE_MIN_FILTER and LINEAR behaves
+    exactly as LINEAR for TEXTURE_MIN_FILTER, as described in the previous
+    section, including the wrapping calculations. The level-of-detail
+    level_base texture array is always used for magnification.
 
     Modify Section 3.8.14, Texture Comparison Modes (p. 185)
 
@@ -2272,6 +2289,10 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     14   07/29/08  pbrown    Discovered additional issues with texture wrap 
+                              handling, replaced with logic that applies wrap
+                              modes per sample.
+
      13   04/04/08  pbrown    Added issue 13, concerning the (non-)interaction
                               with ARB_shader_texture_lod.
 

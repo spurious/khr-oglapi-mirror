@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Date:         02/04/2008
-    NVIDIA Revision:            4
+    Last Modified Date:         07/29/2008
+    NVIDIA Revision:            7
 
 Number
 
@@ -1187,7 +1187,7 @@ Additions to Chapter 2 of the OpenGL 1.5 Specification (OpenGL Operation)
     variable accessed with relative addressing.
 
     Implementations may have a limit on the total number of attribute binding
-    components used by each program target (MAX_PROGRAM_ATTRIB_COMPONENTS).
+    components used by each program target (MAX_PROGRAM_ATTRIB_COMPONENTS_NV).
     Programs that use more attribute binding components than this limit will
     fail to load.  The method of counting used attribute binding components is
     implementation-dependent, but must satisfy the following properties:
@@ -2503,7 +2503,7 @@ Additions to Chapter 2 of the OpenGL 1.5 Specification (OpenGL Operation)
     The TXF instruction provides the ability to extract a single texel from a
     specified texture image using the function
     
-      result_t_vec TexelFetch(uint_vec coord, int_vec offset);
+      result_t_vec TexelFetch(int_vec coord, int_vec offset);
 
     The extracted texel is converted to an (R,G,B,A) vector according to Table
     3.21.  The result vector is interpreted as floating-point, signed integer,
@@ -3790,6 +3790,7 @@ Additions to Chapter 2 of the OpenGL 1.5 Specification (OpenGL Operation)
       result.x = tmp.x * axis.x - direction.x;
       result.y = tmp.x * axis.y - direction.y;
       result.z = tmp.x * axis.z - direction.z;
+      result.w = undefined;
 
     RFL supports only floating-point data type modifiers.
 
@@ -3872,6 +3873,8 @@ Additions to Chapter 2 of the OpenGL 1.5 Specification (OpenGL Operation)
       tmp = ScalarLoad(op0);
       result.x = ApproxCosine(tmp);
       result.y = ApproxSine(tmp);
+      result.z = undefined;
+      result.w = undefined;
 
     If the scalar operand is not in the range [-PI,PI], the result vector is
     undefined.
@@ -4565,6 +4568,7 @@ Additions to Chapter 2 of the OpenGL 1.5 Specification (OpenGL Operation)
       result.x = tmp0.y * tmp1.z - tmp0.z * tmp1.y;
       result.y = tmp0.z * tmp1.x - tmp0.x * tmp1.z;
       result.z = tmp0.x * tmp1.y - tmp0.y * tmp1.x;
+      result.w = undefined;
 
     XPD supports only floating-point data type modifiers.
 
@@ -4610,6 +4614,25 @@ Additions to Chapter 3 of the OpenGL 1.5 Specification (Rasterization)
     zero.  For a one-dimensional texture, define v(x,y) == 0 and w(x,y) === 0;
     for two-dimensional textures, define w(x,y) == 0.
 
+    After u(x,y), v(x,y), and w(x,y) are generated, they are clamped if the
+    corresponding texture wrap modes are CLAMP or MIRROR_CLAMP_EXT.  Let
+
+      u'(x,y) = clamp(u(x,y), 0, w_t),      if TEXTURE_WRAP_S is CLAMP
+                clamp(u(x,y), -w_t, w_t),   if TEXTURE_WRAP_S is
+                                              MIRROR_CLAMP_EXT, or
+                u(x,y),                     otherwise
+      v'(x,y) = clamp(v(x,y), 0, w_t),      if TEXTURE_WRAP_T is CLAMP
+                clamp(v(x,y), -w_t, w_t),   if TEXTURE_WRAP_T is
+                                              MIRROR_CLAMP_EXT, or
+                v(x,y),                     otherwise
+      w'(x,y) = clamp(w(x,y), 0, w_t),      if TEXTURE_WRAP_R is CLAMP
+                clamp(w(x,y), -w_t, w_t),   if TEXTURE_WRAP_R is
+                                              MIRROR_CLAMP_EXT, or
+                w(x,y),                     otherwise,
+
+    where clamp(<a>,<b>,<c>) returns <b> if <a> is less than <b>, <c> if a is
+    greater than <c>, and <a> otherwise.
+
     (start a new paragraph with "For a polygon, rho is given at a fragment
     with window coordinates...", and then continue with the original spec
     text.)
@@ -4617,45 +4640,51 @@ Additions to Chapter 3 of the OpenGL 1.5 Specification (Rasterization)
     (replace text starting with the last paragraph on p. 172, continuing to
     the end of p. 174)
 
-    The (u,v,w) coordinates are then modified according the texture wrap
-    modes, as specified in Table X.19, to generate a new set of coordinates
-    (u',v',w').
-
-      TEXTURE_WRAP_S              Coordinate Transformation
-      --------------------------  ------------------------------------------
-      CLAMP                       u' = clamp(u, 0, w_t-0.5),
-                                         if NEAREST filtering,
-                                       clamp(u, 0, w_t),
-                                         otherwise
-      CLAMP_TO_EDGE               u' = clamp(u, 0.5, w_t-0.5)
-      CLAMP_TO_BORDER             u' = clamp(u, -0.5, w_t+0.5)
-      REPEAT                      u' = clamp(fmod(u, w_t), 0.5, w_t-0.5)
-      MIRROR_CLAMP_EXT            u' = clamp(fabs(u), 0.5, w_t-0.5),
-                                         if NEAREST filtering, or
-                                     = clamp(fabs(u), 0.5, w_t),
-                                         otherwise
-      MIRROR_CLAMP_TO_EDGE_EXT    u' = clamp(fabs(u), 0.5, w_t-0.5)
-      MIRROR_CLAMP_TO_BORDER_EXT  u' = clamp(fabs(u), 0.5, w_t+0.5)
-      MIRRORED_REPEAT             u' = w_t - clamp(fabs(w_t - fmod(u, 2*w_t)),
-                                                   0.5, w_t-0.5),
-
-      Table X.19:  Texel coordinate wrap mode application.  clamp(a,b,c)
-      returns b if a<b, c if a>c, and a otherwise.  fmod(a,b) returns
-      a-b*floor(a/b), and fabs(a) returns the absolute value of a.  For the v
-      and w coordinates, TEXTURE_WRAP_T and h_t, and TEXTURE_WRAP_R and d_t,
-      respectively, are used.
-
     When lambda indicates minification, the value assigned to
     TEXTURE_MIN_FILTER is used to determine how the texture value for a
     fragment is selected.
 
     When TEXTURE_MIN_FILTER is NEAREST, the texel in the image array of level
     level_base that is nearest (in Manhattan distance) to that specified by
-    (s,t,r) is obtained.  For a three-dimensional texture, the texel at
-    location (i,j,k) becomes the texture value.  For a two-dimensional
-    texture, k is irrelevant, and the texel at location (i,j) becomes the
-    texture value.  For a one-dimensional texture, j and k are irrelevant, and
-    the texel at location i becomes the texture value.
+    (s,t,r) is obtained.  Let i, j, and k be integers such that:
+
+      i = apply_wrap(floor(u'(x,y))),
+      j = apply_wrap(floor(v'(x,y))), and
+      k = apply_wrap(floor(w'(x,y))),
+
+    where the coordinate returned by apply_wrap() is as defined by Table X.19.
+    The values of i, j, and k are then modified according to the texture wrap
+    modes, as described in Table 3.19, to produce new values (i', j', and k').
+    For a three-dimensional texture, the texel at location (i,j,k) becomes the
+    texture value.  For a two-dimensional texture, k is irrelevant, and the
+    texel at location (i,j) becomes the texture value.  For a one-dimensional
+    texture, j and k are irrelevant, and the texel at location i becomes the
+    texture value.
+
+      Wrap mode                   Result
+      --------------------------  ------------------------------------------
+      CLAMP_TO_EDGE               clamp(coord, 0, size-1)
+      CLAMP_TO_BORDER             clamp(coord, -1, size)
+      CLAMP                       { clamp(coord, 0, size-1), 
+                                  {         for NEAREST filtering
+                                  { clamp(coord, -1, size), 
+                                  {         for LINEAR filtering
+      REPEAT                      mod(coord, size)
+      MIRROR_CLAMP_TO_EDGE_EXT    clamp(mirror(coord), 0, size-1)
+      MIRROR_CLAMP_TO_BORDER_EXT  clamp(mirror(size), 0, size)
+      MIRROR_CLAMP_EXT            { clamp(mirror(coord), 0, size-1), 
+                                  {         for NEAREST filtering
+                                  { clamp(mirror(size), 0, size), 
+                                  {         for LINEAR filtering
+      MIRRORED_REPEAT             (size-1) - mirror(mod(coord, 2*size)-size)
+
+      Table X.19:  Texel location wrap mode application.  mod(<a>,<b>) is
+      defined to return <a>-<b>*floor(<a>/<b>), and mirror(<a>) is defined to
+      return <a> if <a> is greater than or equal to zero or -(1+<a>)
+      otherwise.  The values of "wrap mode" and size are TEXTURE_WRAP_S and
+      w_t, TEXTURE_WRAP_T and h_t, and TEXTURE_WRAP_R and d_t, for i, j, and k
+      coordinates, respectively.  The coordinate clamp and MIRROR_CLAMP_EXT
+      depends on the filtering mode (NEAREST or LINEAR).
 
     If the selected (i,j,k), (i,j), or i location refers to a border texel
     that satisfies any of the following conditions:
@@ -4663,26 +4692,26 @@ Additions to Chapter 3 of the OpenGL 1.5 Specification (Rasterization)
       i < -b_s,
       j < -b_s, 
       k < -b_s, 
-      i >= w_l + b_s, 
-      j >= h_l + b_s, or
-      j >= d_l + b_s,
+      i >= w_t + b_s, 
+      j >= h_t + b_s, or
+      j >= d_t + b_s,
  
     then the border values defined by TEXTURE_BORDER_COLOR are used in place
     of the non-existent texel. If the texture contains color components, the
     values of TEXTURE_BORDER_COLOR are interpreted as an RGBA color to match
-    the texture’s internal format in a manner consistent with table 3.15. If
+    the texture's internal format in a manner consistent with table 3.15. If
     the texture contains depth components, the first component of
     TEXTURE_BORDER_COLOR is interpreted as a depth value.
 
     When TEXTURE_MIN_FILTER is LINEAR, a 2x2x2 cube of texels in the image
     array of level level_base is selected.  Let:
 
-      i_0   = floor(u' - 0.5),
-      j_0   = floor(v' - 0.5),
-      k_0   = floor(w' - 0.5),
-      i_1   = i_0 + 1,
-      j_1   = j_0 + 1,
-      k_1   = k_0 + 1,
+      i_0   = apply_wrap(floor(u' - 0.5)),
+      j_0   = apply_wrap(floor(v' - 0.5)),
+      k_0   = apply_wrap(floor(w' - 0.5)),
+      i_1   = apply_wrap(floor(u' - 0.5) + 1),
+      j_1   = apply_wrap(floor(v' - 0.5) + 1),
+      k_1   = apply_wrap(floor(w' - 0.5) + 1),
       alpha = frac(u' - 0.5),
       beta  = frac(v' - 0.5),
       gamma = frac(w' - 0.5),
@@ -6024,11 +6053,39 @@ Issues
       Rather than provide a duplicate set of token names, we simply use the
       EXT version here.
 
+    (44) For the purposes of determining the number of attribute and result
+         components, how are "scalar" attributes counted.  For example, only
+         the x component of the "pointsize" per-vertex output is actually
+         relevant.
+
+      RESOLVED:  Implementations are allowed to count all inputs and outputs
+      as full four-component vectors.  To avoid this, apply appropriate write
+      masks or swizzles.
+
+      For example, writing to "result.pointsize" may count as four components.
+      Consistently writing to "result.pointsize.x" may only count as one.
+      Similarly, reading a fragment's fog coordinate as "fragment.fogcoord"
+      may count as four components; "fragment.fogcoord.x" will only count as
+      one.
 
 Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  --------------------------------------------
+     7    07/29/08  pbrown    Discovered additional issues with texture wrap 
+                              handling, replaced with logic that applies wrap
+                              modes per sample.  Add a few instruction
+                              pseudo-code lines explicitly identifying
+                              undefined components.
+
+     6    05/02/08  pbrown    Fix the prototype for the internal TexelFetch()
+                              function used in the spec language; texel
+                              coordinates are signed integers.
+                              
+     5    02/22/08  pbrown    Clarified that when counting attribute/result
+                              components, irrelevant/undefined components
+                              can still count against the limits.
+
      4    02/04/08  pbrown    Fix errors in texture wrap mode handling.
                               Added a missing clamp to avoid sampling border
                               in REPEAT mode.  Fixed incorrectly specified

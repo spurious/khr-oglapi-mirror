@@ -18,8 +18,8 @@ Status
 
 Version
 
-    Last Modified Date:         2/9/2007
-    NVIDIA Revision:            9
+    Last Modified Date:         7/9/2008
+    NVIDIA Revision:            10
 
 Number
 
@@ -296,11 +296,23 @@ Issues
         similar to the way that ColorMask() affects the per draw
         buffer write masks.
       
+    7.  What does DRAW_BUFFERi mean in the context of functions like
+    ColorMaskIndexedEXT?
+    
+        PROPOSED:  When DrawBuffersARB is called with a list of buffers 
+        to be used for MRT rendering, DRAW_BUFFERi implies an index into 
+        the list of buffers.  That is, DRAW_BUFFER0 refers to the zeroeth
+        buffer in the array passed to DrawBuffersARB (or any of the other
+        ways to specify multiple render targets).  MAX_DRAW_BUFFERS is
+        also to be understood in this context to mean the number of currently
+        active draw buffers.
 
 Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+    10    07/11/08  joburgess Added a clarification of ColorMaskIndexedEXT / DrawBuffersARB interaction.
+    
      9    02/09/07  pbrown    Updated status section (now released).
 
      8    10/23/06  pbrown    Fixed typo in the prototype for

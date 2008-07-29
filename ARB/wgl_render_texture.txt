@@ -266,7 +266,7 @@ Issues
     to distinguish between selecting RGB vs. RGBA textures? Additionally,
     how is this parameter defined for non texture buffers.
 
-    Resolved: In order to accomodate RGBA visuals to support RGB textures
+    Resolved: In order to accommodate RGBA visuals to support RGB textures
     (i.e. ignore alpha) and to allow the specification to be extensible
     for depth textures, WGL_TEXTURE_FORMAT_ARB is required in this
     specification. This parameter is defined as WGL_NO_TEXTURE_ARB for
@@ -604,7 +604,7 @@ Additions to the WGL Specification
         To set an attribute of a pbuffer call 
 
         BOOL wglSetPbufferAttribARB (HPBUFFERARB hPbuffer, 
-            const int *piAttribList); 
+                                     const int *piAttribList); 
 
         with <hPbuffer> set to a previously returned pbuffer handle. 
         <piAttribList> is a list of attribute {type, value} pairs containing
@@ -655,7 +655,7 @@ Additions to the WGL Specification
         To query an attribute associated with a specific pbuffer, call 
 
         BOOL wglQueryPbufferARB(HPBUFFERARB hPbuffer, int iAttribute, 
-            int *piValue); 
+                                int *piValue); 
 
         with <hPbuffer> set to a previously returned pbuffer handle. 
         <iAttribute> must be set to one of WGL_PBUFFER_WIDTH_ARB, 

@@ -19,8 +19,8 @@ Status
 
 Version
 
-    Last Modified Date:         04/04/2008
-    NVIDIA Revision:            19
+    Last Modified Date:         07/29/2008
+    NVIDIA Revision:            20
 
 Number
 
@@ -915,7 +915,7 @@ Operation)
     and render primitives to arbitrary layers computed at run time. For
     example, this mechanism can be used to project and render a scene onto all
     six faces of a cubemap texture in one pass. The layer to render to is
-    specified by writing to the built-in output variable gl_layer. Layered
+    specified by writing to the built-in output variable gl_Layer. Layered
     rendering requires the use of framebuffer objects. Refer to the section
     'Dependencies on EXT_framebuffer_object' for details.
 
@@ -2507,6 +2507,8 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     20   07/29/08  pbrown    Minor typo fix.
+
      19   04/04/08  pbrown    Changed MAX_GEOMETRY_TEXTURE_IMAGE_UNITS_EXT
                               minimum value to zero, to match discussion (from
                               aeddy).  Added separators to group pictures and 

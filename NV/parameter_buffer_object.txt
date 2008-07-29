@@ -4,7 +4,7 @@ Name
 
 Name Strings
 
-    None (impled by NV_GPU_program4)
+    None (implied by NV_GPU_program4)
 
 Contact
 

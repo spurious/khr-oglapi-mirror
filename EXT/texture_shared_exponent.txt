@@ -12,17 +12,18 @@ Contact
 
 Contributors
 
-    Pat Brown
+    Pat Brown, NVIDIA
     Jon Leech
+    Bruce Merry, ARM
 
 Status
 
-    Preliminary
+    Shipping
 
 Version
 
-    Date: February 6, 2007
-    Revision: 0.5
+    Date: July 18, 2008
+    Revision: 1.0
 
 Number
 
@@ -138,11 +139,12 @@ Additions to Chapter 3 of the 2.0 Specification (Rasterization)
     RGB components (ignoring the "Conversion to floating-point" section
     below in this case) as follows:
 
-       red   = p_red   * 2^(p_exp - B)
-       green = p_green * 2^(p_exp - B)
-       blue  = p_blue  * 2^(p_exp - B)
+       red   = p_red   * 2^(p_exp - B - N)
+       green = p_green * 2^(p_exp - B - N)
+       blue  = p_blue  * 2^(p_exp - B - N)
 
-    where B is 15."
+    where B is 15 (the exponent bias) and N is 9 (the number of mantissa
+    bits)."
 
  -- Section 3.8.1, Texture Image Specification:
 
@@ -159,23 +161,31 @@ Additions to Chapter 3 of the 2.0 Specification (Rasterization)
 
     where sharedexp_max is (2^N-1)/2^N * 2^(Emax-B), N is the number
     of mantissa bits per component, Emax is the maximum allowed biased
-    exponent value (careful: not necessarily 2^E-1 when E is the number
-    of exponent bits), bits, and B is the exponent bias.  For the
-    RGB9_E5_EXT format, N=9, Emax=30 (careful: not 31!), and B=15.
+    exponent value (careful: not necessarily 2^E-1 when E is the number of
+    exponent bits), bits, and B is the exponent bias.  For the RGB9_E5_EXT
+    format, N=9, Emax=31, and B=15.
 
     The largest clamped component, max_c, is determined:
 
         max_c = max(red_c, green_c, blue_c)
 
-    A shared exponent is computed:
+    A preliminary shared exponent is computed:
 
-        exp_shared = max(-B-1, floor(log2(max_c))) + 1 + B
+        exp_shared_p = max(-B-1, floor(log2(max_c))) + 1 + B
+
+    A refined shared exponent is then computed as:
+
+        max_s   = floor(max_c   / 2^(exp_shared_p - B - N) + 0.5)
+
+                     { exp_shared_p,    0 <= max_s <  2^N
+        exp_shared = {
+                     { exp_shared_p+1,       max_s == 2^N
 
     These integers values in the range 0 to 2^N-1 are then computed:
 
-        red_s   = floor(red_c   / 2^(exp_shared - B + N) + 0.5)
-        green_s = floor(green_c / 2^(exp_shared - B + N) + 0.5)
-        blue_s  = floor(blue_c  / 2^(exp_shared - B + N) + 0.5)
+        red_s   = floor(red_c   / 2^(exp_shared - B - N) + 0.5)
+        green_s = floor(green_c / 2^(exp_shared - B - N) + 0.5)
+        blue_s  = floor(blue_c  / 2^(exp_shared - B - N) + 0.5)
 
     Then red_s, green_s, and blue_s are stored along with exp_shared in
     the red, green, blue, and shared bits respectively of the texture
@@ -492,6 +502,15 @@ rgb9e5 float3_to_rgb9e5(const float rgb[3])
   /* This pow function could be replaced by a table. */
   denom = pow(2, exp_shared - RGB9E5_EXP_BIAS - RGB9E5_MANTISSA_BITS);
 
+  maxm = (int) floor(maxrgb / denom + 0.5);
+  if (maxm == MAX_RGB9E5_MANTISSA+1) {
+    denom *= 2;
+    exp_shared += 1;
+    assert(exp_shared <= RGB9E5_MAX_VALID_BIASED_EXP);
+  } else {
+    assert(maxm <= MAX_RGB9E5_MANTISSA);
+  }
+
   rm = (int) floor(rc / denom + 0.5);
   gm = (int) floor(gc / denom + 0.5);
   bm = (int) floor(bc / denom + 0.5);
@@ -630,9 +649,9 @@ Issues
         We've already discussed how the BIASED zero exponent is used to
         encode denorm values (and zero) with conventional floating-point
         formats.  The largest BIASED exponent (31 for s10e5, 127 for
-        s23e8) indicates Infinity and NaN values.  This means these two
-        extrema exponent values are "off limits" for run-of-the-mill
-        values.
+        s23e8) for conventional floating-point fomats indicates Infinity
+        and NaN values.  This means these two extrema exponent values are
+        "off limits" for run-of-the-mill values.
 
         The numbers corresponding to a shared exponent format value are:
 
@@ -814,4 +833,8 @@ Issues
 
 Revision History
 
-    None
+    Rev.    Date    Author    Changes
+    ----  --------  --------  --------------------------------------------
+    0.5   02/18/07  mjk       Initial public version
+    1.0   07/18/08  mjk       correct significant errors in spec language
+                              and C code

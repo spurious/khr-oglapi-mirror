@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Date:  November 6, 2006
-    Author Revision: 1.4
+    Last Modified Date:  May 9, 2008
+    Author Revision: 1.5
 
 Number
 
@@ -75,7 +75,7 @@ Additions to Chapter 2 of the OpenGL 2.0 Specification
         else {
             for (i = 0; i < primcount; i++) {
                 instanceID = i;
-                DrawArrays(mode, first, count, i);
+                DrawArrays(mode, first, count);
             }
             instanceID = 0;
         }
@@ -95,7 +95,7 @@ Additions to Chapter 2 of the OpenGL 2.0 Specification
         else {
             for (int i = 0; i < primcount; i++) {
                 instanceID = i;
-                DrawElements(mode, count, type, indices, i);
+                DrawElements(mode, count, type, indices);
             }
             instanceID = 0;
         }
@@ -151,4 +151,8 @@ Issues
 
 Revision History
 
-    None
+      Rev.    Date    Author    Changes
+      ----  --------  --------  -----------------------------------------
+      1.5   05/09/08  gold      Removed extraneous parameters to DrawArrays
+                                and DrawElements in chapter 2 pseudocode
+

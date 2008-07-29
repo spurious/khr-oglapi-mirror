@@ -18,8 +18,8 @@ Status
 
 Version
 
-    Last Modified Date:  November 10, 2006
-    Revision #7
+    Last Modified Date:  May 31, 2008
+    Revision #9
 
 Number
 
@@ -79,7 +79,7 @@ New Tokens
     Accepted by the <pname> parameter of GetIntegerv:
 
         MAX_MULTISAMPLE_COVERAGE_MODES_NV        0x8E11
-        MULITSAMPLE_COVERAGE_MODES_NV            0x8E12
+        MULTISAMPLE_COVERAGE_MODES_NV            0x8E12
 
 Additions to Chapter 2 of the OpenGL 2.0 Specification (OpenGL Operation)
 
@@ -186,7 +186,7 @@ Operations and the Frame Buffer)
 
     is equivalent to calling
 
-        RenderbufferStorageMultisamplesCoverageNv(target, samples, 0,
+        RenderbufferStorageMultisampleCoverageNV(target, samples, 0,
             internalforamt, width, height).
 
     Modification to 4.4.4.2 (Framebuffer Completeness)
@@ -261,7 +261,7 @@ New Implementation Dependent State
     MAX_MULTISAMPLE_COVERAGE_MODES_NV    Z+        GetIntegerv        0  Number of unique combinations of      4.4.2.1      -
                                                                          <coverageSamples> and <colorSamples>
                                                                          supported by the implementation.
-    MULITSAMPLE_COVERAGE_MODES_NV      n * 2 x Z+  GetIntegerv     -     MAX_MULTISAMPLE_COVEAGE_MODES_NV (n)  4.4.2.1      -
+    MULTISAMPLE_COVERAGE_MODES_NV      n * 2 x Z+  GetIntegerv     -     MAX_MULTISAMPLE_COVERAGE_MODES_NV (n)  4.4.2.1      -
                                                                          pairs of integers.  Each pair is
                                                                          a unique combination of 
                                                                          <coverageSamples> and <colorSamples>
@@ -316,9 +316,9 @@ Issues
          MAX_MULTISAMPLE_COVERAGE_MODES_NV.  The result is the number of
          unique combinations of <coverageSamples> and <colorSamples> that
          are supported by the implementation.  GetIntegerv can be used
-         with MULITSAMPLE_COVERAGE_MODES_NV to query these combinations.
+         with MULTISAMPLE_COVERAGE_MODES_NV to query these combinations.
          The integer array is populated with 
-         MAX_MULTISAMPLE_COVERAGE_MODES_NV paris of integers, where each
+         MAX_MULTISAMPLE_COVERAGE_MODES_NV pairs of integers, where each
          pair describes a unique multisample coverage mode.  The first
          integer in each pair is the number of coverage samples and the
          second integer is the number of color samples.  An example is
@@ -342,4 +342,8 @@ Issues
 
 Revision History
 
-    None
+    Rev.    Date    Author    Changes
+    ----  --------  --------  --------------------------------------------
+    7-9   05/31/08  mjk       Miscellaneous typo fixes.
+
+     6              mstrauss  Internal spec development.

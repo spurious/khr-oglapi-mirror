@@ -23,8 +23,8 @@ Status
 
 Version
 
-    Last Modified Date:         02/04/2008
-    NVIDIA Revision:            14
+    Last Modified Date:         02/20/2008
+    NVIDIA Revision:            15
 
 Number
 
@@ -1132,7 +1132,7 @@ New Implementation Dependent State
     ATTRIBS_NV                                               attributes or vayings that
                                                              can be captured in transform
                                                              feedback
-    MXFB_SEPARATE           Z+   GetIntegerv  16             Max number of components     2.Y       -
+    MXFB_SEPARATE           Z+   GetIntegerv  4              Max number of components     2.Y       -
     COMPONENTS_NV                                            per attribute or varying 
                                                              in separate mode
 
@@ -1469,6 +1469,10 @@ Revision History
 
       Rev.    Date    Author    Changes
       ----  --------  --------  -----------------------------------------
+       15   02/20/08  pbrown    Fix incorrect minimum for MAX_TRANSFORM_
+                                FEEDBACK_SEPARATE_COMPONENTS_NV.  Should be
+                                4, not 16.
+
        14   02/04/08  pbrown    Fixed a problem with the spec where we were
                                 unable to record "result.layer" using the
                                 assembly interface.  Added a new enum to 

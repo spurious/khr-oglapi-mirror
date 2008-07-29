@@ -26,8 +26,8 @@ Status
 
 Version
 
-    Last Modified Date:  05/16/2004
-    NVIDIA Revision:     32
+    Last Modified Date:  03/18/2008
+    NVIDIA Revision:     33
 
 Number
 
@@ -2560,7 +2560,7 @@ parameters.
       3. ClampApproxReciprocal(-INF) = -2^-64.
       4. ClampApproxReciprocal(+0.0) = +2^64.
       5. ClampApproxReciprocal(-0.0) = -2^64.
-      6. ClampApproxReciprocal(x) = +2^-64, if -2^64 < x < +INF.
+      6. ClampApproxReciprocal(x) = +2^-64, if +2^64 < x < +INF.
       7. ClampApproxReciprocal(x) = -2^-64, if -INF < x < -2^-64.
       8. ClampApproxReciprocal(x) = +2^64, if +0.0 < x < +2^-64.
       9. ClampApproxReciprocal(x) = -2^64, if -2^-64 < x < -0.0.
@@ -3428,6 +3428,9 @@ Revision History
 
     Rev.  Date      Author   Changes
     ----  --------  -------  --------------------------------------------
+    33    03/18/08  pbrown   Fixed incorrectly documented clamp in the RCC
+                             instruction.
+
     32    05/16/04  pbrown   Documented that it's not possible to results from
                              LG2 that are any more precise than what is
                              available in the fp32 storage format.

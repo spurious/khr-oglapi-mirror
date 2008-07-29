@@ -315,7 +315,7 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
     An element (i,j,k) of the texel array is called a texel (for a
     two-dimensional texture or one-dimensional array texture, k is irrelevant;
     for a one-dimensional texture, j and k are both irrelevant).  The texture
-    value used in texturing a fragment is determined by that fragment’s
+    value used in texturing a fragment is determined by that fragment's
     associated (s,t,r) coordinates, but may not correspond to any actual
     texel. See figure 3.10.
 

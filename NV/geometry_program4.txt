@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Date:         11/06/2006
-    NVIDIA Revision:            6
+    Last Modified Date:         07/29/2008
+    NVIDIA Revision:            10
 
 Number
 
@@ -511,7 +511,7 @@ Additions to Chapter 2 of the OpenGL 1.5 Specification (OpenGL Operation)
 
     Section 2.14.6.4, Geometry Program Output Limits
 
-    A geometry program may not emit an limited in the number of vertices per
+    A geometry program may not emit an unlimited number of vertices per
     invocation.  Each geometry program must declare a vertex limit, which is
     the maximum number of vertices that the program can ever produce.  The
     vertex limit is specified using the "VERTICES_OUT" declaration.  A
@@ -606,6 +606,7 @@ Additions to Chapter 2 of the OpenGL 1.5 Specification (OpenGL Operation)
     <attribBasic>           ::= <vtxPrefix> "position"
                               | <vtxPrefix> "fogcoord"
                               | <vtxPrefix> "pointsize"
+                              | <vtxPrefix> "id"
                               | <attribTexCoord> <optArrayMemAbs>
                               | <attribClip> <arrayMemAbs>
                               | <attribGeneric> <arrayMemAbs>
@@ -1347,6 +1348,12 @@ Dependencies on EXT_framebuffer_blit
     DRAW_FRAMEBUFFER_EXT or READ_FRAMEBUFFER_EXT, and that those functions
     set/query state for the draw framebuffer if <target> is FRAMEBUFFER_EXT.
 
+    If BlitFramebufferEXT() is called with a layered read framebuffer, pixel
+    values are obtained from layer zero from the read framebuffer.  If the
+    draw framebuffer is layered, pixel values are written to layer zero of the
+    draw framebuffer.  If both framebuffers are layered, the two-dimensional
+    blit operation is still performed only on layer zero.
+
 Dependencies on EXT_texture_array
 
     If EXT_texture_array is not supported, the discussion array textures the
@@ -1385,19 +1392,18 @@ Dependencies on NV_primitive_restart
 New State
                                                        Initial
     Get Value                  Type    Get Command      Value  Description            Sec.    Attribute
-    -------------------------  ----    -----------     ------- ---------------------- ------  ----------------
-    GEOMETRY_PROGRAM_NV         B      IsEnabled        FALSE  Geometry shader enable 2.14.6  enable/transform
-
-    FRAMEBUFFER_ATTACHMENT_    nxB     GetFramebuffer-  FALSE  Framebuffer attachment 4.4.2.3       -
+    -------------------------  ----    -----------     ------- ---------------------- ------  ---------
+    GEOMETRY_PROGRAM_NV         B      IsEnabled        FALSE  Geometry shader enable 2.14.6   enable
+    FRAMEBUFFER_ATTACHMENT_    nxB     GetFramebuffer-  FALSE  Framebuffer attachment 4.4.2.3    -
       LAYERED_EXT                      Attachment-             is layered
                                        ParameterivEXT
-    GEOMETRY_VERTICES_OUT_EXT   Z+     GetProgramivARB    0    vertex limit of the    2.14.6.4      -
+    GEOMETRY_VERTICES_OUT_EXT   Z+     GetProgramivARB    0    vertex limit of the    2.14.6.4   -
                                                                current geometry 
                                                                program
-    GEOMETRY_INPUT_TYPE_EXT     Z+     GetProgramivARB    0    input primitive type   2.14.6.4      -
+    GEOMETRY_INPUT_TYPE_EXT     Z+     GetProgramivARB    0    input primitive type   2.14.6.4   -
                                                                of the current geometry 
                                                                program
-    GEOMETRY_OUTPUT_TYPE_EXT    Z+     GetProgramivARB    0    output primitive type  2.14.6.4      -
+    GEOMETRY_OUTPUT_TYPE_EXT    Z+     GetProgramivARB    0    output primitive type  2.14.6.4   -
                                                                of the current geometry 
                                                                program
 
@@ -1901,7 +1907,39 @@ Issues
       we simply use the EXT versions here.  The tokens specific to assembly
       shader uses retain an NV suffix.
 
+    (25) What happens if you try to do a framebuffer blit (via
+        EXT_framebuffer_blit) to/from a layered framebuffer?
+
+      RESOLVED:  BlitFramebufferEXT() is a two-dimensional operation (only has
+      a width and height), so only reads/writes layer zero.  The framebuffer
+      blit operation is defined partially in terms of CopyPixels, which itself
+      is defined in terms of ReadPixels and DrawPixels.  This spec defines
+      both operations to use layer zero when a layered framebuffer is
+      involved.
+
+      It may be desirable to provide a three-dimensional framebuffer blit
+      operation or an explicit copy single-step operation between two
+      three-dimensional, cube map, or array textures.  That functionality is
+      left for a future extension or OpenGL version.
+
 
 Revision History
 
-    None
+    Rev.    Date    Author    Changes
+    ----  --------  --------  --------------------------------------------
+    10    07/29/08  pbrown    Clean up garbled language describing vertex
+                              output limits.
+
+     9    04/04/08  pbrown    Fixed error in the state tables; the geometry
+                              program enable should push/pop only with the
+                              enable bit like all the other program enables.
+
+     8    03/15/08  pbrown    Additional dependency on EXT_framebuffer_blit;
+                              blits to/from layered targets affect only
+                              layer zero.
+
+     7    03/07/08  pbrown    Fix grammar to allow vertex ID, as already 
+                              allowed in the rest of the spec body.
+
+     6              pbrown    Internal spec development.
+

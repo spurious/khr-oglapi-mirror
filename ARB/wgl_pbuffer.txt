@@ -8,8 +8,8 @@ Name Strings
 
 Contact
 
-    Dale Kirkland, 3Dlabs (dlkirkla 'at' 3dlabs.com)
-    Bimal Podder, Intel (bimal.poddar 'at' intel.com)
+    Dale Kirkland, NVIDIA (dkirkland 'at' nvidia.com)
+    Bimal Poddar, Intel (bimal.poddar 'at' intel.com)
     Steve Urquhart, Intelligraphics (steveu 'at' intelligraphics.com)
 
 Status
