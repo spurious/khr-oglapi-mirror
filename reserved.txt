@@ -120,6 +120,7 @@ Extension Numbers
 345		Graphic Remedy
 346-351		NVIDIA
 352		NVIDIA
+353		NVIDIA,S3,TransGaming,Blizzard
 
 GLU Enumerants
 ==============
