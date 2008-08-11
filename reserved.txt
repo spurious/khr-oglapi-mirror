@@ -156,7 +156,7 @@ Enumerateds (32 Bits)
 0x83F0	0x83FF	Intel
 0x8400	0x846F	SGI
 0x8470	0x848F	ATI
-0x8490	0x849F	Rendition	Acquired by Micron
+0x8490	0x849F	Rendition
 0x84A0	0x84BF	ATI
 0x84C0	0x84EF	OpenGL ARB
 0x84F0	0x855F	NVIDIA
@@ -169,7 +169,7 @@ Enumerateds (32 Bits)
 0x85E0	0x85FF	SGI
 0x8600	0x861F	SUN
 0x8620	0x867F	NVIDIA
-0x8680	0x869F	Pixelfusion	Out of business
+0x8680	0x869F	Pixelfusion
 0x86A0	0x86AF	OpenGL ARB
 0x86B0	0x86BF	3Dfx
 0x86C0	0x871F	NVIDIA
@@ -417,8 +417,8 @@ Khronos		Jon Leech	    jon 'at' alumni.caltech.edu (OpenML, OpenGL ES)
 3Dfx - same as NVIDIA (acquired)
 3Dlabs - no longer in the desktop graphics business. Mobile contact needed.
 ADD		Bruce Campbell	    baruch 'at' teckla.scuba.net - probably out of business
-ATI		Allen Gallotta	    alleng 'at' atitech.com
-ATI/NVIDIA	Bill Licea-Kane     bill 'at' ati.com
+ATI		Bill Licea-Kane     bill.licea-kane 'at' amd.com
+ATI/NVIDIA	Bill Licea-Kane     bill.licea-kane 'at' amd.com
 Apple		Bob Beretta	    beretta 'at' apple.com
 Compaq - same as HP (acquired)
 DEC - same as HP (acquired)
@@ -429,11 +429,13 @@ Imagination	Graham Connor	    gconnor 'at' videologic.com
 Intel		Bimal Poddar	    bimal.poddar 'at' intel.com
 Intense3D - same as 3Dlabs (acquired)
 Intergraph - same as 3Dlabs (spinoff of Intense3D)
+KPC (Kubota) - out of business
 Mesa		Brian Paul	    brianp 'at' mesa3d.org
 Micron		Shari Petersen	    sbpetersen 'at' micron.com
 Microsoft	Dave Aronson	    daronson 'at' microsoft.com
 NEC		Seiji Uchida	    uchida 'at' hpc.bs1.fc.nec.co.jp
 NVIDIA		Michael Gold	    gold 'at' nvidia.com
+PGI - acquired by Template Graphics Systems
 Pixelfusion - no longer in the graphics business
 Rendition - same as Micron (acquired)
 S3		Yanjun Zhang	    YanjunZhang@s3graphics.com
