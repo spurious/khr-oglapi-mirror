@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Date:         02/04/2008
-    Author revision:            6
+    Last Modified Date:         8/07/2008
+    Author revision:            7
 
 Number
 
@@ -856,7 +856,7 @@ New Implementation Dependent State
                                                     Minimum
     Get Value                     Type  Get Command  Value  Description         Sec.  Attribute
     ----------------------------  ----  ----------- ------- ------------------  ----- ---------
-    MAX_TEXTURE_ARRAY_LAYERS_EXT   Z+   GetIntegerv   64    maximum number of   3.8.1     -
+    MAX_ARRAY_TEXTURE_LAYERS_EXT   Z+   GetIntegerv   64    maximum number of   3.8.1     -
                                                             layers for texture
                                                             arrays
 
@@ -1228,6 +1228,9 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+      7   08/07/08  jleech    Corrected token MAX_TEXTURE_ARRAY_LAYERS_EXT in
+                              state table to MAX_ARRAY_TEXTURE_LAYERS_EXT.
+
       6   02/04/08  pbrown    Added a missing interaction with the VTC texture 
                               compression spec allowing updates of compressed
                               2D array textures along 4x4x1 boundaries (we

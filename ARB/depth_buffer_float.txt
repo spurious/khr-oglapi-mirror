@@ -1,32 +1,31 @@
 Name
 
-    NV_depth_buffer_float
+    ARB_depth_buffer_float
 
 Name Strings
 
-    GL_NV_depth_buffer_float
+    GL_ARB_depth_buffer_float
 
 Contributors
 
-    Pat Brown
-    Mike Strauss
+    Pierre Boudier
 
 Contact
 
-    Mike Strauss, NVIDIA Corporation (mstrauss 'at' nvidia.com)    
+    Pierre Boudier, AMD pierre.boudier 'at' amd.com)
 
 Status
 
-    Shipping for GeForce 8 Series (November 2006) 
+    Approved by the ARB on July 11, 2008
 
 Version
 
-    Last Modified Date:         08/06/2008
-    NVIDIA Revision:            9
+    Last Modified Date:         August 8, 2008
+    Revision:                   6
 
 Number
 
-    334
+    ARB Extension #43
 
 Dependencies
 
@@ -36,7 +35,7 @@ Dependencies
 
     EXT_packed_depth_stencil is required.
 
-    EXT_framebuffer_object is required.
+    ARB_framebuffer_object is required.
     
     This extension modifies EXT_depth_bounds_test.
 
@@ -54,11 +53,6 @@ Overview
     via EXT_framebuffer_object.  Floating-point depth textures can store
     values outside the range [0,1].
 
-    By default, OpenGL entry points taking depth values implicitly clamp the
-    values to the range [0,1].  This extension provides new DepthClear,
-    DepthRange, and DepthBoundsEXT entry points that allow applications to
-    specify depth values that are not clamped.
-
     Additionally, this extension provides new packed depth/stencil pixel
     formats (see EXT_packed_depth_stencil) that have 64-bit pixels consisting
     of a 32-bit floating-point depth value, 8 bits of stencil, and 24 unused
@@ -71,9 +65,7 @@ Overview
 
 New Procedures and Functions
 
-    void DepthRangedNV(double n, double f);
-    void ClearDepthdNV(double d);
-    void DepthBoundsdNV(double zmin, double zmax);
+    None
 
 New Tokens
 
@@ -82,19 +74,14 @@ New Tokens
     and returned in the <data> parameter of GetTexLevelParameter and
     GetRenderbufferParameterivEXT:
 
-        DEPTH_COMPONENT32F_NV                           0x8DAB
-        DEPTH32F_STENCIL8_NV                            0x8DAC
+        DEPTH_COMPONENT32F                              0x8CAC
+        DEPTH32F_STENCIL8                               0x8CAD
 
     Accepted by the <type> parameter of DrawPixels, ReadPixels, TexImage1D,
     TexImage2D, TexImage3D, TexSubImage1D, TexSubImage2D, TexSubImage3D, and
     GetTexImage:
 
-        FLOAT_32_UNSIGNED_INT_24_8_REV_NV               0x8DAD
-
-    Accepted by the <pname> parameters of GetBooleanv, GetIntegerv,
-    GetFloatv, and GetDoublev:
-
-        DEPTH_BUFFER_FLOAT_MODE_NV                      0x8DAF
+        FLOAT_32_UNSIGNED_INT_24_8_REV                  0x8DAD
 
 Additions to Chapter 2 of the OpenGL 2.0 Specification (OpenGL Operation)
 
@@ -104,7 +91,6 @@ Additions to Chapter 2 of the OpenGL 2.0 Specification (OpenGL Operation)
     encoded by n and f are set using
 
         void DepthRange(clampd n, clampd f);
-        void DepthRangedNV(double n, double f);
     
     z_w is represented as either fixed-point or floating-point
     depending on whether the framebuffer's depth buffer uses
@@ -113,9 +99,8 @@ Additions to Chapter 2 of the OpenGL 2.0 Specification (OpenGL Operation)
     used represents each value k/(2^m - 1), where k is in 
     {0,1,...,2^m-1}, as k (e.g. 1.0 is represented in binary as a 
     string of all ones).  The parameters n and f are clamped to [0, 1]
-    when using DepthRange, but not when using DepthRangedNV.  When n
-    and f are applied to z_d, they are clamped to the range appropriate
-    given the depth buffer's representation.
+    when using DepthRange.  When n  and f are applied to z_d, they are
+    clamped to the range appropriate given the depth buffer's representation.
 
 Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
 
@@ -153,16 +138,16 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
     depth values are always limited to the range [0, 1], either by 
     clamping after offset addition is performed (preferred), or by 
     clamping the vertex values used in the rasterization of the 
-    polygons.  Fragment depth values are not clamped when the depth 
+    polygons.  Fragment depth values are clamped when the depth
     buffer uses a floating-point representation.
 
 
     Add a row to table 3.5, p. 128
 
     type Parameter                       GL Type    Special
-    ------------------------------------------------
+    ------------------------------       -------    -------
     ...                                  ...        ...    
-    FLOAT_32_UNSIGNED_INT_24_8_REV_NV    N/A        Yes
+    FLOAT_32_UNSIGNED_INT_24_8_REV       N/A        Yes
     ...                                  ...        ...
 
 
@@ -174,7 +159,7 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
     then the error INVALID_OPERATION occurs.  If <type> is BITMAP and
     <format> is not COLOR_INDEX or STENCIL_INDEX then the error
     INVALID_ENUM occurs.  If <format> is DEPTH_STENCIL_EXT and <type>
-    is not UNSIGNED_INT_24_8_EXT or FLOAT_32_UNSIGNED_INT_24_8_REV_NV,
+    is not UNSIGNED_INT_24_8_EXT or FLOAT_32_UNSIGNED_INT_24_8_REV,
     then the error INVALID_ENUM occurs.  Some additional constraints 
     on the combinations of <format> and <type> values that are accepted
     are discussed below.
@@ -185,7 +170,7 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
     UNSIGNED_INT_24_8_EXT is a special case in which all the components 
     of each group are packed into a single unsigned byte, unsigned 
     short, or unsigned int, depending on the type.  If <type> is 
-    FLOAT_32_UNSIGNED_INT_24_8_REV_NV, the components of each group
+    FLOAT_32_UNSIGNED_INT_24_8_REV, the components of each group
     are two 32-bit words.  The first word contains the float component.
     The second word contains packed 24-bit and 8-bit components.
 
@@ -193,15 +178,15 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
     Add two rows to table 3.8, p. 132
 
     type Parameter                       GL Type  Components  Pixel Formats
-    ------------------------------------------------------------------
+    ------------------------------       -------  ----------  -------------
     ...                                  ...      ...         ...        
-    FLOAT_32_UNSIGNED_INT_24_8_REV_NV    N/A      2           DEPTH_STENCIL_EXT
+    FLOAT_32_UNSIGNED_INT_24_8_REV       N/A      2           DEPTH_STENCIL_EXT
     ...                                  ...      ...         ...
 
 
     Add a row to table 3.11, p. 134
 
-    FLOAT_32_UNSIGNED_INT_24_8_REV_NV:
+    FLOAT_32_UNSIGNED_INT_24_8_REV:
 
        31 30 29 28 ... 4 3 2 1 0    31 30 29 ... 9 8 7 6 5 ... 2 1 0
       +-------------------------+  +--------------------------------+
@@ -214,8 +199,8 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
     representation.  For fixed-point depth buffers, the element is first
     clamped to [0, 1] and then converted to fixed-point as if it were a
     window z value (see section 2.11.1, Controling the Viewport).  
-    Clamping and conversion are not necessary when the depth buffer uses
-    a floating-point representation.
+    Conversion is not necessary when the depth buffer uses
+    a floating-point representation, but clamping is.
 
 
     Modify Section 3.8.1 (Texture Image Specification), p. 150
@@ -224,10 +209,9 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
     ARB_color_buffer_float) The selected groups are processed exactly 
     as for DrawPixels, stopping just before final conversion.  Each R,
     G, B, A, or depth value so generated is clamped based on the 
-    component type in the <internalFormat>.  Fixed-point components 
-    are clamped to [0, 1].  Floating-point components are clamped to 
-    the limits of the range representable by their format.  32-bit 
-    floating-point components are in the standard IEEE float format.  
+    component type in the <internalFormat>.  Fixed-point and Floating-point
+    components are clamped to [0, 1].
+    32-bit floating-point components are in the standard IEEE float format.
     16-bit floating-point components have 1 sign bit, 5 exponent bits,
     and 10 mantissa bits.  Stencil index values are masked by 2^n-1 
     where n is the number of stencil bits in the internal format 
@@ -240,10 +224,10 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
 
     Sized                   Base               R    G    B    A    L    I    D    S
     Internal Format         InternalFormat    bits bits bits bits bits bits bits bits
-    ------------------------------------------------------------------------------
+    ------------------      ----------------- ---- ---- ---- ---- ---- ---- ---- ----
     ...                     ...               ...  ...  ...  ...  ...  ...  ...  ...
-    DEPTH_COMPONENT32F_NV   DEPTH_COMPONENT                                 f32
-    DEPTH32F_STENCIL8_NV    DEPTH_STENCIL_EXT                               f32  8
+    DEPTH_COMPONENT32F      DEPTH_COMPONENT                                 f32
+    DEPTH32F_STENCIL8       DEPTH_STENCIL_EXT                               f32  8
     ...                     ...               ...  ...  ...  ...  ...  ...  ...  ...
 
 
@@ -252,9 +236,8 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
     (modify second paragraph of "Depth Texture Comparison Mode," p.
     188) Let D_t be the depth texture value, and R be the interpolated 
     texture coordinate.  If the texture's internal format indicates a 
-    fixed-point depth texture, then D_t and R are clamped to [0, 1], 
-    otherwise no clamping is performed.  The effective texture value 
-    L_t, I_t, or A_t is computed as follows:    
+    depth texture, then D_t and R are clamped to [0, 1]. The effective
+    texture value L_t, I_t, or A_t is computed as follows:
 
 
     Modify Section 3.11.2 (Shader Execution), p. 194
@@ -271,9 +254,8 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
     data values are not modified.  For fixed-point depth buffers the 
     final fragment depth written by a fragment shader is first clamped
     to [0, 1] and then converted to fixed-point as if it were a window
-    z value (see section 2.11.1).  Clamping and conversion are not 
-    applied for floating-point depth buffers.  Note that the depth
-    range computation is not applied here.
+    z value (see section 2.11.1).  Conversion is not applied for floating-point
+    depth buffers.  Note that the depth range computation is not applied here.
 
 
 Additions to Chapter 4 of the OpenGL 2.0 Specification (Per-Fragment
@@ -296,15 +278,13 @@ Operations and the Frame Buffer)
     The functions
 
         void ClearDepth(clampd d);
-        void ClearDepthdNV(double d);
 
     are used to set the depth value used when clearing the depth buffer.
     ClearDepth takes a floating-point value that is clamped to the range
-    [0, 1].  ClearDepthdNV takes a floating-point value that is not
-    clamped.  When clearing a fixed-point depth buffer, the depth clear
+    [0, 1].  When clearing a fixed-point depth buffer, the depth clear
     value is clamped to the range [0, 1], and converted to fixed-point
     according to the rules for a window z value given in section 2.11.1.
-    No clamping or conversion are applied when clearing a floating-point
+    No conversion are applied when clearing a floating-point
     depth buffer.
 
     Modify Section 4.3.1 (Writing to the Stencil Buffer), p. 218
@@ -314,8 +294,8 @@ Operations and the Frame Buffer)
     both the depth buffer and the stencil buffer.  If there is no depth
     buffer or if there is no stencil buffer, then the error
     INVALID_OPERATION occurs.  If the <type> parameter is not
-    UNSIGNED_INT_24_8_EXT, or FLOAT_32_UNSIGNED_INT_24_8_REV_NV then the
-    error INVALID_ENUM occurs.
+    UNSIGNED_INT_24_8_EXT, or FLOAT_32_UNSIGNED_INT_24_8_REV then
+    the error INVALID_ENUM occurs.
 
 
     Modify Section 4.3.2 (Reading Pixels), p. 219
@@ -334,17 +314,17 @@ Operations and the Frame Buffer)
     Add a row to table 4.6, p. 223
 
       type Parameter                      Index Mask
-      ----------------------------------------------
+      ------------------------------      ----------
       ...                                 ...      
-      FLOAT_32_UNSIGNED_INT_24_8_REV_NV   2^8-1
+      FLOAT_32_UNSIGNED_INT_24_8_REV      2^8-1
 
 
     Add a row to table 4.7, p. 224
 
     type Parameter                       GL Type  Component Conversion
-    ------------------------------------------------------------------
-    ...                                   ...      ...
-    FLOAT_32_UNSIGNED_INT_24_8_REV_NV     float    c = f (depth only)
+    ------------------------------       -------  --------------------
+    ...                                  ...      ...
+    FLOAT_32_UNSIGNED_INT_24_8_REV       float    c = f (depth only)
 
 
 Additions to Chapter 5 of the OpenGL 2.0 Specification (Special Functions)
@@ -379,15 +359,6 @@ State Requests)
     DEPTH_CLEAR_VALUE  R   GetFloatv    1    Depth buffer clear value 4.2.3 depth-buffer
 
 
-    Add DEPTH_BUFFER_FLOAT_MODE entry to table 6.32 (Implementation Dependent Values) p. 293
-
-                                             Init
-    Get Value               Type Get Command Value Description                 Sec  Attribute
-    ----------------------- ---- ----------- ----  --------------------------- ---- ------------
-    DEPTH_BUFFER_FLOAT_MODE B    GetBooleanv  -    True if depth buffer uses a  4     -
-                                                   floating-point represnetation
-
-
 Additions to Appendix A of the OpenGL 2.0 Specification (Invariance)
 
     None.
@@ -410,15 +381,13 @@ Dependencies on EXT_depth_bounds_test:
     (modify first paragraph) ...These values are set with
 
         void DepthBoundsEXT(clampd zmin, clampd zmax);
-        void DepthBoundsdNV(double zmin, double zmax);
 
     The paramerters to DepthBoundsEXT are clamped to the range [0, 1].
-    No clamping is applied to the parameters of DepthBoundsdNV.  Each
-    of zmin and zmax are subject to clamping to the range of the depth 
+    Each of zmin and zmax are subject to clamping to the range of the depth
     buffer at the time the depth bounds test is applied.  For 
     fixed-point depth buffers, the applied zmin and zmax are clamped to
     [0, 1].  For floating-point depth buffers, the applied zmin and 
-    zmax are unmodified.  If zmin <= Zpixel <= zmax, then the depth 
+    zmax are clamped to [0, 1]. If zmin <= Zpixel <= zmax, then the depth
     bounds test passes.  Otherwise, the test fails and the fragment is
     discarded.  The test is enabled or disabled using Enable or Disable 
     using the constant DEPTH_BOUNDS_TEST_EXT.  When disabled, it is as 
@@ -433,20 +402,20 @@ Errors
 
     Modify the following error in the EXT_packed_depth_stencil
     specification by adding mention of 
-    FLOAT_32_UNSIGNED_INT_24_8_REV_NV:
+    FLOAT_32_UNSIGNED_INT_24_8_REV:
 
     The error INVALID_ENUM is generated if DrawPixels or ReadPixels is
     called where format is DEPTH_STENCIL_EXT and type is not
-    UNSIGNED_INT_24_8_EXT, or FLOAT_32_UNSIGNED_INT_24_8_REV_NV.
+    UNSIGNED_INT_24_8_EXT, or FLOAT_32_UNSIGNED_INT_24_8_REV.
 
 
     Modify the following error in the EXT_packed_depth_stencil
     specification by adding mention of 
-    FLOAT_32_UNSIGNED_INT_24_8_REV_NV:
+    FLOAT_32_UNSIGNED_INT_24_8_REV:
 
     The error INVALID_OPERATION is generated if DrawPixels or 
     ReadPixels is called where type is UNSIGNED_INT_24_8_EXT, 
-    or FLOAT_32_UNSIGNED_INT_24_8_REV_NV and format is not 
+    or FLOAT_32_UNSIGNED_INT_24_8_REV and format is not
     DEPTH_STENCIL_EXT.
 
 
@@ -454,7 +423,7 @@ Errors
     specification:
 
     The error INVALID_OPERATION is generated if CopyPixels is called
-    where type is DEPTH_STENCIL_TO_RGBA_NV or DEPTH_STENCL_TO_BGRA_NV
+    where type is DEPTH_STENCIL_TO_RGBA_EXT or DEPTH_STENCL_TO_BGRA_EXT
     and the depth buffer uses a floating point representation.
 
 New State
@@ -472,15 +441,18 @@ Issues
     2.  How does an application access the full range of a floating-point
         depth buffer?
 
-        RESOLVED:  New functions have been introduced that set existing GL
-        state without clamping to the range [0, 1].  These functions are
-        DepthRangedNV, ClearDepthdNV, and DepthBoundsdNV.
+        RESOLVED:  This will be a different extension
 
     3.  Should we add a new state query to determine if the depth buffer is
         using a floating-point representation?
 
-        RESOLVED: Yes.  An application can query DEPTH_FLOAT_MODE_NV to see
-        if the depth buffer is using a floating-point representation.
+        RESOLVED: No. The old EXT version of this extension had
+        DEPTH_BUFFER_FLOAT_MODE_EXT boolean state to see if the depth
+        buffer is using a floating-point representation, but in this ARB
+        extension we rely on the GetFramebufferAttachmentiv query
+        FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE query introduced with
+        ARB_framebuffer_object and OpenGL 3.0.
+
 
     4.  How does polygon offset work with floating-point depth buffers?
 
@@ -504,10 +476,10 @@ Issues
         RESOLVED:  It isn't clear that there is any usefulness to copying the
         data for 32-bit floating-point depth values to a fixed-point color
         buffer.  It is even less clear how copying packed data from a
-        FLOAT_32_UNSIGNED_24_8_REV_NV depth/stencil buffer to a fixed-point color
+        FLOAT_32_UNSIGNED_24_8_REV depth/stencil buffer to a fixed-point color
         buffer would be useful or even how it should be implemented.  An error
         should be generated if CopyPixels is called where <type> is
-        DEPTH_STENCIL_TO_RGBA_NV or DEPTH_STENCIL_TO_BGRA and the depth buffer
+        DEPTH_STENCIL_TO_RGBA_EXT or DEPTH_STENCIL_TO_BGRA and the depth buffer
         uses a floating-point representation.
 
     6. Other OpenGL hardware implementations may be capable of supporting
@@ -528,14 +500,35 @@ Issues
         thought of as taking the capability of the EXT version and extending
         it to support Z values outside the range [0,1].
 
+    7. Why don't the new tokens and entry points in this extension have
+       "ARB" suffixes like other ARB extensions?
+
+        RESOLVED: Unlike most ARB extensions, this is a strict subset of
+        functionality already approved in OpenGL 3.0. This extension
+        exists only to support that functionality on older hardware that
+        cannot implement a full OpenGL 3.0 driver. Since there are no
+        possible behavior changes between the ARB extension and core
+        features, source code compatibility is improved by not using
+        suffixes on the extension.
+
 Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
-     9    08/06/08  jleech    Fix missing _REV in some token names.
+     6    08/08/08  Jon Leech Remove DEPTH_BUFFER_FLOAT_MODE query,
+                              update issue 3 accordingly, and
+                              change dependency from EXT to
+                              ARB_framebuffer_object / GL 3.0.
 
-     8    02/09/07  pbrown    Updated status section (now released).
+     5    08/07/08  Jon Leech Remove ARB suffixes.
 
-     7    10/11/06  pbrown    Rename the extension from EXT to NV.
+     4    08/06/08  Jon Leech Fix missing _REV in some token names.
 
-     6                        Internal spec revisions.
+     3    07/11/08  Jon Leech Change NV enum values due to incompatible
+                              clamping behavior.
+
+     2	  06/30/08  jsandmel  Trivial conversion to ARB_depth_buffer_float
+     
+     1	  06/05/08  pboudier  Forked from NV_depth_buffer_float. Restore
+			      clamping to [0,1] and remove 'd' entry
+			      points. Change suffix from NV to EXT.

@@ -25,11 +25,12 @@ Status
 
 Version
 
-    Draft 0.5, September 24, 2004
+    Draft 0.6, August 7, 2008
 
 Number
 
-    309
+    OpenGL Extension #309
+    OpenGL ES Extension #49
 
 Dependencies
 
@@ -290,6 +291,8 @@ Appendix:
 
 Revision History
 
+    0.6,  08/07/08 jleech:  Assigned OpenGL ES extension number so the
+                            extension can live in both API registries.
     0.5,  09/24/04 njuffa:  Added contributors section. Changed name to
                             EXT_texture_compression_dxt1
     0.4,  09/23/04 njuffa:  Extension no longer specified as a delta to
