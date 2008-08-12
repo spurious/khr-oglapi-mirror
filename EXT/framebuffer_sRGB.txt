@@ -34,8 +34,8 @@ Status
 
 Version
 
-    Date: October 21, 2006
-    Revision: 1
+    Date: August 11, 2008
+    Revision: 2
 
 Number
 
@@ -286,7 +286,7 @@ New State
 
     Get Value                     Type  Get Command  Initial Value  Description           Sec.   Attribute
     ----------------------------  ----  -----------  -------------  --------------------  -----  ---------
-    FRAMEBUFFER_SRGB_CAPABLE_EXT  B     IsEnabled    -              true if drawable      4.1.X  -
+    FRAMEBUFFER_SRGB_CAPABLE_EXT  B     GetIntegerv  -              true if drawable      4.1.X  -
                                                                     supports sRGB update
                                                                     and blending
 
@@ -572,6 +572,8 @@ Revision History
 
         Rev.    Date    Author    Changes
         ----  --------  --------  -------------------------------------
+           2  08/11/08  mjk       Get Command: IsEnabled -> GetInteger
+                                  for FRAMEBUFFER_SRGB_CAPABLE_EXT
            1  10/21/06  barthold  Added revision history         
          0.4  10/20/06  mjk       Added issue 19
          0.3            mjk       Internal spec development.
