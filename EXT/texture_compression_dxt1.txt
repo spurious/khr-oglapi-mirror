@@ -21,11 +21,11 @@ Notice
 
 Status
 
-    DRAFT 
+    Shipping in an NVIDIA OpenGL ES 1.x implementation
 
 Version
 
-    Draft 0.6, August 7, 2008
+    1.0, August 12, 2008
 
 Number
 
@@ -291,6 +291,8 @@ Appendix:
 
 Revision History
 
+    1.0,  08/12/08 jleech:  Move out of draft status as NVIDIA has
+                            verified a shipping implementation.
     0.6,  08/07/08 jleech:  Assigned OpenGL ES extension number so the
                             extension can live in both API registries.
     0.5,  09/24/04 njuffa:  Added contributors section. Changed name to

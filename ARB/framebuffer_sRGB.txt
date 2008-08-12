@@ -11,9 +11,6 @@ Name Strings
 Contributors
 
     Herb (Charles) Kuta, Quantum3D
-
-    From the EXT_texture_sRGB specification...
-
     Alain Bouchard, Matrox
     Brian Paul, Tungsten Graphics
     Daniel Vogel, Epic Games
@@ -23,7 +20,8 @@ Contributors
     Pat Brown, NVIDIA
     Yanjun Zhang, S3 Graphics
     Jeremy Sandmel, Apple
-     
+    Jon Leech
+
 Contact
 
     Mark J. Kilgard, NVIDIA Corporation (mjk 'at' nvidia.com)
@@ -34,8 +32,8 @@ Status
 
 Version
 
-    Date: August 7, 2008
-    Revision: 1.1
+    Date: August 11, 2008
+    Revision: 1.2
 
 Number
 
@@ -43,7 +41,7 @@ Number
 
 Dependencies
 
-    OpenGL 1.1 required
+    OpenGL 1.1 is required
 
     This extension is written against the OpenGL 2.0 (September 7,
     2004) specification.
@@ -54,7 +52,7 @@ Dependencies
 
     ARB_color_buffer_float interacts with this extension.
 
-    ARB_framebuffer_object interacts with this extension.
+    ARB_framebuffer_object is required.
 
     EXT_texture_sRGB interacts with this extension.
 
@@ -115,11 +113,6 @@ New Tokens
 
         FRAMEBUFFER_SRGB                             0x8DB9
 
-    Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
-    GetFloatv, and GetDoublev:
-
-        FRAMEBUFFER_SRGB_CAPABLE                     0x8DBA
-
 Additions to Chapter 2 of the 2.0 Specification (OpenGL Operation)
 
     None
@@ -168,8 +161,10 @@ and the Frame Buffer)
 
     "Destination (framebuffer) components are taken to be fixed-point
     values represented according to the scheme in section 2.14.9 (Final
-    Color Processing).  If FRAMEBUFFER_SRGB is enabled and the boolean
-    FRAMEBUFFER_SRGB_CAPABLE state for the drawable is true, the R,
+    Color Processing).  If FRAMEBUFFER_SRGB is enabled and the value
+    of FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING for the framebuffer
+    attachment corresponding to the destination buffer is SRGB (see
+    section 6.1.3), the R
     G, and B destination color values (after conversion from fixed-point
     to floating-point) are considered to be encoded for the sRGB color
     space and hence need to be linearized prior to their use in blending.
@@ -182,19 +177,22 @@ and the Frame Buffer)
 
     where cs is the component value prior to linearization and cl is
     the result.  Otherwise if FRAMEBUFFER_SRGB is disabled, or the
-    drawable is not sRGB capable, or the value corresponds to the A
-    component, then cs = cl for such components.  The corresponding cs
-    values for R, G, B, and A are recombined as the destination color
-    used subsequently by blending."
+    value of FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING is not SRGB, no
+    linearization is performed.
+
+    The resulting linearized R, G, and B and unmodified A values are
+    recombined as the destination color used in blending computations.
+
 
     ADD new section 4.1.X "sRGB Conversion" after section 4.1.8 (Blending)
     and before section 4.1.9 (Dithering).  With this new section added,
     understand the "next operation" referred to in the section 4.1.8
     (Blending) to now be "sRGB Conversion" (instead of "Dithering").
 
-    "If FRAMEBUFFER_SRGB is enabled and the boolean
-    FRAMEBUFFER_SRGB_CAPABLE state for the drawable is true, the R,
-    G, and B values after blending are converted into the non-linear
+    "If FRAMEBUFFER_SRGB is enabled and the value of
+    FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING for the framebuffer attachment
+    corresponding to the destination buffer is SRGB (see section 6.1.3),
+    the R, G, and B values after blending are converted into the non-linear
     sRGB color space by some approximation of the following:
 
              {  0.0,                          0         <= cl
@@ -203,12 +201,15 @@ and the Frame Buffer)
              {  1.0,                                       cl >= 1
 
     where cl is the R, G, or B element and cs is the result
-    (effectively converted into an sRGB color space).  Otherwise if
-    FRAMEBUFFER_SRGB is disabled, or the drawable is not sRGB
-    capable, or the value corresponds to the A element, then cs = cl
-    for such elements.
+    (effectively converted into an sRGB color space).
 
-    The resulting cs values form a new RGBA color value.  If the color
+    If FRAMEBUFFER_SRGB is disabled or the value of
+    FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING is not SRGB, then
+
+        cs = cl
+
+    The resulting cs values for R, G, and B and the unmodified A form a
+    new RGBA color value. If the color
     buffer is fixed-point, the components of this RGBA color value are
     clamped to [0,1] and then converted to a fixed-point value in the
     manner described in section 2.14.9.  The resulting four values are
@@ -238,26 +239,24 @@ Dependencies on ARB_color_buffer_float
 Dependencies on EXT_texture_sRGB and ARB_framebuffer_object
 
     If EXT_texture_sRGB and ARB_framebuffer_object are both supported, the
-    implementation should set FRAMEBUFFER_SRGB_CAPABLE to false when
+    implementation should set the value of
+    FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING to LINEAR when
     rendering to a color texture that is not one of the EXT_texture_sRGB
-    introduced internal formats.  An implementation can determine whether
-    or not it will set FRAMEBUFFER_SRGB_CAPABLE to true for the
+    introduced internal formats. An implementation can determine whether
+    or not it will set the value of
+    FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING to SRGB for the
     EXT_texture_sRGB introduced internal formats.  Implementations are
     encouraged to allow sRGB update and blending when rendering to sRGB
     textures using ARB_framebuffer_object but this is not required.
-    In any case, FRAMEBUFFER_SRGB_CAPABLE should indicate whether
-    or not sRGB update and blending is supported.
+    In any case, FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING should indicate
+    whether or not sRGB update and blending is supported.
 
 Dependencies on ARB_draw_buffers, EXT_texture_sRGB, and ARB_framebuffer_object
 
-
     If ARB_draw_buffers, EXT_texture_sRGB, and ARB_framebuffer_object
-    are supported and an application attempts to render to a set
-    of color buffers where some but not all of the color buffers
-    are FRAMEBUFFER_SRGB_CAPABLE individually, the query of
-    FRAMEBUFFER_SRGB_CAPABLE should return true.
-
-    However sRGB update and blending only apply to the color buffers
+    are supported and an application attempts to render to a set of
+    color buffers where some but not all of the color buffers are SRGB
+    capable, sRGB update and blending only apply to the color buffers
     that are actually sRGB-capable.
 
 GLX Protocol
@@ -270,7 +269,7 @@ Errors
     ---------------------------------
 
     Enable, Disable, IsEnabled, GetBooleanv, GetIntegerv, GetFloatv,
-    and GetDoublev now accept the new token as allowed in the "New
+    and GetDoublev now accept FRAMEBUFFER_SRGB as allowed in the "New
     Tokens" section.
 
 New State
@@ -281,14 +280,6 @@ New State
     ----------------  ----  -----------  -------------  ---------------  -----  -------------------
     FRAMEBUFFER_SRGB  B     IsEnabled    False          sRGB update and  4.1.X  color-buffer/enable
                                                         blending enable
-
-    Add to table 6.33 (Implementation Dependent Values)
-
-    Get Value                 Type  Get Command  Initial Value  Description           Sec.   Attribute
-    ------------------------  ----  -----------  -------------  --------------------  -----  ---------
-    FRAMEBUFFER_SRGB_CAPABLE  B     IsEnabled    -              true if drawable      4.1.X  -
-                                                                supports sRGB update
-                                                                and blending
 
 New Implementation Dependent State
 
@@ -352,7 +343,7 @@ Issues
     4)  Should there be an enable for sRGB update and blending?
 
         RESOLVED:  Yes, and it is disabled by default.  The enable only
-        applies if the framebuffer's underlying pixel format is capable
+        applies if a destination buffer's pixel format is capable
         of sRGB update and blending.  Otherwise, the enable is silently
         ignored (similar to how the multisample enables are ignored when
         the pixel format lacks multisample supports).
@@ -371,21 +362,21 @@ Issues
         treated as linear color components.  Then the result of blending
         is converted to an sRGB encoding and stored in the framebuffer.
 
-    6)  What happens if GL_FRAMEBUFFER_SRGB is enabled (and
-        GL_FRAMEBUFFER_SRGB_CAPABLE is true for the drawable) but
+    6) What happens if GL_FRAMEBUFFER_SRGB is enabled (and
+        GL_FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING is GL_SRGB), but
         GL_BLEND is not enabled?
 
-        RESOLVED:  The color result from fragment coloring (the source
+        RESOLVED: The color result from fragment coloring (the source
         color) is converted to an sRGB encoding and stored in the
         framebuffer.
 
     7)  How are multiple render targets handled?
 
-        RESOLVED:  Render targets that are not
-        GL_FRAMEBUFFER_SRGB_CAPABLE ignore the state of the
-        GL_FRAMEBUFFER_SRGB enable for sRGB update and blending.
-        So only the render targets that are sRGB-capable perform sRGB
-        blending and update when GL_FRAMEBUFFER_SRGB is enabled.
+        RESOLVED: Render targets that are not sRGB-capable ignore the
+        state of the GL_FRAMEBUFFER_SRGB enable for sRGB update and
+        blending. Note that unlike EXT_framebuffer_sRGB, the
+        sRGB-capable query may be performed on a per-color-attachment
+        basis.
 
     8)  Should sRGB framebuffer support affect the pixel path?
 
@@ -470,15 +461,14 @@ Issues
 
     13) How does this extension interact with ARB_framebuffer_object?
 
-        RESOLVED:  When rendering to a color texture, an application
-        can query GL_FRAMEBUFFER_SRGB_CAPABLE to determine if the
-        color texture image is capable of sRGB rendering.
+        RESOLVED: ARB_framebuffer_object is required to provide the
+        GL_FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING query used to determine
+        if the color texture image is capable of sRGB rendering.
 
-        This boolean should be false for all texture internal formats
-        except may be true (but are not required to be true) for the sRGB
-        internal formats introduced by EXT_texture_sRGB.  The expectation
-        is that implementations of this extension will be able to support
-        sRGB update and blending of sRGB textures.
+        This query should be LINEAR for all texture internal formats
+        other than sRGB internal formats such as those introduced by
+        EXT_texture_sRGB. Implementations of this extension must be able
+        to support sRGB update and blending of sRGB textures.
 
     14) How is the constant blend color handled for sRGB framebuffers?
 
@@ -583,12 +573,25 @@ Issues
         extension, since those elements are not part of a new core GLX
         or WGL release yet.
 
+    21) Where's the specification language for the GLX and WGL pixel
+        format selection interface?
+
+        TO BE DONE. The {GLX,WGL}_FRAMEBUFFER_SRGB_CAPABLE_ARB pixel
+        format attributes are used to select default framebuffers which
+        are sRGB-capable in the fairly obvious way, but this language
+        was missing in the original EXT_framebuffer_sRGB and needs to be
+        added here.
+
 Revision History
 
         Rev.    Date    Author    Changes
         ----  --------  --------  -------------------------------------
+         1.2  08/11/08  jleech    Use per-FBO-attachment state for
+                                  sRGB-capable queries, rather then the
+                                  EXT's single boolean query for the
+                                  entire framebuffer.
          1.1  08/08/08  jleech    Remove ARB suffixes.
-           1  10/21/06  barthold  Added revision history         
+           1  10/21/06  barthold  Added revision history
          0.4  10/20/06  mjk       Added issue 19
          0.3            mjk       Internal spec development.
 
