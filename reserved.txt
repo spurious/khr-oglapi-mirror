@@ -121,6 +121,7 @@ Extension Numbers
 346-351		NVIDIA
 352		NVIDIA
 353		NVIDIA,S3,TransGaming,Blizzard
+354		NVIDIA,Aspyr,TransGaming,Blizzard
 
 GLU Enumerants
 ==============
@@ -145,7 +146,8 @@ Enumerateds (32 Bits)
 0x81D0	0x81DF	SUN
 0x81E0	0x81FF	SGI
 0x8200	0x820F	ATI (Microsoft released unused 0x8200-0x82AF range on 2002/9/16)
-    [0x8210-0x82AF unused]
+0x8210	0x823F	OpenGLARB
+    [0x8240-0x82AF unused]
 0x82B0	0x830F	ADD
 0x8310	0x832F	SGI
 0x8330	0x833F	SUN
@@ -208,6 +210,7 @@ Enumerateds (32 Bits)
 0x8EC0	0x8ECF	Vincent
 0x8ED0	0x8F4F	NVIDIA
 0x8F50	0x8F5F	3Dlabs (OpenGL ES)
+0x8F60	0x8F6F	ARM (OpenGL ES)
 100000	100999	GLU Library
 101000	101999	OpenGL ARB	Conformance Tests
 103000	103999	IBM
