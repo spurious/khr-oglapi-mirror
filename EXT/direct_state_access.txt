@@ -3616,7 +3616,7 @@ Issues
 
         Another way to measure the footprint of EXT_direct_state_access
         is in terms of the optimized compiled user-space driver
-        sthe ize (text+data) of a modern Windows XP OpenGL driver
+        the size (text+data) of a modern Windows XP OpenGL driver
         supporting EXT_direct_state_access compared to the same
         driver without EXT_direct_state_access supported compiled in.
         The EXT_direct_state_access driver is +2.5% larger.

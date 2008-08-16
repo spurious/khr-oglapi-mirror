@@ -21,8 +21,8 @@ Status
 
 Version
 
-    Last Modified Date: January 13, 2000
-    Author Revision: 0.2
+    Last Modified Date: June 22, 2000
+    Author Revision: 0.3
 
     Based on:  EXT_texture_env_add
                Date: 1999/03/22 Revision: 1.1
@@ -39,7 +39,7 @@ Overview
 
     New texture environment function ADD is supported with the following
     equation:
-                        Cv = Cf + Ct
+                        Cv = min(1, Cf + Ct)
 
     New function may be specified by calling TexEnv with ADD token.
 
@@ -82,29 +82,29 @@ Additions to Chapter 3 of the GL Specification (Rasterization)
                              ...        ...      Bv = Bf
                              ...        ...      Av = AfAt
 
-        LUMINANCE            ...        ...      Rv = Rf+Lt
-         (or 1)              ...        ...      Gv = Gf+Lt
-                             ...        ...      Bv = Bf+Lt
+        LUMINANCE            ...        ...      Rv = min(1, Rf+Lt)
+         (or 1)              ...        ...      Gv = min(1, Gf+Lt)
+                             ...        ...      Bv = min(1, Bf+Lt)
                              ...        ...      Av = Af
 
-        LUMINANCE_ALPHA      ...        ...      Rv = Rf+Lt
-         (or 2)              ...        ...      Gv = Gf+Lt
-                             ...        ...      Bv = Bf+Lt
+        LUMINANCE_ALPHA      ...        ...      Rv = min(1, Rf+Lt)
+         (or 2)              ...        ...      Gv = min(1, Gf+Lt)
+                             ...        ...      Bv = min(1, Bf+Lt)
                              ...        ...      Av = AfAt
 
-        INTENSITY            ...        ...      Rv = Rf+It
-                             ...        ...      Gv = Gf+It
-                             ...        ...      Bv = Bf+It
-                             ...        ...      Av = Af+It
+        INTENSITY            ...        ...      Rv = min(1, Rf+It)
+                             ...        ...      Gv = min(1, Gf+It)
+                             ...        ...      Bv = min(1, Bf+It)
+                             ...        ...      Av = min(1, Af+It)
 
-        RGB                  ...        ...      Rv = Rf+Rt
-        (or 3)               ...        ...      Gv = Gf+Gt
-                             ...        ...      Bv = Bf+Bt
+        RGB                  ...        ...      Rv = min(1, Rf+Rt)
+        (or 3)               ...        ...      Gv = min(1, Gf+Gt)
+                             ...        ...      Bv = min(1, Bf+Bt)
                              ...        ...      Av = Af
 
-        RGBA                 ...        ...      Rv = Rf+Rt
-        (or 4)               ...        ...      Gv = Gf+Gt
-                             ...        ...      Bv = Bf+Bt
+        RGBA                 ...        ...      Rv = min(1, Rf+Rt)
+        (or 4)               ...        ...      Gv = min(1, Gf+Gt)
+                             ...        ...      Bv = min(1, Bf+Bt)
                              ...        ...      Av = AfAt
 
 
@@ -158,3 +158,5 @@ Revision History
           to TexEnv{if} and TexEnv{if}v
         - Added change to TEXTURE_ENV_MODE type (Z4 -> Z5)
 
+    6/22/2000   0.3
+        - The addition should saturate to 1.
