@@ -109,13 +109,15 @@ Additions to Chapter 2 of the OpenGL 2.1 Specification (OpenGL Operation)
     such as DrawArrays and DrawElements; and all queries of vertex
     array state (see chapter 6).
 
-    BindVertexArray fails and an INVALID OPERATION error is generated if
+    BindVertexArray fails and an INVALID_OPERATION error is generated if
     array is not a name returned from a previous call to
     GenVertexArrays, or if such a name has since been deleted with
-    DeleteVertexArrays. Bug 3236 An INVALID OPERATION error is generated
+    DeleteVertexArrays. An INVALID_OPERATION error is generated
     if VertexAttribPointer or VertexAttribIPointer is called while a
-    non-zero vertex array object is bound and zero is bound to the ARRAY
-    BUFFER buffer object binding point 6 .
+    non-zero vertex array object is bound and zero is bound to the
+    ARRAY_BUFFER buffer object binding point[fn].
+	[fn: This error makes it impossible to create a vertex array
+              object containing client array pointers.]
 
 Additions to Chapter 3 of the OpenGL 2.1 Specification (Rasterization)
 
@@ -340,3 +342,5 @@ Revision History
                                  draft glspec30.20080708.1.pdf.
 
       8   08/07/2008  Jon Leech Remove ARB suffixes.
+
+      9   08/20/2008  Jon Leech Cleanup formatting errors.
