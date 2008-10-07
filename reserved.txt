@@ -122,6 +122,7 @@ Extension Numbers
 352		NVIDIA
 353		NVIDIA,S3,TransGaming,Blizzard
 354		NVIDIA,Aspyr,TransGaming,Blizzard
+355		NVIDIA
 
 GLU Enumerants
 ==============
