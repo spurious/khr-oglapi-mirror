@@ -17,8 +17,8 @@ Status
 
 Version
 
-    Last Modified Date:         04/18/2007
-    NVIDIA Revision:            7
+    Last Modified Date:         10/02/2007
+    NVIDIA Revision:            8
 
 Number
 
@@ -81,7 +81,7 @@ New Tokens
     Accepted by the <target> parameter of ProgramBufferParametersfvNV,
     ProgramBufferParametersIivNV, and ProgramBufferParametersIuivNV,
     BindBufferRangeNV, BindBufferOffsetNV, BindBufferBaseNV, and BindBuffer
-    and the <value> parameter of GetIntegerIndexedvEXT:
+    and the <value> parameter of GetIntegerv and GetIntegerIndexedvEXT:
 
       VERTEX_PROGRAM_PARAMETER_BUFFER_NV                0x8DA2
       GEOMETRY_PROGRAM_PARAMETER_BUFFER_NV              0x8DA3
@@ -370,6 +370,10 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     8    10/02/08  mjk       Fix New Tokens to note glGetIntegerv works
+                              for *_PROGRAM_PARAMETER_NV (matching the table);
+                              NVIDIA drivers before 180.00 fail to implement
+                              this get, later drivers do
      7    04/18/07  pbrown    Fixed state table to include the buffer
                               object binding array for each program type.
 
