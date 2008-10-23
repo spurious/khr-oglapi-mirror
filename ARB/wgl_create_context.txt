@@ -21,7 +21,7 @@ Status
 
 Version
 
-    August 10, 2008 (version 15)
+    August 21, 2008 (version 16)
 
 Number
 
@@ -228,12 +228,23 @@ Additions to the WGL specification
     (add to the description of wglMakeCurrent and
     wglMakeContextCurrentARB)
 
-    If the OpenGL context version of <hglrc> is 3.0 or above, and if
+   "If the OpenGL context version of <hglrc> is 3.0 or above, and if
     either the <hdc> parameter of wglMakeCurrent is NULL, or both of the
     <hDrawDC> and <hReadDC> parameters of wglMakeContextCurrentARB are
     NULL, then the context is made current, but with no default
     framebuffer defined. The effects of having no default framebuffer on
     the GL are defined in Chapter 4 of the OpenGL 3.0 Specification.
+
+    The first time <ctx> is made current, the viewport and scissor
+    dimensions are set to the size of the draw drawable (as though
+    glViewport(0,0,w,h) and glScissor(0,0,w,h) were called, where <w>
+    and <h> are the width and height of the drawable, respectively). If
+    the first time <ctx> is made current, it is without a default
+    framebuffer, then the viewport and scissor regions are set as though
+    glViewport(0,0,0,0) and glScissor(0,0,0,0) were called."
+    However, the viewport and scissor dimensions are not modified when
+    <ctx> is subsequently made current; it is the client's
+    responsibility to reset the viewport and scissor in this case."
 
     Sharing Objects Between Contexts
     --------------------------------
@@ -367,6 +378,10 @@ Issues
     Also see Bugzilla bugs 2940 and 3016.
 
 Revision History
+
+    Version 16, 2008/08/21 - Add initial viewport/scissor setting
+    behavior (cloned from GLX, including the case when no default
+    framebuffer is made current.
 
     Version 15, 2008/08/10 - Assign enumerant values and extension
     number.
