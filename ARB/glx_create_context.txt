@@ -20,11 +20,11 @@ Status
 
 Version
 
-    Version 5, 2008/10/22
+    Version 6, 2008/10/24
 
 Number
 
-    356
+    ARB Extension #56
 
 Dependencies
 
@@ -449,3 +449,6 @@ Revision History
 
     Version 5, 2008/10/22 - Mark as complete and assign extension number
     for the registry.
+
+    Version 6, 2008/10/24 - Renumber to ARB extension #55 - misplaced
+    into vendor extension numbering scheme at first.
