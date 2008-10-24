@@ -35,8 +35,8 @@ Status
 
 Version
 
-    Last Modified Date:         10/13/2008
-    Author revision:            23
+    Last Modified Date:         10/21/2008
+    Author revision:            24
 
 Number
 
@@ -584,8 +584,8 @@ New Procedures and Functions
 
     <OpenGL 1.2.1: New indexed generic queries (added for indexed texture
     state) append "Indexed" to name and add "uint index" parameter
-    (to identify the texture unit) after state name parameters (if any)
-    and before state value parameters>
+    (to identify the texture unit) after state name parameters (if any) and
+    before state value parameters>
 
         void GetFloatIndexedvEXT(enum pname, uint index, float *params);
         void GetDoubleIndexedvEXT(enum pname, uint index, double *params);
