@@ -213,6 +213,7 @@ Enumerateds (32 Bits)
 0x8ED0	0x8F4F	NVIDIA
 0x8F50	0x8F5F	3Dlabs (OpenGL ES)
 0x8F60	0x8F6F	ARM (OpenGL ES)
+0x8F70	0x8F7F	HI Corp (OpenGL ES)
 100000	100999	GLU Library
 101000	101999	OpenGL ARB	Conformance Tests
 103000	103999	IBM
@@ -224,11 +225,13 @@ Enumerateds (32 Bits)
 
 GLX Opcodes (8 bits)
 ====================
-     1	    15	GLX 1.0
-    16		Vendor Private
-    17		Vendor Private with Reply
-    18	    20	GLX 1.1
-    21	    32	GLX 1.3
+     1-15   GLX 1.0
+    16	    Vendor Private
+    17	    Vendor Private with Reply
+    18-20   GLX 1.1
+    21-32   GLX 1.3
+    33	    glXSetClientInfoARB (GLX_ARB_create_context)
+    34	    glXCreateContextAttribsARB (GLX_ARB_create_context)
 
 GLX Vendor Private / Vendor Private with Reply opcodes (32-bits)
 			  (first 4 bytes past standard X header)
