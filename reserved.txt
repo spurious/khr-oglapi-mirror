@@ -124,6 +124,7 @@ Extension Numbers
 354		NVIDIA,Aspyr,TransGaming,Blizzard
 355		NVIDIA
 356             NVIDIA,Id Software
+357             NVIDIA
 
 GLU Enumerants
 ==============
