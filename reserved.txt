@@ -123,8 +123,8 @@ Extension Numbers
 353		NVIDIA,S3,TransGaming,Blizzard
 354		NVIDIA,Aspyr,TransGaming,Blizzard
 355		NVIDIA
-356             NVIDIA,Id Software
-357             NVIDIA
+356		NVIDIA,Id Software
+357		NVIDIA
 
 GLU Enumerants
 ==============
@@ -215,6 +215,7 @@ Enumerateds (32 Bits)
 0x8F50	0x8F5F	3Dlabs (OpenGL ES)
 0x8F60	0x8F6F	ARM (OpenGL ES)
 0x8F70	0x8F7F	HI Corp (OpenGL ES)
+0x8F80	0x8F8F	Zebra Imaging
 100000	100999	GLU Library
 101000	101999	OpenGL ARB	Conformance Tests
 103000	103999	IBM
