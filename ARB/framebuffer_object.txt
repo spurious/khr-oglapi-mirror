@@ -56,8 +56,8 @@ Status
 
 Version
 
-    Last Modified Date: August 20, 2008
-    Revision: #27
+    Last Modified Date: November 17, 2008
+    Revision: #28
 
 Number
 
@@ -475,7 +475,7 @@ New Procedures and Functions
     void FramebufferTexture3D(enum target, enum attachment,
                               enum textarget, uint texture,
                               int level, int layer);
-    void FramebufferTexturLayer(enum target,enum attachment,
+    void FramebufferTextureLayer(enum target,enum attachment,
                                  uint texture,int level,int layer);
 
     void FramebufferRenderbuffer(enum target, enum attachment,
@@ -2336,7 +2336,7 @@ Operations and the Framebuffer)
 
     The command
 
-    void FramebufferTexturLayer(enum target,enum attachment,
+    void FramebufferTextureLayer(enum target,enum attachment,
                                     uint texture,int level,int layer);
 
     operates identically to FramebufferTexture3D, except that it
@@ -3515,7 +3515,7 @@ GLX Protocol
             4        CARD32          level
             4        CARD32          layer
 
-        FramebufferTexturLayer
+        FramebufferTextureLayer
             2        24              rendering command length
             2        237             rendering command opcode
             4        ENUM            target
@@ -4192,7 +4192,7 @@ Issues
 
          * Gen'ed names must be used for framebuffer objects and renderbuffers.
 
-         * Added FramebufferTexturLayer.
+         * Added FramebufferTextureLayer.
     
         Other features we have considered include:
 
@@ -4360,7 +4360,7 @@ Revision History
 
    #17 July 12, 2008: Jon Leech
         - Use 'layer' instead of 'zoffset' terminology. Add
-          FramebufferTexturLayer.
+          FramebufferTextureLayer.
         - Add framebuffer attachment queries for attachment component
           size / type / color encoding.
         - Allow framebuffer incomplete if no default framebuffer is made
@@ -4398,7 +4398,7 @@ Revision History
         - add interactions with ARB_texture_rg, EXT_texture_array and NV_float_buffer
         - restore FRAMEBUFFER enumerant and restore all the text where
           it had been accepted before (removed in version 4).
-        - allow texture arrays via FramebufferTexturLayer
+        - allow texture arrays via FramebufferTextureLayer
         - removed reference to required format list which we don't have here.
         - updated resolution of issue (6)
     
@@ -4421,7 +4421,7 @@ Revision History
         - Use new GLX rendering opcodes for BindRenderbuffer and
           BindFramebuffer so they can be semantically distinguished
           from the EXT entry points.
-        - Add GLX protocol for FramebufferTexturLayer.
+        - Add GLX protocol for FramebufferTextureLayer.
 
     #24 August 7, 2008: Jon Leech
         - Remove ARB suffixes.
@@ -4437,3 +4437,7 @@ Revision History
     #27 August 20, 2008: Jon Leech
         - Add ALPHA to list of color-renderable base internal formats to
           sync with 3.0 spec language.
+
+    #28 November 17, 2008: Mark Kilgard & Nigel Stewart
+        - glFramebufferTexturLayerARB -> glFramebufferTextureLayerARB
+          (add final e to Texture)
