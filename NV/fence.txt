@@ -11,6 +11,12 @@ Contact
     John Spitzer, NVIDIA Corporation (jspitzer 'at' nvidia.com)
     Mark Kilgard, NVIDIA Corporation (mjk 'at' nvidia.com)
 
+Contributors
+
+    John Spitzer
+    Mark Kilgard
+    Acorn Pooley
+
 Notice
 
     Copyright NVIDIA Corporation, 2000, 2001.
@@ -25,11 +31,13 @@ Status
 
     Shipping as of November, 2003 (version 1.1)
 
+    Version 1.2 adds ES support and clarification; otherwise identical to 1.1.
+
 Version
 
-    October 3, 2003 (version 1.1)
+    December 17, 2008 (version 1.2)
     $Date$ $Revision$
-    $Id: //sw/main/docs/OpenGL/specs/GL_NV_fence.txt#14 $
+    $Id: //sw/main/docs/OpenGL/specs/GL_NV_fence.txt#15 $
 
 Number
 
@@ -37,7 +45,9 @@ Number
 
 Dependencies
 
-    None
+    This extension is written against the OpenGL 1.2.1 Specification.
+    It can also be used with OpenGL ES (see the section, "Dependencies on
+    OpenGL ES," below).
 
 Overview
 
@@ -193,6 +203,11 @@ Issues
 
         The fence command completion is ignored.
 
+    What happens if you use an arbitrary number for the SetFenceNV() <fence>
+    parameter instead of obtaining the name from GenFences()?
+
+        This works fine (just as with texture objects).
+
 New Procedures and Functions
 
     void GenFencesNV(sizei n, uint *fences);
@@ -248,7 +263,8 @@ Additions to Chapter 5 of the OpenGL 1.2.1 Specification (Special Functions)
     satisfied within the command stream, the corresponding fence object's
     state is changed to TRUE.  For a condition of ALL_COMPLETED_NV,
     this is completion of the fence command and all preceding commands.
-    No other state is affected by execution of the fence command.
+    No other state is affected by execution of the fence command.  The name
+    <fence> may be one returned by GenFencesNV() but that is not required.
 
     A fence's state can be queried by calling the command
 
@@ -263,13 +279,14 @@ Additions to Chapter 5 of the OpenGL 1.2.1 Specification (Special Functions)
     FinishFenceNV does not return until all effects from these commands
     on GL client and server state and the framebuffer are fully realized.
 
-    The fence must first be created before it can be used.  The command
+    The command
 
       void GenFencesNV(sizei n, uint *fences);
 
     returns n previously unused fence names in fences.  These names
-    are marked as used, for the purposes of GenFencesNV only, but acquire
-    boolean state only when they have been set.
+    are marked as used, for the purposes of GenFencesNV only, but
+    corresponding fence objects do not exist (have no state) until created
+    with SetFenceNV().
 
     Fences are deleted by calling
 
@@ -279,8 +296,8 @@ Additions to Chapter 5 of the OpenGL 1.2.1 Specification (Special Functions)
     deleted, it has no state, and its name is again unused.  Unused names
     in fences are silently ignored.
 
-    If the fence passed to TestFenceNV or FinishFenceNV is not the name
-    of a fence, the error INVALID_OPERATION is generated.  In this case,
+    If the fence passed to TestFenceNV or FinishFenceNV is not the name of an
+    existing fence, the error INVALID_OPERATION is generated.  In this case,
     TestFenceNV will return TRUE, for the sake of consistency.
 
     State must be maintained to indicate which fence integers are
@@ -304,10 +321,10 @@ Additions to Chapter 6 of the OpenGL 1.2.1 Specification (State and State Reques
 
       boolean IsFenceNV(uint fence);
 
-    return TRUE if texture is the name of a fence.  If fence is not the
-    name of a fence, or if an error condition occurs, IsFenceNV returns
-    FALSE.  A name returned by GenFencesNV, but not yet set via SetFenceNV,
-    is not the name of a fence.
+    return TRUE if <fence> is the name of an existing fence.  If <fence> is
+    not the name of an existing fence, or if an error condition occurs,
+    IsFenceNV returns FALSE.  A name returned by GenFencesNV, but not yet set
+    via SetFenceNV, is not the name of an existing fence.
 
     The command
 
@@ -435,12 +452,11 @@ GLX Protocol
 
 Errors
 
-    INVALID_VALUE is generated if GenFencesNV parameter <n> is negative.
+    INVALID_VALUE is generated if GenFencesNV or DeleteFencesNV parameter <n>
+    is negative.
 
-    INVALID_VALUE is generated if DeleteFencesNV parameter <n> is negative.
-
-    INVALID_OPERATION is generated if the fence used in TestFenceNV or
-    FinishFenceNV is not the name of a fence.
+    INVALID_OPERATION is generated if the fence used in TestFenceNV,
+    FinishFenceNV or GetFenceivNV is not the name of an existing fence.
 
     INVALID_ENUM is generated if the condition used in SetFenceNV
     is not ALL_COMPLETED_NV.
@@ -448,12 +464,6 @@ Errors
     INVALID_OPERATION is generated if any of the commands defined in
     this extension is executed between the execution of Begin and the
     corresponding execution of End.
-
-    INVALID_OPERATION is generated if the named fence in GetFenceivNV
-    does not exist.
-
-    INVALID_VALUE is generated if DeleteFencesNV or GenFencesNV are
-    called where n is negative.
 
 New State
 
@@ -467,6 +477,15 @@ FENCE_CONDITION_NV  Z1    GetFenceivNV  determined by 1st SetFenceNV  Fence cond
 New Implementation Dependent State
 
     None
+
+Dependencies on OpenGL ES
+
+    If implemented for OpenGL ES, NV_fence acts as described in this spec,
+    except:
+
+        * Ignore all references to display lists and immediate mode, including
+          changes to section 5.4 "Display Lists".
+        * Ignore all references to GLX and GLX protocol.
 
 GeForce Implementation Details
 
@@ -503,3 +522,6 @@ Revision History
 
     Also fix a typo in the GLX protocol specification for IsFenceNV so
     the reply is 32 (not 33) bytes.
+
+    December 17. 2008 - Add "Dependencies on OpenGL ES" section.  Clarify
+    generation of fence name vs creation of the fence itself.
