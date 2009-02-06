@@ -1,4 +1,5 @@
 Name
+
     OES_fixed_point
 
 Name Strings
@@ -12,15 +13,16 @@ Contact
 Status
 
     Ratified by the Khronos BOP, July 23, 2003.
+    Ratified by the Khronos BOP, Aug 5, 2004.
 
 Version
 
-    Last Modifed Date: 12 July 2003
-    Author Revision: 0.7
+    Last Modifed Date: 16 June 2004
+    Author Revision: 0.8
 
 Number
 
-    292
+    OpenGL ES Extension #9 (formerly ARB Extension #292)
 
 Dependencies
 
@@ -102,6 +104,7 @@ New Procedures and Functions
     void LightModelx[v]OES(enum pname, T param);
 
     void PointSizexOES(fixed size);
+    void PointParameterxvOES(enum pname, const fixed *params)
     void LineWidthxOES(fixed width);
     void PolygonOffsetxOES(fixed factor, fixed units);
 
@@ -415,3 +418,6 @@ Revision History
 
     07/12/2003    0.7
         - Added note about GLX protocol
+
+    06/16/2004    0.8
+        - Added ClipPlanex, and various Get functions

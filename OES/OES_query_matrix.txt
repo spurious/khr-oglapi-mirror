@@ -20,7 +20,7 @@ Version
 
 Number
 
-    296
+    OpenGL ES Extension #16 (formerly OpenGL Extension #296)
 
 Dependencies
 

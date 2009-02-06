@@ -20,7 +20,7 @@ Version
 
 Number
 
-    291
+    OpenGL ES Extension #4 (formerly OpenGL Extension #291)
 
 Dependencies
 

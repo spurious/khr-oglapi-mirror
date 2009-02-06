@@ -1,4 +1,5 @@
 Name
+
     OES_single_precision
 
 Name Strings
@@ -12,15 +13,16 @@ Contact
 Status
 
     Ratified by the Khronos BOP, July 23, 2003.
+    Ratified by the Khronos BOP, Aug 5, 2004.
 
 Version
 
-    Last Modifed Date: 22 July 2003
-    Author Revision : 0.4
+    Last Modifed Date: April 22, 2007
+    Author Revision : 0.6
 
 Number
 
-    293
+    OpenGL ES Extension #18 (formerly OpenGL Extension #293)
 
 Dependencies
 
@@ -221,3 +223,9 @@ Revision History
 
     07/22/2003    0.4
         - Added GLX protocol (Thomas Roell)
+
+    06/28/2004    0.5
+        - Added ClipPlanef function (Aaftab Munshi)
+
+    04/22/2007    0.6
+	- Fixed 'void void' typo (Jon Leech)
