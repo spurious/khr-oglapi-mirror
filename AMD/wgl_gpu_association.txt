@@ -406,9 +406,8 @@ New State
 Interactions with GL_EXT_framebuffer_blit
 
     If the framebuffer blit extension is not supported, all language 
-    referring to glBlitContextFramebufferEXT and
-    wglBlitContextFramebufferAMD are removed.
-    
+    referring to glBlitFramebufferEXT and wglBlitContextFramebufferAMD 
+    is removed.
     
 Interactions with GL_EXT_framebuffer_object
 
