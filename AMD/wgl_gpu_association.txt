@@ -86,7 +86,7 @@ New Procedures and Functions
 
     UINT  wglGetGPUIDsAMD(UINT maxCount, UINT *ids);
     
-    INT   wglGetGPUInfoAMD(UINT id, INT property, ENUM dataType,
+    INT   wglGetGPUInfoAMD(UINT id, INT property, GLenum dataType,
                            UINT size, void *data)
     
     UINT  wglGetContextGPUIDAMD(HGLRC hglrc);
