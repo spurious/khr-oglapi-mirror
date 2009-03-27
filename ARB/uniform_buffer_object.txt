@@ -37,8 +37,8 @@ Status
 
 Version
 
-    Last Modified Date:     02/16/2009
-    Author revision:        61
+    Last Modified Date:     03/26/2009
+    Author revision:        62
 
 Number
 
@@ -147,9 +147,9 @@ Overview
     c) Uniforms and "uniform blocks" can be inactive because they don't
        exist in the source, or because they have been removed by dead
        code elimination.
-    d) An inactive uniform has u_index == INVALID_INDEX_ARB.
-    e) An inactive uniform block has ub_index == INVALID_INDEX_ARB.
-    f) A u_index or ub_index of INVALID_INDEX_ARB generates the
+    d) An inactive uniform has u_index == INVALID_INDEX.
+    e) An inactive uniform block has ub_index == INVALID_INDEX.
+    f) A u_index or ub_index of INVALID_INDEX generates the
        INVALID_VALUE error if given as a function argument.
     g) The default uniform block, which is not assigned any ub_index, uses a
        private, internal data storage, and does not have any buffer object
@@ -168,32 +168,32 @@ IP Status
 
 New Procedures and Functions
 
-   void    GetUniformIndicesARB(uint program, 
+   void    GetUniformIndices(uint program,
                                 sizei uniformCount, 
                                 const char** uniformNames, 
                                 uint* uniformIndices);
 
-   void    GetActiveUniformsivARB(uint program, 
+   void    GetActiveUniformsiv(uint program,
                                   sizei uniformCount, 
                                   const uint* uniformIndices, 
                                   enum pname, 
                                   int* params);
 
-   void    GetActiveUniformNameARB(uint program, 
+   void    GetActiveUniformName(uint program,
                                    uint uniformIndex, 
                                    sizei bufSize, 
                                    sizei* length, 
                                    char* uniformName);
 
-   uint    GetUniformBlockIndexARB(uint program, 
+   uint    GetUniformBlockIndex(uint program,
                                    const char* uniformBlockName);
 
-   void    GetActiveUniformBlockivARB(uint program, 
+   void    GetActiveUniformBlockiv(uint program,
                                       uint uniformBlockIndex, 
                                       enum pname, 
                                       int* params);
 
-   void    GetActiveUniformBlockNameARB(uint program, 
+   void    GetActiveUniformBlockName(uint program,
                                         uint uniformBlockIndex, 
                                         sizei bufSize, 
                                         sizei* length, 
@@ -211,7 +211,7 @@ New Procedures and Functions
 
    void    GetIntegeri_v(enum target, uint index, int* data);
 
-   void    UniformBlockBindingARB(uint program, 
+   void    UniformBlockBinding(uint program,
                                   uint uniformBlockIndex, 
                                   uint uniformBlockBinding);
 
@@ -225,69 +225,69 @@ New Tokens
     BufferSubData, MapBuffer, UnmapBuffer, GetBufferSubData, and
     GetBufferPointerv:
 
-        UNIFORM_BUFFER_ARB                              0x8A11
+        UNIFORM_BUFFER                                  0x8A11
 
     Accepted by the <pname> parameter of GetIntegeri_v, GetBooleanv,
     GetIntegerv, GetFloatv, and GetDoublev:
 
-        UNIFORM_BUFFER_BINDING_ARB                      0x8A28
+        UNIFORM_BUFFER_BINDING                          0x8A28
 
     Accepted by the <pname> parameter of GetIntegeri_v:
 
-        UNIFORM_BUFFER_START_ARB                        0x8A29
-        UNIFORM_BUFFER_SIZE_ARB                         0x8A2A
+        UNIFORM_BUFFER_START                            0x8A29
+        UNIFORM_BUFFER_SIZE                             0x8A2A
 
     Accepted by the <pname> parameter of GetBooleanv, GetIntegerv,
     GetFloatv, and GetDoublev:
 
-        MAX_VERTEX_UNIFORM_BLOCKS_ARB                   0x8A2B
-        MAX_GEOMETRY_UNIFORM_BLOCKS_ARB                 0x8A2C
-        MAX_FRAGMENT_UNIFORM_BLOCKS_ARB                 0x8A2D
-        MAX_COMBINED_UNIFORM_BLOCKS_ARB                 0x8A2E
-        MAX_UNIFORM_BUFFER_BINDINGS_ARB                 0x8A2F
-        MAX_UNIFORM_BLOCK_SIZE_ARB                      0x8A30
-        MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS_ARB      0x8A31
-        MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS_ARB    0x8A32
-        MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS_ARB    0x8A33
-        UNIFORM_BUFFER_OFFSET_ALIGNMENT_ARB             0x8A34
+        MAX_VERTEX_UNIFORM_BLOCKS                       0x8A2B
+        MAX_GEOMETRY_UNIFORM_BLOCKS                     0x8A2C
+        MAX_FRAGMENT_UNIFORM_BLOCKS                     0x8A2D
+        MAX_COMBINED_UNIFORM_BLOCKS                     0x8A2E
+        MAX_UNIFORM_BUFFER_BINDINGS                     0x8A2F
+        MAX_UNIFORM_BLOCK_SIZE                          0x8A30
+        MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS          0x8A31
+        MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS        0x8A32
+        MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS        0x8A33
+        UNIFORM_BUFFER_OFFSET_ALIGNMENT                 0x8A34
 
     Accepted by the <pname> parameter of GetProgramiv:
 
-        ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH_ARB        0x8A35
-        ACTIVE_UNIFORM_BLOCKS_ARB                       0x8A36
+        ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH            0x8A35
+        ACTIVE_UNIFORM_BLOCKS                           0x8A36
 
-    Accepted by the <pname> parameter of GetActiveUniformsivARB:
+    Accepted by the <pname> parameter of GetActiveUniformsiv:
 
-        UNIFORM_TYPE_ARB                                0x8A37
-        UNIFORM_SIZE_ARB                                0x8A38
-        UNIFORM_NAME_LENGTH_ARB                         0x8A39
-        UNIFORM_BLOCK_INDEX_ARB                         0x8A3A
-        UNIFORM_OFFSET_ARB                              0x8A3B
-        UNIFORM_ARRAY_STRIDE_ARB                        0x8A3C
-        UNIFORM_MATRIX_STRIDE_ARB                       0x8A3D
-        UNIFORM_IS_ROW_MAJOR_ARB                        0x8A3E
+        UNIFORM_TYPE                                    0x8A37
+        UNIFORM_SIZE                                    0x8A38
+        UNIFORM_NAME_LENGTH                             0x8A39
+        UNIFORM_BLOCK_INDEX                             0x8A3A
+        UNIFORM_OFFSET                                  0x8A3B
+        UNIFORM_ARRAY_STRIDE                            0x8A3C
+        UNIFORM_MATRIX_STRIDE                           0x8A3D
+        UNIFORM_IS_ROW_MAJOR                            0x8A3E
 
-    Accepted by the <pname> parameter of GetActiveUniformBlockivARB:
-    
-        UNIFORM_BLOCK_BINDING_ARB                       0x8A3F
-        UNIFORM_BLOCK_DATA_SIZE_ARB                     0x8A40
-        UNIFORM_BLOCK_NAME_LENGTH_ARB                   0x8A41
-        UNIFORM_BLOCK_ACTIVE_UNIFORMS_ARB               0x8A42
-        UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES_ARB        0x8A43
-        UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER_ARB   0x8A44
-        UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER_ARB 0x8A45
-        UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER_ARB 0x8A46
+    Accepted by the <pname> parameter of GetActiveUniformBlockiv:
+
+        UNIFORM_BLOCK_BINDING                           0x8A3F
+        UNIFORM_BLOCK_DATA_SIZE                         0x8A40
+        UNIFORM_BLOCK_NAME_LENGTH                       0x8A41
+        UNIFORM_BLOCK_ACTIVE_UNIFORMS                   0x8A42
+        UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES            0x8A43
+        UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER       0x8A44
+        UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER     0x8A45
+        UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER     0x8A46
         
-    Returned by GetActiveUniformsivARB and GetUniformBlockIndexARB
+    Returned by GetActiveUniformsiv and GetUniformBlockIndex
     
-        INVALID_INDEX_ARB                              0xFFFFFFFFu
+        INVALID_INDEX                                   0xFFFFFFFFu
 
 2.1 Specification Updates
 
 Additions to Chapter 2 - OpenGL Operation
 
     Section 2.9 - Buffer Objects
-    Add UNIFORM_BUFFER_ARB to list of buffer object targets on:
+    Add UNIFORM_BUFFER to list of buffer object targets on:
     Pg 35, 2nd pgph
     Pg 37, top of page
     Pg 38, top of page
@@ -317,7 +317,7 @@ Additions to Chapter 2 - OpenGL Operation
     amount of combined storage available for uniform variables in all uniform
     blocks accessed by a vertex shader (including the default uniform block)
     is specified by the value of the implementation-dependent
-    constant MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS_ARB. These values
+    constant MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS. These values
     represent the numbers of individual floating-point, integer, or boolean
     values that can be held in uniform variable storage for a vertex shader.
     A link error is generated if an attempt is made to utilize more than
@@ -367,7 +367,7 @@ Additions to Chapter 2 - OpenGL Operation
     Uniform block indices corresponding to uniform block names can be queried
     by calling
 
-        uint GetUniformBlockIndexARB(uint program, 
+        uint GetUniformBlockIndex(uint program,
                                      const char* uniformBlockName);
 
     <program> is the name of a program object for which the command
@@ -379,17 +379,17 @@ Additions to Chapter 2 - OpenGL Operation
     <uniformBlockName> must contain a null-terminated string specifying
     the name of a uniform block.
 
-    GetUniformBlockIndexARB returns the uniform block index for the
+    GetUniformBlockIndex returns the uniform block index for the
     uniform block named <uniformBlockName> of <program>. If
     <uniformBlockName> does not identify an active uniform block of
-    <program>, or an error occurred, then INVALID_INDEX_ARB is returned.
+    <program>, or an error occurred, then INVALID_INDEX is returned.
     The indices of the active uniform blocks of a program are assigned in
     consecutive order, beginning with zero.
     
     An active uniform block's name string can be queried from its
     uniform block index by calling
     
-        void GetActiveUniformBlockNameARB(uint program, 
+        void GetActiveUniformBlockName(uint program,
                                           uint uniformBlockIndex, 
                                           sizei bufSize, 
                                           sizei* length, 
@@ -403,10 +403,10 @@ Additions to Chapter 2 - OpenGL Operation
 
     <uniformBlockIndex> must be an active uniform block index of
     <program>, in the range zero to the value of
-    ACTIVE_UNIFORM_BLOCKS_ARB - 1. The value of
-    ACTIVE_UNIFORM_BLOCKS_ARB can be queried with GetProgramiv (see
+    ACTIVE_UNIFORM_BLOCKS - 1. The value of
+    ACTIVE_UNIFORM_BLOCKS can be queried with GetProgramiv (see
     section 6.1.14). If <uniformBlockIndex> is greater than or equal to
-    the value of ACTIVE_UNIFORM_BLOCKS_ARB, the error INVALID_VALUE is
+    the value of ACTIVE_UNIFORM_BLOCKS, the error INVALID_VALUE is
     generated.
     
     The string name of the uniform block identified by <uniformBlockIndex>
@@ -423,7 +423,7 @@ Additions to Chapter 2 - OpenGL Operation
 
     Information about an active uniform block can be queried by calling
 
-        void GetActiveUniformBlockivARB(uint program, 
+        void GetActiveUniformBlockiv(uint program,
                                         uint uniformBlockIndex, 
                                         enum pname, 
                                         int* params);
@@ -436,20 +436,20 @@ Additions to Chapter 2 - OpenGL Operation
 
     <uniformBlockIndex> is an active uniform block index of <program>.
     If <uniformBlockIndex> is greater than or equal to the value of
-    ACTIVE_UNIFORM_BLOCKS_ARB, or is not the index of an active uniform
+    ACTIVE_UNIFORM_BLOCKS, or is not the index of an active uniform
     block in <program>, the error INVALID_VALUE is generated.
     
     If no error occurs, the uniform block parameter(s) specified by
     <pname> are returned in <params>. Otherwise, nothing will be written
     to <params>.
     
-    If <pname> is UNIFORM_BLOCK_BINDING_ARB, then
+    If <pname> is UNIFORM_BLOCK_BINDING, then
     the index of the uniform buffer binding
     point last selected by the uniform block specified by <uniformBlockIndex>
     for <program> is returned. If no uniform block has been previously
     specified, zero is returned.
     
-    If <pname> is UNIFORM_BLOCK_DATA_SIZE_ARB, the value returned is the
+    If <pname> is UNIFORM_BLOCK_DATA_SIZE, the value returned is the
     implementation-dependent minimum total buffer object size, in
     basic machine units, required to hold all active uniforms in the
     uniform block identified by <uniformBlockIndex>.
@@ -464,27 +464,27 @@ Additions to Chapter 2 - OpenGL Operation
     The total amount of buffer object storage available for any given uniform
     block is subject to an implementation-dependent limit; the maximum amount
     of available space, in basic machine units, can be queried by calling
-    GetIntegerv with the constant MAX_UNIFORM_BLOCK_SIZE_ARB.  If the amount
+    GetIntegerv with the constant MAX_UNIFORM_BLOCK_SIZE.  If the amount
     of storage required for a uniform block exceeds this limit, a program may
     fail to link.
 
-    If <pname> is UNIFORM_BLOCK_NAME_LENGTH_ARB, then the total length
+    If <pname> is UNIFORM_BLOCK_NAME_LENGTH, then the total length
     (including the null terminator) of the name of the uniform block
     identified by <uniformBlockIndex> is returned.
 
-    If <pname> is UNIFORM_BLOCK_ACTIVE_UNIFORMS_ARB, then the number of
+    If <pname> is UNIFORM_BLOCK_ACTIVE_UNIFORMS, then the number of
     active uniforms in the uniform block identified by
     <uniformBlockIndex> is returned.
 
-    If <pname> is UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES_ARB, then a list
+    If <pname> is UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES, then a list
     of the active uniform indices for the uniform block identified by
     <uniformBlockIndex> is returned.
     The number of elements that will be written to <params> is the value
-    of UNIFORM_BLOCK_ACTIVE_UNIFORMS_ARB for <uniformBlockIndex>.
+    of UNIFORM_BLOCK_ACTIVE_UNIFORMS for <uniformBlockIndex>.
 
-    If <pname> is UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER_ARB,
-    UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER_ARB, or
-    UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER_ARB, then
+    If <pname> is UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER,
+    UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER, or
+    UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER, then
     a boolean value indicating whether the uniform block identified by
     <uniformBlockIndex> is referenced by the vertex, geometry, or fragment
     programming stage of <program>, respectively, is returned.
@@ -494,7 +494,7 @@ Additions to Chapter 2 - OpenGL Operation
     assigned in consecutive order, beginning with zero.  The indices assigned
     to a set of uniforms in a program may be queried by calling
 
-        void GetUniformIndicesARB(uint program, 
+        void GetUniformIndices(uint program,
                                   sizei uniformCount, 
                                   const char** uniformNames, 
                                   uint* uniformIndices);
@@ -514,7 +514,7 @@ Additions to Chapter 2 - OpenGL Operation
     string in <uniformNames>, the index assigned to the active uniform of 
     that name will be written to the corresponding element of
     <uniformIndices>.  If a string in <uniformNames> is not the name of an 
-    active uniform, the value INVALID_INDEX_ARB will be written to the
+    active uniform, the value INVALID_INDEX will be written to the
     corresponding element of <uniformIndices>.
 
     If an error occurs, nothing is written to <uniformIndices>.
@@ -522,7 +522,7 @@ Additions to Chapter 2 - OpenGL Operation
     The name of an active uniform may be queried from the corresponding uniform
     index by calling
 
-        void GetActiveUniformNameARB(uint program, 
+        void GetActiveUniformName(uint program,
                                      uint uniformIndex, 
                                      sizei bufSize, 
                                      sizei* length, 
@@ -552,7 +552,7 @@ Additions to Chapter 2 - OpenGL Operation
     longest uniform name in <program> is given by the value of
     ACTIVE_UNIFORM_MAX_LENGTH, which can be queried with GetProgramiv.
 
-    If GetActiveUniformNameARB is not successful, nothing is written to
+    If GetActiveUniformName is not successful, nothing is written to
     <length> or <uniformName>.
 
     Each uniform variable, declared in a shader, is broken down into one or
@@ -575,7 +575,7 @@ Additions to Chapter 2 - OpenGL Operation
 
     or
 
-        void GetActiveUniformsivARB(uint program, 
+        void GetActiveUniformsiv(uint program,
                                     sizei uniformCount, 
                                     const uint* uniformIndices, 
                                     enum pname, 
@@ -591,7 +591,7 @@ Additions to Chapter 2 - OpenGL Operation
     by <index> or <uniformIndices>, respectively. In GetActiveUniform, an
     <index> of 0 selects the first active uniform, and an <index> of the value
     of ACTIVE_UNIFORMS - 1 selects the last active uniform. In 
-    GetActiveUniformsivARB, <uninformIndices> is an array of such active uniform
+    GetActiveUniformsiv, <uninformIndices> is an array of such active uniform
     indices. If any index is greater than or equal to the value of
     ACTIVE_UNIFORMS, the error INVALID_VALUE is generated.
 
@@ -667,46 +667,46 @@ Additions to Chapter 2 - OpenGL Operation
                                          UNSIGNED_INT_SAMPLER_2D_RECT_EXT   usampler2DRect
     -----------------------------------------------------------------------
     Table 2.utype: OpenGL Shading Language type tokens returned by
-    GetActiveUniform and GetActiveUniformsivARB, and corresponding shading
+    GetActiveUniform and GetActiveUniformsiv, and corresponding shading
     language keywords declaring each such type.
 
 
-    For GetActiveUniformsivARB, <uniformCount> indicates both the number of
+    For GetActiveUniformsiv, <uniformCount> indicates both the number of
     elements in the array of indices <uniformIndices> and the number of
     parameters written to <params> upon successful return.  <pname> identifies
     a property of each uniform in <uniformIndices> that should be written into
     the corresponding element of <params>.  If an error occurs, nothing will
     be written to <params>.
 
-    If <pname> is UNIFORM_TYPE_ARB, then an array identifying the types
+    If <pname> is UNIFORM_TYPE, then an array identifying the types
     of the uniforms specified by the corresponding array of
     <uniformIndices> is returned.  The returned types can be any of the 
     values in Table 2.utype.
 
-    If <pname> is UNIFORM_SIZE_ARB, then an array identifying the size
+    If <pname> is UNIFORM_SIZE, then an array identifying the size
     of the uniforms specified by the corresponding array of
     <uniformIndices> is returned. The sizes returned are in units of the type
-    returned by a query of UNIFORM_TYPE_ARB.  For active uniforms that are
+    returned by a query of UNIFORM_TYPE.  For active uniforms that are
     arrays, the size is the number of active elements in the array; for 
     all other uniforms, the size is one.
 
-    If <pname> is UNIFORM_NAME_LENGTH_ARB, then an array identifying the
+    If <pname> is UNIFORM_NAME_LENGTH, then an array identifying the
     length, including the terminating null character, of the uniform
     name strings specified by the corresponding array of
     <uniformIndices> is returned.
 
-    If <pname> is UNIFORM_BLOCK_INDEX_ARB, then an array identifying the
+    If <pname> is UNIFORM_BLOCK_INDEX, then an array identifying the
     uniform block index of each of the uniforms specified by the
     corresponding array of <uniformIndices> is returned. The index of a
     uniform associated with the default uniform block is -1.
 
-    If <pname> is UNIFORM_OFFSET_ARB, then an array of uniform buffer offsets
+    If <pname> is UNIFORM_OFFSET, then an array of uniform buffer offsets
     is returned.  For uniforms in a named uniform block, the returned value
     will be its offset, in basic machine units, relative to the beginning of
     the uniform block in the buffer object data store.  For uniforms in the
     default uniform block, -1 will be returned.
 
-    If <pname> is UNIFORM_ARRAY_STRIDE_ARB, then an array identifying
+    If <pname> is UNIFORM_ARRAY_STRIDE, then an array identifying
     the stride between elements, in basic machine units, of each of the
     uniforms specified by the corresponding array of <uniformIndices> is
     returned. The stride of a uniform associated with the default
@@ -715,7 +715,7 @@ Additions to Chapter 2 - OpenGL Operation
     declared in a named uniform block, an array stride of zero is
     returned.
 
-    If <pname> is UNIFORM_MATRIX_STRIDE_ARB, then an array identifying
+    If <pname> is UNIFORM_MATRIX_STRIDE, then an array identifying
     the stride between columns of a column-major matrix or rows of a
     row-major matrix, in basic machine units, of each of the uniforms
     specified by the corresponding array of <uniformIndices> is
@@ -725,7 +725,7 @@ Additions to Chapter 2 - OpenGL Operation
     are declared in a named uniform block, a matrix stride of zero is
     returned.
 
-    If <pname> is UNIFORM_IS_ROW_MAJOR_ARB, then
+    If <pname> is UNIFORM_IS_ROW_MAJOR, then
     an array identifying whether each of the uniforms
     specified by the corresponding array of <uniformIndices> is a row-major
     matrix or not is returned. A value of one indicates a row-major
@@ -754,8 +754,8 @@ Additions to Chapter 2 - OpenGL Operation
     If the number of uniform blocks used by any shader in the program exceeds
     its corresponding limit, the program will fail to link.  The limits for
     vertex, fragment, and geometry shaders can be obtained by calling
-    GetIntegerv with <pname> values of MAX_VERTEX_UNIFORM_BLOCKS_ARB,
-    MAX_FRAGMENT_UNIFORM_BLOCKS_ARB, and MAX_GEOMETRY_UNIFORM_BLOCKS_ARB,
+    GetIntegerv with <pname> values of MAX_VERTEX_UNIFORM_BLOCKS,
+    MAX_FRAGMENT_UNIFORM_BLOCKS, and MAX_GEOMETRY_UNIFORM_BLOCKS,
     respectively.
 
     Additionally, there is an implementation-dependent limit on the sum of the
@@ -763,7 +763,7 @@ Additions to Chapter 2 - OpenGL Operation
     uniform block is used by multiple shaders, each such use counts separately
     against this combined limit.  The combined uniform block use limit can be
     obtained by calling GetIntegerv with a <pname> of
-    MAX_COMBINED_UNIFORM_BLOCKS_ARB.
+    MAX_COMBINED_UNIFORM_BLOCKS.
 
     When a named uniform block is declared by multiple shaders in a program,
     it must be declared identically in each shader.  The uniforms within the
@@ -803,7 +803,7 @@ Additions to Chapter 2 - OpenGL Operation
       The column vectors will be stored in order, with column zero at the
       lowest offset. The difference in offsets between consecutive columns of
       the matrix will be referred to as the column stride, and is constant
-      across the matrix. The column stride, UNIFORM_MATRIX_STRIDE_ARB, is an
+      across the matrix. The column stride, UNIFORM_MATRIX_STRIDE, is an
       implementation-dependent value and may be queried after a program is
       linked.
 
@@ -813,14 +813,14 @@ Additions to Chapter 2 - OpenGL Operation
       row vectors will be stored in order, with row zero at the lowest offset.
       The difference in offsets between consecutive rows of the matrix will be
       referred to as the row stride, and is constant across the matrix. The
-      row stride, UNIFORM_MATRIX_STRIDE_ARB, is an implementation-dependent
+      row stride, UNIFORM_MATRIX_STRIDE, is an implementation-dependent
       value and may be queried after a program is linked.
 
     - Arrays of scalars, vectors, and matrices are stored in memory by element
       order, with array member zero at the lowest offset. The difference in
       offsets between each pair of elements in the array in basic machine
       units is referred to as the array stride, and is constant across the
-      entire array. The array stride, UNIFORM_ARRAY_STRIDE_ARB, is an 
+      entire array. The array stride, UNIFORM_ARRAY_STRIDE, is an
       implementation-dependent value and may be queried after a program is
       linked.
 
@@ -913,7 +913,7 @@ Additions to Chapter 2 - OpenGL Operation
     The value an active uniform inside a named uniform block is extracted from
     the data store of a buffer object bound to one of an array of uniform
     buffer binding points.  The number of binding points can be queried using
-    GetIntegerv with the constant MAX_UNIFORM_BUFFER_BINDINGS_ARB.
+    GetIntegerv with the constant MAX_UNIFORM_BUFFER_BINDINGS.
 
     Buffer objects are bound to uniform block binding points by calling one of
     the commands
@@ -928,15 +928,15 @@ Additions to Chapter 2 - OpenGL Operation
                             uint index,
                             uint buffer);
 
-    with <target> set to UNIFORM_BUFFER_ARB. There is an array of buffer
+    with <target> set to UNIFORM_BUFFER. There is an array of buffer
     object binding points with which uniform blocks can be associated via
-    UniformBlockBindingARB, plus a single general binding point that can be 
+    UniformBlockBinding, plus a single general binding point that can be
     used by other buffer object manipulation functions (e.g. BindBuffer, 
     MapBuffer). Both commands bind the buffer object named by <buffer> to the 
     general binding point, and additionally bind the buffer object to the 
     binding point in the array given by <index>. The error INVALID_VALUE is
     generated if <index> is greater than or equal to the value of
-    MAX_UNIFORM_BUFFER_BINDINGS_ARB.
+    MAX_UNIFORM_BUFFER_BINDINGS.
 
     For BindBufferRange, <offset> specifies a starting offset into the buffer
     object <buffer>, and <size> specifies the amount of data that can be read
@@ -945,14 +945,14 @@ Additions to Chapter 2 - OpenGL Operation
     generated if the value of <size> is less than or equal to zero, if
     <offset> + <size> is greater than the value of BUFFER_SIZE, or if <offset>
     is not a multiple of the implementation-dependent required alignment
-    (UNIFORM_BUFFER_OFFSET_ALIGNMENT_ARB). BindBufferBase is
+    (UNIFORM_BUFFER_OFFSET_ALIGNMENT). BindBufferBase is
     equivalent to calling BindBufferRange with <offset> zero and <size> equal
     to the size of <buffer>.
 
     Each of a program's active uniform blocks has a corresponding uniform buffer
     object binding point. This binding point can be assigned by calling:
     
-         void UniformBlockBindingARB(uint program, 
+         void UniformBlockBinding(uint program,
                                      uint uniformBlockIndex, 
                                      uint uniformBlockBinding);
 
@@ -962,10 +962,10 @@ Additions to Chapter 2 - OpenGL Operation
     <uniformBlockIndex> must be an active uniform block index of the program
     <program>. Otherwise, INVALID_VALUE is generated.
 
-    <uniformBlockBinding> must be less than MAX_UNIFORM_BUFFER_BINDINGS_ARB. 
+    <uniformBlockBinding> must be less than MAX_UNIFORM_BUFFER_BINDINGS.
     Otherwise, INVALID_VALUE is generated.
 
-    If successful, UniformBlockBindingARB specifies that 
+    If successful, UniformBlockBinding specifies that
     <program> will use the data store of the buffer object bound to the
     binding point <uniformBlockBinding> to extract the values of the uniforms
     in the uniform block identified by <uniformBlockIndex>.
@@ -973,14 +973,14 @@ Additions to Chapter 2 - OpenGL Operation
     The results of Begin or commands that perform an implicit Begin are 
     undefined when an active uniform block of the active program is assigned a 
     uniform buffer binding point where the <size> parameter to BindBufferRange 
-    is less than the value of UNIFORM_BLOCK_DATA_SIZE_ARB for that uniform 
+    is less than the value of UNIFORM_BLOCK_DATA_SIZE for that uniform
     block, or when no buffer object is bound to that binding point, and may 
     result in GL interruption or termination.
 
     When executing shaders that access uniform blocks, the binding point
     corresponding to each active uniform block must be populated with a buffer
     object with a size no smaller than the minimum required size of the
-    uniform block (UNIFORM_BLOCK_DATA_SIZE_ARB).  For binding points populated
+    uniform block (UNIFORM_BLOCK_DATA_SIZE).  For binding points populated
     by BindBufferRange, the size in question is the value of the <size>
     parameter.  If any active uniform block is not backed by a sufficiently
     large buffer object, the results of shader execution are undefined, and
@@ -1004,7 +1004,7 @@ Additions to Chapter 3 - Rasterization
     combined storage available for fragment shader uniform variables in all
     uniform blocks (including the default uniform block) is specified by the
     value of the implementation-dependent constant
-    MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS_ARB. These values represent the
+    MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS. These values represent the
     numbers of individual floating-point, integer, or boolean values that can be
     held in uniform variable storage for a fragment shader. 
 
@@ -1043,17 +1043,17 @@ Additions to Chapter 6 - State and State Requests
     To query which buffer objects are bound to the array of uniform
     buffer binding points and will be used as the storage for
     active uniform blocks, call GetIntegeri_v with <param> set to
-    UNIFORM_BUFFER_BINDING_ARB. <index> must be in the range 
-    zero to the value of MAX_UNIFORM_BUFFER_BINDINGS_ARB - 1. 
+    UNIFORM_BUFFER_BINDING. <index> must be in the range
+    zero to the value of MAX_UNIFORM_BUFFER_BINDINGS - 1.
     The name of the buffer object bound to <index> is returned in 
     <values>. If no buffer object is bound for <index>, zero is 
     returned in <values>.
 
     To query the starting offset or size of the range of each buffer
     object binding used for uniform buffers, call GetIntegeri_v with
-    <param> set to UNIFORM_BUFFER_START_ARB or UNIFORM_BUFFER_SIZE_ARB
+    <param> set to UNIFORM_BUFFER_START or UNIFORM_BUFFER_SIZE
     respectively. <index> must be in the range zero to the value of
-    MAX_UNIFORM_BUFFER_BINDINGS_ARB - 1. If the parameter (starting
+    MAX_UNIFORM_BUFFER_BINDINGS - 1. If the parameter (starting
     offset or size) was not specified when the buffer object was bound,
     zero is returned. If no buffer object is bound to <index>, -1 is
     returned.
@@ -1061,10 +1061,10 @@ Additions to Chapter 6 - State and State Requests
     6.1.14 Shader and Program Queries
     Pg 261, continuation of paragraph defining "GetProgramiv"
 
-    If <pname> is ACTIVE_UNIFORM_BLOCKS_ARB the number of uniform
+    If <pname> is ACTIVE_UNIFORM_BLOCKS the number of uniform
     blocks for <program> containing active uniforms is returned.
 
-    If <pname> is ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH_ARB, the
+    If <pname> is ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH, the
     length of the longest active uniform block name, including
     the null terminator, is returned.
 
@@ -1296,7 +1296,7 @@ Interactions with OpenGL 3.0
     If OpenGL 3.0 is supported, replace "Begin or commands that perform
     an implicit Begin" with "Draw* commands."
 
-    If OpenGL 3.0 is supported, UNIFORM_BUFFER_ARB is a valid target for
+    If OpenGL 3.0 is supported, UNIFORM_BUFFER is a valid target for
     new buffer-related API, e.g. MapBufferRange.
 
 Interactions with EXT_gpu_shader4
@@ -1328,52 +1328,52 @@ Interactions with EXT_texture_integer
 Interactions with ARB_geometry_shader4
 
     If ARB_geometry_shader4 is not supported, omit all mentions of the
-    geometry shader stage, including MAX_GEOMETRY_UNIFORM_BUFFERS_ARB
-    and UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER_ARB. The minimum
-    value of MAX_COMBINED_UNIFORM_BLOCKS_ARB and
-    MAX_UNIFORM_BUFFER_BINDINGS_ARB changes from 36 to 24.
+    geometry shader stage, including MAX_GEOMETRY_UNIFORM_BUFFERS
+    and UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER. The minimum
+    value of MAX_COMBINED_UNIFORM_BLOCKS and
+    MAX_UNIFORM_BUFFER_BINDINGS changes from 36 to 24.
 
 Errors
 
     The error INVALID_OPERATION is generated by BindBufferRange and
     BindBufferBase if <buffer> is not the name of a valid buffer object.
     
-    The error INVALID_VALUE is generated by GetUniformIndicesARB,
-    GetActiveUniformsivARB, GetActiveUniformNameARB, GetUniformBlockIndexARB,
-    GetActiveUniformBlockivARB, GetActiveUniformBlockNameARB, and
-    UniformBlockBindingARB if <program> is not a value generated by GL.
+    The error INVALID_VALUE is generated by GetUniformIndices,
+    GetActiveUniformsiv, GetActiveUniformName, GetUniformBlockIndex,
+    GetActiveUniformBlockiv, GetActiveUniformBlockName, and
+    UniformBlockBinding if <program> is not a value generated by GL.
 
     The error INVALID_VALUE is generated by GetUniformIndices and
-    GetActiveUniformsivARB if <uniformCount> is less than zero.
+    GetActiveUniformsiv if <uniformCount> is less than zero.
 
-    The error INVALID_VALUE is generated by GetActiveUniformNameARB and
-    GetActiveUniformBlockNameARB if <bufSize> is less than zero.
+    The error INVALID_VALUE is generated by GetActiveUniformName and
+    GetActiveUniformBlockName if <bufSize> is less than zero.
 
     The error INVALID_VALUE is generated by BindBufferRange if <size> is less
     than zero.
 
-    The error INVALID_VALUE is generated by GetActiveUniformNameARB if
+    The error INVALID_VALUE is generated by GetActiveUniformName if
     <uniformIndex> is greater than or equal to ACTIVE_UNIFORMS.
 
-    The error INVALID_VALUE is generated by GetActiveUniformsivARB if any of
+    The error INVALID_VALUE is generated by GetActiveUniformsiv if any of
     the indices in <uniformIndices> is greater than or equal to ACTIVE_UNIFORMS.
 
-    The error INVALID_VALUE is generated by GetActiveUniformBlockivARB,
-    GetActiveUniformBlockNameARB, and UniformBlockBindingARB if
-    <uniformBlockIndex> is greater than or equal to ACTIVE_UNIFORM_BLOCKS_ARB.
+    The error INVALID_VALUE is generated by GetActiveUniformBlockiv,
+    GetActiveUniformBlockName, and UniformBlockBinding if
+    <uniformBlockIndex> is greater than or equal to ACTIVE_UNIFORM_BLOCKS.
 
-    The error INVALID_VALUE is generated by UniformBlockBindingARB if
+    The error INVALID_VALUE is generated by UniformBlockBinding if
     <uniformBlockBinding> is greater than or equal to 
-    MAX_UNIFORM_BUFFER_BINDINGS_ARB.
+    MAX_UNIFORM_BUFFER_BINDINGS.
 
     The error INVALID_VALUE is generated by BindBufferRange and BindBufferBase
-    if <index> is greater than or equal to MAX_UNIFORM_BUFFER_BINDINGS_ARB.
+    if <index> is greater than or equal to MAX_UNIFORM_BUFFER_BINDINGS.
 
     The error INVALID_VALUE is generated by BindBufferRange if <offset> is not
-    a multiple of UNIFORM_BUFFER_OFFSET_ALIGNMENT_ARB basic machine units.
+    a multiple of UNIFORM_BUFFER_OFFSET_ALIGNMENT basic machine units.
 
-    The error INVALID_ENUM is generated by GetActiveUniformsivARB and
-    GetActiveUniformBlockivARB if <pname> is not one of the accepted values.
+    The error INVALID_ENUM is generated by GetActiveUniformsiv and
+    GetActiveUniformBlockiv if <pname> is not one of the accepted values.
 
     The error INVALID_ENUM is generated by BindBufferRange and BindBufferBase
     if <target> is not an accepted indexable buffer object target.
@@ -1383,76 +1383,76 @@ New State
                                                                     Initial
     Get Value                          Type  Get Command            Value     Description                Sec    Attribute
     --------------------------         ----  -----------            -----     -------------------------  -----  ---------
-    UNIFORM_BUFFER_BINDING_ARB         Z+    GetIntegerv              0       Uniform buffer object      2.15.3 -
+    UNIFORM_BUFFER_BINDING             Z+    GetIntegerv              0       Uniform buffer object      2.15.3 -
                                                                               bound to the context for
                                                                               buffer object manipulation.
 
-    UNIFORM_BUFFER_BINDING_ARB         nxZ+  GetIntegeri_v            0       Uniform buffer object      2.15.3 -
+    UNIFORM_BUFFER_BINDING             nxZ+  GetIntegeri_v            0       Uniform buffer object      2.15.3 -
                                                                               bound to the specified
                                                                               context binding point
                                                                               
-    ACTIVE_UNIFORM_BLOCKS_ARB          Z+    GetProgramiv             0       Number of active           2.15.3 -
+    ACTIVE_UNIFORM_BLOCKS              Z+    GetProgramiv             0       Number of active           2.15.3 -
                                                                               uniform blocks in a 
                                                                               program
 
-    ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH_ARB 
+    ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH
                                        Z+    GetProgramiv             0       Length of longest active   2.15.3 -
                                                                               uniform block name
 
-    UNIFORM_TYPE_ARB                0*xZ_27  GetActiveUniformsivARB   -       Type of active uniform     2.15.3 -
+    UNIFORM_TYPE                    0*xZ_27  GetActiveUniformsiv      -       Type of active uniform     2.15.3 -
 
-    UNIFORM_SIZE_ARB                   0*xZ+ GetActiveUniformsivARB   -       Size of active uniform     2.15.3 -
+    UNIFORM_SIZE                       0*xZ+ GetActiveUniformsiv      -       Size of active uniform     2.15.3 -
     
-    UNIFORM_NAME_LENGTH_ARB            0*xZ+ GetActiveUniformsivARB   -       Uniform name length        2.15.3 -
+    UNIFORM_NAME_LENGTH                0*xZ+ GetActiveUniformsiv      -       Uniform name length        2.15.3 -
 
-    UNIFORM_BLOCK_INDEX_ARB            0*xZ  GetActiveUniformsivARB   -       Uniform block index        2.15.3 -
+    UNIFORM_BLOCK_INDEX                0*xZ  GetActiveUniformsiv      -       Uniform block index        2.15.3 -
         
-    UNIFORM_OFFSET_ARB                 0*xZ  GetActiveUniformsivARB   -       Uniform buffer offset      2.15.3 -
+    UNIFORM_OFFSET                     0*xZ  GetActiveUniformsiv      -       Uniform buffer offset      2.15.3 -
     
-    UNIFORM_ARRAY_STRIDE_ARB           0*xZ  GetActiveUniformsivARB   -       Uniform buffer array       2.15.3 -
+    UNIFORM_ARRAY_STRIDE               0*xZ  GetActiveUniformsiv      -       Uniform buffer array       2.15.3 -
                                                                               stride
 
-    UNIFORM_MATRIX_STRIDE_ARB          0*xZ  GetActiveUniformsivARB   -       Uniform buffer intra-      2.15.3 -
+    UNIFORM_MATRIX_STRIDE              0*xZ  GetActiveUniformsiv      -       Uniform buffer intra-      2.15.3 -
                                                                               matrix stride
 
-    UNIFORM_IS_ROW_MAJOR_ARB           0*xZ+ GetActiveUniformsivARB   -       Whether uniform is a       2.15.3 -
+    UNIFORM_IS_ROW_MAJOR               0*xZ+ GetActiveUniformsiv      -       Whether uniform is a       2.15.3 -
                                                                               row-major matrix
 
-    UNIFORM_BLOCK_BINDING_ARB          0*xZ+ GetActiveUniformBlockivARB  0    Uniform buffer binding     2.15.3 -
+    UNIFORM_BLOCK_BINDING              0*xZ+ GetActiveUniformBlockiv  0       Uniform buffer binding     2.15.3 -
                                                                               points associated with the
                                                                               specified uniform block
 
 
-    UNIFORM_BLOCK_DATA_SIZE_ARB        0*xZ+ GetActiveUniformBlockivARB  -    Size of the storage        2.15.3 -
+    UNIFORM_BLOCK_DATA_SIZE            0*xZ+ GetActiveUniformBlockiv  -       Size of the storage        2.15.3 -
                                                                               needed to hold this
                                                                               uniform block's data
 
 
-    UNIFORM_BLOCK_ACTIVE_UNIFORMS_ARB  0*xZ+ GetActiveUniformBlockivARB  -    Count of active            2.15.3 -
+    UNIFORM_BLOCK_ACTIVE_UNIFORMS      0*xZ+ GetActiveUniformBlockiv  -       Count of active            2.15.3 -
                                                                               uniforms in 
                                                                               the specified 
                                                                               uniform block
 
-    UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES_ARB
-                                    0*xnxZ+  GetActiveUniformBlockivARB  -    Array of active            2.15.3 -
+    UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES
+                                    0*xnxZ+  GetActiveUniformBlockiv  -       Array of active            2.15.3 -
                                                                               uniform indices of
                                                                               the specified 
                                                                               uniform block
 
-    UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER_ARB
-                                       0*xB  GetActiveUniformBlockivARB  0    TRUE if uniform block      2.15.3 -
+    UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER
+                                       0*xB  GetActiveUniformBlockiv  0       TRUE if uniform block      2.15.3 -
                                                                               is actively 
                                                                               referenced by the 
                                                                               vertex shader
 
-    UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER_ARB
-                                       0*xB  GetActiveUniformBlockivARB  0    TRUE if uniform block      2.15.3 -
+    UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER
+                                       0*xB  GetActiveUniformBlockiv  0       TRUE if uniform block      2.15.3 -
                                                                               is actively 
                                                                               referenced by the 
                                                                               geometry shader
 
-    UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER_ARB
-                                       0*xB  GetActiveUniformBlockivARB  0    TRUE if uniform block      2.15.3 -
+    UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER
+                                       0*xB  GetActiveUniformBlockiv  0       TRUE if uniform block      2.15.3 -
                                                                               is actively 
                                                                               referenced by the 
                                                                               fragment shader
@@ -1462,26 +1462,26 @@ New Implementation Dependent State
                                                                        Minimum
     Get Value                                       Type  Get Command  Value    Description                  Sec     Attribute
     --------------------------------                --    -----------  -----    -------------------------    -----   ----------
-    MAX_VERTEX_UNIFORM_BLOCKS_ARB                   Z+    GetIntegerv   12      Maximum number of vertex     2.15.3  -
+    MAX_VERTEX_UNIFORM_BLOCKS                       Z+    GetIntegerv   12      Maximum number of vertex     2.15.3  -
                                                                                 uniform buffers per 
                                                                                 program
 
-    MAX_FRAGMENT_UNIFORM_BLOCKS_ARB                 Z+    GetIntegerv   12      Maximum number of fragment   2.15.3  -
+    MAX_FRAGMENT_UNIFORM_BLOCKS                     Z+    GetIntegerv   12      Maximum number of fragment   2.15.3  -
                                                                                 uniform buffers per 
                                                                                 program
 
-    MAX_GEOMETRY_UNIFORM_BLOCKS_ARB                 Z+    GetIntegerv   12      Maximum number of geometry   2.15.3  -
+    MAX_GEOMETRY_UNIFORM_BLOCKS                     Z+    GetIntegerv   12      Maximum number of geometry   2.15.3  -
                                                                                 uniform buffers per 
                                                                                 program
 
-    MAX_COMBINED_UNIFORM_BLOCKS_ARB                 Z+    GetIntegerv   36      Maximum number of uniform    2.15.3  -
+    MAX_COMBINED_UNIFORM_BLOCKS                     Z+    GetIntegerv   36      Maximum number of uniform    2.15.3  -
                                                                                 buffers per program
 
-    MAX_UNIFORM_BUFFER_BINDINGS_ARB                 Z+    GetIntegerv   36      Maximum number of uniform    2.15.3  -
+    MAX_UNIFORM_BUFFER_BINDINGS                     Z+    GetIntegerv   36      Maximum number of uniform    2.15.3  -
                                                                                 buffer binding points
                                                                                 on the context
 
-    MAX_UNIFORM_BLOCK_SIZE_ARB                      Z+    GetIntegerv   16384   Max size in basic machine    2.15.3  -
+    MAX_UNIFORM_BLOCK_SIZE                          Z+    GetIntegerv   16384   Max size in basic machine    2.15.3  -
                                                                                 units of a uniform block
 
     MAX_VERTEX_UNIFORM_COMPONENTS                   Z+    GetIntegerv   *       Number of words for vertex   2.15.3  -
@@ -1492,31 +1492,32 @@ New Implementation Dependent State
                                                                                 shader uniform variables
                                                                                 in default uniform block
 
-    MAX_GEOMETRY_UNIFORM_COMPONENTS_ARB             Z+    GetIntegerv   *       Number of words for geometry 2.15.3  -
+    MAX_GEOMETRY_UNIFORM_COMPONENTS                 Z+    GetIntegerv   *       Number of words for geometry 2.15.3  -
                                                                                 shader uniform variables
                                                                                 in default uniform block
 
-    MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS_ARB      Z+    GetIntegerv   *       Number of words for vertex   2.15.3  -
+    MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS          Z+    GetIntegerv   *       Number of words for vertex   2.15.3  -
                                                                                 shader uniform variables
                                                                                 in all uniform blocks
                                                                                 (including default)
 
-    MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS_ARB    Z+    GetIntegerv   *       Number of words for fragment 2.15.3  -
+    MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS        Z+    GetIntegerv   *       Number of words for fragment 2.15.3  -
                                                                                 shader uniform variables
                                                                                 in all uniform blocks
                                                                                 (including default)
 
-    MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS_ARB    Z+    GetIntegerv   *       Number of words for geometry 2.15.3  -
+    MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS        Z+    GetIntegerv   *       Number of words for geometry 2.15.3  -
                                                                                 shader uniform variables
                                                                                 in all uniform blocks
                                                                                 (including default)
 
-    UNIFORM_BUFFER_OFFSET_ALIGNMENT_ARB             Z+    GetIntegerv   1       Minimum required alignment   2.15.3  -
+    UNIFORM_BUFFER_OFFSET_ALIGNMENT                 Z+    GetIntegerv   1       Minimum required alignment   2.15.3  -
                                                                                 for uniform buffer sizes
                                                                                 and offsets
 
-    * Minimum value for OpenGL 3.1 is (MAX_<stage>_UNIFORM_BLOCKS_ARB * MAX_UNIFORM_BLOCK_SIZE_ARB) + MAX_<stage>_UNIFORM_COMPONENTS. 
-      Minimum value prior to OpenGL 3.1 is MAX_<stage>_UNIFORM_COMPONENTS.
+    * Minimum value for OpenGL 3.1 is (MAX_<stage>_UNIFORM_BLOCKS *
+      MAX_UNIFORM_BLOCK_SIZE) + MAX_<stage>_UNIFORM_COMPONENTS. Minimum
+      value prior to OpenGL 3.1 is MAX_<stage>_UNIFORM_COMPONENTS.
 
 Sample Code
 
@@ -1591,34 +1592,34 @@ Sample Code
 
         //There's only one uniform block here, the 'colors0' uniform block. 
         //It contains the color info for the gooch shader.
-        uniformBlockIndex = glGetUniformBlockIndexARB(prog_id, "colors0");
+        uniformBlockIndex = glGetUniformBlockIndex(prog_id, "colors0");
         
         //We need to get the uniform block's size in order to back it with the
         //appropriate buffer
-        glGetActiveUniformBlockivARB(prog_id, uniformBlockIndex, 
-                                     GL_UNIFORM_BLOCK_DATA_SIZE_ARB, 
+        glGetActiveUniformBlockiv(prog_id, uniformBlockIndex,
+                                     GL_UNIFORM_BLOCK_DATA_SIZE,
                                      &uniformBlockSize);
         glError();
         
         //Create UBO.
-        glBindBuffer(GL_UNIFORM_BUFFER_ARB, buffer_id);
-        glBufferData(GL_UNIFORM_BUFFER_ARB, uniformBlockSize, 
+        glBindBuffer(GL_UNIFORM_BUFFER, buffer_id);
+        glBufferData(GL_UNIFORM_BUFFER, uniformBlockSize,
                      NULL, GL_DYNAMIC_DRAW);
 
         //Now we attach the buffer to UBO binding point 0...
-        glBindBufferBase(GL_UNIFORM_BUFFER_ARB, 0, buffer_id);
+        glBindBufferBase(GL_UNIFORM_BUFFER, 0, buffer_id);
         //And associate the uniform block to this binding point.
-        glUniformBlockBindingARB(prog_id, uniformBlockIndex, 0);
+        glUniformBlockBinding(prog_id, uniformBlockIndex, 0);
         glError();
 
         //To update a single uniform in a uniform block, we need to get its
         //offset into the buffer.
-        glGetUniformIndicesARB(prog_id, 1, &names[2], &index);
-        glGetActiveUniformsivARB(prog_id, 1, &index, 
-                                 GL_UNIFORM_OFFSET_ARB, &offset);
+        glGetUniformIndices(prog_id, 1, &names[2], &index);
+        glGetActiveUniformsiv(prog_id, 1, &index,
+                                 GL_UNIFORM_OFFSET, &offset);
         
-        glGetActiveUniformsivARB(prog_id, 1, &index, 
-                                 GL_UNIFORM_SIZE_ARB, &singleSize);
+        glGetActiveUniformsiv(prog_id, 1, &index,
+                                 GL_UNIFORM_SIZE, &singleSize);
         glError();
         
         glViewport(0, 0, width, height);
@@ -1636,10 +1637,10 @@ Sample Code
         glLoadIdentity();
         glTranslatef(0, 0, -4);
         glColor3f(1.0, 1.0, 1.0);
-        glBindBuffer(GL_UNIFORM_BUFFER_ARB, buffer_id);
+        glBindBuffer(GL_UNIFORM_BUFFER, buffer_id);
         //We can use BufferData to upload our data to the shader,
         //since we know it's in the std140 layout
-        glBufferData(GL_UNIFORM_BUFFER_ARB, 80, colors, GL_DYNAMIC_DRAW);
+        glBufferData(GL_UNIFORM_BUFFER, 80, colors, GL_DYNAMIC_DRAW);
         //With a non-standard layout, we'd use BufferSubData for each uniform.
         glBufferSubData(GL_UNIFORM_BUFFER_EXT, offset, singleSize, &colors[8]);
         //the teapot winds backwards
@@ -1855,7 +1856,7 @@ Issues
         in a more comprehensive way.
     
 
-    (6) Should AttachUniformBufferARB take a <program> argument?
+    (6) Should AttachUniformBuffer take a <program> argument?
 
         This issue is moot.  Earlier versions of this extension included
         the additional ability to attach a uniform buffer object directly
@@ -1868,10 +1869,10 @@ Issues
         If this routine were to be added and does not take a program
         argument, then it should work on the currently bound program
         object, and its name should be changed to
-        ProgramUniformBufferARB, to conform to precedent set by
+        ProgramUniformBuffer, to conform to precedent set by
         FramebufferTexture, et. all.
     
-        Alternately, if AttachUniformBufferARB requires a program
+        Alternately, if AttachUniformBuffer requires a program
         argument, it would be for consistency with existing C API to
         GLSL (i.e., those that attach shaders to program objects and
         query program objects for information).
@@ -1926,7 +1927,7 @@ Issues
         
         Once a program is linked, the storage needed for a given uniform
         block can be determined by querying for
-        UNIFORM_BLOCK_DATA_SIZE_ARB.
+        UNIFORM_BLOCK_DATA_SIZE.
 
         If a uniform block needs more storage than the buffer object
         bound to the associated uniform buffer binding point can provide,
@@ -1934,15 +1935,15 @@ Issues
         of an array.
         
 
-    (11) Is it an error to call AttachUniformBufferARB prior to
+    (11) Is it an error to call AttachUniformBuffer prior to
     linking the program designated by <program>?
 
         Resolved.  This issue is moot because the
-        AttachUniformBufferARB was removed/deferred to a future
+        AttachUniformBuffer was removed/deferred to a future
         extension.
 
         But if this API were added, then yes. INVALID_VALUE is generated
-        if AttachUniformBufferARB is used to attach a buffer to an
+        if AttachUniformBuffer is used to attach a buffer to an
         invalid uniform block index.  Prior to linking, there are no
         uniform block indices.
 
@@ -1979,7 +1980,7 @@ Issues
         eliminating uniforms and uniform blocks that are not used by the paired
         shaders.  Here, limitations exist only for arrays.  Dead elements may be
         stripped from the end of an array that is never dynamically
-        dereferenced.  An application must query UNIFORM_SIZE_ARB before
+        dereferenced.  An application must query UNIFORM_SIZE before
         loading array data into the uniform buffer to ensure that trailing
         elements exist.
 
@@ -1996,7 +1997,7 @@ Issues
     strides be guaranteed based on array data type for all hw platforms?
 
         Resolved: No.  The stride is provided explictly by querying
-        UNIFORM_ARRAY_STRIDE_ARB with GetActiveUniformsivARB.
+        UNIFORM_ARRAY_STRIDE with GetActiveUniformsiv.
 
 
     (15) How are the values from static initializer values propagated 
@@ -2007,10 +2008,10 @@ Issues
         established through writes to the uniform buffer.
 
     
-    (16) Is GetUniformBlockIndexARB needed?  This information can be
+    (16) Is GetUniformBlockIndex needed?  This information can be
     obtained (in reverse mapping) from GetActiveUniformBlock.
 
-        Resolved: Yes.  GetUniformBlockIndexARB allows the uniform
+        Resolved: Yes.  GetUniformBlockIndex allows the uniform
         block database to be queried in the most natural manner: step 1)
         do the expensive conversion from a uniform block name to a
         uniform block index, step 2) use the uniform block index to
@@ -2018,24 +2019,24 @@ Issues
         dereference, not a search.
 
 
-    (17) is GetUniformIndexARB needed?  This information can be obtained (in
+    (17) is GetUniformIndex needed?  This information can be obtained (in
     reverse mapping) from GetActiveUniform.
 
         Resolved: Yes.  See issue (16).
 
 
-    (18) Should we add a separate function GetActiveUniformBlockBufferSizeARB
-    instead of using GetActiveUniformBlockARB to return everything.  
+    (18) Should we add a separate function GetActiveUniformBlockBufferSize
+    instead of using GetActiveUniformBlock to return everything.
 
         Resolved: No.  This issue became moot when the more general function
-        GetActiveUniformBlockivARB was added.
+        GetActiveUniformBlockiv was added.
 
 
     (19) Should we provide a mechanism for iterating over the uniforms in a
     particular uniform block?
 
         Resolved: Yes.  This is provided by querying
-        UNIFORM_BLOCK_ACTIVE_UNIFORMS_ARB with GetActiveUniformBlockivARB.
+        UNIFORM_BLOCK_ACTIVE_UNIFORMS with GetActiveUniformBlockiv.
 
 
     (20) Should we provide a means for the application to query the desired
@@ -2075,8 +2076,8 @@ Issues
         noticed at next draw time, at the latest].
     
 
-    (23) The naming convention choosen for GetActiveUniformsivARB and
-    GetActivePartitionsivARB is not a simple matter.
+    (23) The naming convention choosen for GetActiveUniformsiv and
+    GetActivePartitionsiv is not a simple matter.
 
         First, considering that the list of uniforms passed into these
         routines must be active uniform indices, and is an error if not,
@@ -2088,8 +2089,8 @@ Issues
         parameters.  Consistency with this GLSL precedent is the reason
         we've choosen to include "Active" in these routine names.
 
-        Second, note that GetActiveUniformsivARB does not "get active
-        uniforms" and GetActiveUniformBlocksivARB does not "get active
+        Second, note that GetActiveUniformsiv does not "get active
+        uniforms" and GetActiveUniformBlocksiv does not "get active
         uniform blocks".  There is a compelling argument therefore that
         these names are counterintuitive. In reality, these routines
         return parameters of active uniforms and active uniform blocks
@@ -2115,24 +2116,24 @@ Issues
         Resolved: See above.
 
 
-    (24) Do we need to be able to query UNIFORM_START_ARB to get the index of
+    (24) Do we need to be able to query UNIFORM_START to get the index of
     the first active element of an array?
 
-        An application must query UNIFORM_SIZE_ARB to find the extent of an
+        An application must query UNIFORM_SIZE to find the extent of an
         array at runtime because the GLSL compiler may have eliminated elements
         from the end of a static array during dead code elimination.  If the
-        application is not required to similarly query UNIFORM_START_ARB, the
+        application is not required to similarly query UNIFORM_START, the
         compiler must be prevented from eliminating elements from the start of
         an array.
     
         For example, if an application declares "uniform float myFloat[10];" and
         accesses only the single element myFloat[7] in the shader text, the
-        compiler may eliminate elements 8-9 only.  Querying UNIFORM_SIZE_ARB
-        will give 8, and UNIFORM_OFFSET_ARB will give the offset of element 0.
+        compiler may eliminate elements 8-9 only.  Querying UNIFORM_SIZE
+        will give 8, and UNIFORM_OFFSET will give the offset of element 0.
     
-        If we add UNIFORM_START_ARB, in this example, querying
-        UNIFORM_SIZE_ARB will give 1, UNIFORM_START_ARB will give 7, and
-        UNIFORM_OFFSET_ARB will give the offset of element 7 in the uniform
+        If we add UNIFORM_START, in this example, querying
+        UNIFORM_SIZE will give 1, UNIFORM_START will give 7, and
+        UNIFORM_OFFSET will give the offset of element 7 in the uniform
         buffer.
     
         Purely for symmetry, it seems that the compiler should be as free to
@@ -2171,12 +2172,12 @@ Issues
     
 
     (27) What is the difference between
-    MAX_LOGICAL_UNIFORM_BUFFERS_ARB and
-    MAX_COMBINED_UNIFORM_BUFFERS_ARB?
+    MAX_LOGICAL_UNIFORM_BUFFERS and
+    MAX_COMBINED_UNIFORM_BUFFERS?
 
-        MAX_LOGICAL_UNIFORM_BUFFERS_ARB is the maximum number of
+        MAX_LOGICAL_UNIFORM_BUFFERS is the maximum number of
         uniform buffer binding points on the context.
-        MAX_COMBINED_UNIFORM_BUFFERS_ARB is the maximum number of
+        MAX_COMBINED_UNIFORM_BUFFERS is the maximum number of
         uniform buffers that any one program can use at one time.
 
         Note, see issue (46) for a related issue with textures.
@@ -2522,12 +2523,12 @@ Issues
                 SHADER_BINDING_0..n
 
             - a new routine to bind a UBO to a per-stage context binding point
-                BindUniformBufferARB(enum target, uint uniformBlockIndex, 
+                BindUniformBuffer(enum target, uint uniformBlockIndex,
                                      uint buffer);
     
             - a new routine that defines the mapping of a uniform block name
             string to a per-stage binding point index
-                void UniformBlockBindingARB(uint program, uint unit,
+                void UniformBlockBinding(uint program, uint unit,
                     const char* name);
 
 
@@ -2584,8 +2585,8 @@ Issues
         MAX_{VERTEX|GEOMETRY|FRAGMENT}_UNIFORM_COMPONENTS.
 
         
-    (37) Do we need  MAX_{VERTEX|GEOMETRY|FRAGMENT}_UNIFORM_BUFFERS_ARB
-    or can we merge these into a single value MAX_UNIFORM_BUFFERS_ARB that
+    (37) Do we need  MAX_{VERTEX|GEOMETRY|FRAGMENT}_UNIFORM_BUFFERS
+    or can we merge these into a single value MAX_UNIFORM_BUFFERS that
     is the same for the 3 stages?
     
         DISCUSSION:
@@ -2654,7 +2655,7 @@ Issues
         Note that there is no prescribed ordering in which indices must be
         assigned. In other words, which uniform block indices are assigned to
         which uniform blocks is an implementation choice. An application must
-        call GetUniformBlockIndexARB to find the mapping.
+        call GetUniformBlockIndex to find the mapping.
         
         RESOLUTION: Resolved, yes.
 
@@ -2681,14 +2682,14 @@ Issues
         alignment for the offset.  See also issue 55.
 
         Currently, we do now support this offset (via BindBufferRange) and an
-        alignment query (UNIFORM_BUFFER_OFFSET_ALIGNMENT_ARB).  The offset
+        alignment query (UNIFORM_BUFFER_OFFSET_ALIGNMENT).  The offset
         is per-context binding point state.  We probably want to pick up
         UNIFORM_BUFFER_START and UNIFORM_BUFFER_SIZE queries, too.  See issue
         (65) to track whether we add these.
 
         RESOLUTION: Resolved, there should be an offset for the base of a
         uniform block within a UBO.  If an implementation can not support
-        non-zero offsets, they can set UNIFORM_BUFFER_OFFSET_ALIGNMENT_ARB
+        non-zero offsets, they can set UNIFORM_BUFFER_OFFSET_ALIGNMENT
         to a sufficiently large value.
 
 
@@ -2703,12 +2704,12 @@ Issues
     
         Do we need these?
     
-        RESOLUTION: Resolved, we'll replace GetActiveUniformNamesARB with
-        GetActiveUniformNameARB, but keep the rest which have solid use
+        RESOLUTION: Resolved, we'll replace GetActiveUniformNames with
+        GetActiveUniformName, but keep the rest which have solid use
         cases.
 
 
-    (44) What is the default value for UNIFORM_BLOCK_BINDING_ARB?
+    (44) What is the default value for UNIFORM_BLOCK_BINDING?
 
         Having the default values be set equal to the uniform block index at
         link time would be convenient.  This would make it unnecessary
@@ -2721,7 +2722,7 @@ Issues
         RESOLUTION.  Resolved, default value is zero.
 
 
-    (45) What is the default value of UNIFORM_BLOCK_BUFFER_BINDING_ARB?  
+    (45) What is the default value of UNIFORM_BLOCK_BUFFER_BINDING?
     
         This is moot without the AttachUniformBuffer API. This was the
         query for the uniform buffer object bound directly to a uniform
@@ -2730,7 +2731,7 @@ Issues
         If we add this API in a future extension, it seems it should be
         zero. We would need for the spec to state the precedence of
         program attachments over context attachments.  I.e., if the
-        value of UNIFORM_BLOCK_BUFFER_BINDING_ARB is non-zero, then
+        value of UNIFORM_BLOCK_BUFFER_BINDING is non-zero, then
         the backing for that uniform block comes from the specified
         uniform block uniform buffer binding, otherwise it comes from
         the  unit binding, and hence from the context that is currently
@@ -2766,11 +2767,11 @@ Issues
 
         This spec tries to avoid this problem with the following queries:
         
-            MAX_VERTEX_UNIFORM_BLOCKS_ARB
-            MAX_GEOMETRY_UNIFORM_BLOCKS_ARB
-            MAX_FRAGMENT_UNIFORM_BLOCKS_ARB
-            MAX_COMBINED_UNIFORM_BLOCKS_ARB  (much like "combined" for textures)
-            MAX_UNIFORM_BUFFER_BINDINGS_ARB  (# UBO binding points on context)
+            MAX_VERTEX_UNIFORM_BLOCKS
+            MAX_GEOMETRY_UNIFORM_BLOCKS
+            MAX_FRAGMENT_UNIFORM_BLOCKS
+            MAX_COMBINED_UNIFORM_BLOCKS  (much like "combined" for textures)
+            MAX_UNIFORM_BUFFER_BINDINGS  (# UBO binding points on context)
             
         For symmetry, we'd recommend that we make a similar update to textures
         in the 3.1 spec:
@@ -2919,7 +2920,7 @@ Issues
         
 
     (52) The current extension spec seems to specify "uint" indices, but
-    the values in the queries such as GetActiveUniformBlockivARB are
+    the values in the queries such as GetActiveUniformBlockiv are
     returned as "int" values. Should we fix this?
 
         Need to double check the APIs to see if we'd have to duplicate
@@ -2954,7 +2955,7 @@ Issues
         RESOLUTION: resolved 
 
     (55) Should we use the BindBufferBase/BindBufferRange APIs that were
-    introduced in GL 3.0 instead of BindUniformBufferARB?
+    introduced in GL 3.0 instead of BindUniformBuffer?
     
         As defined, they'd work fine.
         
@@ -2965,7 +2966,7 @@ Issues
         If implementations can support the latter, it may allow
         applications to get by with fewer context bindings.
         
-        If not, then we should replace BindUniformBufferARB with
+        If not, then we should replace BindUniformBuffer with
         these routines, but for the 2.0 extension version we'd still
         need to add those routines and duplicate their spec language
         in this spec.
@@ -2990,7 +2991,7 @@ Issues
         RESOLUTION:  Resolved, not needed, the user can do this.
 
 
-    (57) Should we have MAX_UNIFORM_BUFFER_SIZE_ARB or a max size on
+    (57) Should we have MAX_UNIFORM_BUFFER_SIZE or a max size on
     uniform block data instead?
         
         The uniform buffer could be larger than the amount of uniform
@@ -2998,7 +2999,7 @@ Issues
         
         Also see issue (36).
     
-        RESOLUTION: Resolved, name is MAX_UNIFORM_BLOCK_SIZE_ARB.
+        RESOLUTION: Resolved, name is MAX_UNIFORM_BLOCK_SIZE.
         
     
     (58) Is there any expectation that uniforms stay in the order
@@ -3047,21 +3048,27 @@ Issues
         RESOLUTION: resolved, deferred for now
 
 
-    (62) Should we rename this extension from APPLE to ARB now?  And can we get
-    token assignments from the ARB pool?
+    (62) Why don't the new tokens and entry points in this extension have
+         "ARB" suffixes like other ARB extensions?
 
-        RESOLUTION: Resolved, yes.
+        RESOLVED: Unlike a normal ARB extension, this is a strict subset
+        of functionality already approved in OpenGL 3.1. This extension
+        exists only to support that functionality on older hardware that
+        cannot implement a full OpenGL 3.1 driver. Since there are no
+        possible behavior changes between the ARB extension and core
+        features, source code compatibility is improved by not using
+        suffixes on the extension.
 
 
     (63) Should we introduce a query of a program's longest uniform name length,
-    similar to the ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH_ARB query of a
+    similar to the ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH query of a
     program's longest uniform block name?
 
         RESOLUTION: Resolved, no.  ACTIVE_UNIFORM_MAX_LENGTH serves this purpose
         well enough.  No great need for a per uniform block query of the same.
 
 
-    (64) What should the UNIFORM_OFFSET_ARB query return for uniforms that
+    (64) What should the UNIFORM_OFFSET query return for uniforms that
     are associated with the default uniform block?  Same for strides?
 
         RESOLUTION: Resolved, spec'd to return -1 in these cases.
@@ -3262,8 +3269,8 @@ Issues
 
         Providing multiple queries seems like the safest choice, and doesn't
         have any significant down-side. The first stride query, between major
-        vectors of a matrix, is UNIFORM_MATRIX_STRIDE_ARB. The latter query is
-        actually the same UNIFORM_ARRAY_STRIDE_ARB query used for any type of
+        vectors of a matrix, is UNIFORM_MATRIX_STRIDE. The latter query is
+        actually the same UNIFORM_ARRAY_STRIDE query used for any type of
         array element.
 
 
@@ -3271,7 +3278,7 @@ Issues
     row-major, so an app can determine the layout without knowing how the
     matrix is declared in the shader?
 
-        RESOLVED:  Yes, UNIFORM_IS_ROW_MAJOR_ARB.
+        RESOLVED:  Yes, UNIFORM_IS_ROW_MAJOR.
 
 
     (74) What's language mechanism should be used for opting into standard
@@ -3341,7 +3348,7 @@ Issues
         Future versions of OpenGL/GLSL may choose to provide additional sets of
         canonical packing rules that may end up being more compact.
 
-    (76) When using the standard layout, how is UNIFORM_BLOCK_DATA_SIZE_ARB
+    (76) When using the standard layout, how is UNIFORM_BLOCK_DATA_SIZE
     determined?
 
       RESOLVED:  The data size returned by the query is derived by taking the
@@ -3355,6 +3362,12 @@ Issues
 
 
 Revision History
+
+    (v62, 2009-03-26, jon)
+        - Remove ARB suffixes for consistency with other extensions
+          simultaneously introduced with new GL core features, intended
+          to enable those features in older drivers.
+
     (v61, 2009-02-16, benj)
         - pickup latest changes to GLSL language
 
@@ -3381,7 +3394,7 @@ Revision History
         - change _STAGE to _SHADER in UNIFORM_BLOCK_REFERENCED_BY token names
         - silently ignore INVALID_INDEX_ARB in GetActiveUniformsivARB
         - clarify that matrices in the default uniform block return 0 for
-          UNIFORM_IS_ROW_MAJOR_ARB
+          UNIFORM_IS_ROW_MAJOR
         - Replace Draw* with Begin or commands that perform an implicit Begin
           since the extension is written against GL 2.1
 
