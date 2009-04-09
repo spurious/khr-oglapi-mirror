@@ -56,8 +56,8 @@ Status
 
 Version
 
-    Last Modified Date: March 12, 2009
-    Revision: #29
+    Last Modified Date: March 31, 2009
+    Revision: #30
 
 Number
 
@@ -209,13 +209,15 @@ Overview
     
     This extension differs from EXT_framebuffer_object by splitting the
     framebuffer object binding point into separate DRAW and READ
-    bindings.  This allows copying directly from one framebuffer to
-    another.  In addition, a new high performance blit function is
-    added to facilitate these blits and perform some data conversion
-    where allowed.
+    bindings (incorporating functionality introduced by
+    EXT_framebuffer_blit). This allows copying directly from one
+    framebuffer to another. In addition, a new high performance blit
+    function is added to facilitate these blits and perform some data
+    conversion where allowed.
  
     This extension also enables usage of multisampling in conjunction with
-    renderbuffers, as follows:
+    renderbuffers (incorporating functionality from
+    EXT_packed_depth_stencil), as follows:
 
     The new operation RenderbufferStorageMultisample() allocates
     storage for a renderbuffer object that can be used as a multisample
@@ -284,7 +286,8 @@ Overview
     resolve operation, we avoid both of these problems.
     
     This extension also enables usage of packed depth-stencil formats in 
-    renderbuffers, as follows:
+    renderbuffers (incorporating functionality from
+    EXT_packed_depth_stencil), as follows:
 
     Many OpenGL implementations have chosen to interleave the depth and
     stencil buffers into one buffer, often with 24 bits of depth
@@ -673,7 +676,7 @@ Additions to Chapter 2 of the 2.1 Specification (OpenGL Operation)
 
     It is possible to use a GL context <without> a default framebuffer, in
     which case a framebuffer object must be used to perform all rendering.
-    This is useful for applications neeting to perform <offscreen
+    This is useful for applications needing to perform <offscreen
     rendering>."
 
 
@@ -771,7 +774,7 @@ Additions to Chapter 3 of the OpenGL 2.1 Specification (Rasterization)
     same values as the corresponding argument of ColorTable, with the
     exception of the values 1, 2, 3, and 4."
 
-    In section 3.6.3 "Pixel Transfer Modes", update the sectiond paragraph
+    In section 3.6.3 "Pixel Transfer Modes", update the second paragraph
     in the subsection titled "Minmax Table Specification", in the definition
     of Minmax to say:
 
@@ -1049,8 +1052,7 @@ Additions to Chapter 3 of the OpenGL 2.1 Specification (Rasterization)
         NEAREST_MIPMAP_LINEAR, LINEAR_MIPMAP_NEAREST, or
         LINEAR_MIPMAP_LINEAR, and the value of
         FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL for attachment point
-        <A> is within the the inclusive range from TEXTURE_BASE_LEVEL to
-        q."
+        <A> is within the inclusive range from TEXTURE_BASE_LEVEL to q."
 
     In subsection "Automatic Mipmap Generation" to section 3.8.8,
     replace the first paragraph with the following text and footnote:
@@ -1327,7 +1329,7 @@ Operations and the Framebuffer)
     for writing.  Specifying COLOR_ATTACHMENTi enables drawing only
     to the image attached to the framebuffer at COLOR_ATTACHMENTi.
     Each COLOR_ATTACHMENTi adheres to COLOR_ATTACHMENTi =
-    COLOR_ATTACHMENT0 + i.  The intial value of DRAW_BUFFER for
+    COLOR_ATTACHMENT0 + i.  The initial value of DRAW_BUFFER for
     application-created framebuffer objects is COLOR_ATTACHMENT0.
 
 
@@ -2421,7 +2423,7 @@ Operations and the Framebuffer)
           of NEAREST_MIPMAP_NEAREST, NEAREST_MIPMAP LINEAR, LINEAR
           MIPMAP_NEAREST, or LINEAR_MIPMAP_LINEAR, and the value of
           FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL for attachment point
-          <A> is within the the range specified by the current values of
+          <A> is within the range specified by the current values of
           TEXTURE_BASE_LEVEL to q, inclusive, for the texture object
           <T>.  (q is defined in the Mipmapping discussion of section
           3.8.8),
@@ -2469,8 +2471,9 @@ Operations and the Framebuffer)
     attachment points to which it can be attached.
 
         * The following base internal formats from table 3.15 are
-          <color-renderable>: ALPHA, RED, RG, RGB, RGBA, FLOAT_R_NV,
-          FLOAT_RG_NV, FLOAT_RGB_NV, and FLOAT_RGBA_NV. The sized
+          <color-renderable>: ALPHA, LUMINANCE, LUMINANCE_ALPHA,
+          INTENSITY, RED, RG, RGB, RGBA, FLOAT_R_NV, FLOAT_RG_NV,
+          FLOAT_RGB_NV, and FLOAT_RGBA_NV. The sized
           internal formats from table 3.16 that have a color-renderable
           base internal format are also color-renderable. No other
           formats, including compressed internal formats, are
@@ -2529,7 +2532,7 @@ Operations and the Framebuffer)
     4.4.4.
 
     The framebuffer object <target> is said to be "framebuffer complete" if
-    all the following conditons are true:
+    all the following conditions are true:
 
       * <target> is the default framebuffer, and the default framebuffer
         exists.
@@ -3490,7 +3493,7 @@ GLX Protocol
             2        24              rendering command length
             2        4321            rendering command opcode
             4        ENUM            target
-            4        ENUM            attachement
+            4        ENUM            attachment
             4        ENUM            textarget
             4        CARD32          texture
             4        CARD32          level
@@ -3499,7 +3502,7 @@ GLX Protocol
             2        24              rendering command length
             2        4322            rendering command opcode
             4        ENUM            target
-            4        ENUM            attachement
+            4        ENUM            attachment
             4        ENUM            textarget
             4        CARD32          texture
             4        CARD32          level
@@ -3508,7 +3511,7 @@ GLX Protocol
             2        28              rendering command length
             2        4323            rendering command opcode
             4        ENUM            target
-            4        ENUM            attachement
+            4        ENUM            attachment
             4        ENUM            textarget
             4        CARD32          texture
             4        CARD32          level
@@ -3518,7 +3521,7 @@ GLX Protocol
             2        24              rendering command length
             2        237             rendering command opcode
             4        ENUM            target
-            4        ENUM            attachement
+            4        ENUM            attachment
             4        CARD32          texture
             4        CARD32          level
             4        CARD32          layer
@@ -4248,9 +4251,9 @@ Issues
         formats?
         
         RESOLVED. The values of RED_BITS, GREEN_BIT, BLUE_BITS and
-        ALPHA_BITS are only defined if all color attachements of the draw
+        ALPHA_BITS are only defined if all color attachments of the draw
         framebuffer have identical formats, in which case the color
-        component sizes of color attachement zero are return. This is
+        component sizes of color attachment zero are return. This is
         necessary for backwards compatibility with EXT_framebuffer_object.
         The actual sizes of the color, depth, or stencil bit planes can be
         obtained by querying an attachment point using
@@ -4275,7 +4278,7 @@ Issues
         provided has not been generated by GenFramebuffer. That error did
         not exist in EXT_framebuffer_object, and this extension does not
         modify the behavior of BindFramebufferEXT. This difference also
-        applies to BindRenderbuffer from this extension vs
+        applies to BindRenderbuffer from this extension vs.
         BindRenderbufferEXT from EXT_framebuffer_object.
  
     (8) Why don't the new tokens and entry points in this extension have
@@ -4288,6 +4291,54 @@ Issues
         possible behavior changes between the ARB extension and core
         features, source code compatibility is improved by not using
         suffixes on the extension.
+
+    (9) Should color-renderable textures be limited to a subset of
+        color base internal formats?
+
+        RESOLVED:  No, all color base internal formats and
+        sized internal formats should be supported by FBO; the FBO
+        status can report what works and doesn't work.
+
+        The glCheckFramebufferStatus provides a mechanism for FBOs to
+        report whether or not the FBO configuration is supported or
+        not (i.e. GL_FRAMEBUFFER_UNSUPPORTED).  If implementations
+        have issues supporting certain color formats for rendering,
+        the existing FBO mechanism is sufficient to report their lack
+        of support.
+
+        Prior to revision 29, the list of color-renderable base internal
+        formats did not include LUMINANCE, LUMINANCE_ALPHA, or INTENSITY
+        (and the EXT version of FBO did not list ALPHA either).
+
+        This lead to inconsistent operation of FBO.  For example, you
+        could use a glFramebufferTexture2D to attach a texture that
+        was LUMINANCE, LUMINANCE_ALPHA, or INTENSITY to an FBO and find
+        out via glCheckFramebufferStatus that this combination wasn't
+        considered color-renderable, but if an internal format for one of
+        these base internal formats was used with glRenderbufferStorage,
+        then an OpenGL error would be generated according to the
+        specification.  Such inconsistencies are undesirable and
+        unnecessarily limit the render-to-texture functionality exposed by
+        some implementations when hardware capable of rendering to
+        LUMINANCE, LUMINANCE_ALPHA, and INTENSITY textures does exist.
+
+        For this reason, revision 29 (specification version 1.1) adds
+        these previously missing based internal formats.  Developers are
+        warned that some implementations (specification version 1.0)
+        will report OpenGL errors if glRenderbufferStorage is called for
+        LUMINANCE, INTENSITY, LUMINANCE_ALPHA formats (or even possibly
+        ALPHA in the case of the EXT version of FBO).
+
+        Some thought was given to introducing a new, one-off extension
+        (instead of a version 1.1) to allow the LUMINANCE, INTENSITY,
+        LUMINANCE_ALPHA base internal formats and their respective
+        sized formats to be color-renderable (both otherwise introduce
+        no new API).  Given the existence of a mechanism for determine
+        whether or not an FBO is supported, simply providing this version
+        1.1 clarification was judged to be the most expedient approach.
+        This approach also provides consistency with other approved
+        ARB specifications such as ARB_framebuffer_sRGB which describes
+        (see its issue #9) that formats such as GL_SLUMINANCE8.
 
 Revision History
 
@@ -4459,3 +4510,7 @@ Revision History
           language, including removing the completeness requirement that all
           color buffers of an FBO be the same depth. Reflow some text for
           readability.
+
+    #30 March 31, 2009: Mark Kilgard & Jeff Juliano
+        - Change color-renderable to be any color texture format.
+          Fix some typos.
