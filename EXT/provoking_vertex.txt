@@ -11,10 +11,13 @@ Contributors
     Cynthia Allison, NVIDIA
     Gregory Roth, NVIDIA
     Daniel Koch, TransGaming
-    Jason Green, TransGaming
     Gavriel State, TransGaming
+    Jason Green, TransGaming
+    Ian Romanick, Intel
+    Marcus Steyer, NVIDIA
     Pat Brown, NVIDIA
     Stefan Dosinger, CodeWeavers
+    Henri Verbeet, CodeWeavers
 
 Contact
 
@@ -26,8 +29,8 @@ Status
 
 Version
 
-    Last Modified Date:  March 12, 2009
-    Version:             9
+    Last Modified Date:  March 26, 2009
+    Version:             10
 
 Number
 
@@ -40,6 +43,10 @@ Dependencies
 
     ARB_geometry_shader4, EXT_geometry_shader4, NV_geometry_shader4,
     and NV_gpu_program4 interact with this extension
+
+    EXT_transform_feedback, NV_transform_feedback, and the transform
+    feedback functionality made core by OpenGL 3.0 are clarified by
+    this extension.
 
 Overview
 
@@ -120,7 +127,7 @@ Additions to Chapter 2 of the OpenGL 2.1 Specification (OpenGL Operation)
     last vertex convention for quad primitives (and, in this case,
     return false for QUADS_FOLLOW_PROVOKING_VERTEX_EXT).
 
-    ShadeModel and ProvokingVertex each require one bit of state.
+    ShadeModel and ProvokingVertexEXT each require one bit of state.
 
                                      First vertex  Last vertex
         Primitive type of polygon i  convention    convention
@@ -191,6 +198,17 @@ NV_geometry_shader4, and/or NV_gpu_program4:
     NV_geometry_shader4, or NV_gpu_program4 are supported, ignore
     the rows of table 2.12 for line adjacency, line strip adjacency,
     triangle adjacency, and triangle strip adjacency.
+
+Dependencies on EXT_transform_feedback, NV_transform_feedback, and/or the
+transform feedback functionality integrated into the core by OpenGL 3.0:
+    
+    Clarify the statement describing when transform feedback occurs
+    (in section 2.18 of the OpenGL 3.1 specification) to read:
+
+    "The vertices are fed back after vertex color clamping, but before
+    flatshading and clipping."
+
+    (The "flatshading and" phrase is newly clarifying.)
 
 GLX Protocol
 
@@ -293,9 +311,9 @@ Issues
     4.  What token names for the provoking vertex conventions should
         be used?
 
-        RESOLVED:  FIRST_VERTEX_CONVENTION_EXT and
-        LAST_VERTEX_CONVENTION_EXT (the initial state, consistent with
-        OpenGL's unextended operation).
+        RESOLVED:  GL_FIRST_VERTEX_CONVENTION_EXT and
+        GL_LAST_VERTEX_CONVENTION_EXT (the initial state, consistent
+        with OpenGL's unextended operation).
 
         The word "convention" is used because (see issue #2), the "first
         vertex" or "last vertex" rules are not iron-clad as they may or
@@ -331,7 +349,7 @@ Issues
 
         Direct3D does not support line loops.
 
-    7.  How should are triangle fans handled?
+    7.  How are triangle fans handled?
 
         RESOLVED:  The first vertex of a triangle fan is the spoke vertex.
         Triangle fans in GL_FIRST_VERTEX_CONVENTION_EXT mode should use
@@ -376,7 +394,7 @@ Issues
         to Direct3D's "first vertex provokes" convention for line and
         triangle output primitives from a geometry shader.  So matching
         the DirectX 10 geometry shader behavior for flat shading requires
-        setting the provoking vertex to GL_ FIRST_VERTEX_CONVENTION_EXT.
+        setting the provoking vertex to GL_FIRST_VERTEX_CONVENTION_EXT.
 
         This said, the OpenGL default convention of "last vertex" for the
         provoking vertex tends to be more useful for geometry shaders.
@@ -500,16 +518,16 @@ Issues
 
         The GLSL 1.30 specification says "This variable [qualified as
         flat] will come from a single provoking vertex, as described by
-        the OpenGL Graphics System Specification."  This extension ammends
+        the OpenGL Graphics System Specification."  This extension amends
         how the provoking vertex is described so no GLSL specification
         update is required.  This does imply that user-declared varyings
         in a GLSL shader declared with "flat" will have the provoking
         vertex convention applied to determine their value.
 
-    17. How is the provoking vertex apply to Direct3D 10?
+    17. How does the provoking vertex apply to Direct3D 10?
 
         RESOLVED:  Direct3D 10 has deprecated the D3DSHADEMODE state for
-        controlling flat or smooth (gouaud) shading.  However there is
+        controlling flat or smooth (Gouraud) shading.  However there is
         still the concept of a provoking vertex (called the "leading
         vertex" by Direct3D 10) which still corresponds to this
         extension's "first vertex" convention.
@@ -527,14 +545,74 @@ Issues
         to be specified for fragment program inputs.  The NV_gpu_program4
         specification says "If an attribute is flat-shaded, it will be
         taken from the output attribute of the provoking vertex of the
-        primitive using the same data type." This extension ammends
+        primitive using the same data type." This extension amends
         how the provoking vertex is described so no NV_gpu_program4
         specification update is required.
+
+    19. How does this extension interact with transform feedback?
+
+        RESOLVED:  Attribute components written out by transform feedback
+        are NOT affected by the flatshading or provoking vertex state.
+
+        While this specification is written against OpenGL 2.1, transform
+        feedback was made core functionality with OpenGL 3.0 and then
+        the order of the transform feedback was moved in the OpenGL
+        3.1 specification.  Therefore the subsequent discussion uses
+        the more recent 3.1 sectioning.
+
+        Specifically the OpenGL 3.1 specification (section 2.18: Transform
+        Feedback) says "The vertices are fed back after vertex color
+        clamping, but before clipping."
+
+        This statement is unclear because flatshading (section 2.13.7:
+        Flatshading) happens inbetween vertex color clamping (section
+        2.13.6: Clamping or Masking) and primitive clipping (section 2.20:
+        Primitive Clipping).
+
+        Base on this issue the sentence is clarified to read: "The
+        vertices are fed back after vertex color clamping, but before
+        [flatshading and] clipping."
+
+        For reference, the original EXT_transform_feedback extension has
+        this same language ("The vertices are fed back after vertex color
+        clamping, but before clipping.") but follows that sentence with:
+        "If a geometry shader is active, the vertices recorded are those
+        emitted from the geometry shader."  Technically geometry shading
+        takes place prior to even vertex color clamping.
+
+        Clearly flat shading needs to happen prior to clipping so that
+        clipped vertices can share the flat shaded attributes of the
+        primitive prior to any potential clipping.
+
+        This resolution is consistent with DirectX 10's behavior.
+        Technically, DirectX 10 says that vertices output through
+        transform feedback (which DirectX 10 calls "stream output")
+        only have to be defined for constant attributes of the primitive's
+        leading vertex (constant attributes are those that OpenGL would
+        call flatshaded).  Other constant attributes for non-leading
+        vertices may be undefined.  Leaving such constant attributes
+        undefined is undesirable, particularly given how OpenGL operates.
+        It is well-defined and more useful to simply output the value
+        of the vertex's attribute prior to any flatshading.  This is
+        particularly desirable for OpenGL because with this extension
+        (and even prior to supporting this extension), the provoking
+        vertex is not always the leading vertex.
+
+        To clarify further, while this resolution is consistent with
+        DirectX 10, an OpenGL implementation that supports transform
+        feedback has no undefined behavior specified.  The simplest way
+        to describe what happens is that attribute components written
+        out by transform feedback are the attribute component values
+        of vertices AFTER (optional) geometry shading and vertex color
+        clamping but PRIOR to flatshading and primitive clipping.
 
 Revision History
 
     Rev.    Date    Author     Changes
     ----  -------- ---------  --------------------------------------------
+     11   4/17/09  mjk        grammar and typo fixes
+     10   3/26/09  mjk        typo fixes, more contributors listed, clarify
+                              transform feedback interaction
       9   3/12/09  mjk        dependencies on geometry shading extensions
       8   3/11/09  mjk        Fix issues 2, 4 & 7, add issues 16, 17, & 18
       7   3/7/09   mjk        Fix line adj typo, re-order table
