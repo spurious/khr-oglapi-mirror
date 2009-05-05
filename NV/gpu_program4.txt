@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Date:         07/29/2008
-    NVIDIA Revision:            7
+    Last Modified Date:         08/11/2008
+    NVIDIA Revision:            8
 
 Number
 
@@ -3392,6 +3392,10 @@ Additions to Chapter 2 of the OpenGL 1.5 Specification (OpenGL Operation)
     MOD supports both signed and unsigned integer data type modifiers.  If no
     data type modifier is specified, both operands and the result are treated
     as signed integers.
+    
+    A result component is undefined if the corresponding component of the
+    first operand is negative or if the second operand is less than or equal
+    to zero.
 
 
     Section 2.X.8.Z, MOV:  Move
@@ -6072,6 +6076,10 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  --------------------------------------------
+     8    08/11/08  jbreton   Clarified that when a MOD instruction is 
+                              performed on negative operands the result is 
+                              undefined.
+                               
      7    07/29/08  pbrown    Discovered additional issues with texture wrap 
                               handling, replaced with logic that applies wrap
                               modes per sample.  Add a few instruction

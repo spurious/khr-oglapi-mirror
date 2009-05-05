@@ -19,8 +19,8 @@ Status
 
 Version
 
-    Last Modified Date:         07/29/2008
-    Author revision:            14
+    Last Modified Date:         04/09/2009
+    Author revision:            15
 
 Number
 
@@ -498,7 +498,7 @@ Operation)
     level, excluding a possible border, are then returned. If the computed
     texture image level is outside the range [level_base, level_max], the
     results are undefined. When querying the size of an array texture, both
-    the dimensions and the layer index are returned. Note that buffer textures
+    the dimensions and the layer count are returned. Note that buffer textures
     do not support mipmapping, therefore the previous lod discussion does not
     apply to buffer textures
 
@@ -2289,6 +2289,9 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     15   04/09/09  pbrown    Fixed a typo in the texture size query spec
+                              language - returns a layer count, not "index".
+
      14   07/29/08  pbrown    Discovered additional issues with texture wrap 
                               handling, replaced with logic that applies wrap
                               modes per sample.

@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Date:         07/29/2008
-    NVIDIA Revision:            10
+    Last Modified Date:         03/11/09
+    NVIDIA Revision:            11
 
 Number
 
@@ -906,15 +906,15 @@ Additions to Chapter 2 of the OpenGL 1.5 Specification (OpenGL Operation)
     EMIT        - - - - - -  -          -    emit vertex
     ENDPRIM     - - - - - -  -          -    end of primitive
 
-    (add the following subsection to section 2.X.5, Program Options.)
+    (add the following subsection to section 2.X.6, Program Options.)
 
-    Section 2.X.5.Y, Geometry Program Options
+    Section 2.X.6.Y, Geometry Program Options
 
     No options are supported at present for geometry programs.
 
-    (add the following subsection to section 2.X.6, Program Declarations.)
+    (add the following subsection to section 2.X.7, Program Declarations.)
 
-    Section 2.X.6.Y, Geometry Program Declarations
+    Section 2.X.7.Y, Geometry Program Declarations
 
     Geometry programs support three types of declaration statements, as
     described below.  Each of the three must be included exactly once in the
@@ -939,9 +939,9 @@ Additions to Chapter 2 of the OpenGL 1.5 Specification (OpenGL Operation)
     positive integer.  A vertex program that emits more than the specified
     number of vertices may terminate abnormally.
 
-    (add the following subsections to section 2.X.7, Program Instruction Set.)
+    (add the following subsections to section 2.X.8, Program Instruction Set.)
 
-    Section 2.X.7.Z, EMIT:  Emit Vertex
+    Section 2.X.8.Z, EMIT:  Emit Vertex
 
     The EMIT instruction emits a new vertex to be added to the current output
     primitive of a geometry program.  The attributes of the emitted vertex are
@@ -949,7 +949,7 @@ Additions to Chapter 2 of the OpenGL 1.5 Specification (OpenGL Operation)
     EMIT instruction completes, a new vertex is started and all result
     variables become undefined.
 
-    Section 2.X.7.Z, ENDPRIM:  End of Primitive
+    Section 2.X.8.Z, ENDPRIM:  End of Primitive
 
     A geometry program can emit multiple primitives in a single invocation.
     The ENDPRIM instruction is used in a geometry program to signify the end
@@ -1927,6 +1927,9 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  --------------------------------------------
+    11    03/11/09  pbrown    Fix section numbers for option/declaration
+                              sections.
+
     10    07/29/08  pbrown    Clean up garbled language describing vertex
                               output limits.
 

@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Date:         10/06/06
-    NVIDIA Revision:            5
+    Last Modified Date:         03/11/09
+    NVIDIA Revision:            6
 
 Number
 
@@ -512,9 +512,9 @@ Additions to Chapter 2 of the OpenGL 2.0 Specification (OpenGL Operation)
     active, the vertex program must write "result.id" or the vertex ID number
     is undefined.
 
-    (add the following subsection to section 2.X.5, Program Options.)
+    (add the following subsection to section 2.X.6, Program Options.)
 
-    Section 2.X.5.Y, Vertex Program Options
+    Section 2.X.6.Y, Vertex Program Options
 
     + Position-Invariant Vertex Programs (ARB_position_invariant)
 
@@ -534,9 +534,9 @@ Additions to Chapter 2 of the OpenGL 2.0 Specification (OpenGL Operation)
     instructions it contains exceeds the implementation-dependent limit minus
     four.
 
-    (add the following subsection to section 2.X.6, Program Declarations.)
+    (add the following subsection to section 2.X.7, Program Declarations.)
 
-    Section 2.X.6.1, Vertex Program Declarations
+    Section 2.X.7.Y, Vertex Program Declarations
 
     No declarations are supported at present for vertex programs.
 
@@ -816,4 +816,9 @@ Issues
 
 Revision History
 
-    None
+    Rev.    Date    Author    Changes
+    ----  --------  --------  --------------------------------------------
+     6    03/11/09  pbrown    Fix section numbers for option/declaration
+                              sections.
+
+    1-5             pbrown    Internal spec development.

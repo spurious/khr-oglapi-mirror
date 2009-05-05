@@ -41,7 +41,8 @@ Version
 
 Number
 
-    222
+    OpenGL Extension #222
+    OpenGL ES Extension #52
 
 Dependencies
 
