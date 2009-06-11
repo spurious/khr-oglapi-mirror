@@ -56,8 +56,8 @@ Status
 
 Version
 
-    Last Modified Date: March 31, 2009
-    Revision: #30
+    Last Modified Date: May 27, 2009
+    Revision: #31
 
 Number
 
@@ -3228,9 +3228,9 @@ New State
                                                                                                                 attached, if object
                                                                                                                 attached is texture.
 
-    FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE  Z+      GetFramebufferAttachmentParameteriv    TEXTURE_       cubemap face of         4.4.2.2 and   -
-                                                                                                 CUBE_MAP_      texture image           4.4.2.3
-                                                                                                 POSITIVE_X     attached, if object
+    FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE  Z+      GetFramebufferAttachmentParameteriv    NONE           cubemap face of         4.4.2.2 and   -
+                                                                                                                texture image           4.4.2.3
+                                                                                                                attached, if object
                                                                                                                 attached is cubemap
                                                                                                                 texture.
 
@@ -4514,3 +4514,7 @@ Revision History
     #30 March 31, 2009: Mark Kilgard & Jeff Juliano
         - Change color-renderable to be any color texture format.
           Fix some typos.
+
+    #31 May 27, 2009: Jon Leech
+        - Change default value of FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE
+          to NONE (bug 4407).
