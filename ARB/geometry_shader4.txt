@@ -47,6 +47,8 @@ Dependencies
 
     This extension interacts with ARB_tranform_feedback.
 
+    This extension interacts with geometry shader support in OpenGL 3.2.
+
 Overview
 
     ARB_geometry_shader4 defines a new shader type available to be run on the
@@ -1333,6 +1335,58 @@ Dependencies on ARB_texture_buffer_object
     INVALID_OPERATION error if a buffer texture is passed to
     FramebufferTextureARB should be removed.
 
+Dependencies on OpenGL 3.2
+
+    If this extension and OpenGL 3.2 (and GLSL 1.50) are supported, two
+    slightly different versions of geometry shader support are available.
+
+    In this extension, the input and output primitive types and maximum output
+    vertex count are specified prior to linking, using the
+    ProgramParameteriARB command.  However, OpenGL 3.2 requires that these
+    properties be specified using the "layout" modifier in geometry shader
+    source and provides no program paramter state.  For implementations
+    supporting both features, there are potentially two different ways to set
+    these properties prior to linking a program.  If no geometry shader
+    enables this extension via "#extension", all three properties must be
+    specified in shader source as required by OpenGL 3.2.  Otherwise, these
+    properties need not be specified in source code, but still may be if
+    #version 150 or better is enabled.  If a given property is specified in
+    geometry shader source, the value from the source code is used; otherwise,
+    the value of the program parameter state is used.
+
+    Additionally, OpenGL 3.2 and ARB_geometry_shader have similarly-named
+    queries for the input and output primitive type and maximum vertex count.
+    In particular, the commands
+
+      glGetProgramiv(program, GL_GEOMETRY_VERTICES_OUT_ARB, &verticesOut);
+      glGetProgramiv(program, GL_GEOMETRY_INPUT_TYPE_ARB,   &inputType);
+      glGetProgramiv(program, GL_GEOMETRY_OUTPUT_TYPE_ARB,  &outputType);
+
+    query the program parameter state provided by this extension.  If the
+    program parameter state is changed without relinking, the new values will
+    be returned, even though old values will be in effect when the program is
+    used.  These queries are not supported by unextended OpenGL 3.2.  Instead,
+    OpenGL 3.2 supports the following queries:
+
+      glGetProgramiv(program, GL_GEOMETRY_VERTICES_OUT, &verticesOut);
+      glGetProgramiv(program, GL_GEOMETRY_INPUT_TYPE,   &inputType);
+      glGetProgramiv(program, GL_GEOMETRY_OUTPUT_TYPE,  &outputType);
+
+    The OpenGL 3.2 queries return the properties established when the program
+    is linked, and ignore the program parameter state.  Despite the very
+    similar names, there is no conflict -- neither the enumerant names nor the
+    values are exactly the same.
+
+    If OpenGL 3.2 is supported and layered framebuffer attachments are used,
+    the requirement that all layer counts match is removed and the
+    FRAMEBUFFER_INCOMPLETE_LAYER_COUNT_ARB error condition will never be
+    generated.  Instead, rendering will use the minimum layer count for all
+    attachments as specified by OpenGL 3.2.  This change was made for
+    consistency with OpenGL 3.0's framebuffer object support, which similarly
+    lifted the requirement that framebuffer attachments have matching widths
+    and heights.
+
+
 GLX protocol
 
     TBD
@@ -2514,6 +2568,8 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     23   06/30/09  pbrown    Add interaction with OpenGL 3.2.
+
      22   08/07/08  jleech    Strip ARB suffix from a few tokens already
                               in OpenGL 3.0 (see issue 35).
 
