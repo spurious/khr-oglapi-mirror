@@ -126,7 +126,9 @@ Extension Numbers
 356		NVIDIA,Id Software
 357-358		NVIDIA
 359-363		AMD
-364             NVIDIA,TransGaming
+364		NVIDIA,TransGaming
+365-366		AMD
+367-372		APPLE
 
 GLU Enumerants
 ==============
