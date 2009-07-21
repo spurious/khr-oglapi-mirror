@@ -27,8 +27,6 @@ Status
 Version
 
     Last Modified Date: June 23, 2009
-    $Date: 2009/04/29 $ $Revision: #13 $
-    $Id: //sw/main/docs/OpenGL/specs/GL_EXT_texture_lod_bias.txt#13 $
 
 Number
 

@@ -19,8 +19,8 @@ Status
 
 Version
 
-    Last Modified Date:         07/29/2008
-    NVIDIA Revision:            20
+    Last Modified Date:         07/21/2009
+    NVIDIA Revision:            21
 
 Number
 
@@ -1244,12 +1244,12 @@ Dependencies on EXT_framebuffer_object
     framebuffer is not layered.
 
     When fragments are written to a layered framebuffer, the fragment's layer
-    number selects an image from the array of images at each attachment point
-    from which to obtain the destination R, G, B, A values for blending
-    (Section 4.1.8) and to which to write the final color values for that
-    attachment.  If the fragment's layer number is negative or greater than
-    the number of layers attached, the effects of the fragment on the
-    framebuffer contents are undefined.
+    number selects a single image from the array of images at each attachment
+    point to use for the stencil test (section 4.1.5), depth buffer test
+    (section 4.1.6), and for blending and color buffer writes (section 4.1.8).
+    If the fragment's layer number is negative or greater than the number of
+    layers attached, the effects of the fragment on the framebuffer contents
+    are undefined.
 
     When the Clear command is used to clear a layered framebuffer attachment,
     all layers of the attachment are cleared.
@@ -2507,6 +2507,10 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     21   07/21/09  pbrown    Clarify that when doing layered rendering,
+                              a layer specified in the shader is used to
+                              select the depth and stencil layers accessed.
+
      20   07/29/08  pbrown    Minor typo fix.
 
      19   04/04/08  pbrown    Changed MAX_GEOMETRY_TEXTURE_IMAGE_UNITS_EXT

@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Date:         03/11/09
-    NVIDIA Revision:            5
+    Last Modified Date:         05/26/09
+    NVIDIA Revision:            6
 
 Number
 
@@ -546,11 +546,11 @@ Additions to Chapter 2 of the OpenGL 2.0 Specification (OpenGL Operation)
     passes.  A fragment killed by the KIL instruction is discarded, and will
     not be seen by subsequent stages of the pipeline.
 
-    A KIL instruction may be specified using either a floating-point vector
-    operand or a condition code test.  
+    A KIL instruction may be specified using either a floating-point or
+    integer vector operand or a condition code test.
 
-    If a floating-point vector is provided, the fragment is discarded if any
-    of its components are negative:
+    If a floating-point or integer vector is provided, the fragment is
+    discarded if any of its components are negative:
 
       tmp = VectorLoad(op0);
       if ((tmp.x < 0) || (tmp.y < 0) || 
@@ -558,6 +558,9 @@ Additions to Chapter 2 of the OpenGL 2.0 Specification (OpenGL Operation)
       {
           exit;
       }
+
+    Unsigned integer vector operands are permitted; however, KIL.U will have
+    no effect as no component is negative by definition.
 
     If a condition code test is provided, the fragment is discarded if any
     component of the test passes:
@@ -568,8 +571,7 @@ Additions to Chapter 2 of the OpenGL 2.0 Specification (OpenGL Operation)
          exit;
       }
 
-    KIL supports no data type modifiers.  If a vector operand is provided, it
-    must have floating-point components.
+    KIL supports all three data type modifiers.
 
     KIL is available only to fragment programs.
 
@@ -802,6 +804,10 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  --------------------------------------------
+     6    05/26/09  pbrown    Fix documentation of KIL to support integer
+                              operands, as indicated in the opcodes table
+                              in NV_gpu_program4.
+
      5    03/11/09  pbrown    Fix section numbers for option/declaration
                               sections.
 

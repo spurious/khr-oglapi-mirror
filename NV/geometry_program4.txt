@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Date:         03/11/09
-    NVIDIA Revision:            11
+    Last Modified Date:         07/21/09
+    NVIDIA Revision:            12
 
 Number
 
@@ -102,9 +102,13 @@ New Procedures and Functions
 
 New Tokens
 
-    Accepted by the <cap> parameter of Disable, Enable, and IsEnabled, and by
+    Accepted by the <cap> parameter of Disable, Enable, and IsEnabled, by
     the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv, and
-    GetDoublev:
+    GetDoublev, and by the <target> parameter of ProgramStringARB,
+    BindProgramARB, ProgramEnvParameter4[df][v]ARB,
+    ProgramLocalParameter4[df][v]ARB, GetProgramEnvParameter[df]vARB, 
+    GetProgramLocalParameter[df]vARB, GetProgramivARB and
+    GetProgramStringARB:
 
         GEOMETRY_PROGRAM_NV                             0x8C26
 
@@ -1290,12 +1294,12 @@ Dependencies on EXT_framebuffer_object
     geometry program has no effect if the framebuffer is not layered.
 
     When fragments are written to a layered framebuffer, the fragment's layer
-    number selects an image from the array of images at each attachment point
-    from which to obtain the destination R, G, B, A values for blending
-    (Section 4.1.8) and to which to write the final color values for that
-    attachment.  If the fragment's layer number is negative or greater than
-    the number of layers attached, the effects of the fragment on the
-    framebuffer contents are undefined.
+    number selects a single image from the array of images at each attachment
+    point to use for the stencil test (section 4.1.5), depth buffer test
+    (section 4.1.6), and for blending and color buffer writes (section 4.1.8).
+    If the fragment's layer number is negative or greater than the number of
+    layers attached, the effects of the fragment on the framebuffer contents
+    are undefined.
 
     When the Clear command is used to clear a layered framebuffer attachment,
     all layers of the attachment are cleared.
@@ -1927,6 +1931,13 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  --------------------------------------------
+    12    07/21/09  pbrown    Clarify that when doing layered rendering,
+                              a layer specified in the shader is used to
+                              select the depth and stencil layers accessed.
+
+                              Also document several additional entry points
+                              that accept GEOMETRY_PROGRAM_NV.
+
     11    03/11/09  pbrown    Fix section numbers for option/declaration
                               sections.
 

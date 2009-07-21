@@ -18,8 +18,8 @@ Status
     Shipping since 2004 for NVIDIA Quadro SDI (Serial Digital Interface)
 
 Version 
-    Last Modified:      $Date: 2008/02/20 $
-    NVIDIA Revision:    $Revision: #5 $
+    Last Modified:      2008/02/20
+    NVIDIA Revision:    5
 
 Number 
 
