@@ -1,0 +1,289 @@
+Name
+
+    ARB_sample_shading
+
+Name Strings
+
+    GL_ARB_sample_shading
+
+Contact
+
+    Eric Werness, NVIDIA Corporation (ewerness 'at' nvidia.com)
+    Pat Brown, NVIDIA Corporation (pbrown 'at' nvidia.com)
+
+Contributors
+
+    Murat Balci, AMD
+    Pierre Boudier, AMD
+    Pat Brown, NVIDIA
+    Greg Roth, NVIDIA
+    Graham Sellers, AMD
+    Eric Werness, NVIDIA
+
+Status
+
+    Complete. Approved by the ARB on July 3, 2009.
+
+Version
+
+    Last Modified Date:         08/02/2009
+    Revision:                   4
+
+Number
+
+    ARB Extension #70
+
+Dependencies
+
+    OpenGL 2.0 is required.
+
+    OpenGL Shading Language 1.30 is required
+
+    This extension is written against the OpenGL 2.0 specification and
+    version 1.30 of the OpenGL Shading Language Specification.
+
+Overview
+
+    In standard multisample rendering, an implementation is allowed to
+    assign the same color and texture coordinate values to each sample,
+    which then allows the optimization where the shader is only
+    evaluated once and then distributed to the samples that have been
+    determined to be covered by the primitive currently being
+    rasterized. This can cause aliasing where the input color and
+    texture coordinates are used to generate a result that doesn't
+    antialias itself, for example with alpha-tested transparency.
+
+    This extension adds the ability to explicitly request that an
+    implementation use a minimum number of unique set of fragment
+    computation inputs when multisampling a pixel. Specifying such a
+    requirement can reduce aliasing that results from evaluating the
+    fragment computations too few times per pixel.
+
+    This extension adds new global state that controls the minimum
+    number of samples for which attribute data is independently
+    interpolated. When enabled, all operations that were traditionally
+    executed per-fragment operate independently on each sample.
+
+    This also extends the shading language to allow control over the
+    sample being processed. This includes built-in fragment input
+    variables identifying the sample number and position being processed
+    when executing fragment shaders per sample.
+
+New Procedures and Functions
+
+    void MinSampleShadingARB(clampf value);
+
+New Tokens
+
+    Accepted by the <cap> parameter of Enable, Disable, and IsEnabled,
+    and by the <pname> parameter of GetBooleanv, GetIntegerv, GetFloatv,
+    and GetDoublev:
+
+        SAMPLE_SHADING_ARB                              0x8C36
+
+    Accepted by the <pname> parameter of GetBooleanv, GetDoublev,
+    GetIntegerv, and GetFloatv:
+
+        MIN_SAMPLE_SHADING_VALUE_ARB                    0x8C37
+
+Additions to Chapter 2 of the OpenGL 2.0 Specification (OpenGL Operation)
+
+    None.
+
+Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
+
+    Modify Section 3.2.1 Multisampling p. 93
+
+    Add a new paragraph at the end of the section
+
+    Sample shading can be controlled by by calling Enable or Disable
+    with the symbolic constant SAMPLE_SHADING_ARB.
+
+    If MULTISAMPLE is disabled, the values of SAMPLE_SHADING_ARB and
+    MIN_SAMPLE_SHADING_VALUE_ARB have no effect. If MULTISAMPLE is
+    enabled and SAMPLE_SHADING_ARB is disabled, then rasterization
+    proceeds as described above.
+
+    If SAMPLE_SHADING_ARB is enabled, an implementation must have a
+    minimum of max(MIN_SAMPLE_SHADING_VALUE_ARB*SAMPLES,1) unique color
+    values and sets of texture coordinates for each fragment. These are
+    associated with the samples in an implementation-dependent manner.
+
+    Modify section 3.11, Fragment Shaders, p. 193
+
+    Add the following paragraph to the section Shader Inputs, p. 196
+
+    The built-in read-only variable gl_SampleID is filled with the
+    sample number of the sample currently being processed. This variable
+    is in the range 0 to gl_MaxSampleID, where gl_MaxSampleID is the
+    maximum number of samples to be independently processed by the
+    shader. Using this variable in a fragment shader causes the entire
+    shader to be evaluated per-sample.
+
+    The built-in read-only variable gl_SamplePosition contains the
+    position of the current sample within the multi-sample draw buffer.
+    The x and y components of gl_SamplePosition contain the sub-pixel
+    coordinate of the current sample and will have values in the range
+    zero to one.
+
+    Add the following paragraph to the section Shader Outputs, p. 196
+
+    The built-in array gl_SampleMask can be used to change the
+    multisample coverage for a fragment from within the shader.
+    Modifying the sample mask in this way may exclude samples from
+    coverage on a per-fragment granularity. If the program is being
+    evaluated per-sample, then the bit of the sample mask corresponding
+    to the current sample is used.
+
+    Add the following prototypes to the list of built-in variables
+    accessible from a fragment shader:
+
+        int gl_SampleID;
+        int gl_SampleMask[];
+        vec2 gl_SamplePosition;
+
+    Add the following prototype to the list of built-in uniforms
+    accessible from a fragment shader:
+
+        int gl_MaxSampleID;
+
+Additions to Chapter 4 of the OpenGL 2.0 Specification (Per-Fragment
+Operations and the Frame Buffer)
+
+    The value of MIN_SAMPLE_SHADING_VALUE_ARB is specified by calling
+
+        void MinSampleShadingARB(clampf value);
+
+    with value set to the desired minimum sample shading value. value is
+    clamped to [0,1] before being stored as
+    MIN_SAMPLE_SHADING_VALUE_ARB. MIN_SAMPLE_SHADING_VALUE_ARB is
+    queried by calling GetFloatv with pname set to
+    MIN_SAMPLE_SHADING_VALUE_ARB.
+
+
+Additions to Chapter 5 of the OpenGL 2.0 Specification (Special Functions)
+
+    None.
+
+Additions to Chapter 6 of the OpenGL 2.0 Specification (State and
+State Requests)
+
+    None.
+
+Additions to the AGL/GLX/WGL Specifications
+
+    None
+
+GLX Protocol
+
+    TBD
+
+Errors
+
+    None.
+
+New State
+
+    Get Value                       Get Command    Type    Initial Value    Attribute
+    ---------                       -----------    ----    -------------    ---------
+    SAMPLE_SHADING_ARB              IsEnabled      B       FALSE            multisample/enable
+    MIN_SAMPLE_SHADING_VALUE_ARB    GetFloatv      R+      0                multisample
+
+New Implementation Dependent State
+
+    None.
+
+Modifications to The OpenGL Shading Language Specification, Version 1.10.59
+
+    Including the following line in a shader can be used to control the
+    language features described in this extension:
+
+      #extension GL_ARB_sample_shading
+
+    A new preprocessor #define is added to the OpenGL Shading Language:
+
+      #define GL_ARB_sample_shading
+
+    Add to section 7.2 "Fragment Shader Special Variables"
+
+      The built-in gl_SampleMask array sets the sample mask for the
+      fragment being processed. Coverage for the current fragment is
+      ANDed with the value of gl_SampleMask. Bit B of mask
+      gl_SampleMask[M] corresponds to sample 32*M+B. This array must be
+      sized in the fragment shader either implicitly or explicitly to be
+      the same size as the implementation dependent maximum sample mask
+      words determined by the maximum number of samples.
+
+      The built-in read-only variable gl_SampleID is filled with the
+      sample number of the sample currently being processed. This
+      variable is in the range 0 to gl_MaxSampleID, where gl_MaxSampleID
+      is the maximum number of samples to be independently processed by
+      the shader. Using this variable in a fragment shader causes the
+      entire shader to be evaluated per-sample.
+
+      The built-in read-only variable gl_SamplePosition contains the
+      position of the current sample within the multi-sample draw
+      buffer. The x and y components of gl_SamplePosition contain the
+      sub-pixel coordinate of the current sample and will have values in
+      the range zero to one.
+
+Issues
+
+
+    1) Do we need both an enable and state?
+
+       RESOLVED. Yes - that's just the way GL rolls
+
+    2) How many times is the fragment shader run?
+
+       RESOLVED. The shader must be run at least once for each unique
+       set of texture coordinates and colors, so
+       max(MIN_SAMPLE_SHADING_VALUE_ARB*SAMPLES,1) times.
+
+    3) What cases can benefit from enabling this?
+
+       RESOLVED. Something like alpha-tested rendering using textures
+       don't benefit from multisampling right now - using this extension
+       to run the fragment shader or fixed-function texturing multiple
+       times per pixel can significantly improve quality.
+
+    4) What do KIL and discard do?
+
+       RESOLVED. They terminate a single invocation of the shader, so a
+       single fragment may have some threads that discard and some that
+       don't.
+
+    5) Should there be an option to specify that all fragment shader inputs
+    be interpolated at per-sample frequency?  If so, how?
+
+      RESOLVED:  Yes. Via the enable
+
+    6) Should the ability to specify per-sample or per-fragment
+    interpolation on a per-varying basis be added via the language?
+
+      RESOLVED: Not in this extension.
+
+    7) Does gl_sampleMask belong here?
+
+      RESOLVED: Yes, it's sample related and conteporary with the
+      hardware required for the rest of this extension. Thematically it
+      might match better with ARB_texture_multisample, but that
+      extension targets hardware that cannot support gl_sampleMask.
+
+    8) How should gl_sampleMask mask samples above the first 32?
+
+      RESOLVED: By being an array with enough entries to encompass all
+      the implementation-dependent maximum number of samples.
+
+Revision History
+
+    Rev.    Date      Author    Changes
+    ----  --------    --------  -----------------------------------------
+    4     08/02/2009  Jon Leech Reformat to 80 columns and assign
+                                ARB extension number
+    3     06/25/2009  groth     Restore missing explanations of
+                                MIN_SAMPLE_SHADING_VALUE_ARB
+    2     05/15/2009  groth     Restore gl_sampleMask as an array
+    1     05/13/2009  groth     Merge from NV_sample_shading_control,
+                                NV_gpu_shader4_1, and AMD_sample_rate_shader
+
