@@ -29,8 +29,8 @@ Status
 
 Version
 
-    Last Modified Date:  March 26, 2009
-    Version:             10
+    Last Modified Date:  May 11, 2009
+    Version:             12
 
 Number
 
@@ -409,12 +409,20 @@ Issues
         and GLSL respectively to request the specific provoking vertex
         convention for the shader?
 
-        UNRESOLVED:  This seems like a good idea because a particular
-        geometry shader relying on flat shading probably needs to know
-        what the convention is to output its flat-shaded color with the
-        correct (first or last) vertex of each line or triangle strip.
+        RESOLVED:  No.
 
-        TransGaming supports adding a pragma.
+        The provoking vertex is context state that doesn't belong within
+        a shader as a pragma anymore than the stencil state belongs
+        within the shader.  Overriding context state based on a pragma
+        in a shader introduces unfortunate validation interactions that
+        will slow down shader binds.
+
+        Geometry shaders written for DirectX 10 and using flat attributes
+        expect the "first vertex" provoking vertex convention but the
+        application is better off specifying the proper provoking vertex
+        convention for shaders just as is done with other context state.
+
+        TransGaming supports this resolution to not support a pragma.
 
     10. How do geometry shader input primitives interact with this
         extension?
@@ -609,7 +617,9 @@ Issues
 Revision History
 
     Rev.    Date    Author     Changes
-    ----  -------- ---------  --------------------------------------------
+    ----  -------- ---------  ---------------------------------------------
+     12   5/11/09  mjk        Resolve issue 12 with feedback from
+                              Daniel Koch
      11   4/17/09  mjk        grammar and typo fixes
      10   3/26/09  mjk        typo fixes, more contributors listed, clarify
                               transform feedback interaction

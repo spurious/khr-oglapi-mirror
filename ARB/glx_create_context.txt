@@ -19,6 +19,7 @@ IP Status
 Status
 
     Complete. Approved by the ARB on July 28, 2009.
+    Approved by the Khronos Board of Promoters on August 28, 2009.
 
 Version
 
