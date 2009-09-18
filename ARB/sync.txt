@@ -16,6 +16,7 @@ Contributors
     Jeremy Sandmel, Apple
     John Kessenich, Intel
     Jon Leech, Khronos
+    Piers Daniell, NVIDIA
 
 Contact
 
@@ -34,7 +35,7 @@ Status
 
 Version
 
-    July 24, 2009 (version 24)
+    September 18, 2009 (version 25)
 
 Number
 
@@ -266,7 +267,7 @@ Additions to Chapter 5 of the OpenGL 3.1 Specification (Special Functions)
     the time ClientWaitSync is called then ClientWaitSync will block and
     will wait up to <timeout> nanoseconds for <sync> to become signaled.
     <flags> controls command flushing behavior, and may be
-    SYNC_FLUSH_COMMAND_BIT, as discussed in section 5.2.2.
+    SYNC_FLUSH_COMMANDS_BIT, as discussed in section 5.2.2.
 
     ClientWaitSync returns one of four status values. A return value of
     ALREADY_SIGNALED indicates that <sync> was signaled at the time
@@ -286,7 +287,7 @@ Additions to Chapter 5 of the OpenGL 3.1 Specification (Special Functions)
 
     If <sync> is not the name of a sync object, an INVALID_VALUE error
     is generated. If <flags> contains any bits other than
-    SYNC_FLUSH_COMMAND_BIT, an INVALID_VALUE error is generated.
+    SYNC_FLUSH_COMMANDS_BIT, an INVALID_VALUE error is generated.
 
     The command
 
@@ -352,7 +353,7 @@ Additions to Chapter 5 of the OpenGL 3.1 Specification (Special Functions)
     unsignaled when ClientWaitSync is called, then the equivalent of
     Flush will be performed before blocking on <sync>.
        [fn4 - The simple flushing behavior defined by
-	SYNC_FLUSH_COMMAND_BIT will not help when waiting for a fence
+	SYNC_FLUSH_COMMANDS_BIT will not help when waiting for a fence
 	command issued in another context's command stream to complete.
 	Applications which block on a fence sync object must take
 	additional steps to assure that the context from which the
@@ -1385,4 +1386,7 @@ Revision History
     enum values.
 
     Version 24, 2009/07/24 - Rename stray GetSyncuiv functions to
-    GetSynciv
+    GetSynciv.
+
+    Version 25, 2009/09/18 - Correct spelling of SYNC_FLUSH_COMMAND_BIT
+    to SYNC_FLUSH_COMMANDS_BIT in several places.
