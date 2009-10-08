@@ -19,7 +19,7 @@ Status
 
 Version 
     Last Modified:      2008/02/20
-    NVIDIA Revision:    5
+    NVIDIA Revision:    6
 
 Number 
 
@@ -107,7 +107,7 @@ New Types
     /*
      * GLXVideoDeviceNV is an opaque handle to a video device.
      */
-    typedef struct unsigned int GLXVideoDeviceNV;
+    typedef unsigned int GLXVideoDeviceNV;
 
 
 New Procedures and Functions 

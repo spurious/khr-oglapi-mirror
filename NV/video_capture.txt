@@ -7,7 +7,6 @@ Name Strings
     GL_NV_video_capture
     GLX_NV_video_capture
     WGL_NV_video_capture
-
 Contributors
 
     James Jones
@@ -22,12 +21,12 @@ Contact
 
 Status
 
-    Preliminary
+    Complete.  Shipping in NVIDIA 190.XX drivers
 
 Version
 
-    Last Modified Date: Sep 4, 2009
-    Author Revision: 22
+    Last Modified Date: Sep 28, 2009
+    Author Revision: 24
 
 Number
 
@@ -122,6 +121,11 @@ New Procedures and Functions
     BOOL wglReleaseVideoCaptureDeviceNV(HDC hDc,
                                         HVIDEOINPUTDEVICENV hDevice);
 
+New Types
+
+    typedef XID GLXVideoCaptureDeviceNV
+
+    DECLARE_HANDLE(HVIDEOINPUTDEVICENV);
 
 New Tokens
 
@@ -240,7 +244,7 @@ Operations and the Frame Buffer)
     capture operations on an invalid video capture slot or a video
     capture slot with no device bound to it will generate
     INVALID_OPERATION.
-
+    
     "The values captured can be transformed by a fixed-function color
     conversion pipeline before they are written to the destination.
     Each video input device can have an implementation-dependent number
@@ -260,14 +264,14 @@ Operations and the Frame Buffer)
     device bound to <video_capture_slot> will begin filling a queue of
     raw buffers with incoming video data.  If capture is already in the
     requested state, INVALID_OPERATION is generated.
-
+    
     "To move data from the raw buffers into the GL, buffer objects or
     textures must be bound to the individual video capture streams.  A
     video capture stream refers to a single video source.  Each video
     capture slot must provide one or more video capture streams.
     Streams are referred to by their index, starting from zero.  If an
     invalid stream index is specified, INVALID_VALUE is generated.
-
+    
     Buffer objects or textures can be bound to streams using the
     commands
 
@@ -290,7 +294,7 @@ Operations and the Frame Buffer)
     bound to the stream; one for the upper field and one for the lower
     field.  If only one field is bound at capture time,
     INVALID_OPERATION is generated.
-
+    
     "For buffer object capture, the buffer bound to the
     VIDEO_BUFFER_NV target is used.  An offset into the buffer object
     can be specified using the <offset> parameter.  The offset provided
@@ -341,7 +345,7 @@ Operations and the Frame Buffer)
     Z4Y12Z4CB12Z4CR12_444_NV                  4 zero bits, Y',   4:4:4
                                               4 zero bits, Cb,
                                               4 zero bits, Cr
-
+    
     Table 4.13 - Video capture buffer internal formats
 
     "For texture object capture, the texture named <texture> on <target>
@@ -379,7 +383,7 @@ Operations and the Frame Buffer)
     4:4:4:4        4:4:4, 4:4:4:4
 
     Table 4.14 - Compatible format layouts.
-
+    
     "If the effective capture data format is 4:2:2, there will be 2
     components per pixel.  If capturing to a format from table 4.13, it
     will take two incoming pixels to make up one pixel group referred to
@@ -438,7 +442,7 @@ Operations and the Frame Buffer)
 
       * INVALID_OPERATION if automatic mipmap generation is enabled for
         any textures bound.
-
+    
     "If PARTIAL_SUCCESS_NV is returned, the command
 
       void GetVideoCaptureStream{i,f,d}vNV(uint video_capture_slot,
@@ -466,7 +470,7 @@ Operations and the Frame Buffer)
     4.4 as they are transferred from the capture device's raw buffers to
     the bound capture objects.
 
-                         |Y'i|
+                         |Y'i|   
       Output =  clamp( M |Cbi| +  Offset )
                          |Cri|
                          |Ai |
@@ -555,7 +559,7 @@ Additions to Chapter 5 of the 1.1 Specification (Special Functions)
     In section 5.4, "Display Lists", add the following to the list of
     commands that are not compiled into display lists:
 
-    "Video capture commands: BeginVideoCaptureNV,
+    "Video capture commands: BeginVideoCaptureNV, 
         BindVideoCaptureStreamBufferNV, BindVideoCaptureStreamTextureNV,
         EndVideoCaptureNV, VideoCaptureNV,
         VideoCaptureStreamParameter{i,f,d}vNV
@@ -694,7 +698,7 @@ Errors)
                                       unsigned int video_capture_slot,
                                       GLXVideoCaptureDeviceNV device);
 
-
+      
     "to bind it to the capture slot <video_capture_slot> in the current
     context.  If the slot is already bound, the device it's bound to
     it will be unbound first.  To unbind a video capture device, bind
@@ -706,7 +710,7 @@ Errors)
     capture device, BadValue is generated.  If <device> is already bound
     to a video capture slot, GLX_BAD_VALUE is returned.  If <device> is
     not locked by <dpy>, BadMatch is generated."
-
+    
     "GLX does not provide a mechanism to configure the video capture
     process.  It is expected that device vendors provide a vendor-
     specific mechanism for configuring or detecting properties such as
@@ -754,7 +758,7 @@ GLX Protocol
         4       0                       reply length
         4       CARD32                  status
         20                              unused
-
+ 
     EnumerateVideoCaptureDeviceNV
         1       CARD8                   opcode (X assigned)
         1       17                      GLX opcode (glXVendorPrivateWithReply)
@@ -771,7 +775,7 @@ GLX Protocol
         4       CARD32                  num_properties (p)
         16                              unused
         4*n     LISTofATTRIBUTE_PAIR    attribute, value pairs
-
+ 
     LockVideoCaptureDeviceNV
         1       CARD8                   opcode (X assigned)
         1       16                      GLX opcode (glXVendorPrivate)
@@ -779,7 +783,7 @@ GLX Protocol
         4       1414                    vendor specific opcode
         4                               unused
         4       CARD32                  device
-
+ 
     ReleaseVideoCaptureDeviceNV
         1       CARD8                   opcode (X assigned)
         1       16                      GLX opcode (glXVendorPrivate)
@@ -787,7 +791,7 @@ GLX Protocol
         4       1415                    vendor specific opcode
         4                               unused
         4       CARD32                  device
-
+ 
     BeginVideoCaptureNV
         1       CARD8                   opcode (X assigned)
         1       16                      GLX opcode (glXVendorPrivate)
@@ -795,7 +799,7 @@ GLX Protocol
         4       1400                    vendor specific opcode
         4       GLX_CONTEXT_TAG         context tag
         4       CARD32                  video_cpture_slot
-
+ 
     BindVideoCaptureStreamBufferNV
         1       CARD8                   opcode (X assigned)
         1       16                      GLX opcode (glXVendorPrivate)
@@ -806,7 +810,7 @@ GLX Protocol
         4       CARD32                  video_cpture_slot
         4       CARD32                  stream
         4       ENUM                    frame_region
-
+ 
     BindVideoCaptureStreamBufferNV
         1       CARD8                   opcode (X assigned)
         1       16                      GLX opcode (glXVendorPrivate)
@@ -818,7 +822,7 @@ GLX Protocol
         4       ENUM                    frame_region
         4       ENUM                    target
         4       CARD32                  texture
-
+ 
     EndVideoCaptureNV
         1       CARD8                   opcode (X assigned)
         1       16                      GLX opcode (glXVendorPrivate)
@@ -826,7 +830,7 @@ GLX Protocol
         4       1403                    vendor specific opcode
         4       GLX_CONTEXT_TAG         context tag
         4       CARD32                  video_cpture_slot
-
+ 
     GetVideoCaptureivNV
         1       CARD8                   opcode (X assigned)
         1       17                      GLX opcode (glXVendorPrivateWithReply)
@@ -842,17 +846,17 @@ GLX Protocol
         4       m                       reply length, m = (n==1 ? 0 : n)
         4                               unused
         4       CARD32                  n
-
+ 
         if (n=1) this follows:
-
+ 
         4       INT32                   params
         12                              unused
-
+ 
         otherwise this follows:
-
+ 
         16                              unused
         n*4     LISTofINT32             params
-
+ 
     GetVideoCaptureStreamivNV
         1       CARD8                   opcode (X assigned)
         1       17                      GLX opcode (glXVendorPrivateWithReply)
@@ -869,17 +873,17 @@ GLX Protocol
         4       m                       reply length, m = (n==1 ? 0 : n)
         4                               unused
         4       CARD32                  n
-
+ 
         if (n=1) this follows:
-
+ 
         4       INT32                   params
         12                              unused
-
+ 
         otherwise this follows:
-
+ 
         16                              unused
         n*4     LISTofINT32             params
-
+ 
     GetVideoCaptureStreamfvNV
         1       CARD8                   opcode (X assigned)
         1       17                      GLX opcode (glXVendorPrivateWithReply)
@@ -896,17 +900,17 @@ GLX Protocol
         4       m                       reply length, m = (n==1 ? 0 : n)
         4                               unused
         4       CARD32                  n
-
+ 
         if (n=1) this follows:
-
+ 
         4       FLOAT32                 params
         12                              unused
-
+ 
         otherwise this follows:
-
+ 
         16                              unused
         n*4     LISTofFLOAT32           params
-
+ 
     GetVideoCaptureStreamdvNV
         1       CARD8                   opcode (X assigned)
         1       17                      GLX opcode (glXVendorPrivateWithReply)
@@ -923,17 +927,17 @@ GLX Protocol
         4       m                       reply length, m = (n==1 ? 0 : n*2)
         4                               unused
         4       CARD32                  n
-
+ 
         if (n=1) this follows:
-
+ 
         8       FLOAT64                 params
         8                               unused
-
+ 
         otherwise this follows:
-
+ 
         16                              unused
         n*8     LISTofFLOAT64           params
-
+ 
     VideoCaptureNV
         1       CARD8                   opcode (X assigned)
         1       17                      GLX opcode (glXVendorPrivateWithReply)
@@ -951,7 +955,7 @@ GLX Protocol
         8       CARD64                  capture_time
         4       CARD32                  sequence_num
         4                               unused
-
+ 
     VideoCaptureStreamParameterivNV
         1       CARD8                   opcode (X assigned)
         1       16                      GLX opcode (glXVendorPrivate)
@@ -969,7 +973,7 @@ GLX Protocol
                 0x902D n=1              GL_VIDEO_CAPTURE_SURFACE_ORIGIN_NV
                 else n=0                command is erroneous
         4*n     LISTofINT32             params
-
+ 
     VideoCaptureStreamParameterfvNV
         1       CARD8                   opcode (X assigned)
         1       16                      GLX opcode (glXVendorPrivate)
@@ -987,7 +991,7 @@ GLX Protocol
                 0x902D n=1              GL_VIDEO_CAPTURE_SURFACE_ORIGIN_NV
                 else n=0                command is erroneous
         4*n     LISTofFLOAT32           params
-
+ 
     VideoCaptureStreamParameterdvNV
         1       CARD8                   opcode (X assigned)
         1       16                      GLX opcode (glXVendorPrivate)
@@ -1061,10 +1065,10 @@ Additions to the WGL Specification
       BOOL wglBindVideoCaptureDeviceNV(UINT uVideoSlot,
                                        HVIDEOINPUTDEVICENV hDevice);
 
-
+      
     "to bind it to the capture slot <video_capture_slot> in the current
-    context.  If the slot is already bound, the device it's bound to
-    will be unbound first.
+    context.  If the slot is already bound, the device it's bound to 
+    will be unbound first. 
     It's an error to bind an already bound device to a different slot.
     To unbind a video capture device, bind device NULL to the
     video capture slot the device is bound to.
@@ -1097,7 +1101,7 @@ Errors
     VideoCaptureStreamParameter{i,f,d}vNV.
 
     INVALID_OPERATION is generated if there is no video capture device
-    bound to the slot specified by <video_capture_slot> when calling
+    bound to the slot specified by <video_capture_slot> when calling 
     BeginVideoCaptureNV, BindVideoCaptureStreamBufferNV,
     BindVideoCaptureStreamTextureNV, EndVideoCaptureNV,
     GetVideoCaptureivNV, GetVideoCaptureStream{i,f,d}vNV,
@@ -1242,28 +1246,28 @@ Add a new table, after the above:
     VIDEO_CAPTURE_FRAME_WIDTH_NV         Z+    GetVideoCaptureStreamiv  See sec. 4.5  width of      4.5   -
                                                                                       a frame or
                                                                                       field on
-                                                                                      currently
+                                                                                      currently  
                                                                                       bound video
                                                                                       capture
                                                                                       device.
 
     VIDEO_CAPTURE_FRAME_HEIGHT_NV        Z+    GetVideoCaptureStreamiv  See sec. 4.5  height of     4.5   -
                                                                                       a full frame
-                                                                                      on currently
+                                                                                      on currently  
                                                                                       bound video
                                                                                       capture
                                                                                       device.
 
     VIDEO_CAPTURE_FIELD_UPPER_HEIGHT_NV  Z+    GetVideoCaptureStreamiv  See sec. 4.5  height of     4.5   -
                                                                                       upper field
-                                                                                      on currently
+                                                                                      on currently  
                                                                                       bound video
                                                                                       capture
                                                                                       device.
 
     VIDEO_CAPTURE_FIELD_LOWER_HEIGHT_NV  Z+    GetVideoCaptureStreamiv  See sec. 4.5  height of     4.5   -
                                                                                       lower field
-                                                                                      on currently
+                                                                                      on currently  
                                                                                       bound video
                                                                                       capture
                                                                                       device.
@@ -1278,19 +1282,19 @@ Add a new table, after the above:
                                                                                       capture.
 
     VIDEO_COLOR_CONVERSION_MATRIX_NV     M4    GetVideoCaptureStreamfv  Identity      Color         4.5   -
-                                                                        Matrix        Conversion
+                                                                        Matrix        Conversion 
                                                                                       Matrix
 
     VIDEO_COLOR_CONVERSION_MAX_NV        R4    GetVideoCaptureStreamfv  <1,1,1,1>     Color         4.5   -
-                                                                                      Conversion
+                                                                                      Conversion 
                                                                                       Clamp Max
 
     VIDEO_COLOR_CONVERSION_MIN_NV        R4    GetVideoCaptureStreamfv  <0,0,0,0>     Color         4.5   -
-                                                                                      Conversion
+                                                                                      Conversion 
                                                                                       Clamp Min
 
     VIDEO_COLOR_CONVERSION_OFFEST_NV     R4    GetVideoCaptureStreamfv  <0,0,0,0>     Color         4.5   -
-                                                                                      Conversion
+                                                                                      Conversion 
                                                                                       Offset
 
     -                                    Z+    -                        0             name of       4.5   -
@@ -1355,7 +1359,7 @@ Usage Examples:
         glXBindVideoCaptureDeviceNV(dpy, 1, None);
 
         glXReleaseVideoCaptureDeviceNV(dpy, device);
-
+        
 
     This example demonstrates capturing 1080p video data from two
     sources, streaming the first to system memory, and displaying the
@@ -1405,7 +1409,7 @@ Usage Examples:
         while (...) {
             uint64EXT timestamp;
             uint sequence_num;
-
+            
             // Capture the video to a buffer object
             VideoCaptureNV(0, &sequence_num, &timestamp);
 
@@ -1444,18 +1448,6 @@ Issues
        capture statistics immediately.  The application will likely need
        to use these values to decide how to use the captured data.
 
-    Should the application be able to choose how many raw capture
-    buffers are available through this API?  If so when?
-
-       [RESOLVED] This is a very implementation specific operation.  Not
-       all video capture devices will even have the raw capture buffer
-       concept.  This functionality will be left to another API.
-
-    Should ANC data capture be exposed in this extension, or in a
-    separate extension built on top of this one?
-
-       [RESOLVED] ANC data capture was moved to a separate spec.
-
     How should video capture devices be presented to the application?
 
        [RESOLVED] In GLX, video capture devices are X resources
@@ -1469,33 +1461,6 @@ Issues
        same video device, but only one X client or handle at a time
        can own the physical device.  This is accomplished with the lock
        and release entry points.
-
-    What formats should be supported by the buffer object capture mode?
-
-       [RESOLVED] Most formats can be accommodated using the texture
-       internal formats already available in the GL.  For example,
-       10-bit Y'CbCr 4:4:4 data can be captured to an RGB10A2 texture
-       with no loss in precision or data conversion.  Only data formats
-       that do not map to the layout of existing internal formats should
-       be added.  These formats are 4:2:2 Y'CbCr data, and 12-bit 4:4:4
-       data.  For these, three formats were added: 8 and 10-bit 4:2:2
-       formats, and a 12-bit 4:4:4 component.  The 10 and 12-bit formats
-       were packed into 16-bit values to match the rendering
-       capabilities of current hardware.
-
-    What should the names of the <frame_region> enums be?
-
-       [RESOLVED] The least ambiguous way to refer to individual fields
-       in a frame is using the spatial "upper" and "lower" terms, so the
-       enum names will be GL_FIELD_UPPER_NV and GL_FIELD_LOWER_NV.
-
-    Should raw video capture buffers be directly exposed through this
-    API?
-
-       [RESOLVED] No.  Users can adjust the number of raw capture buffers
-       with NV-CONTROL/NVAPI.  When capturing, applications will always
-       be operating on the next buffer in the queue.  This makes it
-       easier to transparently handle various corner cases.
 
     How does the application determine if a given capture operation
     returned valid data.
@@ -1515,11 +1480,6 @@ Issues
        useful if the devices connected to each stream have different
        color characteristics and therefore each need different
        conversion matrices.
-
-    Should there be a way to specify 3x4 matrices for RGB colors?
-
-       [RESOLVED] No.  Applications must expand their 3x4 matrices to
-       the 4x4 equivalent themselves.
 
     Should there be a way to specify color clamp values for each stream
     and each color component?
@@ -1570,143 +1530,11 @@ Issues
 
 
 Revision History
-    Revision 22: 2009/9/4
-        -Moved VIDEO_CAPTURE_TO_422_SUPPORTED_NV to per-stream state
-        -Buffer object offsets must be multiples of the pixel size.
+    Fourth external draft: 2009/9/28
+      -Added "New Types" section
 
-    Revision 21: 2009/8/31
-        -Added language within spec body describing error conditions
-        -Added language describing GLX command error conditions
-        -Added description of video capture slots and video capture
-         stream indices.
+    Third external draft: 2009/9/8
 
-    Revision 20: 2009/8/21
-        -Added VIDEO_CAPTURE_SURFACE_ORIGIN_NV
-        -Require version 2.0 because of the UPPER/LOWER_LEFT enums
-        -Added GLX protocol
+    Second external draft: 2009/7/31
 
-    Revision 19: 2009/8/02
-        -Replaced all occurances of YUV with Y'CbCr.
-        -Fixed a few typos.
-        -Replaced YCbY'Cr with Y'0CbY'1Cr
-        -Reworded text to avoid the word pass-through when describing
-         the Y'CbCr formats so they won't be confused with the
-         removed pass-through scannout modes.
-
-    Revision 18: 2009/7/31
-        -Added Errors section.
-
-    Revision 17: 2009/7/30
-        -Added language describing how incoming pixel components
-         map to various capture destination formats' components.
-        -Disallowed the use of formats in table 4.13 if the incoming
-         data format isn't compatible.
-        -Moved a bunch of effectively resolved issues to resolved.
-        -Clarified that the user supplied clamp values are themselves
-         clamped to the the range permitted by the destination format
-         at capture time.
-        -Added state tables.
-
-    Revision 16: 2009/7/28
-        -Make video capture dimension queries to per-stream rather
-         than per-slot state.
-
-    Revision 15: 2009/7/27
-        -Added video capture field dimensions queries.
-        -Added num video capture slots window system layer context
-         queries.
-
-    Revision 14: 2009/7/14
-        -Removed present video pass-through support.  This functionality
-         will be introduced in a separate extension.
-        -Changed the list of special YUV formats supported to include
-         8-bit 4:2:2:4, 10-bit 4:2:2:4, 12-bit 4:2:2 and 4:2:2:4.
-        -Removed the FRAME_NV token from this specification and
-         referenced NV_present_video in the dependencies section
-         instead.
-        -Renamed the VIDEO_CAPTURE_TO_TEXTURE_SUPPORTED_NV token to
-         VIDEO_CAPTURE_TO_422_SUPPORTED_NV to invert its meaning.  4:2:2
-         and 4:4:4 data can always be captured to textures, but only
-         4:2:2 data can be captured to 4:2:2 formats.
-
-    Revision 13: 2009/5/18
-        -Remove unsigned versions of VideoCaptureStreamParameter and
-         GetVideoCaptureStream
-
-    Revision 12: 2009/5/17
-        -glXBindVideoCaptureDeviceNV returns int not void
-        -Pass None, not NULL to glXBindVideoCaptureDeviceNV to unbind
-         a device from a slot without binding a new one.
-        -glXLockVideoCaptureDeviceNV returns void not int
-        -Added several issues related to the interaction between bound
-         video capture devices and video capture slot state.
-        -A few cosmetic cleanups
-
-    Revision 11:2009/5/15
-        - Fixed typos in the examples (0 is not a valid slot, constant
-        renamings).
-
-    Revision 10:2009/4/2
-        - wglBindVideoCaptureDeviceNV no longer takes an HDC (a context
-          must be current to call it).
-        - EnumerateVideoCaptureDevicesNV returns UINT
-        - ReleaseVideoCaptureDeviceNV returns BOOL
-        - Clarified what happens to bound devices/slots when you release/bind.
-
-    Revision 9: 2009/2/23
-        -Added YUV 4:2:2 and 4:4:4 formats usable only when capturing
-         to buffer objects.
-        -Added method to display buffer objects directly using
-         NV_present_video
-        -Updated capture time language to be more specific about where
-         in the capture process the timestamp comes from.
-        -Marked the added rendering commands as not display-listable
-        -Added WGL spec language based on the GLX language
-        -Touched up the formatting
-
-    Revision 8: 2009/2/17
-        -Added colorspace conversion offset and clamping
-        -Changed VideoCaptureStreamMatrix to VideoCaptureStreamParameter
-        -Added different typed versions of GetVideoCaptureStream to
-         support querying the color conversion state.
-        -Separated buffer object binding and internal format
-         specification.
-        -Added spec language covering the GLX API.
-
-    Revision 7: 2009/02/12
-        -Resolved colorspace matrix issue.
-        -Added video capture matrix setting entry points.
-        -Added spec language covering the basic functionality
-         of all the core entry points.
-
-    Revision 6: 2009/02/10
-        -Added colorspace matrix issues.
-
-    Revision 5: 2009/02/09
-        -Took attrib_list arguments back out of the grab functions
-         and changed "Init" to "Lock" in their names.
-        -Moved ANC functionality to a separate extension.
-        -Added query token VIDEO_CAPTURE_TO_TEXTURE_SUPPORTED_NV to
-         query whether a video capture device is configured with support
-         for capturing to a texture.
-
-    Revision 4: 2009/01/30
-        -Added frame region parameter to capture binding functions
-         to allow capture of individual fields.
-        -Replaced hard tabs with spaces
-
-    Revision 3: 2009/01/27
-        -Added Begin/EndCapture
-        -Adjusted some token names
-        -Added GLX/WGL entry points to query capture devices.
-        -Added attrib_list arguments to the grab functions and
-         changed "Grab" to "Init" in their names.
-
-    Revision 2: 2009/01/26
-        -Second draft.  Added core entry point for binding textures to
-         capture streams.  Reworked buffer object binding semantics.
-         Added various issues.  Proposed window-system-specific entry
-         points.
-
-    Revision 1: 2008/11/20
-        -Initial draft proposing core entry points and usage example
+    First external draft: 2009/2/23
