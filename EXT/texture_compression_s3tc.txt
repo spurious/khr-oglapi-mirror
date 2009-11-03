@@ -16,7 +16,7 @@ Status
 
 Version
 
-    1.4, 13 April 2009
+    1.5, 3 November 2009
 
 Number
 
@@ -379,7 +379,7 @@ Appendix
         bits is a 32-bit unsigned integer, from which a two-bit control code
         is extracted for a texel at location (x,y) in the block using:
 
-            code(x,y) = bits[2*(4*y+x)+1..2*(4*y+x)+0]
+            code(x,y) = bits[2*(4*y+x)+1 .. 2*(4*y+x)+0]
         
         where bit 31 is the most significant and bit 0 is the least
         significant bit.
@@ -449,7 +449,7 @@ Appendix
         alpha is a 64-bit unsigned integer, from which a four-bit alpha value
         is extracted for a texel at location (x,y) in the block using:
 
-            alpha(x,y) = bits[4*(4*y+x)+3..4*(4*y+x)+0]
+            alpha(x,y) = bits[4*(4*y+x)+3 .. 4*(4*y+x)+0]
 
         where bit 63 is the most significant and bit 0 is the least
         significant bit.
@@ -483,7 +483,7 @@ Appendix
         bits is a 48-bit unsigned integer, from which a three-bit control code
         is extracted for a texel at location (x,y) in the block using:
 
-            code(x,y) = bits[3*(4*y+x)+1..3*(4*y+x)+0]
+            code(x,y) = bits[3*(4*y+x)+2 .. 3*(4*y+x)+0]
 
         where bit 47 is the most significant and bit 0 is the least
         significant bit.
@@ -566,6 +566,9 @@ NVIDIA Implementation Note
     block also uses code(x,y) values of 2 and 3.
 
 Revision History
+
+    1.5   11/03/09 pbrown     Fix typo in the encoding description of the
+                              3-bit "bits" fields in DXT5.
 
     1.4   04/13/09 pbrown     Add interaction with non-power-of-two textures
                               from OpenGL 2.0 / ARB_texture_non_power_of_two.
