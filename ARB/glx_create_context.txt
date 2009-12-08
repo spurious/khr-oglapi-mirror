@@ -24,7 +24,7 @@ Status
 
 Version
 
-    Version 8, 2009/08/30
+    Version 9, 2009/11/19
 
 Number
 
@@ -35,7 +35,7 @@ Dependencies
 
     GLX 1.4 is required.
 
-    Some of the capabilities of this extension are only available with
+    Some of the capabilities of these extensions are only available with
     contexts supporting OpenGL 3.0 or later.
 
     The presence of an OpenGL 3.2 or later implementation determines
@@ -373,6 +373,9 @@ GLX Errors
 
     The requested context profile is invalid or not supported.
 
+    BEC is the base error code for the extension, as returned by
+    XQueryExtension.
+
     Encoding:
 
 	1      0		      Error
@@ -609,3 +612,6 @@ Revision History
     generated in the case profile tokens are used with a server that
     doesn't support them.  Replace ERROR_INVALID_PROFILE_ARB with
     GLXBadProfileARB and define its encoding.
+
+    Version 9, 2009/11/19 - Clarify that BEC in the BadProfile protocol
+    represents the base error code for the GLX extension.
