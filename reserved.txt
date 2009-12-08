@@ -417,15 +417,36 @@ GLX Enumerateds (32 Bits)
 GLX Error Codes
 ===============
 
-(None reserved. Extension reservations should start sufficiently
-high so they don't interfere with extension of core GLX.)
+(Extension reservations for vendor extensions should start sufficiently
+high so they don't interfere with GLX core and GLX ARB extensions.)
+
+0   GLXBadContext		    OpenGL ARB (GLX core)
+1   GLXBadContextState		    OpenGL ARB (GLX core)
+2   GLXBadDrawable		    OpenGL ARB (GLX core)
+3   GLXBadPixmap		    OpenGL ARB (GLX core)
+4   GLXBadContextTag		    OpenGL ARB (GLX core)
+5   GLXBadCurrentWindow		    OpenGL ARB (GLX core)
+6   GLXBadRenderRequest		    OpenGL ARB (GLX core)
+7   GLXBadLargeRequest		    OpenGL ARB (GLX core)
+8   GLXUnsupportedPrivateRequest    OpenGL ARB (GLX core)
+9   GLXBadFBConfig		    OpenGL ARB (GLX core)
+10  GLXBadPbuffer		    OpenGL ARB (GLX core)
+11  GLXBadCurrentDrawable	    OpenGL ARB (GLX core)
+12  GLXBadWindow		    OpenGL ARB (GLX core)
+13  GLXBadProfileARB		    OpenGL ARB (GLX_ARB_create_context)
 
 
 GLX Event Codes
 ===============
 
-0		OpenGL ARB (GLX 1.3)
-16		SGI (pbuffer)
+(The X.org/Mesa GLX implementation derived from the SGI Sample
+Implementation has __GLX_NUMBER_EVENTS == 17, suggesting that vendor
+events should be allocated downwards from the first free value <= 16
+(14), and core GLX events allocated upwards).
+
+0		OpenGL ARB (GLX_PbufferClobber in GLX 1.3)
+15		Intel (GLX_BufferSwapINTEL)
+16		SGI (GLX_PbufferClobberSGIX)
 64		SGI
 
 Definition	Contact		    Email
@@ -445,7 +466,7 @@ E&S		Bill Armstrong	    armstron 'at' es.com
 HP		Andrew Wiltzius     andrew.wiltzius 'at' hp.com
 IBM		Dan Brokenshire     brokensh 'at' austin.ibm.com
 Imagination	Graham Connor	    gconnor 'at' videologic.com
-Intel		Bimal Poddar	    bimal.poddar 'at' intel.com
+Intel		Ian Romanick	    ian.d.romanick 'at' intel.com
 Intense3D - same as 3Dlabs (acquired)
 Intergraph - same as 3Dlabs (spinoff of Intense3D)
 KPC (Kubota) - out of business
@@ -453,7 +474,7 @@ Mesa		Brian Paul	    brianp 'at' mesa3d.org
 Micron		Shari Petersen	    sbpetersen 'at' micron.com
 Microsoft	Dave Aronson	    daronson 'at' microsoft.com
 NEC		Seiji Uchida	    uchida 'at' hpc.bs1.fc.nec.co.jp
-NVIDIA		Michael Gold	    gold 'at' nvidia.com
+NVIDIA		James Jones	    jajones 'at' nvidia.com
 PGI - acquired by Template Graphics Systems
 Pixelfusion - no longer in the graphics business
 Rendition - same as Micron (acquired)
