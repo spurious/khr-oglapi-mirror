@@ -24,8 +24,8 @@ Status
 
 Version
 
-    Last Modified Date: 08/02/2009
-    Author revision:    4
+    Last Modified Date: 12/07/2009
+    Author revision:    9
 
 Number
 
@@ -637,21 +637,14 @@ Modification to the OpenGL shading Language Specification, Version 1.30.08
     (Add new functions to the set of allowed texture lookup functions p. 85):
     Syntax:
 
-      ivec4 textureSize(samplerCubeArray sampler, int lod)
+      ivec3 textureSize(samplerCubeArray sampler, int lod)
       gvec4 texture(gsamplerCubeArray sampler, vec4 coord
                     [, float bias])
       gvec4 textureLod(gsamplerCubeArray sampler, vec4 coord, float lod)
-      vec4  texture(samplerCubeArrayShadow sampler, vec4 coord, float compare)
+      ivec3 textureSize(samplerCubeArrayShadow sampler, int lod)
+      float texture(samplerCubeArrayShadow sampler, vec4 coord, float compare)
       gvec4 textureGrad(gsamplerCubeArray sampler, vec4 coord,
-                        vec2 ddx, vec2 ddy);
-      gvec4 textureOffset(gsamplerCubeArray sampler, vec4 coord,
-                          ivec2 offset [, float bias])
-      gvec4 textureLodOffset(gsamplerCubeArray sampler, vec4 coord,
-                             float lod, ivec2 offset)
-      vec4 textureOffset(samplerCubeArrayShadow sampler, vec4 coord,
-                         float compare, ivec2 offset)
-      gvec4 textureGradOffset(gsamplerCubeArray sampler, vec4 coord,
-                              vec2 ddx, vec2 ddy, ivec2 offset);
+                        vec3 ddx, vec3 ddy);
 
     Description:
 
@@ -662,6 +655,12 @@ Modification to the OpenGL shading Language Specification, Version 1.30.08
       for more details. The shadow comparison texture functions take the
       comparison value from a separate input rather than from the
       primary coord vector.
+
+    Modify the Description of the textureSize function.
+
+       For the array forms, the last component of the return value is
+       the number of layers in the texture array, or the number of cubes
+       in the texture cube map array.
 
 Issues
 
@@ -852,10 +851,28 @@ Issues
                                      vec4 coord, vec2 ddx, vec2 ddy,
                                      ivec2 offset);
 
+    (12) What does ivec3 textureSize(samplerCubeArray sampler, int lod)
+         in the z component?
+
+      Resolved: array_layer (that is, number of cube maps in the array).
+
+      The spec is currently ambiguous, and can be interpreted as
+      layer (the number of cube map faces) or array_layer = floor(layer/6),
+      the number of cube maps.
+ 
 Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     9    12/07/09  wwlk      Edit texture function table description
+                              as resolved in issue 12
+     8    12/07/09  wwlk      Resolved issue 12
+     7    11/13/09  wwlk      Added array size returned issue 12
+     6    11/11/09  wwlk      Correct more mistaken GLSL prototypes
+                              gSamplerCube takes vec3 ddx and ddy
+                              gSamplerCube do not have offsets
+                              gSamplerCubeArray should match.
+     5    09/09/09  groth     Correct some mistaken GLSL prototypes
      4    08/02/09  Jon Leech Reformat to 80 columns and assign ARB
                               extension number.
      3    07/22/09  myoung    Fix gl_layer interaction description
