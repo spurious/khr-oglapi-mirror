@@ -133,6 +133,7 @@ Extension Numbers
 367-373		APPLE
 374-381		NVIDIA
 382-383		AMD
+384		INTEL
 
 GLU Enumerants
 ==============
