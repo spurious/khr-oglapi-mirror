@@ -11,7 +11,7 @@ Contributors
     Brian Nguyen, NVIDIA, brnguyen at nvidia.com
     James Jones, NVIDIA, jajones at nvidia.com
     Ian Romanick, Intel, idr at freedesktop.org
-    Jesse Barns, Intel, jbarnes at virtuousgeek.org
+    Jesse Barnes, Intel, jbarnes at virtuousgeek.org
 
 Contact
 
