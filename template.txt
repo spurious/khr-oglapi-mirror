@@ -81,7 +81,7 @@
 *
 *	    None
 *
-*   While this may appear excessively vebose, the purpose is to ensure
+*   While this may appear excessively verbose, the purpose is to ensure
 *   that extension authors document all affected parts of Specifications.
 *   An exception is that headers for sections of Specifications that
 *   are not altered by the extension may be omitted, once the extension
@@ -408,7 +408,7 @@ New Tokens
     *	New Tokens
     *
     *	Accepted by the <pname> parameters of GetBooleanv, GetIntegerv,
-    *	GetFloatv, and GetDoublev:
+    *	GetInteger64v, GetFloatv, and GetDoublev:
     *
     *	    NEW_TOKEN_EXT		0x6042
     *	    ANOTHER_TOKEN_EXT		0x????
@@ -700,7 +700,7 @@ Revision History
     *	Example (and actual revision history of the template):
 
 *   Revision 8, 2010/01/20
-*     - Minor updates for completeness and consitency. Push updated
+*     - Minor updates for completeness and consistency. Push updated
 *	template to the public Registry.
 *   Revision 7, 2009/12/07
 *     - Generalize template to allow for ES and GL extensions
