@@ -26,8 +26,8 @@ Status
 
 Version
 
-    Last Modified Date:         10/22/2009
-    Revision:                   6
+    Last Modified Date:         01/20/2010
+    Revision:                   7
 
 Number
 
@@ -102,9 +102,12 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
 
     If MULTISAMPLE or SAMPLE_SHADING_ARB is disabled, sample shading has no
     effect.  Otherwise, an implementation must provide a minimum of
-    max(MIN_SAMPLE_SHADING_VALUE_ARB*SAMPLES,1) unique color values and sets
-    of texture coordinates for each fragment. These are associated with the
-    samples in an implementation-dependent manner.  The value of
+
+        max(ceil(MIN_SAMPLE_SHADING_VALUE_ARB*SAMPLES),1) 
+
+    unique color values and sets of texture coordinates for each
+    fragment. These are associated with the samples in an
+    implementation-dependent manner. The value of
     MIN_SAMPLE_SHADING_VALUE_ARB is specified by calling
 
         void MinSampleShadingARB(clampf value);
@@ -328,6 +331,10 @@ Revision History
 
     Rev.    Date      Author    Changes
     ----  --------    --------  -----------------------------------------
+    7     01/20/2010  Jon Leech Add rounding rule for computing number of
+                                samples used depending on min sample  
+                                shading setting.
+
     6     10/22/2009  pdaniell  Specify that gl_NumSamples should return
                                 the sample count for the framebuffer
                                 regardless of whether MULTISAMPLE is enabled
