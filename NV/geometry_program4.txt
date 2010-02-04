@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Date:         07/21/09
-    NVIDIA Revision:            12
+    Last Modified Date:         12/14/09
+    NVIDIA Revision:            13
 
 Number
 
@@ -1039,7 +1039,22 @@ Additions to the AGL/GLX/WGL Specifications
 
 GLX Protocol
 
-    None.
+    The following rendering commands are sent to the server as part of a
+    glXRender request:
+
+    ProgramVertexLimitNV
+
+        2           12               rendering command length
+        2           4312             rendering command opcode
+        4           ENUM             target
+        4           INT32            limit
+
+
+    The extension EXT_geometry_shader4 defines GLX protocol for
+    the following non-rendering commands:
+
+        FramebufferTextureEXT, FramebufferTextureLayerEXT,
+        FramebufferTextureFaceEXT.
 
 Errors
 
@@ -1931,6 +1946,8 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  --------------------------------------------
+    13    12/14/09  mgodse    Added GLX protocol.
+    
     12    07/21/09  pbrown    Clarify that when doing layered rendering,
                               a layer specified in the shader is used to
                               select the depth and stencil layers accessed.

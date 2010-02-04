@@ -17,8 +17,8 @@ Status
 
 Version
 
-    Last Modified Date:         07/21/2009
-    NVIDIA Revision:            24
+    Last Modified Date:         12/21/2009
+    NVIDIA Revision:            25
 
 Number
 
@@ -1387,9 +1387,46 @@ Dependencies on OpenGL 3.2
     and heights.
 
 
-GLX protocol
+GLX Protocol
 
-    TBD
+    The following rendering command is sent to the server as part of a
+    glXRender request:
+
+    ProgramParameteriARB
+        2           16               rendering command length
+        2           266              rendering command opcode
+        4           CARD32           program
+        4           ENUM             pname
+        4           INT32            value
+
+    FramebufferTextureARB
+
+        2           20               rendering command length
+        2           267              rendering command opcode
+        4           ENUM             target
+        4           ENUM             attachment
+        4           CARD32           texture
+        4           INT32            level
+
+    FramebufferTextureLayerARB
+
+        2           24               rendering command length
+        2           237              rendering command opcode
+        4           ENUM             target
+        4           ENUM             attachment
+        4           CARD32           texture
+        4           INT32            level
+        4           INT32            layer
+
+    FramebufferTextureFaceARB
+
+        2           24               rendering command length
+        2           268              rendering command opcode
+        4           ENUM             target
+        4           ENUM             attachment
+        4           CARD32           texture
+        4           INT32            level
+        4           ENUM             face
 
 Errors
 
@@ -2568,6 +2605,8 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     25   12/21/09  jjones    Add GLX protocol.
+
      24   07/21/09  pbrown    Clarify that when doing layered rendering,
                               a layer specified in the shader is used to
                               select the depth and stencil layers accessed.

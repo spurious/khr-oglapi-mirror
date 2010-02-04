@@ -19,8 +19,8 @@ Status
 
 Version
 
-    Last Modified Date:         07/21/2009
-    NVIDIA Revision:            21
+    Last Modified Date:         12/14/2009
+    NVIDIA Revision:            22
 
 Number
 
@@ -1335,9 +1335,46 @@ Dependencies on EXT_texture_buffer_object
     INVALID_OPERATION error if a buffer texture is passed to
     FramebufferTextureEXT should be removed.
 
-GLX protocol
+GLX Protocol
 
-    TBD
+    The following rendering command is sent to the server as part of a
+    glXRender request:
+
+    ProgramParameteriEXT
+        2           16               rendering command length
+        2           266              rendering command opcode
+        4           CARD32           program
+        4           ENUM             pname
+        4           INT32            value
+
+    FramebufferTextureEXT
+
+        2           20               rendering command length
+        2           267              rendering command opcode
+        4           ENUM             target
+        4           ENUM             attachment
+        4           CARD32           texture
+        4           INT32            level
+
+    FramebufferTextureLayerEXT
+
+        2           24               rendering command length
+        2           237              rendering command opcode
+        4           ENUM             target
+        4           ENUM             attachment
+        4           CARD32           texture
+        4           INT32            level
+        4           INT32            layer
+
+    FramebufferTextureFaceEXT
+
+        2           24               rendering command length
+        2           268              rendering command opcode
+        4           ENUM             target
+        4           ENUM             attachment
+        4           CARD32           texture
+        4           INT32            level
+        4           ENUM             face
 
 Errors
 
@@ -2507,6 +2544,8 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     22   12/14/09  mgodse    Added GLX protocol.
+     
      21   07/21/09  pbrown    Clarify that when doing layered rendering,
                               a layer specified in the shader is used to
                               select the depth and stencil layers accessed.
