@@ -26,8 +26,8 @@ Status
 
 Version
 
-    Last Modified Date:         01/20/2010
-    Revision:                   7
+    Last Modified Date:         02/02/2010
+    Revision:                   8
 
 Number
 
@@ -132,7 +132,7 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
     number of samples in the framebuffer, or one if rendering to a
     non-multisample framebuffer. Using this variable in a fragment shader
     causes the entire shader to be evaluated per-sample.  When rendering to a
-    non-multisample buffer, of if multisample rasterization is disabled, 
+    non-multisample buffer, or if multisample rasterization is disabled, 
     gl_SampleID will always be zero. gl_NumSamples is the sample count
     of the framebuffer regardless of whether multisample rasterization
     is enabled or not.
@@ -142,7 +142,10 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
     The x and y components of gl_SamplePosition contain the sub-pixel
     coordinate of the current sample and will have values in the range
     zero to one.  The sub-pixel coordinate of the center of the pixel is
-    always (0.5, 0.5).
+    always (0.5, 0.5).  Using this variable in a fragment shader
+    causes the entire shader to be evaluated per-sample.  When rendering to a
+    non-multisample buffer, or if multisample rasterization is disabled, 
+    gl_SamplePosition will always be (0.5, 0.5).
 
     Add the following paragraph to the section Shader Outputs, p. 196
 
@@ -267,7 +270,8 @@ Modifications to The OpenGL Shading Language Specification, Version 1.10.59
       position of the current sample within the multi-sample draw
       buffer. The x and y components of gl_SamplePosition contain the
       sub-pixel coordinate of the current sample and will have values in
-      the range zero to one.
+      the range zero to one.  Using this variable in a fragment shader
+      causes the entire shader to be evaluated per-sample.
 
       ...
 
@@ -327,10 +331,32 @@ Issues
       RESOLVED: By being an array with enough entries to encompass all
       the implementation-dependent maximum number of samples.
 
+    9) Is per-sample shading ever triggered by properties of the fragment
+    shader?
+
+      RESOLVED:  Yes.  The variables "gl_SampleID" and "gl_SamplePosition"
+      can be used to read properties of the current sample, which wouldn't
+      make much sense if the fragment shader were run at a lower frequency
+      than per-sample.
+
+    10) Does gl_SamplePosition need to support layout() qualifiers such as
+    "pixel_center_integer" in GLSL 1.50?
+
+      RESOLVED:  Not in this extension.  "pixel_center_integer" was added in
+      part for compatibility with shaders originally targeting Direct3D
+      version 9.0 or earlier, where pixel centers were specified to be (X.0,
+      Y.0) instead of OpenGL's (X.5, Y.5).  However, Direct3D 9.0 doesn't
+      support anything like "gl_SamplePosition", and Direct3D versions that do
+      support this functionality have adopted OpenGL's (X.5, Y.5) conventions.
+
+
 Revision History
 
     Rev.    Date      Author    Changes
     ----  --------    --------  -----------------------------------------
+    8     02/02/2010  pbrown    Clarify that use of gl_SamplePosition
+                                triggers per-sample shading (bug 5911).
+                                
     7     01/20/2010  Jon Leech Add rounding rule for computing number of
                                 samples used depending on min sample  
                                 shading setting.

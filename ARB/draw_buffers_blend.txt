@@ -28,8 +28,8 @@ Status
 
 Version
 
-    Last Modified Date:         08/02/2009
-    Revision:                   2
+    Last Modified Date:         02/11/2010
+    Revision:                   3
 
 Number
 
@@ -86,7 +86,7 @@ Operations and the Frame Buffer)
 
     (modify section Blend Equation starting with the first paragraph)
 
-    Blending is controlled by the blend equation. This equation can be
+   "Blending is controlled by the blend equation. This equation can be
     simultaneously set to the same value for all draw buffers using the
     commands:
 
@@ -142,22 +142,35 @@ Operations and the Frame Buffer)
     draw buffers. BlendFuncSeparateiARB and BlendFunciARB modify the
     blend functions associated with an individual draw buffer. The <buf>
     argument is an integer i that indicates that the blend equations
-    should be modified for DRAW_BUFFERi.
+    should be modified for DRAW_BUFFER<i>."
 
 
     (modify section Blending State)
 
-    For each of n draw buffers, the state required for blending is two
+   "The state required for blending, for each draw buffer, is two
     integers for the RGB and alpha blend equations, four integers
     indicating the source and destination RGB and alpha blending
-    functions, four floating-point values to store the RGBA constant
-    blend color, and a bit indicating whether blending is enabled or
-    disabled. For all draw buffers, the initial blend equations for RGB
-    and alpha are both FUNC_ADD. The initial blending functions for all
-    draw buffers are ONE for the source RGB and alpha functions, and
-    ZERO for the destination RGB and alpha functions. For all draw
-    buffers initial constant blend color is (R, G, B, A) = (0, 0, 0, 0).
-    Initially, blending is disabled for all draw buffers."
+    functions, and a bit indicating whether blending is enabled or
+    disabled. Additionally, four floating-point values to store the RGBA
+    constant blend color are required.
+
+    For all draw buffers, the initial blend equations for RGB and alpha
+    are both FUNC_ADD, and the initial blending functions are ONE for
+    the source RGB and alpha functions, and ZERO for the destination RGB
+    and alpha functions. Initially, blending is disabled for all draw
+    buffers. The initial constant blend color is (R,G,B,A) = (0,0,0,0).
+
+    The value of the blend enable for draw buffer <i> can be queried by
+    calling IsEnabledi with <target> BLEND and <index> <i>, and the
+    values of the blend equations and functions can be queried by caling
+    GetIntegeri_vEXT with the corresponding <target> as shown in table
+    6.20 and <index> $i$.
+    
+    The value of the blend enable, or the blend equations and functions
+    for draw buffer zero may also be queried by calling IsEnabled, or
+    GetInteger, respectively, with the same symbolic constants but no
+    <index> parameter."
+
 
 Additions to Chapter 5 of the OpenGL 2.0 Specification (Special Functions)
 
@@ -218,27 +231,21 @@ New State
     and equations)
 
 
-                                                                    Initial
-    Get Target                           Type Get Command           Value    Description                                          Section Attribute
-    -----------------------------------  ---- --------------------- -------- ---------------------------------------------------- ------- -------------
-    BLEND_SRC_RGB (BLEND_SRC)            Z_15 GetIntegerv           ONE      Blending source RGB function for draw buffer 0       4.2.2   color-buffer
-    BLEND_SRC_RGB (BLEND_SRC)            Z_15 GetIntegeri_vEXT      ONE      Blending source RGB function for draw buffer i       4.2.2   color-buffer
-                                                                             where i is specified as <index>
-    BLEND_SRC_ALPHA                      Z_15 GetIntegerv           ONE      Blending source A function for draw buffer 0         4.2.2   color-buffer
-    BLEND_SRC_ALPHA                      Z_15 GetIntegeri_vEXT      ONE      Blending source A function for draw buffer i         4.2.2   color-buffer
-                                                                             where i is specified as <index>
-    BLEND_DST_RGB (BLEND_DST)            Z_14 GetIntegerv           ZERO     Blending destination RGB function for draw buffer 0  4.2.2   color-buffer
-    BLEND_DST_RGB (BLEND_DST)            Z_14 GetIntegeri_vEXT      ZERO     Blending destination RGB function for draw buffer i  4.2.2   color-buffer
-                                                                             where i is specified as <index>
-    BLEND_DST_ALPHA                      Z_14 GetIntegerv           ZERO     Blending destination A function for draw buffer 0    4.2.2   color-buffer
-    BLEND_DST_ALPHA                      Z_14 GetIntegeri_vEXT      ZERO     Blending destination A function for draw buffer i    4.2.2   color-buffer
-                                                                             where i is specified as <index>
-    BLEND_EQUATION_RGB (BLEND_EQUATION)  Z    GetIntegerv           FUNC_ADD RGB blending equation for draw buffer 0              4.2.2   color-buffer
-    BLEND_EQUATION_RGB (BLEND_EQUATION)  Z    GetIntegeri_vEXT      FUNC_ADD RGB blending equation for draw buffer i              4.2.2   color-buffer
-                                                                             where i is specified as <index>
-    BLEND_EQUATION_ALPHA                 Z    GetIntegerv           FUNC_ADD Alpha blending equation for draw buffer 0            4.2.2   color-buffer
-    BLEND_EQUATION_ALPHA                 Z    GetIntegeri_vEXT      FUNC_ADD Alpha blending equation for draw buffer i            4.2.2   color-buffer
-                                                                             where i is specified as <index>
+                                                                         Initial
+    Get Target                           Type      Get Command           Value    Description                                          Section Attribute
+    -----------------------------------  --------- --------------------- -------- ---------------------------------------------------- ------- -------------
+    BLEND_SRC_RGB (BLEND_SRC)            1* x Z_15 GetIntegeri_vEXT      ONE      Blending source RGB function for draw buffer i       4.2.2   color-buffer
+                                                                                  where i is specified as <index>
+    BLEND_SRC_ALPHA                      1* x Z_15 GetIntegeri_vEXT      ONE      Blending source A function for draw buffer i         4.2.2   color-buffer
+                                                                                  where i is specified as <index>
+    BLEND_DST_RGB (BLEND_DST)            1* x Z_14 GetIntegeri_vEXT      ZERO     Blending destination RGB function for draw buffer i  4.2.2   color-buffer
+                                                                                  where i is specified as <index>
+    BLEND_DST_ALPHA                      1* x Z_14 GetIntegeri_vEXT      ZERO     Blending destination A function for draw buffer i    4.2.2   color-buffer
+                                                                                  where i is specified as <index>
+    BLEND_EQUATION_RGB (BLEND_EQUATION)  1* x Z    GetIntegeri_vEXT      FUNC_ADD RGB blending equation for draw buffer i              4.2.2   color-buffer
+                                                                                  where i is specified as <index>
+    BLEND_EQUATION_ALPHA                 1* x Z    GetIntegeri_vEXT      FUNC_ADD Alpha blending equation for draw buffer i            4.2.2   color-buffer
+                                                                                  where i is specified as <index>
 
 Issues
 
@@ -270,6 +277,13 @@ Revision History
 
     Rev.    Date    Author     Changes
     ----  -------- ---------  ----------------------------------------
+      3   2/11/10  Jon Leech  Clarify in required state section that
+                              the constant blend color is global,
+                              not per-draw-buffer. Remove duplicate
+                              state for draw buffer zero from state
+                              tables and describe how non-indexed
+                              queries access it from required state
+                              section (Bug 5920).
       2   8/02/09  Jon Leech  Reformat to 80 columns and assign
                               ARB extension number.
       1   5/14/09  jbolz      copy & rename from EXT version rev 5.
