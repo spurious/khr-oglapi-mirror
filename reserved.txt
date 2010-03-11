@@ -234,6 +234,7 @@ Enumerateds (32 Bits)
 0x9100	0x912F	OpenGL ARB
 0x9130	0x913F	Imagination Technologies
 0x9140	0x91BF	AMD
+0x91C0	0x923F	AMD
 100000	100999	GLU Library
 101000	101999	OpenGL ARB	Conformance Tests
 103000	103999	IBM
