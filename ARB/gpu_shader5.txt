@@ -31,8 +31,7 @@ Status
 
 Version
 
-    Last Modified Date:         03/07/2010
-    NVIDIA Revision:            10
+    Version 11, March 23, 2010
 
 Number
 
@@ -1258,11 +1257,12 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50
     undefined.
 
     The function interpolateAtOffset() will return the value of the input
-    varying <interpolant> sampled at a fixed offset <offset> from the center
-    of the pixel.  The two floating-point components of <offset>, give the
-    offset in pixels in the x and y directions, respectively.  An offset of
-    (0,0) identifies the center of the pixel.  The range and granularity of
-    offsets supported by this function is implementation-dependent.  
+    varying <interpolant> sampled at an offset from the center of the pixel
+    specified by <offset>.  The two floating-point components of <offset>
+    give the offset in pixels in the x and y directions, respectively.  
+    An offset of (0,0) identifies the center of the pixel.  The range and
+    granularity of offsets supported by this function is
+    implementation-dependent.  
 
     For all of the interpolation functions, <interpolant> must be an input
     variable or an element of an input variable declared as an array.
@@ -1683,6 +1683,10 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+    11    03/23/10  Jon Leech Describe <offset> to interpolateAtOffset
+                              without implying it is a constant expression
+                              (Bug 6026).
+
     10    03/07/10  pbrown    Fix typo in an output stream qualifier example.
 
      9    03/05/10  pbrown    Modify function overloading rules to remove
