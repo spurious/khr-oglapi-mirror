@@ -29,8 +29,8 @@ Status
 
 Version
 
-    Last Modified Date:         02/04/2010
-    Revision:                   11
+    Last Modified Date:         03/23/2010
+    Revision:                   12
 
 Number
 
@@ -1346,6 +1346,11 @@ Issues
       makes sense for rasterization, because the geometry shader output
       "gl_Position" is associated with stream zero.
 
+      We considered building a mechanism for rasterization to select from any
+      of the vertex streams, but decided not to include such a feature since
+      it would require some way to designate a position for each stream or
+      potentially assign "gl_Position" to all streams.
+
     (15) How might you use transform feedback with assembly geometry programs
          and multiple vertex streams?
 
@@ -1389,11 +1394,25 @@ Issues
       other streams are ignored, after they are optionally captured in
       transform feedback mode.
 
+    (18) How do transform feedback vertex streams interact with separate
+         shader objects (EXT_separate_shader_objects)?
+
+      RESOLVED:  The data captured in transform feedback are produced by the
+      last active shader stage prior to the transform feedback stage.  If
+      there is an active program object for the geometry shader stage, and
+      that program has a geometry shader that emits vertices to multiple
+      streams, such a configuration behaves exactly like a similar
+      configuration using a single program object.
+
 
 Revision History
 
     Rev.    Date     Author    Changes
     ----  --------   --------  -----------------------------------------
+    12    03/23/2010 pbrown    Update issue (13) and add issue (18) from
+                               issues left behind in the NV_gpu_shader5 when
+                               specs were refactored.
+
     11    02/04/2010 gsellers  Add indexed query entry points.
                                Remove indexed enums.
 

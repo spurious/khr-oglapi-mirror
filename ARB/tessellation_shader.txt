@@ -32,8 +32,8 @@ Status
     
 Version
 
-    Last Modified Date:         01/29/2010
-    NVIDIA Revision:            16
+    Last Modified Date:         03/29/2010
+    NVIDIA Revision:            18
 
 Number
 
@@ -51,9 +51,9 @@ Dependencies
 
     This specification interacts with the core profile of OpenGL 3.2.
 
-    This specification interacts with NV_primitive_restart.
+    This specification interacts with ARB_gpu_shader5.
 
-    This specification interacts with NV_transform_feedback3.
+    This specification interacts with ARB_gpu_shader_fp64.
 
     This specification interacts with NV_gpu_shader5.
 
@@ -3292,7 +3292,7 @@ Issues
 
     (42) What restrictions should apply to the barrier() built-in?
 
-      UNRESOLVED:  Given that the barrier() function must be reached by all
+      RESOLVED:  Given that the barrier() function must be reached by all
       threads before any thread continues, it would be possible for shader
       thread groups to hang if any thread in the group never reaches the
       barrier because of conditional flow control.
@@ -3407,14 +3407,14 @@ Issues
          Whatever keyword we choose, should it be reserved in all languages or
          just tessellation control and evaluation?
 
-      UNRESOLVED:  TBD.
+      RESOLVED:  This extension uses "patch".
 
     (47) Should we allow tessellation control or evaluation inputs and outputs
          to be declared as "centroid in" or "centroid out", or with
          interpolation modifiers, even if those variables aren't being
          interpolated?
 
-      UNRESOLVED:  Yes.  This allows for mix-and-match linkage where you can
+      RESOLVED:  Yes.  This allows for mix-and-match linkage where you can
       feed an output from a single vertex shader to a fragment shader in one
       program and a tessellation/geometry shader in another.  The shading
       language requires that variables on each interface match in type and
@@ -3459,6 +3459,10 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     18   03/29/10  pbrown    Update issues (42), (46), and (47).
+
+     17   03/22/10  pbrown    Minor corrections to the Dependencies section.
+
      16   01/29/10  pbrown    Updates from ARB review (bug 5905).  In
                               particular, we again allow only the token
                               "gl_Invocation" for indexing TCS outputs,

@@ -21,8 +21,8 @@ Status
 
 Version
 
-    Date: October 22, 2009
-    Revision: 2
+    Date: March 21, 2010
+    Revision: 3
     $Id$
 
 Number
@@ -34,14 +34,14 @@ Dependencies
     This extension is written against Version 1.50 (Revision 09) of the OpenGL
     Shading Language Specification.
 
-    This extension is based on EXT_gpu_shader5.
+    This extension is based on ARB_gpu_shader5.
 
 Overview
 
     This extension trivially adds built-in functions for getting/setting
     the bit encoding for floating-point values in the OpenGL Shading Language.
 
-    These functions are pulled out of EXT_gpu_shader5, since support for such
+    These functions are pulled out of ARB_gpu_shader5, since support for such
     built-in functions exists in current hardware.
 
 IP Status
@@ -92,7 +92,7 @@ Issues
 
     Resolved.  Currently ARB_shader_bit_encoding.
 
-    2) Are there other built-in functions from EXT_gpu_shader5 that should
+    2) Are there other built-in functions from ARB_gpu_shader5 that should
     be pulled in here?
 
     Resolved.  Given the deadline, hearing no additional candidates for
@@ -100,9 +100,9 @@ Issues
 
     3) Are there other issues?
 
-    Resolved.  Certainly.  They will be found in EXT_gpu_shader5.  This
-    extension will track resolutions of EXT_gpu_shader5.  It is a simple
-    subset of EXT_gpu_shader5.
+    Resolved.  Certainly.  They will be found in ARB_gpu_shader5.  This
+    extension will track resolutions of ARB_gpu_shader5.  It is a simple
+    subset of ARB_gpu_shader5.
  
 
 Revision History
@@ -115,3 +115,7 @@ Revision History
     2, wwlk
     Rename to ARB (draft!)
     No additional features have been proposed.
+
+    2010-03-21
+    3, pbrown
+    Update to rename references to "EXT_gpu_shader5" to "ARB_gpu_shader5".

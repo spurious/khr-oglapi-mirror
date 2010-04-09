@@ -31,8 +31,8 @@ Status
     
 Version
 
-    Last Modified Date:         02/02/2010
-    NVIDIA Revision:            9
+    Last Modified Date:         03/23/2010
+    NVIDIA Revision:            10
 
 Number
 
@@ -933,13 +933,84 @@ Issues
       checks the offset of transform feedback buffers against the current
       program.
 
-    !!! STILL NEED TO MOVE OVER SOME ISSUES FROM NV_GPU_SHADER5
+    (5) Should we have double-precision matrix types?  We didn't add integer 
+        matrices, but integer matrix math is fairly uncommon.
+
+      RESOLVED:  Yes, we will support all matrix sizes in double-precision.
+      We will also provide double-precision equivalents for all matrix
+      operators and built-in matrix functions.
+
+    (6) What should be done to distinguish between single- and
+        double-precision floating-point constants?
+
+      RESOLVED:  We will use "LF" to identify double-precision floating-point
+      constants.  Here, we depart from the C standard.  In C, floating-point
+      constants without a suffix are implicitly double-precision and require a
+      "F" suffix to specify a single-precision constant.  However, GLSL has
+      historically provided no support for double precision.  Changing to C
+      rules would materially affect the behavior of pre-existing shaders that
+      add an #extension line for this extension, since constants with no
+      suffix have meant "float" up to now.  Additionally, such a change would
+      likely have required that we introduce implicit conversions from double
+      to float; otherwise, assigning a constant with no suffix to a float
+      would result in a compile-time error.
+
+    (7) Should we require IEEE 1394-compliant behavior for NaNs and
+        infinities?  Denorms?
+
+      RESOLVED:  Following historical precedent in the GLSL and OpenGL APIs
+      not defining special-case floating-point behavior, we chose not to do so
+      in this extension.
+
+    (8) Should we provide double-precision versions of all the built-ins that
+        take a <genType>, which are currently defined to be floats and
+        floating-point vectors?
+
+      RESOLVED:  We provide double-precision versions of most of the built-in
+      functions supported by GLSL.  We opted not to provide double-precision
+      functions for special trigonometry, exponential, derivative, and noise
+      functions.
+
+    (9) Are double-precision "varyings" (values passed between shader stages)
+        supported by this extension?  If so, is double-precision interpolation
+        is supported?
+
+      RESOLVED:  Double-precision shader inputs and outputs are supported,
+      except for vertex shader inputs and fragment shader outputs.
+      Additionally, double-precision vertex shader inputs are provided by the
+      separate extension EXT_vertex_attrib_64bit.  No known extension provides
+      double-precision fragment outputs, but that doesn't seem important since
+      OpenGL provides no pixel/texture formats with double-precision
+      components that could reasonably receive such outputs.
+
+      Interpolation not supported in this extension for double-precision
+      floating-point components.  As with integer types in OpenGL 3.0,
+      double-precision floating-point fragment shader inputs must be qualified
+      as "flat".
+
+      Note that this extension reformulates the spec language requiring "flat"
+      qualifiers, in addition to adding doubles to the list of "flat" types.
+      In GLSL 1.30, the spec applies these requirements to vertex shader
+      outputs but imposes no requirement on fragment inputs.  We move this
+      requirement to fragment inputs, since vertex shader outputs may be
+      passed to tessellation or geometry shaders without interpolation, and
+      thus without the need for qualification by "flat".
+
+    (19) Should we support any implicit conversion of matrix types, now that
+         we have both "mat4" and "dmat4"?
+
+      RESOLVED:  No.  It doesn't seem worth the trouble.
+
 
 
 Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+    10    03/23/10  pbrown    Update issues section to include fp64 issues
+                              that were left behind in NV_gpu_shader5 when the
+                              specs were refactored.
+
      9    02/02/10  pbrown    Specify that capturing any component at an
                               offset that is not size-aligned results in
                               undefined behavior (bug 5863).

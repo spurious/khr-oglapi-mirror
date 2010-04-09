@@ -30,8 +30,8 @@ Status
 
 Version
 
-    Last Modified Date:         02/08/2010
-    Revision:                   15
+    Last Modified Date:         03/29/2010
+    Revision:                   17
 
 Number
 
@@ -465,8 +465,11 @@ New Implementation Dependent State
 
 Dependencies on NV_gpu_program5:
 
-    If NV_gpu_program5 is supported, the following additional edits are
-    required:
+    If NV_gpu_program5 is supported, the following edits are made to extend
+    the assembly programming model documented in the NV_gpu_program4 extension
+    and extended by NV_gpu_program5.  No "OPTION" line is required; the
+    following capability is implied by NV_gpu_program5 program headers such as
+    "!!NVfp5.0".
 
     New Procedures and Functions
 
@@ -711,14 +714,14 @@ Issues
     (1) What terms should we use to describe the various data types and
     concepts in this specification?
 
-    UNRESOLVED:  This extension uses mechanisms similar to function pointers
-    in C.  We aren't directly exposing function pointers, but are instead
-    using a function pointer-like data type.  We are using the term
-    "subroutine" to qualify various concepts in this extension.  The function
-    pointer type is referred to as a "subroutine type".  Integer indices used
-    to identify functions that can be assigned to a function pointer type are
-    referred to as "subroutine indices".  Uniforms that can hold function
-    pointer values are referred to as "subroutine uniforms".
+    RESOLVED:  This extension uses mechanisms similar to function pointers in
+    C.  We aren't directly exposing function pointers, but are instead using a
+    function pointer-like data type.  We are using the term "subroutine" to
+    qualify various concepts in this extension.  The function pointer type is
+    referred to as a "subroutine type".  Integer indices used to identify
+    functions that can be assigned to a function pointer type are referred to
+    as "subroutine indices".  Uniforms that can hold function pointer values
+    are referred to as "subroutine uniforms".
 
     We considered using the term "interfaces", but were concerns about
     confusion with object-oriented programming models -- the model we are
@@ -787,9 +790,14 @@ Issues
     locations (MAX_SUBROUTINE_UNIFORM_LOCATIONS).
 
     (10) How many subroutine variables be used? Should they be allowed as
-    function parameters, struct members, and arrays?
+    function parameters, structure members, and arrays?
 
-    UNRESOLVED: Arrays are currently allowed. The others might be.
+    RESOLVED:  Arrays of subroutine uniforms are allowed.  The spec does not
+    currently permit them as function parameters or structure members, as it
+    requires subroutine variables be declared as uniforms.  Subroutine
+    function parameters can be emulated by declaring a uniform array holding
+    all possible subroutines that a shader might want to pass as a parameter
+    and then passing an integer index to select a subroutine to call.
 
     (11) Is the "subroutine" keyword necessary when declaring a subroutine
     uniform?
@@ -844,6 +852,12 @@ Revision History
 
     Rev.    Date      Author    Changes
     ----  ----------  --------  -----------------------------------------
+    17    03/29/2010  pbrown    Update issues (1) and (10).
+
+    16    03/21/2010  pbrown    Minor clarification in the NV_gpu_program5
+                                interaction that no OPTION is required to
+                                use subroutines in assembly programs.
+
     15    02/08/2010  Jon Leech Minor wording changes for consistency with
                                 4.0 specification.
 

@@ -31,7 +31,7 @@ Status
 
 Version
 
-    Version 11, March 23, 2010
+    Version 12, March 23, 2010
 
 Number
 
@@ -1466,23 +1466,24 @@ New Implementation Dependent State
 
 Issues
 
-    (X) This extension builds on the capability provided by
-    ARB_sample_shading, adding a new built-in variable for the input sample
-    mask.  It seems likely that a shader using this mask might also want to
-    use one or more ARB_sample_shading built-ins.  Are such shaders required
-    to include #extension lines for both extensions?
+    (1) This extension builds on the capability provided by
+        ARB_sample_shading, adding a new built-in variable for the input
+        sample mask.  It seems likely that a shader using this mask might also
+        want to use one or more ARB_sample_shading built-ins.  Are such
+        shaders required to include #extension lines for both extensions?
 
       UNRESOLVED:  It would be nice if it wasn't required.
 
-    (X) How do the per-sample shading features of this extension interact with
-    non-multisample rendering?
+    (2) How do the per-sample shading features of this extension interact with
+        non-multisample rendering?
 
       RESOLVED:  Non-multisample rendering (due to no multisample buffer or
       MULTISAMPLE disabled) is treated as single-sample rendering.
 
-    (X) This extension lifts the restriction requiring that indices into
-    samplers be constant expressions, but makes the results undefined if the
-    indices used would diverge in lockstep execution.  What is this good for?
+    (3) This extension lifts the restriction requiring that indices into
+        samplers be constant expressions, but makes the results undefined if
+        the indices used would diverge in lockstep execution.  What is this
+        good for?
 
       RESOLVED:  This allows shaders to index into samplers using integer
       uniforms, or with non-divergent values computed at run-time (e.g., loop
@@ -1494,8 +1495,8 @@ Issues
       Note that the NV_gpu_shader5 extension similarly lifts the restriction
       but does not require non-divergent indexing.
 
-    (X) What sort of implicit conversions should we support in this and
-    related extensions?
+    (4) What sort of implicit conversions should we support in this and
+        related extensions?
 
       RESOLVED:  In GLSL 1.50, we have implicit conversion from "int" and
       "uint" to "float", as well as equivalent conversions for vector type.
@@ -1533,9 +1534,9 @@ Issues
       conversions are unidirectional.  If type A can be implicitly converted
       to type B, type B can not be converted to type A.
 
-    (X) Increasing the number of available implicit conversions means that
-    there is the possibility of ambiguities in various operators?  How do we
-    deal with these cases?
+    (5) Increasing the number of available implicit conversions means that
+        there is the possibility of ambiguities in various operators?  How do
+        we deal with these cases?
 
       RESOLVED:  For binary operators, the new implicit conversions mean that
       there may be multiple ways to resolve an expression.  For example, in
@@ -1559,10 +1560,10 @@ Issues
 
       These rules should extend naturally if new basic data types are added.
 
-    (X) Increasing the number of available implicit conversions means that
-    there is an increased possibility of ambiguity when function overloading
-    is involved?  Additionally, this and related extensions add new function
-    overloads?  How do we deal with these cases?
+    (6) Increasing the number of available implicit conversions means that
+        there is an increased possibility of ambiguity when function
+        overloading is involved?  Additionally, this and related extensions
+        add new function overloads?  How do we deal with these cases?
 
       RESOLVED:  The general rule for function overloading in GLSL 1.50 is
       that we first check for a function prototype that exactly matches the
@@ -1614,29 +1615,32 @@ Issues
       is:
 
         - favor exact matches
-        - prefer matches not converting between signed and unsigned 
-        - prefer matches not converting between integer and float
-        - disfavor conversions to a larger type than to a smaller one (inputs)
-        - disfavor conversions from a smaller type than from a larger one
-          (outputs)
+        - prefer "promotions" (float->double) to other conversions
+        - prefer conversions from int/uint to float over similar conversion to
+          double 
 
-      Note that this priority favors conversion from "int" to "float" over
-      conversion from "int" to "uint".  This order was chosen for backward
-      compatibility.  Consider the following prototypes:
+      If none of the rules apply, one match is considered neither better nor
+      worse than the other.
+
+      With these rules, the "min(f,1)" example above resolves to the "float"
+      version, as is the case in GLSL 1.50.  However, there are other cases
+      where ambiguity remains.  For example, consider the prototypes:
 
         int f(uint x);
         int f(float x);
 
       With GLSL 1.50 rules, "f(3)" would match the floating-point version, as
       no implicit conversions existed from "int" to "uint".  With the new
-      implicit conversions, both prototypes match.  The rules have been
-      arranged to avoid having these new features cause us to resolve to a
-      different function.
+      implicit conversions, both prototypes match and neither is preferred.
+      Because of the ambiguity, "f(3)" would fail to compile with this
+      extension enabled, but should still compile on implementations
+      supporting this extension if the extension is not enabled in GLSL source
+      code.
 
-    (X) The function overloading rules described in this extension describe
-    conversions between data types with different sizes, however all existing
-    data types allowing implicit conversion (int, uint, float) are the same
-    size?  Why do we specify these rules?
+    (7) The function overloading rules described in this extension describe
+        conversions between data types with different sizes, however all
+        existing data types allowing implicit conversion (int, uint, float)
+        are the same size?  Why do we specify these rules?
 
       RESOLVED:  This extension is specified at the same time as the related
       ARB_gpu_shader_fp64 and NV_gpu_shader5 extensions, which do provide such
@@ -1645,24 +1649,26 @@ Issues
       provides the ability to automatically convert from signed to unsigned
       integer types, as in the C programming language.
 
-    (X) Should we support textureGather() for rectangle textures
-    (sampler2DRect)?  They aren't in ARB_texture_gather.
+    (8) Should we support textureGather() for rectangle textures
+        (sampler2DRect)?  They aren't in ARB_texture_gather.
+
+      RESOLVED:  Yes.
+
+    (9) How does the input sample mask interact with the fixed-function
+        SampleCoverage and SampleMask state?  Will samples be removed from the
+        input mask if they would be eliminated by these masks in the
+        per-fragment operations?
 
       UNRESOLVED.
 
-    (X) How does the input sample mask interact with the fixed-function
-    SampleCoverage and SampleMask state?  Will samples be removed from the
-    input mask if they would be eliminated by these masks in the per-fragment
-    operations?
-
-      UNRESOLVED.
-
-    (X) Should we support reading patches as geometry shader inputs, and if
+    (10) Should we support reading patches as geometry shader inputs, and if
     so, where?
 
-      UNRESOLVED.
+      RESOLVED:  Not in this extension.  This capability will be provided in
+      NV_gpu_shader5.
 
-    (X) Should we support per-sample interpolation of attributes?  If so, how.
+    (11) Should we support per-sample interpolation of attributes?  If so,
+         how?
 
       RESOLVED.  Yes.  When multisample rasterization is enabled, qualifying
       one or more fragment shader inputs with "sample" will force per-sample
@@ -1671,18 +1677,282 @@ Issues
       interpolated per-pixel (i.e., all samples get the same values, likely
       evaluated at the pixel center).
 
-    (X) Should we reserve "sample" as a keyword for per-sample interpolation
+    (12) Should we reserve "sample" as a keyword for per-sample interpolation
     qualifiers, or use something more obscure, such as "per_sample"?
 
-      UNRESOLVED:  TBD.
+      RESOLVED:  This extension uses "sample".
 
-    !!! STILL NEED TO MOVE OVER SOME ISSUES FROM NV_GPU_SHADER5
+    (13) What should be the base data type for the bitCount(), findLSB(), and
+         findMSB() functions -- signed or unsigned integers?
+
+      RESOLVED:  These functions will return signed values, with -1 returned
+      by findLSB/findMSB if no bit is found.  Note that the shading language
+      supports implicit conversions of signed integers to unsigned, which
+      makes it easy enough if an unsigned result is desired.
+
+    (14) Why do EmitVertex() and EndPrimitive() begin with capitalized words
+         while most of the other built-ins start with a lower-case (e.g.,
+         emitVertex)?  Which precedent should the new per-vertex stream emit
+         and end primitive functions follow?
+
+      RESOLVED:  The inconsistency began with the original functions in
+      EXT_geometry_shader4; the spec author can't recall the original reasons
+      (if any).  Regardless, we decided to match the existing functions as
+      closely as possible and use EmitStreamVertex() and EndStreamPrimitive().
+
+    (15) How do the textureGather functions work with sRGB textures?
+
+      RESOLVED:  Gamma-correction is applied to the texture source color
+      before "gathering" and hence applies to all four components, unless the
+      texture swizzle of the selected component is ALPHA in which case no
+      gamma-correction is applied.
+
+    (16) How should we support arrays of uniform blocks (i.e., multiple blocks
+         in a group, each backed by a separate buffer object)?
+
+      RESOLVED:  We will use instance names in the block definitions, which
+      can be declared as regular arrays:
+
+        uniform UniformData {
+          vec4 stuff;
+        } blocks[4];
+
+      These four blocks used will be referred to as "block[0]" through
+      "block[3]" in shader code, and "UniformData[0]" through "UniformData[3]"
+      in the OpenGL API code.  The block member in this example will be
+      referred to as "UniformData.stuff" in the API.  A similar approach was
+      already adopted in GLSL 1.50, where geometry shaders supported arrays of
+      input blocks that were treated similarly.  Since this spec depends on
+      GLSL 1.50, little new spec language is required here.
+
+    (17) What are instanced geometry shaders useful for?
+
+      RESOLVED:  Instanced geometry shaders allow geometry programs that
+      perform regular operations to run more efficiently.
+
+      Consider a simple example of an algorithm that uses geometry shaders to
+      render primitives to a cube map in a single pass.  Without instanced
+      geometry shaders, the geometry shader to render triangles to the cube
+      map would do something like:
+
+        for (face = 0; face < 6; face++) {
+          for (vertex = 0; vertex < 3; vertex++) {
+            project vertex <vertex> onto face <face>, output position
+            compute/copy attributes of emitted <vertex> to outputs
+            output <face> to result.layer
+            emit the projected vertex
+          }
+          end the primitive (next triangle)
+        }
+
+      This algorithm would output 18 vertices per input triangle, three for
+      each cube face.  The six triangles emitted would be rasterized, one per
+      face.  Geometry shaders that emit a large number of attributes have
+      often posed performance challenges, since all the attributes must be
+      stored somewhere until the emitted primitives.  Large storage
+      requirements may limit the number of threads that can be run in parallel
+      and reduce overall performance.
+
+      Instanced geometry shaders allow this example to be restructured to run
+      with six separate invocations, one per face.  Each invocation projects
+      the triangle to only a single face (identified by the invocation number)
+      and emits only 3 vertices.  The reduced storage requirements allow more
+      geometry shader invocations to be run in parallel, with greater overall
+      efficiency.
+
+      Additionally, the total number of attributes that can be emitted by a
+      single geometry shader invocation is limited.  However, for instanced
+      geometry shaders, that limit applies to each of <N> invocations which
+      allows for a larger total output.  For example, if the GL implementation
+      supports only 1024 components of output per invocation, the 18-vertex
+      algorithm above could emit no more than 56 components per vertex.  The
+      same algorithm implemented as a 3-vertex 6-invocation geometry program
+      could theoretically allow for 341 components per vertex.
+
+    (18) Should EmitStreamVertex() and EndStreamPrimitive() accept a
+         non-constant stream number?
+
+      RESOLVED:  Not in this extension.  Requiring a constant stream number
+      for each call simplifies code generation for the compiler.
+
+    (19) Are there any restrictions on geometry shaders with multiple output
+         streams?
+
+      RESOLVED:  Yes, such geometry shaders are required to generate points;
+      line strip and triangle strip outputs are not supported.
+
+    (20) Since multi-stream geometry shaders only support points, why does
+         EndStreamPrimitive() exist?  Neither it nor EndStream() does anything
+         useful when emitting points.
+
+      RESOLVED:  This function was added for completeness, and would be useful
+      if the requirement for emitting points were lifted by a future
+      extension.
+
+    (21) Should we provide mechanisms allowing shaders to examine or set the
+         bit representation of floating-point numbers?
+
+      RESOLVED:  Yes, we will provide functions to convert single-precision
+      floats to/from signed and unsigned 32-bit integers.  The
+      ARB_gpu_shader_fp64 extension will provide similar functionality for
+      double-precision floats.  We chose to adopt the Java naming convention
+      here -- converting a single-precision float to/from a signed integer is
+      accomplished by the functions floatBitsToInt() and intBitsToFloat().
+
+      Note that this functionality has also been forked off into a separate
+      extension (ARB_shader_bit_encoding) that can be exported on
+      implementations capable of performing such conversions but not capable
+      of the full feature set of this extension and/or OpenGL 4.0.
+
+    (22) What is the "precise" qualifier good for?
+
+      RESOLVED:  Like "invariant", "precise" provides some invariance
+      guarantees is useful for certain algorithms.
+
+      With an output position qualified as "invariant", we ensure that if the
+      same geometry is processed by multiple shaders using the exact same
+      code, it will be transformed in exactly the same way to ensure that we
+      have no cracking or flickering in multi-pass algorithms using different
+      shaders.
+
+      With "precise", we ensure that an algorithm can be written to produce
+      identical results on subtly different inputs.  For example, the order of
+      vertices visible to a geometry or tessellation shader used to subdivide
+      primitive edges might present an edge shared between two primitives in
+      one direction for one primitive and the other direction for the adjacent
+      primitive.  Even if the weights are identical in the two cases, there
+      may be cracking if the computations are being done in an order-dependent
+      manner.  If the position of a new vertex were provided by evaluation the
+      function f() below with limited-precision floating-point math, it's not
+      necessarily the case that f(a,b,c) == f(c,b,a) in the following code:
+
+          float f(float x, float y, float z) 
+          {
+            return (x + y) + z;
+          }
+
+      This function f() can be rewritten as follows with "precise" and a
+      symmetric evaluation order to ensure that f(a,b,c) == f(c,b,a).
+
+          float f(float x, float y, float z)
+          {
+            // Note that we intentionally compute "(x+z)" instead of "(x+y)"
+            // here, because that value will be the same when <x> and <z> 
+            // are reversed.
+            precise float result = (x + z) + y;
+            return result;
+          }
+      
+          (a + b) + c == (c + b) + a
+
+      The "precise" qualifier will disable certain optimization and thus
+      carries a performance cost.  The cost may be higher than "invariant",
+      because "invariant" permits optimizations disallowed by "precise" as
+      long as the compiler ensures that it always optimizes in the exact same
+      manner.
+
+    (23) What computations will be affected by the "precise" qualifier, and
+         what computations aren't?
+
+      RESOLVED:  We will ensure precise computation of any expressions within
+      a single function used directly or indirectly to produce the value of a
+      variable qualified as "precise".
+
+      We chose not to provide this guarantee across function boundaries, even
+      if the results of a function are used in the computation of an output
+      qualified as "precise".  Algorithms requiring the use of "precise" may
+      have a mix of computations, some required to be precise, some not.  This
+      function boundary rule may serve to limit the amount of computation
+      indirectly forced to be precise.
+
+      Additionally, the subroutine rule permits non-precise sub-operations in
+      a computation required to be precise.  For example, a shader might need
+      to compute a "precise" position by taking a weighted average as in the
+      following code:
+
+        precise vec3 pos = (p[0]*w[0] + p[1]*w[1]) + (p[2]*w[2] + p[3]*w[3]);
+
+      However, if the main precision requirement is that the same result be
+      generated when <p> and <w> are reversed, the following code also gets
+      the job done, even if posmad() is implemented with multiply-add
+      operations.
+
+        vec3 posmad(vec3 p0, float w0, vec3 p1w1) { return p0*w0+p1w1; }
+        precise vec3 pos = (posmad(p[0], w[0], p[1]*w[1]) +
+                            posmad(p[3], w[3], p[2]*w[2]));
+
+      To generate precise results within a function, the function arguments
+      and/or temporaries within the function body should be qualified as
+      "precise" as needed.
+
+      Note that when applying "precise" rules to assignments, indirect
+      application of this rule applies on an assignment-by-assignment basis.
+      In the following perverse example:
+
+        float a,b,c,d,e,f;
+        precise float g;
+        f = a + b + c;
+        ...
+        f = c + d + e;
+        g = f * 2.0;
+
+      The first assignment to <f> need not be treated as "precise", since the
+      value assigned will have no effect on the final value of the
+      precise-qualified <g>.  The second assignment to <f> must be evaluated
+      precisely.  The fact that one assignment to a variable needs to be
+      treated as precise does not mean that the variable itself is implicitly
+      treated as "precise".
+
+    (24) Are "precise" qualifiers allowed on function arguments?  If so, what
+         do they mean?  Can a return value for a function be declared as
+         precise?
+
+      RESOLVED:  Yes; the rules permit the use of "precise" on any variable
+      declaration, including function arguments.  The code
+
+        float f(precise in vec4 arg1, precise out vec4 arg2) { ... }
+
+      specifies that any expressions used to assign values to <arg1> or <arg2>
+      within f() will be evaluated as a precise manner.
+
+      Expressions used to derive the value passed to the function f() as
+      <arg1> will be treated as precise according to the normal rules.  The
+      expression for <arg1> is treated as precise if and only if the function
+      call is on the right-hand side of an assignment to a variable qualified
+      as "precise" or is indirectly used in an assignment to such a variable.
+      It is not automatically treated as precise just because the formal
+      parameter <arg1> is qualified with "precise".  
+
+      For the purposes of this rule, variables passed as "out" parameters do
+      not count as assignments.  Values assigned to an output parameter will
+      not be evaluated precisely just because the caller provides a variable
+      qualified as "precise".  When the output parameter itself is qualified
+      as "precise", precise evaluation of that output is required within the
+      callee.
+
+      We chose not to permit function return values to be qualified as
+      "precise", though we could have hypothetically allowed code such as:
+
+        precise float f(float a, float b, float c) { return (a+b)+c; }
+
+      To obtain a precise return value in such a case, use code such as:
+
+        float f(float a, float b, float c) 
+        {
+          precise float result = (a+b) + c;
+          return result;
+        }
 
 
 Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+    12    03/23/10  pbrown    Update issues section, both fixing/numbering
+                              existing issues and including other issues 
+                              that were left behind in NV_gpu_shader5 when the
+                              specs were refactored.
+
     11    03/23/10  Jon Leech Describe <offset> to interpolateAtOffset
                               without implying it is a constant expression
                               (Bug 6026).

@@ -22,8 +22,8 @@ Status
 
 Version
 
-    Last Modified Date:         09/27/2009
-    Author Revision:            4
+    Last Modified Date:         04/07/2010
+    Author Revision:            5
 
 Number
 
@@ -127,12 +127,7 @@ Additions to the OpenGL Shading Language Version 1.40.05
     gl_FragStencilRefAMD, then the value of the fragment's stencil reference
     value may be undefined for executions of the shader that take that path.
     That is, if the set of linked shaders statically contain a write to
-    gl_FragStencilRefAMD, then it is responsible for always writing it. If a
-    shader reads from gl_FragStencilRefAMD before writing to it, the value
-    provided will be the fixed-function stencil reference value for the
-    fragment. If a different reference value is specified for front and back
-    facing primitives, the value provided will depend on the facingness of the
-    fragment.
+    gl_FragStencilRefAMD, then it is responsible for always writing it.
 
     Modify the first paragraph on p.64:
 
@@ -204,6 +199,9 @@ Revision History
     Rev.    Date      Author    Changes
     ----  --------    --------  -----------------------------------------
 
+     5    04/07/2010  gsellers  Remove erroneous language stating that
+                                gl_FragStencilRefAMD is initialized to the fixed
+                                function reference value.
      4    09/27/2009  gsellers  Update issues 1, 4 and 5.
      3    07/16/2009  gsellers  Address two-sided stencil references.
                                 Add issues 3, 4 and 5.

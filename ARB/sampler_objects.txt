@@ -25,7 +25,7 @@ Status
 
 Version
 
-    Version 8, March 22, 2010
+    Version 9, March 27, 2010
 
 Number
 
@@ -78,7 +78,7 @@ New Procedures and Functions
     void GenSamplers(sizei count, uint *samplers);
     void DeleteSamplers(sizei count, const uint * samplers);
     boolean IsSampler(uint sampler);
-    void BindSampler(enum unit, uint sampler);
+    void BindSampler(uint unit, uint sampler);
     void SamplerParameter{if}(uint sampler, enum pname, T param);
     void SamplerParameter{if}v(uint sampler, enum pname, const T *params);
     void SamplerParameterI{i ui}v(uint sampler, enum pname, const T *params);
@@ -515,6 +515,8 @@ Revision History
 
     Rev.    Date      Author    Changes
     ----  --------    --------  -----------------------------------------
+     9    03/27/2010  pbrown    Fix an incorrect prototype for BindSampler
+                                in the new functions section (bug 6146).
      8    03/22/2010  Jon Leech Change error for invalid <sampler> names
                                 passed to *SamplerParameter* from
                                 INVALID_VALUE to INVALID_OPERATION for
