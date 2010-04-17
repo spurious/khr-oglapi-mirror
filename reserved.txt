@@ -135,6 +135,7 @@ Extension Numbers
 382-383         AMD
 384             INTEL
 385             AMD
+386-392         NVIDIA
 
 GLU Enumerants
 ==============
