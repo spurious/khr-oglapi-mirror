@@ -25,7 +25,7 @@ Status
 
 Version
 
-    Version 9, March 27, 2010
+    Version 10, March 29, 2010
 
 Number
 
@@ -79,11 +79,16 @@ New Procedures and Functions
     void DeleteSamplers(sizei count, const uint * samplers);
     boolean IsSampler(uint sampler);
     void BindSampler(uint unit, uint sampler);
-    void SamplerParameter{if}(uint sampler, enum pname, T param);
-    void SamplerParameter{if}v(uint sampler, enum pname, const T *params);
-    void SamplerParameterI{i ui}v(uint sampler, enum pname, const T *params);
-    void GetSamplerParameter{if}v(uint sampler, enum pname, T *params);
-    void GetSamplerParameterI{if}v(uint sampler, enum pname, T *params);
+    void SamplerParameteri(uint sampler, enum pname, int param);
+    void SamplerParameterf(uint sampler, enum pname, float param);
+    void SamplerParameteriv(uint sampler, enum pname, const int *params);
+    void SamplerParameterfv(uint sampler, enum pname, const float *params);
+    void SamplerParameterIiv(uint sampler, enum pname, const int *params);
+    void SamplerParameterIuiv(uint sampler, enum pname, const uint *params);
+    void GetSamplerParameteriv(uint sampler, enum pname, int *params);
+    void GetSamplerParameterfv(uint sampler, enum pname, float *params);
+    void GetSamplerParameterIiv(uint sampler, enum pname, int *params);
+    void GetSamplerParameterIuiv(uint sampler, enum pname, uint *params);
 
 New Tokens
 
@@ -515,6 +520,8 @@ Revision History
 
     Rev.    Date      Author    Changes
     ----  --------    --------  -----------------------------------------
+    10    03/29/2010  pbrown    Further fixes in the listed prototypes;
+                                use separate lines for external parsing.
      9    03/27/2010  pbrown    Fix an incorrect prototype for BindSampler
                                 in the new functions section (bug 6146).
      8    03/22/2010  Jon Leech Change error for invalid <sampler> names
