@@ -102,7 +102,7 @@ Extension Numbers
 281-287		NVIDIA
 288-290		AMD
 291-296		Khronos / OpenGL ES
-297-299		NV
+297-299		NVIDIA
 300-301		Mesa
 302-306		NVIDIA
 307		SGI
@@ -137,6 +137,8 @@ Extension Numbers
 385		AMD
 386-393		NVIDIA
 394-395		AMD
+396		NVIDIA
+397-398		AMD
 
 GLU Enumerants
 ==============
