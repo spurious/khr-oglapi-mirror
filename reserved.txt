@@ -6,22 +6,25 @@ normative files described below for the most current versions.
 
     Changes to extension numbers in this file must be synced with
 
-	ogl/trunk/doc/registry/extensions/registry
 	ogl/trunk/doc/registry/extensions/registry.tcl
 
     which lists the name and status of each extension. Changes to
-    GL and GLX enumerants must be synced with changes to
+    GL, GLX, and WGL enumerants must be synced with changes to
 
 	ogl/trunk/doc/registry/specs/enum.spec
+	ogl/trunk/doc/registry/specs/enumext.spec
 	ogl/trunk/doc/registry/specs/glxenum.spec
+	ogl/trunk/doc/registry/specs/glxenumext.spec
+	ogl/trunk/doc/registry/specs/wglenum.spec
+	ogl/trunk/doc/registry/specs/wglenumext.spec
 
     which are the actual registry and the sources from which header
     files are generated.
 
     When new GLX protocol is created for extension specifications,
     allocate it here and reflect it in the extension specification
-    document as well as the registry and, if appropriate, Sample
-    Implementation gl.spec and glx.spec files, in directories
+    document as well as the registry and, if appropriate, gl.spec and
+    glx.spec files under
 
 	ogl/trunk/doc/registry/specs/
 
@@ -331,7 +334,7 @@ OpenGL Rendering Opcodes (16 Bits)
        231     232  ARB_occlusion_query
        233	    ARB_draw_buffers
        234	    ARB_color_buffer_float
-       235     237  ARB_framebuffer_object (tentative)
+       235     237  ARB_framebuffer_object
   1008-1023 Reserved to IBM (unknown usage)
   1024-1039 Reserved to HP (originally Compaq) (unknown usage)
   1040-2047 Unused
