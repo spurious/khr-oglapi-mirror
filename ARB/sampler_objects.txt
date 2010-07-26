@@ -25,7 +25,7 @@ Status
 
 Version
 
-    Version 10, March 29, 2010
+    Version 11, July 7, 2010
 
 Number
 
@@ -334,7 +334,10 @@ Additions to Chapter 4 of the OpenGL 3.2 Specification (Compatibility Profile) (
 
 Additions to Chapter 5 of the OpenGL 3.2 Specification (Compatibility Profile) (Special Functions)
 
-    None.
+    Add a new category of commands not usable in display lists
+    to section 5.4.1:
+
+   "Sampler objects: GenSamplers and DeleteSamplers."
 
 Additions to Chapter 6 of the OpenGL 3.2 Specification (Compatibility Profile) (State and State Requests)
 
@@ -375,6 +378,13 @@ Additions to Chapter 6 of the OpenGL 3.2 Specification (Compatibility Profile) (
     queried with a type that does not match the original type with which
     it was specified, the result is undefined.
 
+
+    In section 6.1.19, append to the paragraph starting "When PushAttrib
+    is called with TEXTURE_BIT set...":
+
+   "... are restored to their pushed values. The bindings and state for
+    sampler objects are not pushed or popped."
+
 Additions to Appendix A of the OpenGL 3.2 Specification (Compatibility Profile) (Invariance)
 
     None.
@@ -411,7 +421,7 @@ New State
     +-----------------------+-----------+-------------------+-----------------+-------------------------+--------+------------+
     | Get Value             | Type      | Get Command       | Initial Value   | Description             | Sec    | Attribute  |
     +-----------------------+-----------+-------------------+-----------------+-------------------------+--------+------------+
-    | SAMPLER_BINDING       | 48* x Z+  | GetIntegerv       | 0               | Sampler object bound    | 3.9.2  | texture    |
+    | SAMPLER_BINDING       | 48* x Z+  | GetIntegerv       | 0               | Sampler object bound    | 3.9.2  | -          |
     |                       |           |                   |                 | to active texture unit  |        |            |
     +-----------------------+-----------+-------------------+-----------------+-------------------------+--------+------------+
 
@@ -420,19 +430,19 @@ New State
     +---------------------------+-----------+----------------------+------------------------+------------------------------+--------+------------+
     | Get Value                 | Type      | Get Command          | Initial Value          | Description                  | Sec    | Attribute  |
     +---------------------------+-----------+----------------------+------------------------+------------------------------+--------+------------+
-    | TEXTURE_BORDER_COLOR      | n x C     | GetSamplerParameter  | 0,0,0,0                | Border color                 | 3.9    | texture    |
-    | TEXTURE_MIN_FILTER        | n x Z6    | GetSamplerParameter  | NEAREST_MIPMAP_LINEAR  | Minification function        | 3.9.9  | texture    |
-    | TEXTURE_MAG_FILTER        | n x Z2    | GetSamplerParameter  | LINEAR                 | Magnification function       | 3.9.10 | texture    |
-    | TEXTURE_WRAP_S            | n x Z5    | GetSamplerParameter  | REPEAT                 | Texcoord s wrap mode         | 3.9.9  | texture    |
-    | TEXTURE_WRAP_T            | n x Z5    | GetSamplerParameter  | REPEAT                 | Texcoord t wrap mode         | 3.9.9  | texture    |
-    | TEXTURE_WRAP_R            | n x Z5    | GetSamplerParameter  | REPEAT                 | Texcoord r wrap mode         | 3.9.9  | texture    |
-    | TEXTURE_MIN_LOD           | n x R     | GetSamplerParameter  | -1000                  | Minimum level of detail      | 3.9    | texture    |
-    | TEXTURE_MAX_LOD           | n x R     | GetSamplerParameter  | 1000                   | Maximum level of detail      | 3.9    | texture    |
-    | TEXTURE_LOD_BIAS          | n x R     | GetSamplerParameter  | 0.0                    | Texture level of detail      | 3.9.9  | texture    |
+    | TEXTURE_BORDER_COLOR      | n x C     | GetSamplerParameter  | 0,0,0,0                | Border color                 | 3.9    | -          |
+    | TEXTURE_MIN_FILTER        | n x Z6    | GetSamplerParameter  | NEAREST_MIPMAP_LINEAR  | Minification function        | 3.9.9  | -          |
+    | TEXTURE_MAG_FILTER        | n x Z2    | GetSamplerParameter  | LINEAR                 | Magnification function       | 3.9.10 | -          |
+    | TEXTURE_WRAP_S            | n x Z5    | GetSamplerParameter  | REPEAT                 | Texcoord s wrap mode         | 3.9.9  | -          |
+    | TEXTURE_WRAP_T            | n x Z5    | GetSamplerParameter  | REPEAT                 | Texcoord t wrap mode         | 3.9.9  | -          |
+    | TEXTURE_WRAP_R            | n x Z5    | GetSamplerParameter  | REPEAT                 | Texcoord r wrap mode         | 3.9.9  | -          |
+    | TEXTURE_MIN_LOD           | n x R     | GetSamplerParameter  | -1000                  | Minimum level of detail      | 3.9    | -          |
+    | TEXTURE_MAX_LOD           | n x R     | GetSamplerParameter  | 1000                   | Maximum level of detail      | 3.9    | -          |
+    | TEXTURE_LOD_BIAS          | n x R     | GetSamplerParameter  | 0.0                    | Texture level of detail      | 3.9.9  | -          |
     |                           |           |                      |                        | bias (biastexobj)            |        |            |
-    | TEXTURE_COMPARE_MODE      | n x Z2    | GetSamplerParameter  | NONE                   | Comparison mode              | 3.9.16 | texture    |
-    | TEXTURE_COMPARE_FUNC      | n x Z8    | GetSamplerParameter  | LEQUAL                 | Comparison function          | 3.9.16 | texture    |
-    | TEXTURE_MAX_ANISTROPY_EXT | n x R     | GetSamplerParameter  | 1.0                    | Maximum degree of anisotropy | 3.9    | texture    |
+    | TEXTURE_COMPARE_MODE      | n x Z2    | GetSamplerParameter  | NONE                   | Comparison mode              | 3.9.16 | -          |
+    | TEXTURE_COMPARE_FUNC      | n x Z8    | GetSamplerParameter  | LEQUAL                 | Comparison function          | 3.9.16 | -          |
+    | TEXTURE_MAX_ANISTROPY_EXT | n x R     | GetSamplerParameter  | 1.0                    | Maximum degree of anisotropy | 3.9    | -          |
     +---------------------------+-----------+----------------------+------------------------+------------------------------+--------+------------+
 
 New Implementation Dependent State
@@ -520,6 +530,14 @@ Revision History
 
     Rev.    Date      Author    Changes
     ----  --------    --------  -----------------------------------------
+    11    07/07/2010  Jon Leech Do not allow sampler bindings and sampler
+                                object state to be pushed and popped, by
+                                modifying all new state table entries to
+                                have no attribute group and adding a
+                                clarifying statement in section 6.1.20.
+                                Do not allow GenSamplers and
+                                DeleteSamplers in display lists (bug
+                                6056).
     10    03/29/2010  pbrown    Further fixes in the listed prototypes;
                                 use separate lines for external parsing.
      9    03/27/2010  pbrown    Fix an incorrect prototype for BindSampler

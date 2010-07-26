@@ -56,8 +56,8 @@ Status
 
 Version
 
-    Last Modified Date: May 27, 2009
-    Revision: #31
+    Last Modified Date: July 21, 2010
+    Revision: #32
 
 Number
 
@@ -4238,6 +4238,7 @@ Issues
            color encoding.
          * Many other minor tweaks to synchronize with the GL3 framebuffer
            objects.
+         * ARB FBOs are not shareable.
           
     (4) Do we need new enum values, or can we re-use the ones from the EXT
         versions?
@@ -4339,6 +4340,19 @@ Issues
         This approach also provides consistency with other approved
         ARB specifications such as ARB_framebuffer_sRGB which describes
         (see its issue #9) that formats such as GL_SLUMINANCE8.
+
+   (10) Can ARB framebuffer objects be shared between contexts? 
+        ARB_framebuffer_object is supposed to be compatible with 
+        EXT_framebuffer_object, but also a subset of OpenGL 3.0. 
+        EXT_framebuffer_object (rev. 120) explicitly allows sharing in 
+        issue 76, but the 3.0 spec explicitly disallows it in Appendix D.
+
+        Resolved: No. ARB_framebuffer_object is intended to capture the 
+        functionality that went into GL 3.0.  Furthermore, given that the 
+        entry points and tokens in this extension and the core are identical
+        there is no way that an implementation could differentiate FBOs
+        created with this extension from those created by core GL.
+
 
 Revision History
 
@@ -4518,3 +4532,7 @@ Revision History
     #31 May 27, 2009: Jon Leech
         - Change default value of FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE
           to NONE (bug 4407).
+
+    #32 July 21, 2010: Daniel Koch
+        - Add issue 10 clarifying that ARB fbos cannot be shared.
+

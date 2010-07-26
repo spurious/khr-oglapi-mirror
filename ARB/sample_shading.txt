@@ -241,7 +241,7 @@ Modifications to The OpenGL Shading Language Specification, Version 1.10.59
 
     A new preprocessor #define is added to the OpenGL Shading Language:
 
-      #define GL_ARB_sample_shading
+      #define GL_ARB_sample_shading 1
 
     Add to section 7.2 "Fragment Shader Special Variables"
 
