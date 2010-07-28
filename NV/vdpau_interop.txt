@@ -21,11 +21,11 @@ Status
 
 Version
 
-    9 (29 May 2010)
+    10 (16 Jun 2010)
 
 Number
 
-    396
+    <TBD>
 
 Dependencies
 
@@ -56,6 +56,10 @@ Overview
 IP Status
 
     There are no known IP issues. 
+
+New Types
+
+    typedef GLintptr GLvdpauSurfaceNV;
 
 New Procedures and Functions
 
@@ -612,4 +616,7 @@ Revision History
 
     9. 29 May 2010
         - Fix minor typos and formatting issues.
+
+    10. 16 Jun 2010
+        - Added "New Types" section
 
