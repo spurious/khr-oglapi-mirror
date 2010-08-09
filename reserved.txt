@@ -142,6 +142,7 @@ Extension Numbers
 394-395		AMD
 396		NVIDIA
 397-398		AMD
+399-400		NVIDIA
 
 GLU Enumerants
 ==============
