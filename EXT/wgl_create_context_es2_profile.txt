@@ -21,7 +21,7 @@ Status
 
 Version
 
-    Version 2, August 4, 2010
+    Version 3, August 9, 2010
 
 Number
 
@@ -186,8 +186,21 @@ Issues
     against it. Most ARB members would prefer that people use EGL to
     access OpenGL ES 2.0, whether on the desktop or on mobile devices.
 
+ 4) Do we need a GL_CONTEXT_ES2_PROFILE_BIT_EXT token?
+
+    RESOLVED: NO. The GL_CONTEXT_PROFILE_MASK query only exists in
+    desktop GL, while creating an ES2 "profile" results in an OpenGL ES
+    2.0 context, which does not have the query. Therefore at present,
+    it's not possible to ever return this bit from the query and it is
+    not needed.
+
+    If, in the future, ES and GL are unified under the profile mechanism
+    such that there is an actual "embedded" profile of GL, then this
+    resolution may need to change.
 
 Revision History
+
+    Version 3, 2010/08/09 - Added issue 4 resolution.
 
     Version 2, 2010/08/04 - Fix typos and assign extension number.
 
