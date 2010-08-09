@@ -24,8 +24,8 @@ Status
 
 Version
 
-    Last Modified Date:         May 26, 2010
-    Revision:                   4
+    Last Modified Date:         August 4, 2010
+    Revision:                   5
 
 Number
 
@@ -66,6 +66,7 @@ New Tokens
     GetInteger64v, GetFloatv, and GetDoublev:
 
         SHADER_COMPILER                                 0x8DFA
+        SHADER_BINARY_FORMATS                           0x8DF8
         NUM_SHADER_BINARY_FORMATS                       0x8DF9
         MAX_VERTEX_UNIFORM_VECTORS                      0x8DFB
         MAX_VARYING_VECTORS                             0x8DFC
@@ -730,6 +731,8 @@ Revision History
 
     Rev.    Date      Author    Changes
     ----  ----------  --------  -----------------------------------------
+    5     08/04/2010  Jon Leech Add SHADER_BINARY_FORMATS to new tokens
+                                section.
     4     05/26/2010  Jon Leech Add missing tokens, make language more
                                 consistent with GL core spec in some places,
                                 and reflow paragraphs.
