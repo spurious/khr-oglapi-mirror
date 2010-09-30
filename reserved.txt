@@ -360,7 +360,7 @@ OpenGL Rendering Opcodes (16 Bits)
       2078    2081  SGIX_list_priority
       2082	    SGIS_texture_color_mask
   3072-4095 Reserved to ARB (unused)
-  4096-5151 Reserved to EXT (4332-5151 unused)
+  4096-5151 Reserved to EXT (4460-5151 unused)
       4096	    EXT_blend_color/1.2
       4097	    EXT_blend_minmax/1.2
       4098	    EXT_polygon_offset
@@ -397,6 +397,7 @@ OpenGL Rendering Opcodes (16 Bits)
       4326    4329  ARB_matrix_palette
       4330	    EXT_framebuffer_blit
       4331	    EXT_framebuffer_multisample
+      4332    4459  NVIDIA (use TBD, bug 6720)
 
   8192-8207  Reserved to HP (unknown usage)
  16384-16415 Reserved to SUN (unknown usage)
