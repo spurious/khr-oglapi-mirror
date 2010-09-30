@@ -445,7 +445,7 @@ Additions to the AGL/GLX/WGL Specifications
 
 GLX Protocol
 
-    TBD (Protocol support needs to be added for the new functions.)
+    UNDER DEVELOPMENT
 
 Dependencies on EXT_transform_feedback
 
@@ -835,6 +835,8 @@ Revision History
 
       Rev.    Date    Author    Changes
       ----  --------  --------  -----------------------------------------
+       5    05/24/10  srahman   Added GLX protocol support.
+
        4    11/19/08  pbrown    Clean up issues that were previously marked as
                                 UNRESOLVED.  Allow EndTransformFeedbackNV to
                                 be called while transform feedback is paused.

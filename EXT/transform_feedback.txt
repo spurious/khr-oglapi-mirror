@@ -724,6 +724,10 @@ Additions to the AGL/GLX/WGL Specifications
 
     None.
 
+GLX Protocol
+
+    UNDER DEVELOPMENT
+
 Interactions with NV_transform_feedback
 
     NV_transform_feedback is the initial version of this extension, which

@@ -17,8 +17,8 @@ Status
 
 Version
 
-    Last Modified Date:         04/13/2010
-    NVIDIA Revision:            3
+    Last Modified Date:         09/23/2010
+    NVIDIA Revision:            5
 
 Number
 
@@ -195,6 +195,8 @@ New Tokens
         MIN_FRAGMENT_INTERPOLATION_OFFSET_NV            0x8E5B
         MAX_FRAGMENT_INTERPOLATION_OFFSET_NV            0x8E5C
         FRAGMENT_PROGRAM_INTERPOLATION_OFFSET_BITS_NV   0x8E5D
+        MIN_PROGRAM_TEXTURE_GATHER_OFFSET_NV            0x8E5E
+        MAX_PROGRAM_TEXTURE_GATHER_OFFSET_NV            0x8E5F
 
 
 Additions to Chapter 2 of the OpenGL 3.0 Specification (OpenGL Operation)
@@ -329,8 +331,8 @@ Additions to Chapter 2 of the OpenGL 3.0 Specification (OpenGL Operation)
 
     <ATOMop>                ::= "ATOM"
 
-    <STOREop_instruction>   ::= <STOREop> <opModifiers> <instOperandS> "," 
-                                <instOperandV>
+    <STOREop_instruction>   ::= <STOREop> <opModifiers> <instOperandV> "," 
+                                <instOperandS>
 
     <STOREop>               ::= "STORE"
 
@@ -789,6 +791,7 @@ Additions to Chapter 2 of the OpenGL 3.0 Specification (OpenGL Operation)
         vu: 4-component vector (data type is always unsigned integer)
         s:  scalar (replicated if written to a vector destination;
                     data type is inherited from operation)
+        su:  scalar (data type is always unsigned integer)
         c:  condition code test result (e.g., "EQ", "GT1.x")
         vc: 4-component vector or condition code test
         t:  texture
@@ -923,7 +926,7 @@ Additions to Chapter 2 of the OpenGL 3.0 Specification (OpenGL Operation)
     instructions.  These instructions must specify exactly one of these
     modifiers, and may not specify any of the base data type modifiers (F,U,S)
     described above.  The base data types of the result vector of a load
-    instruction or the second operand of a store instruction are trivially
+    instruction or the first operand of a store instruction are trivially
     derived from the storage modifier.
 
     For atomic memory operations performed by the ATOM instruction, the "ADD",
@@ -1444,6 +1447,9 @@ Additions to Chapter 2 of the OpenGL 3.0 Specification (OpenGL Operation)
         break;
       }
       BufferMemoryStore(address, writeval, storageModifier);
+
+    ATOM performs a scalar atomic operation.  The <y>, <z>, and <w> components
+    of the result vector are undefined.
       
     ATOM supports no base data type modifiers, but requires exactly one
     storage modifier.  The base data types of the result vector, and the first
@@ -3139,6 +3145,16 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     5    09/23/10  pbrown    Add missing constants for {MIN,MAX}_PROGRAM_
+                              TEXTURE_GATHER_OFFSET_NV (same as ARB/core).
+                              Add missing description for "su" in the opcode
+                              table; fix a couple operand order bugs for
+                              STORE.
+
+     4    06/22/10  pbrown    Specify that the y/z/w component of the ATOM
+                              results are undefined, as is the case with
+                              ATOMIM from EXT_shader_image_load_store.
+
      3    04/13/10  pbrown    Remove F32 support from ATOM.ADD.
 
      2    03/22/10  pbrown    Various wording updates to the spec overview, 

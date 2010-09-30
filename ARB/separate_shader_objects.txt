@@ -32,8 +32,8 @@ Status
 
 Version
 
-    Last Modified Date:  15 July, 2010
-    Version:             20
+    Last Modified Date:  9 August 2010
+    Version:             21
 
 Number
 
@@ -166,22 +166,135 @@ New Procedures and Functions
 
     void GetProgramPipelineiv(uint pipeline, enum pname, int *params);
 
-    void ProgramUniform{1234}{ifd}(uint program, int location,
-                                   T value);
-    void ProgramUniform{1234}{ifd}v(uint program, int location,
-                                    sizei count, const T value);
-    void ProgramUniform{1234}ui(uint program, int location,
-                                T value);
-    void ProgramUniform{1234}uiv(uint program, int location,
-                                 sizei count, T value);
-    void ProgramUniformMatrix{234}{fd}v
-                                  (uint program, int location,
+    void ProgramUniform1i(uint program, int location,
+                          int x);
+    void ProgramUniform2i(uint program, int location,
+                          int x, int y);
+    void ProgramUniform3i(uint program, int location,
+                          int x, int y, int z);
+    void ProgramUniform4i(uint program, int location,
+                          int x, int y, int z, int w);
+
+    void ProgramUniform1ui(uint program, int location,
+                           uint x);
+    void ProgramUniform2ui(uint program, int location,
+                           uint x, uint y);
+    void ProgramUniform3ui(uint program, int location,
+                           uint x, uint y, uint z);
+    void ProgramUniform4ui(uint program, int location,
+                           uint x, uint y, uint z, uint w);
+
+    void ProgramUniform1f(uint program, int location,
+                          float x);
+    void ProgramUniform2f(uint program, int location,
+                          float x, float y);
+    void ProgramUniform3f(uint program, int location,
+                          float x, float y, float z);
+    void ProgramUniform4f(uint program, int location,
+                          float x, float y, float z, float w);
+
+    void ProgramUniform1d(uint program, int location,
+                          double x);
+    void ProgramUniform2d(uint program, int location,
+                          double x, double y);
+    void ProgramUniform3d(uint program, int location,
+                          double x, double y, double z);
+    void ProgramUniform4d(uint program, int location,
+                          double x, double y, double z, double w);
+
+    void ProgramUniform1iv(uint program, int location,
+                           sizei count, const int *value);
+    void ProgramUniform2iv(uint program, int location,
+                           sizei count, const int *value);
+    void ProgramUniform3iv(uint program, int location,
+                           sizei count, const int *value);
+    void ProgramUniform4iv(uint program, int location,
+                           sizei count, const int *value);
+
+    void ProgramUniform1uiv(uint program, int location,
+                            sizei count, const uint *value);
+    void ProgramUniform2uiv(uint program, int location,
+                            sizei count, const uint *value);
+    void ProgramUniform3uiv(uint program, int location,
+                            sizei count, const uint *value);
+    void ProgramUniform4uiv(uint program, int location,
+                            sizei count, const uint *value);
+
+    void ProgramUniform1fv(uint program, int location,
+                           sizei count, const float *value);
+    void ProgramUniform2fv(uint program, int location,
+                           sizei count, const float *value);
+    void ProgramUniform3fv(uint program, int location,
+                           sizei count, const float *value);
+    void ProgramUniform4fv(uint program, int location,
+                           sizei count, const float *value);
+
+    void ProgramUniform1dv(uint program, int location,
+                           sizei count, const double *value);
+    void ProgramUniform2dv(uint program, int location,
+                           sizei count, const double *value);
+    void ProgramUniform3dv(uint program, int location,
+                           sizei count, const double *value);
+    void ProgramUniform4dv(uint program, int location,
+                           sizei count, const double *value);
+
+    void ProgramUniformMatrix2fv(uint program, int location,
+                                 sizei count, boolean transpose,
+                                 const float *value);
+    void ProgramUniformMatrix3fv(uint program, int location,
+                                 sizei count, boolean transpose,
+                                 const float *value);
+    void ProgramUniformMatrix4fv(uint program, int location,
+                                 sizei count, boolean transpose,
+                                 const float *value);
+
+    void ProgramUniformMatrix2dv(uint program, int location,
+                                 sizei count, boolean transpose,
+                                 const double *value);
+    void ProgramUniformMatrix3dv(uint program, int location,
+                                 sizei count, boolean transpose,
+                                 const double *value);
+    void ProgramUniformMatrix4dv(uint program, int location,
+                                 sizei count, boolean transpose,
+                                 const double *value);
+
+    void ProgramUniformMatrix2x3fv(uint program, int location,
                                    sizei count, boolean transpose,
                                    const float *value);
-    void ProgramUniformMatrix{2x3 3x2 2x4 4x2 3x4 4x3}{fd}v
-                                  (uint program, int location,
+    void ProgramUniformMatrix3x2fv(uint program, int location,
                                    sizei count, boolean transpose,
                                    const float *value);
+    void ProgramUniformMatrix2x4fv(uint program, int location,
+                                   sizei count, boolean transpose,
+                                   const float *value);
+    void ProgramUniformMatrix4x2fv(uint program, int location,
+                                   sizei count, boolean transpose,
+                                   const float *value);
+    void ProgramUniformMatrix3x4fv(uint program, int location,
+                                   sizei count, boolean transpose,
+                                   const float *value);
+    void ProgramUniformMatrix4x3fv(uint program, int location,
+                                   sizei count, boolean transpose,
+                                   const float *value);
+
+    void ProgramUniformMatrix2x3dv(uint program, int location,
+                                   sizei count, boolean transpose,
+                                   const double *value);
+    void ProgramUniformMatrix3x2dv(uint program, int location,
+                                   sizei count, boolean transpose,
+                                   const double *value);
+    void ProgramUniformMatrix2x4dv(uint program, int location,
+                                   sizei count, boolean transpose,
+                                   const double *value);
+    void ProgramUniformMatrix4x2dv(uint program, int location,
+                                   sizei count, boolean transpose,
+                                   const double *value);
+    void ProgramUniformMatrix3x4dv(uint program, int location,
+                                   sizei count, boolean transpose,
+                                   const double *value);
+    void ProgramUniformMatrix4x3dv(uint program, int location,
+                                   sizei count, boolean transpose,
+                                   const double *value);
 
    void ValidateProgramPipeline(uint pipeline );
 
@@ -2191,6 +2304,11 @@ Revision History
 
     Rev.    Date       Author    Changes
     ----  -----------  --------  ---------------------------------------------
+    21    9 Aug 2010   pbrown    Expand ProgramUniform* function prototypes
+                                 to individual entries for tools parsing
+                                 extension specs.  Add missing "*" characters 
+                                 for ProgramUniform*v functions.
+
     20    15 Jul 2010  pbrown    Proposed update to locations for vectors
                                  with double-precision components (bug 6635).
 

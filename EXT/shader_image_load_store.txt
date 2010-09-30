@@ -28,8 +28,8 @@ Status
 
 Version
 
-    Last Modified Date:         03/23/2010
-    NVIDIA Revision:            4
+    Last Modified Date:         09/17/2010
+    NVIDIA Revision:            5
 
 Number
 
@@ -630,11 +630,22 @@ Additions to Chapter 3 of the OpenGL 3.2 (Compatibility Profile) Specification
     texture object, the error INVALID_VALUE is generated.
 
     If the texture identified by <texture> is a one-dimensional array,
-    two-dimensional array, three-dimensional, cube map, or cube map array
-    texture, it is possible to bind either the entire texture level or a
-    single layer of the texture level.  If <layered> is TRUE, the entire level
-    is bound.  If <layered> is FALSE, only the single layer identified by
-    <layer> will be bound.
+    two-dimensional array, three-dimensional, cube map, cube map array, or
+    two-dimensional multisample array texture, it is possible to bind either
+    the entire texture level or a single layer of the texture level.  If
+    <layered> is TRUE, the entire level is bound.  If <layered> is FALSE, only
+    the single layer identified by <layer> will be bound.  When <layered> is
+    FALSE, the single bound layer is treated as a different texture target for
+    image accesses:
+
+      * one-dimensional array texture layers are treated as one-dimensional
+        textures;
+
+      * two-dimensional array, three-dimensional, cube map, cube map array
+        texture layers are treated as two-dimensional textures; and
+
+      * two-dimensional multisample array textures are treated as
+        two-dimensional multisample textures.
 
     <format> specifies the format that the elements of the image will be 
     treated as when doing formatted stores, as described later in this 
@@ -655,29 +666,28 @@ Additions to Chapter 3 of the OpenGL 3.2 (Compatibility Profile) Specification
 
     When a shader accesses the texture bound to an image unit using a built-in
     image load, store, or atomic function, it identifies a single texel by
-    providing a one-, two-, or three-dimensional coordinate and possibly a
-    sample number for multisample texture accesses.  The coordinates provided
-    are assembled into an (x,y,z,w) vector by taking the three coordinates
-    provided as (x,y,z) and the sample number as w.  If the built-in function
-    does not accept three coordinates and/or a sample number, missing
-    coordinates are filled with zero.  The (x,y,z,w) vector is used to select
-    an individual texel tau_i, tau_i_j, or tau_i_j_k according to the target
-    of the texture bound to the image unit using Table X.1.  
+    providing a one-, two-, or three-dimensional coordinate.  Multisample
+    texture accesses also specify a sample number.  A coordinate vector is
+    mapped to an individual texel tau_i, tau_i_j, or tau_i_j_k according to
+    the target of the texture bound to the image unit using Table X.1.  As
+    noted above, single-layer bindings of array or cube map textures are
+    considered to use a texture target corresponding to the bound layer,
+    rather than that of the full texture.
 
                                                    face/
-                                          i  j  k  layer sample
-                                          -- -- -- ----- ------
-        TEXTURE_1D                        x  -  -    -     -
-        TEXTURE_2D                        x  y  -    -     -
-        TEXTURE_3D                        x  y  z    -     -
-        TEXTURE_RECTANGLE                 x  y  -    -     -
-        TEXTURE_CUBE_MAP                  x  y  -    z     -
-        TEXTURE_BUFFER                    x  -  -    -     -
-        TEXTURE_1D_ARRAY                  x  -  -    z     -
-        TEXTURE_2D_ARRAY                  x  y  -    z     -
-        TEXTURE_CUBE_MAP_ARRAY_ARB        x  y  -    z     -
-        TEXTURE_2D_MULTISAMPLE            x  y  -    -     w
-        TEXTURE_2D_MULTISAMPLE_ARRAY      x  y  -    z     w
+                                          i  j  k  layer
+                                          -- -- -- -----
+        TEXTURE_1D                        x  -  -    -
+        TEXTURE_2D                        x  y  -    -
+        TEXTURE_3D                        x  y  z    -
+        TEXTURE_RECTANGLE                 x  y  -    -
+        TEXTURE_CUBE_MAP                  x  y  -    z
+        TEXTURE_BUFFER                    x  -  -    -
+        TEXTURE_1D_ARRAY                  x  -  -    y
+        TEXTURE_2D_ARRAY                  x  y  -    z
+        TEXTURE_CUBE_MAP_ARRAY            x  y  -    z
+        TEXTURE_2D_MULTISAMPLE            x  y  -    -
+        TEXTURE_2D_MULTISAMPLE_ARRAY      x  y  -    z
 
         Table X.1, Mapping of image load, store, and atomic texel coordinate
         components to texel numbers.
@@ -1852,6 +1862,39 @@ Dependencies on NV_gpu_program5
 
     MEMBAR has no operands and generates no result.
 
+    Modify Section 3.9.X, Texture Image Loads and Stores, as added above.
+
+    (Add a separate paragraph and table describing how the four-component
+    coordinate vector used in image load, store, and atomic opcodes are mapped
+    to individual texels.)
+
+    When a program accesses the texture bound to an image unit using the
+    LOADIM, STOREIM, or ATOMIM opcodes, it provides a four-component
+    coordinate vector used to select individual texels or samples.  This
+    (x,y,z,w) vector is used to select an individual texel tau_i, tau_i_j, or
+    tau_i_j_k according to the target of the texture bound to the image unit
+    using Table X.5.  As noted above, single-layer bindings of array or cube
+    map textures are considered to use a texture target corresponding to the
+    bound layer, rather than that of the full texture.
+
+                                                   face/
+                                          i  j  k  layer sample
+                                          -- -- -- ----- ------
+        TEXTURE_1D                        x  -  -    -     -
+        TEXTURE_2D                        x  y  -    -     -
+        TEXTURE_3D                        x  y  z    -     -
+        TEXTURE_RECTANGLE                 x  y  -    -     -
+        TEXTURE_CUBE_MAP                  x  y  -    z     -
+        TEXTURE_BUFFER                    x  -  -    -     -
+        TEXTURE_1D_ARRAY                  x  -  -    z     -
+        TEXTURE_2D_ARRAY                  x  y  -    z     -
+        TEXTURE_CUBE_MAP_ARRAY_ARB        x  y  -    z     -
+        TEXTURE_2D_MULTISAMPLE            x  y  -    -     w
+        TEXTURE_2D_MULTISAMPLE_ARRAY      x  y  -    z     w
+
+        Table X.5, Mapping of image load, store, and atomic texel coordinate
+        components to texel numbers.
+
 
 Issues
 
@@ -2274,15 +2317,33 @@ Issues
          in EXT_separate_shader_object), how will early fragment tests be
          handled?
 
-       RESOLVED:  The early fragment test enable should be taken from the
-       active program object corresponding to the fragment shader stage.
+      RESOLVED:  The early fragment test enable should be taken from the
+      active program object corresponding to the fragment shader stage.
 
+    (36) When specifying a coordinate vector to specify a texel for a
+         TEXTURE_1D_ARRAY target, what coordinate is used to specify the
+         layer?
 
+      RESOLVED:  For GLSL functions, a two-component vector is specified and
+      the second (y) component is used to select a layer.  When using the
+      LOADIM, STOREIM, and ATOMIM NV_gpu_program5 assembly opcodes, a
+      four-component vector is provided and the third (z) component selects
+      the layer.
 
 Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     5    09/17/10  pbrown    Clean up the spec language specifying the
+                              mapping of coordinates to texels according to
+                              the texture target.  For 1D arrays, GLSL wants
+                              the layer in the second component of a
+                              two-component vector while NV_gpu_program5 wants
+                              it in the third component of a four-component
+                              vector.  Also clarify that single-layer bindings
+                              of an array or cube map texture use a target
+                              appropriate to the bound layer.
+                              
      4    03/23/10  pbrown    Add interaction with EXT_separate_shader_objects.
                               Update issues section to include some issues
                               left behind in NV_gpu_shader5 when specs were

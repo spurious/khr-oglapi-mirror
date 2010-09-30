@@ -887,6 +887,10 @@ Additions to the AGL/GLX/WGL Specifications
 
     None.
 
+GLX Protocol
+
+    UNDER DEVELOPMENT
+
 Interactions with EXT_timer_query
 
     EXT_timer_query is the first extension to generalize the BeginQuery and

@@ -25,8 +25,8 @@ Status
 
 Version
 
-    Last Modified Date:  September 9, 2009
-    Version:             8
+    Last Modified Date:  January 11, 2010
+    Version:             9
 
 Number
 
@@ -34,7 +34,8 @@ Number
 
 Dependencies
 
-    Written based on the wording of the OpenGL 3.0 specification.
+    Written based on the wording of the OpenGL 3.0 (August 11, 2008)
+    specification.
 
     This extension requires OpenGL 2.0 or ARB_shader_objects.
 
@@ -203,7 +204,7 @@ Additions to Chapter 2 of the OpenGL 3.0 Specification (OpenGL Operation)
     for all its supported shader types, the program object's shader
     types not bound do not affect GL's current rendering operation."
 
- -- Section 2.15.3 "Shader Variables" (page 79) 
+ -- Section 2.15.3 "Shader Variables" (page 97) 
 
     Replace the 15th paragraph of the "Uniform Variables" section:
 
@@ -357,19 +358,7 @@ Additions to the ARB_geometry_shader4 specification
 
 GLX Protocol
 
-    The following rendering command is sent to the server as part of a
-    glXRender request:
-
-        UseShaderProgramEXT
-            2           8               rendering command length
-            2           ZZZZ            rendering command opcode
-            4           ENUM            type
-            4           CARD32          program
-
-        ActiveProgramEXT   
-            2           4               rendering command length
-            2           ZZZZ            rendering command opcode
-            4           CARD32          program
+    UNDER DEVELOPMENT
 
 Errors
 
@@ -885,6 +874,26 @@ Issues
         update the vertex shader state because there is just one copy
         of it to update.
 
+    19. In case of indirect rendering, should glCreateShaderProgramEXT
+        explicitly send string length parameter to server?
+        
+        PROPOSED: Yes. Although source code passed to
+        glCreateShaderProgramEXT is NUL terminated, the server can not
+        safely rely on the client to terminate the string so it must
+        add the NUL terminator before passing the protocol buffer to
+        the GL command processor. The string length is needed to do this
+        accurately.
+
+    20. Can glCreateShaderProgramEXT support command larger than the 
+        maximum command length supported by a single command?
+ 
+        PROPOSED: Yes. Source code passed to glCreateShaderProgramEXT is
+        unbounded. Command length can be more than the maximum command
+        length supported by a single command. Support for "large single"
+        command needs to be added.
+        
+         
+
 Revision History
 
     Rev.    Date    Author    Changes
@@ -900,3 +909,7 @@ Revision History
     7     08/12/09  mjk       Marked as shipping, resolve and
                               improve issues 15 & 16
     8     09/09/09  mjk       Assign number
+    9     09/09/09  mjk       Fix transposed page number
+    10    24/02/10  srahman   added glx protocol for
+                              glCreateShaderProgramEXT
+                              added issues 19 and 20 

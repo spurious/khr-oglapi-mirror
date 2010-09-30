@@ -21,7 +21,7 @@ Status
 
 Version
 
-    Last Modified Date:         01/30/2009
+    Last Modified Date:         07/27/2010
     NVIDIA Revision:            10
 
 Number
@@ -400,7 +400,8 @@ Additions to the AGL/GLX/WGL Specifications
 
 GLX Protocol
 
-    None.
+
+    UNDER DEVELOPMENT
 
 Dependencies on EXT_depth_bounds_test:
 

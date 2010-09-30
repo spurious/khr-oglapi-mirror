@@ -7,12 +7,13 @@ Name Strings
 
 Contributors
 
-    Cass Everitt, Id Software
+    Cass Everitt, NVIDIA
     Daniel Pageau, Blizzard
     Daniel Koch, TransGaming
     Ian Romanick, IBM
     Jason Green, TransGaming
-    John Carmack, Id Software
+    Johan Andersson, DICE/Electronic Arts
+    Jon Leech
     Mark Kilgard, NVIDIA
     Nicholas Vining, Destineer
     Pat Brown, NVIDIA
@@ -39,8 +40,8 @@ Status
 
 Version
 
-    Last Modified Date:         06/10/2009
-    Author revision:            33
+    Last Modified Date:         09/07/2010
+    Author revision:            34
     Version                     1.1 (version 1.0 lacked OpenGL 3.0 support)
 
 Number
@@ -2455,10 +2456,10 @@ Interactions with the ARB_texture_rectangle specification
 Interactions with the ARB_vertex_program specification
 
     If ARB_vertex_program is NOT supported, ignore the support
-    for PROGRAM_MATRIX_EXT, TRANSPOSE_PROGRAM_MATRIX_EXT, and
-    PROGRAM_MATRIX_STACK_DEPTH_EXT described for the GetBooleanIndexedv,
-    GetIntegerIndexedv, GetFloatIndexedv, and GetDoubleIndexedv
-    commands in section 6.1.X.
+    for PROGRAM_MATRIX_EXT, TRANSPOSE_PROGRAM_MATRIX_EXT,
+    and PROGRAM_MATRIX_STACK_DEPTH_EXT described for the
+    GetBooleanIndexedvEXT, GetIntegerIndexedvEXT, GetFloatIndexedvEXT,
+    and GetDoubleIndexedvEXT commands in section 6.1.X.
 
 Additions to the ARB_vertex_program specification
 
@@ -3522,30 +3523,31 @@ Issues
         glClientAttribDefaultEXT(GL_CLIENT_VERTEX_ARRAY_BIT) for this
         reason.
 
-   (16) Should glGetFloatIndexedv and glGetDoubleIndexedv return values
-        for non-texture state parameters similar to the parameters
-        that work for glGetIntegerIndexedv and glGetBooleanIndexedv
+   (16) Should glGetFloatIndexedvEXT and glGetDoubleIndexedvEXT return
+        values for non-texture state parameters similar to the parameters
+        that work for glGetIntegerIndexedvEXT and glGetBooleanIndexedvEXT
         that EXT_draw_buffers2, EXT_transform_feedback, and
         NV_transform_feedback support?
 
-        RESOLVED:  glGetFloatIndexedv and glGetDoubleIndexedv
-        should accept without error parameter tokens supported by
-        glGetIntegerIndexedv and glGetBooleanIndexedv through
-        the EXT_draw_buffers2, EXT_transform_feedback, and
-        NV_transform_feedback extensions.  In these cases, GLfloat
-        or GLdouble values respectively of the indexed state should
-        be returned.
+        RESOLVED:  glGetFloatIndexedvEXT and glGetDoubleIndexedvEXT
+        should accept without error parameter tokens supported
+        by glGetIntegerIndexedvEXT and glGetBooleanIndexedvEXT
+        through the EXT_draw_buffers2, EXT_transform_feedback, and
+        NV_transform_feedback extensions.  In these cases, GLfloat or
+        GLdouble values respectively of the indexed state should be
+        returned.
 
         The EXT_draw_buffers2 extension specifically considered adding
-        glGetFloatIndexedv and glGetDoubleIndexedv queries but left them
-        out since none of the indexed state introduced was floating-point.
-        This extension adds floating-point indexed state and so adds
-        glGetFloatIndexedv and glGetDoubleIndexedv and thereby enhances
-        the functionality of these unrelated extensions supporting
-        glGetIndexedv, etc.  by introducing glGetFloatIndexedv and
-        glGetDoubleIndexedv and expecting them to operate consistently
-        with glGetIntegerIndexedv except returning GLfloat and GLdouble
-        versions of the queried state respectively.
+        glGetFloatIndexedvEXT and glGetDoubleIndexedvEXT queries but
+        left them out since none of the indexed state introduced was
+        floating-point.  This extension adds floating-point indexed state
+        and so adds glGetFloatIndexedvEXT and glGetDoubleIndexedvEXT
+        and thereby enhances the functionality of these unrelated
+        extensions supporting glGetIndexedv, etc. by introducing
+        glGetFloatIndexedvEXT and glGetDoubleIndexedvEXT and expecting
+        them to operate consistently with glGetIntegerIndexedvEXT except
+        returning GLfloat and GLdouble versions of the queried state
+        respectively.
 
         Following the OpenGL 3.0 function naming convention for indexed
         state, version 1.1 of this specification adds glGetFloati_vEXT
@@ -3959,12 +3961,7 @@ Issues
         despite an error in the subsequent state-setting command or
         state-querying query.
 
-   (27) What feedback has Id Software given on this extension?
-
-        John Carmack:  "This should have happened a long time ago."
-
-        Cass Everitt:  "It's a lot of entry points.  Can this be put
-        into numerical terms?"
+   (27) How many entry points are introduced?
 
         This extension adds just 3 tokens but specifies 214 functions
         (192 for version 1.0 plus 22 for OpenGL 3.0 support added by
@@ -4145,3 +4142,5 @@ Revision History
      33   06/10/09  mjk       add VertexArrayMultiTexCoordOffsetEXT to
                               list of errors for exceeding the maximum
                               texture image units
+     34   09/07/10  mjk       some Get*Indexedv instanced needed EXT
+                              suffixes; issue 27 update

@@ -31,7 +31,7 @@ Status
 
 Version
 
-    Version 12, March 23, 2010
+    Version 13, September 24, 2010
 
 Number
 
@@ -230,52 +230,79 @@ Additions to Chapter 2 of the OpenGL 3.2 (Compatibility Profile) Specification
 Additions to Chapter 3 of the OpenGL 3.2 (Compatibility Profile) Specification
 (Rasterization)
 
-   Modify Section 3.3.1, Multisampling, p. 148
+    Modify Section 3.3.1, Multisampling, p. 148
 
-   (add new paragraph at the end of the section, p. 149)
+    (add new paragraph at the end of the section, p. 149)
 
-   If MULTISAMPLE is enabled and the current program object includes a
-   fragment shader with one or more input variables qualified with "sample
-   in", the data associated with those variables will be assigned
-   independently.  The values for each sample must be evaluated at the
-   location of the sample.  The data associated with any other variables not
-   qualified with "sample in" need not be evaluated independently for each
-   sample.
-
-
-   Modify Section 3.12.1, Shader Variables, p. 273
-
-   (insert prior to the last paragraph of the section, p. 274)
-
-   When interpolating built-in and user-defined varying variables, the default
-   screen-space location at which these variables are sampled is defined in
-   previous rasterization sections.  The default location may be overriden by
-   interpolation qualifiers.  When interpolating variables declared using
-   "centroid in", the variable is sampled at a location within the pixel
-   covered by the primitive generating the fragment.  When interpolating
-   variables declared using "sample in" when MULTISAMPLE is enabled, the
-   fragment shader will be invoked separately for each covered sample and the
-   variable will be sampled at the corresponding sample point.
-
-   Additionally, built-in fragment shader functions provide further
-   fine-grained control over interpolation.  The built-in functions
-   interpolateAtCentroid() and interpolateAtSample() will sample variables as
-   though they were declared with the "centroid" or "sample" qualifiers,
-   respectively.  The built-in function interpolateAtOffset() will sample
-   variables at a specified (x,y) offset relative to the center of the pixel.
-   The range and granularity of offsets supported by this function is
-   implementation-dependent.  If either component of the specified offset is
-   less than MIN_FRAGMENT_INTERPOLATION_OFFSET or greater than
-   MAX_FRAGMENT_INTERPOLATION_OFFSET, the position used to interpolate the
-   variable is undefined.  Not all values of <offset> may be supported; x and
-   y offsets may be rounded to fixed-point values with the number of fraction
-   bits given by the implementation-dependent constant
-   FRAGMENT_INTERPOLATION_OFFSET_BITS.
+    If MULTISAMPLE is enabled and the current program object includes a
+    fragment shader with one or more input variables qualified with "sample
+    in", the data associated with those variables will be assigned
+    independently.  The values for each sample must be evaluated at the
+    location of the sample.  The data associated with any other variables not
+    qualified with "sample in" need not be evaluated independently for each
+    sample.
 
 
-   Modify Section 3.12.2, Shader Execution, p. 274
+    Modify ARB_texture_gather, "Changes to Section 3.8.8"
 
-   (insert prior to the next-to-last paragraph in "Shader Inputs", p. 277)
+    (extend language describing the operation of textureGather, allowing the
+     new <comp> argument to select any of the four components from a
+     multi-component texel vector)
+
+    The textureGather and textureGatherOffset built-in functions from the
+    OpenGL Shading Language...  A four-component vector is then assembled by
+    taking a single component from the swizzled texture source colors of the
+    four texels, in the order T_i0_j1, T_i1_j1, T_i1_j0, and T_i0_j0.  The
+    selected component is identified by the optional <comp> argument, where
+    the values zero, one, two, and three identify the Rs, Gs, Bs, or As
+    component, respectively.  If <comp> is omitted, it is treated as
+    identifying the Rs component.
+
+    (add further language describing textureGatherOffsets)
+
+    The textureGatherOffsets built-in functions from the OpenGL Shading
+    Language return a vector derived from sampling four texels in the image
+    array of level <level_base>.  For each of the four texel offsets specified
+    by the <offsets> argument, the rules for the LINEAR minification filter
+    are applied to identify a 2x2 texel footprint, from which the single texel
+    T_i0_j0 is selected.  A four-component vector is then assembled by taking
+    a single component from each of the four T_i0_j0 texels in the same manner
+    as for the textureGather function.
+
+
+    Modify Section 3.12.1, Shader Variables, p. 273
+
+    (insert prior to the last paragraph of the section, p. 274)
+
+    When interpolating built-in and user-defined varying variables, the default
+    screen-space location at which these variables are sampled is defined in
+    previous rasterization sections.  The default location may be overriden by
+    interpolation qualifiers.  When interpolating variables declared using
+    "centroid in", the variable is sampled at a location within the pixel
+    covered by the primitive generating the fragment.  When interpolating
+    variables declared using "sample in" when MULTISAMPLE is enabled, the
+    fragment shader will be invoked separately for each covered sample and the
+    variable will be sampled at the corresponding sample point.
+
+    Additionally, built-in fragment shader functions provide further
+    fine-grained control over interpolation.  The built-in functions
+    interpolateAtCentroid() and interpolateAtSample() will sample variables as
+    though they were declared with the "centroid" or "sample" qualifiers,
+    respectively.  The built-in function interpolateAtOffset() will sample
+    variables at a specified (x,y) offset relative to the center of the pixel.
+    The range and granularity of offsets supported by this function is
+    implementation-dependent.  If either component of the specified offset is
+    less than MIN_FRAGMENT_INTERPOLATION_OFFSET or greater than
+    MAX_FRAGMENT_INTERPOLATION_OFFSET, the position used to interpolate the
+    variable is undefined.  Not all values of <offset> may be supported; x and
+    y offsets may be rounded to fixed-point values with the number of fraction
+    bits given by the implementation-dependent constant
+    FRAGMENT_INTERPOLATION_OFFSET_BITS.
+
+
+    Modify Section 3.12.2, Shader Execution, p. 274
+
+    (insert prior to the next-to-last paragraph in "Shader Inputs", p. 277)
 
     The built-in variable gl_SampleMaskIn[] is an integer array holding
     bitfields indicating the set of fragment samples covered by the primitive
@@ -1128,18 +1155,14 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50
     identifying the <x>, <y>, <z>, or <w> component of the four-component
     vector lookup result for each texel, respectively.  If <comp> is not
     specified, the <x> component of each texel will be used to generate the
-    result vector.
+    result vector.  As described in the OpenGL Specification, the vector
+    selects the post-swizzle component corresponding to <comp> from each of
+    the four texels, returning:
 
-    When performing a texture gather operation, the minification and
-    magnification filters are ignored, and the rules for LINEAR filtering in
-    the OpenGL Specification are applied to the base level of the texture
-    image to identify the four texels T_i0_j1, T_i1_j1, T_i1_j0, and T_i0_j0.
-    The texels are then converted to texture source colors (Rs,Gs,Bs,As) 
-    according to table 3.21, followed by application of the texture swizzle 
-    as described in section 3.8.13 of the OpenGL Specification.  A four-
-    component vector is assembled by taking the selected component from each 
-    of the swizzled texture source colors in the order i0_j1, i1_j1, i1_j0, 
-    and i0_j0.
+      vec4(T_i0_j1(coord, base).<comp>,
+           T_i1_j1(coord, base).<comp>,
+           T_i1_j0(coord, base).<comp>,
+           T_i0_j0(coord, base).<comp>)
 
     For textureGather() functions using a shadow sampler type, each of the
     four texel lookups performs a depth comparison against the depth reference
@@ -1948,6 +1971,12 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+    13    09/24/10  pbrown    Clarify the interaction of texture gather
+                              with swizzle (bug 5910), fixing conflicts
+                              between API and GLSL spec language.
+                              Consolidate into one copy in the API 
+                              spec.
+
     12    03/23/10  pbrown    Update issues section, both fixing/numbering
                               existing issues and including other issues 
                               that were left behind in NV_gpu_shader5 when the
