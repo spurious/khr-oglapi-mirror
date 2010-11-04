@@ -21,8 +21,8 @@ Status
 
 Version
 
-    Last Modified Date:         04/01/2009
-    Author Revision:            3
+    Last Modified Date:         10/25/2010
+    Author Revision:            4
 
 Number
 
@@ -95,14 +95,14 @@ Additions to Chapter 4 of the OpenGL Shading Language 4.00.08 Specification (Var
     qualifiers only..."
 
         Fragment shaders allow output layout qualifiers only on the interface
-        out, or for the purposes of redeclaring the built-in variable gl_Depth
-        (ses Section 7.2, Fragment Shader Special Variables).
+        out, or for the purposes of redeclaring the built-in variable
+        gl_FragDepth (see Section 7.1, Built-In Language Variables).
 
     Insert the following before the paragraph beginning: "Geometry shaders can
     have three types of output layout qualifiers..."
 
-        The built-in fragment shader variable gl_Depth may be redeclared using 
-        one of the following layout qualifiers.
+        The built-in fragment shader variable gl_FragDepth may be redeclared
+        using one of the following layout qualifiers.
 
         layout-qualifier-id
             depth_any
@@ -163,7 +163,7 @@ Revision History
     Rev.    Date      Author    Changes
     ----  --------    --------  -----------------------------------------
 
+     4    25/10/2010  gsellers  Apply patch from idr.
      3    04/01/2010  gsellers  Minor cleanup. Update to GLSL 4.00.
      2    12/01/2009  gsellers  Internal updates
      1    11/03/2009  pboudier  Initial draft
-

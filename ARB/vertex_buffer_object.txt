@@ -45,8 +45,8 @@ Status
 
 Version
 
-    Last Modified Date: April 14, 2010
-    Revision: 0.99.5
+    Last Modified Date: October 25, 2010
+    Revision: 0.99.6
 
 Number
 
@@ -1726,9 +1726,9 @@ GLX Protocol
             1           CARD8           opcode (X assigned)
             1           189             GLX opcode
             2           7               request length
+            4           GLX_CONTEXT_TAG context tag
             8           CARD64          offset
             8           CARD64          size
-            4           GLX_CONTEXT_TAG context tag
             4           ENUM            target
           =>
             1           1               Reply
@@ -2112,6 +2112,9 @@ Usage Examples
 
     Revision  Date         Author  Changes
     --------  -----------  ------  ---------------------------------------
+    0.99.6    25-Oct-2010  jrj     Fixed 'context tag' location in
+                                   GetBufferSubDataARB GLX protocol.
+
     0.99.5    14-Apr-2010  Jon Leech Added ARB suffix to GLX token.
 
     0.99.4    07-Apr-2010  jrj     Added the GLX_ARB_vertex_buffer_object
