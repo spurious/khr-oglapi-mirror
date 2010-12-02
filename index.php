@@ -6,11 +6,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="description" content="OpenGL Application Binary Interface for Linux"/>
 <title>OpenGL&reg; Application Binary Interface for Linux</title>
-<?php include("http://www.opengl.org/inc/registry_head.txt"); ?>
+<?php include("../../inc/registry_head.txt"); ?>
 </head>
 
 <body>
-<?php include("http://www.opengl.org/inc/registry_body_start.txt"); ?>
+<?php include("../../inc/registry_body_start.txt"); ?>
 
 <h1 style="text-align:center">
     OpenGL&reg; Application Binary Interface for Linux <br/>
@@ -688,6 +688,6 @@
 <li> 9/7/1999 - Initial version. </li>
 </ul>
 
-<?php include("http://www.opengl.org/inc/registry_footer.txt"); ?>
+<?php include("../../inc/registry_footer.txt"); ?>
 </body>
 </html>
