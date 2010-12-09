@@ -28,8 +28,8 @@ Status
 
 Version
 
-    Last Modified Date: Aug 22, 2007
-    Revision: 7
+    Last Modified Date: December 9, 2010
+    Revision: 9
 
 Number
 
@@ -92,9 +92,9 @@ Overview
 
         texture1DGradARB(         sampler1D sampler,
                                   float P, float dPdx, float dPdy );
-        texture1DProjGradARB(     sampler2D sampler,
+        texture1DProjGradARB(     sampler1D sampler,
                                   vec2  P, float dPdx, float dPdy );
-        texture1DProjGradARB(     sampler2D sampler,
+        texture1DProjGradARB(     sampler1D sampler,
                                   vec4  P, float dPdx, float dPdy );
 
         texture2DGradARB(         sampler2D sampler,
@@ -290,9 +290,9 @@ Specification
 
         texture1DGradARB(         sampler1D sampler,
                                   float P, float dPdx, float dPdy );
-        texture1DProjGradARB(     sampler2D sampler,
+        texture1DProjGradARB(     sampler1D sampler,
                                   vec2  P, float dPdx, float dPdy );
-        texture1DProjGradARB(     sampler2D sampler,
+        texture1DProjGradARB(     sampler1D sampler,
                                   vec4  P, float dPdx, float dPdy );
 
         texture2DGradARB(         sampler2D sampler,
@@ -494,6 +494,10 @@ Issues
     texture, dPdx = dFdx( P.st/P.q );  dPdy = dFdy( P.st/P.q );
 
 Revision History:
+
+9 - 2010-12-09 (Jon Leech)
+    * Corrected typos where 1D texture functions were specified
+      as taking sampler2D parameters (Khronos Bug 7008).
 
 8 - 2009-05-24 (Jon Leech)
     * Added to the Registry
