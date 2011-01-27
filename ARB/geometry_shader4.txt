@@ -17,8 +17,8 @@ Status
 
 Version
 
-    Last Modified Date:         12/21/2009
-    NVIDIA Revision:            25
+    Last Modified Date:         01/21/2011
+    NVIDIA Revision:            26
 
 Number
 
@@ -48,6 +48,8 @@ Dependencies
     This extension interacts with ARB_tranform_feedback.
 
     This extension interacts with geometry shader support in OpenGL 3.2.
+
+    This extension interacts with ARB_uniform_buffer_object.
 
 Overview
 
@@ -641,13 +643,18 @@ Operation)
     Section 2.16.3 Geometry Shader Variables
 
     Geometry shaders can access uniforms belonging to the current program
-    object. The amount of storage available for geometry shader uniform
-    variables is specified by the implementation dependent constant
-    MAX_GEOMETRY_UNIFORM_COMPONENTS_ARB. This value represents the number of
-    individual floating-point, integer, or Boolean values that can be held in
-    uniform variable storage for a geometry shader.  A link error will be
+    object.  The amount of storage available for uniform variables in the
+    default uniform block accessed by a geometry shader is specified by the
+    value of the implementation-dependent constant
+    MAX_GEOMETRY_UNIFORM_COMPONENTS_ARB. The total amount of combined storage
+    available for uniform variables in all uniform blocks accessed by a
+    geometry shader (including the default uniform block) is specified by the
+    value of the implementation-dependent constant
+    MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS.  These values represent the
+    numbers of individual floating-point, integer, or boolean values that can
+    be held in uniform variable storage for a geometry shader. A link error is
     generated if an attempt is made to utilize more than the space available
-    for geometry shader uniform variables. Uniforms are manipulated as
+    for geometry shader uniform variables.  Uniforms are manipulated as
     described in section 2.15.3.  Geometry shaders also have access to
     samplers, to perform texturing operations, as described in sections 2.15.3
     and 3.8.
@@ -1385,6 +1392,13 @@ Dependencies on OpenGL 3.2
     consistency with OpenGL 3.0's framebuffer object support, which similarly
     lifted the requirement that framebuffer attachments have matching widths
     and heights.
+
+Dependencies on ARB_uniform_buffer_object
+
+    If ARB_uniform_buffer_object (or OpenGL 3.1) is not supported, language
+    referring to MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS (defined in the
+    ARB_uniform_buffer_object spec) and the "default uniform block" should be
+    removed.
 
 
 GLX Protocol
@@ -2605,6 +2619,10 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     26   01/21/11  pbrown    Add language describing MAX_COMBINED_
+                              GEOMETRY_UNIFORM_COMPONENTS from an interaction
+                              with ARB_uniform_buffer_object (bug 7027).
+
      25   12/21/09  jjones    Add GLX protocol.
 
      24   07/21/09  pbrown    Clarify that when doing layered rendering,

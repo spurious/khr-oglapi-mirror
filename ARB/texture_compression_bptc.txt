@@ -328,7 +328,7 @@ Appendix
     Each block can contain data in one of eight modes. The mode is identified
     by the lowest bits of the lowest byte. It is encoded as zero or more zeros
     followed by a one. For example, using x to indicate a bit not included in
-    the mode numbe, mode 0 is encoded as xxxxxxx1 in the low byte in binary,
+    the mode number, mode 0 is encoded as xxxxxxx1 in the low byte in binary,
     mode 5 is xx100000, and mode 7 is 10000000. Encoding the low byte as zero
     is reserved and should not be used when encoding a BPTC texture.
 
@@ -634,7 +634,7 @@ Appendix
     return value is (0,0,0,1).
 
     Each block can contain data in one of 14 modes. The mode number is encoded
-    in either the lwo two bits or the low five bits. If the low two bits are
+    in either the low two bits or the low five bits. If the low two bits are
     less than two, that is the mode number, otherwise the low five bits the
     mode number. Mode numbers not listed in Table.MF are reserved (19, 23, 27,
     and 31).

@@ -37,8 +37,8 @@ Status
 
 Version
 
-    Last Modified Date:     03/26/2009
-    Author revision:        62
+    Last Modified Date:     01/27/2011
+    Author revision:        64
 
 Number
 
@@ -1055,8 +1055,7 @@ Additions to Chapter 6 - State and State Requests
     respectively. <index> must be in the range zero to the value of
     MAX_UNIFORM_BUFFER_BINDINGS - 1. If the parameter (starting
     offset or size) was not specified when the buffer object was bound,
-    zero is returned. If no buffer object is bound to <index>, -1 is
-    returned.
+    or if no buffer object is bound to <index>, zero is returned.
 
     6.1.14 Shader and Program Queries
     Pg 261, continuation of paragraph defining "GetProgramiv"
@@ -1332,6 +1331,9 @@ Interactions with ARB_geometry_shader4
     and UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER. The minimum
     value of MAX_COMBINED_UNIFORM_BLOCKS and
     MAX_UNIFORM_BUFFER_BINDINGS changes from 36 to 24.
+
+    Language describing MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS can be found
+    in the ARB_geometry_shader4 specification.
 
 Errors
 
@@ -3362,6 +3364,14 @@ Issues
 
 
 Revision History
+
+    (v64, 2011-01-27, jon)
+        - Change return value for start/size queries when no buffer
+          bound from -1 to zero, to match state tables (Bug 7318).
+
+    (v63, 2011-01-21, pbrown)
+        - Add interaction with ARB_geometry_shader4 to indicate that
+          MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS is defined there.
 
     (v62, 2009-03-26, jon)
         - Remove ARB suffixes for consistency with other extensions
