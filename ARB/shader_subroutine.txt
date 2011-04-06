@@ -30,8 +30,8 @@ Status
 
 Version
 
-    Last Modified Date:         03/29/2010
-    Revision:                   17
+    Last Modified Date:         02/10/2011
+    Revision:                   18
 
 Number
 
@@ -310,6 +310,16 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50
     In section 3.6, p.14 (Keywords)
 
     Add subroutine to the list of reserved keywords.
+
+    Modify Section 6.1.1 (Function Calling Conventions)
+
+    (modify the last paragraph of the section, p. 66, to forbid potential
+    recursion via subroutines) Recursion is not allowed, not even statically.
+    Static recursion is present if the static function-call graph of a program
+    contains cycles.  This includes all potential function calls through
+    variables declared as subroutine uniform (described below).  It is an
+    error if a single compilation unit (shader) contains either static
+    recursion or the potential for recursion through subroutine variables.
 
     Add a new Section 6.1.2 (Subroutines)
 
@@ -852,6 +862,13 @@ Revision History
 
     Rev.    Date      Author    Changes
     ----  ----------  --------  -----------------------------------------
+    18    02/10/2011  pbrown    Add a clarification to the GLSL spec language
+                                prohibiting potential recursion via subroutine
+                                uniforms; a program will fail to link if there
+                                is any possible combination of subroutine 
+                                uniform values that would result in recursion
+                                (bug 7327).
+
     17    03/29/2010  pbrown    Update issues (1) and (10).
 
     16    03/21/2010  pbrown    Minor clarification in the NV_gpu_program5

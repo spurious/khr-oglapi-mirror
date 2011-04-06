@@ -32,8 +32,8 @@ Status
 
 Version
 
-    Last Modified Date:         09/23/2009
-    Revision:                   6
+    Last Modified Date:         01/27/2009
+    Revision:                   7
 
 Number
 
@@ -97,16 +97,17 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
     Add to subsection Coordinate Wrapping and Texel Selection
     (P. 208, Prior to "And for a one-dimensional texture"):
 
-     The textureGather and textureGatherOffset built-in functions from the
-     OpenGL Shading Language return a vector derived from sampling a 2x2
-     block of texels in the image array of level <level_base>.  The rules
-     for the LINEAR minification filter are applied to identify the four
-     selected texels.  Each texel is then converted to a texture source
-     color (Rs,Gs,Bs,As) according to table 3.21 and then swizzled as
-     described in the ARB_texture_swizzle extension.  A four-component
-     vector is then assembled by taking the Rs component from the swizzled
-     texture source colors of the four texels, in the order T_i0_j1,
-     T_i1_j1, T_i1_j0, and T_i0_j0.
+     The textureGather and textureGatherOffset built-in shader functions
+     return a vector derived from sampling a 2x2 block of texels in the image
+     array of level <level_base>.  The rules for the LINEAR minification
+     filter are applied to identify the four selected texels.  Each texel is
+     then converted to a texture source color (Rs,Gs,Bs,As) according to table
+     3.21 and then swizzled as described in the ARB_texture_swizzle extension.
+     A four-component vector is then assembled by taking the Rs component from
+     the swizzled texture source colors of the four texels, in the order
+     T_i0_j1, T_i1_j1, T_i1_j0, and T_i0_j0.  Incomplete textures (section
+     3.8.10) are considered to return a texture source color of (0,0,0,1) for
+     all four source texels.
 
      ___________________________________________________________________
      |                                                                 |
@@ -305,10 +306,24 @@ Issues
        indicating the allowed number of components in a gathered texture
        is used.
 
+    (8) How does texture gather interact with incomplete textures?
+
+       RESOLVED:  For regular texture lookups, incomplete textures are
+       considered to return a texel value with RGBA components of (0,0,0,1).
+       For texture gather operations, each texel in the sampled footprint is
+       considered to have RGBA components of (0,0,0,1).  Since this extension
+       selects the R texture component of each texel in a four-texel
+       footprint, a textureGather() function accessing an incomplete texture
+       will return (0,0,0,0).
+
 Revision History
 
     Rev.    Date      Author    Changes
     ----  --------    --------  -----------------------------------------
+    7     01/27/11    pbrown    Add further clarification on the interaction
+                                of texture gather and incomplete textures (bug
+                                7289).
+
     6     09/23/10    pbrown    Clarify the interaction of texture gather
                                 with swizzle (bug 5910), fixing conflicts
                                 between API and GLSL spec language.

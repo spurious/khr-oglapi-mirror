@@ -31,7 +31,7 @@ Status
 
 Version
 
-    Version 13, September 24, 2010
+    Version 14, January 27, 2011
 
 Number
 
@@ -249,14 +249,15 @@ Additions to Chapter 3 of the OpenGL 3.2 (Compatibility Profile) Specification
      new <comp> argument to select any of the four components from a
      multi-component texel vector)
 
-    The textureGather and textureGatherOffset built-in functions from the
-    OpenGL Shading Language...  A four-component vector is then assembled by
-    taking a single component from the swizzled texture source colors of the
-    four texels, in the order T_i0_j1, T_i1_j1, T_i1_j0, and T_i0_j0.  The
-    selected component is identified by the optional <comp> argument, where
-    the values zero, one, two, and three identify the Rs, Gs, Bs, or As
-    component, respectively.  If <comp> is omitted, it is treated as
-    identifying the Rs component.
+    The textureGather and textureGatherOffset built-in shader functions...  A
+    four-component vector is then assembled by taking a single component from
+    the swizzled texture source colors of the four texels, in the order
+    T_i0_j1, T_i1_j1, T_i1_j0, and T_i0_j0.  The selected component is
+    identified by the optional <comp> argument, where the values zero, one,
+    two, and three identify the Rs, Gs, Bs, or As component, respectively.  If
+    <comp> is omitted, it is treated as identifying the Rs component.
+    Incomplete textures (section 3.8.10) are considered to return a texture
+    source color of (0,0,0,1) for all four source texels.
 
     (add further language describing textureGatherOffsets)
 
@@ -1966,11 +1967,25 @@ Issues
           return result;
         }
 
+    (25) How does texture gather interact with incomplete textures?
+
+      RESOLVED:  For regular texture lookups, incomplete textures are
+      considered to return a texel value with RGBA components of (0,0,0,1).
+      For texture gather operations, each texel in the sampled footprint is
+      considered to have RGBA components of (0,0,0,1).  When using the
+      textureGather() function to select the R, G, or B component of an
+      incomplete texture, (0,0,0,0) will be returned.  When selecting the A
+      component, (1,1,1,1) will be returned.
+
 
 Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+    14    01/27/11  pbrown    Add further clarification on the interaction
+                              of texture gather and incomplete textures (bug
+                              7289).
+
     13    09/24/10  pbrown    Clarify the interaction of texture gather
                               with swizzle (bug 5910), fixing conflicts
                               between API and GLSL spec language.
