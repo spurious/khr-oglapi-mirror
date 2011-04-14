@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Date: 4 October 2006
-    Author Revision: 1.0
+    Last Modified Date: 19 March 2008
+    Author Revision: 1.1
 
 Number
 
@@ -166,10 +166,11 @@ Additions to Chapter 2 of the OpenGL 2.0 Specification (Buffer Objects)
     generated if <offset> or <size> is less than zero, or if <offset> + <size>
     is greater than the value of BUFFER_SIZE. When BUFFER_FLUSHING_UNMAP_APPLE
     is set to FALSE, FlushMappedBufferRangeAPPLE must be called on all modified
-    ranges of a mapped buffer object prior to unmapping it, allowing OpenGL to
-    flush only the portions of the buffer object that have been modified.  Any
-    modified ranges of a mapped buffer object that are not explicitly flushed
-    prior to unmapping when BUFFER_FLUSHING_UNMAP_APPLE is set to FALSE become
+    ranges of a mapped buffer object after the data within each specified range
+    has been modified and prior to unmapping it, allowing OpenGL to flush only
+    the portions of the buffer object that have been modified.  Any modified
+    ranges of a mapped buffer object that are not explicitly flushed prior to
+    unmapping when BUFFER_FLUSHING_UNMAP_APPLE is set to FALSE become
     undefined.
 
 Errors
@@ -192,6 +193,13 @@ Errors
     INVALID_OPERATION may be generated if any of the commands defined in this
     extension is executed between the execution of Begin and the corresponding
     execution of End.
+
+    INVALID_VALUE is generated if the <offset> or <size> parameters of
+    FlushMappedBufferRangeAPPLE are negative.
+
+    INVALID_VALUE is generated if the <offset> and <size> parameters of
+    FlushMappedBufferRangeAPPLE define a region of memory that extends beyond
+    that allocated by BufferData.
 
 New State
 
@@ -245,7 +253,7 @@ Usage Examples
 
         //  update/draw time
         glBindBuffer(GL_ARRAY_BUFFER, my_vbo);
-		while(!glTestFenceAPPLE(current_regions_fence))
+        while(!glTestFenceAPPLE(current_regions_fence))
         {
             //  Do some more work if OpenGL is still using the
             //  portions of the VBO that we want to modify.
@@ -262,4 +270,11 @@ Usage Examples
 
 Revision History
 
-    None
+    03/19/2008    1.1
+        - Introduced errors when FlushMappedBufferRangeAPPLE is given bad
+          offset or size parameters.
+        - Clarified that FlushMappedBufferRangeAPPLE must be called after the
+          data in the mapped buffer object range has been modified.
+
+    10/04/2006    1.0
+        - Initial public revision.

@@ -28,8 +28,8 @@ Status
 
 Version
 
-    Last Modified Date: December 9, 2010
-    Revision: 9
+    Last Modified Date: April 13, 2011
+    Revision: 11
 
 Number
 
@@ -81,7 +81,7 @@ Overview
         texture1DLod,   texture1DProjLod,
         texture2DLod,   texture2DProjLod,
         texture3DLod,   texture3DProjLod,
-        textureCubeLod, textureCubProjLod,
+        textureCubeLod,
         shadow1DLod,    shadow1DProjLod,
         shadow2DLod,    shadow2DProjLod,
 
@@ -494,6 +494,10 @@ Issues
     texture, dPdx = dFdx( P.st/P.q );  dPdy = dFdy( P.st/P.q );
 
 Revision History:
+
+10 - 2011-04-13 (Jon Leech)
+    * Remove nonexistent textureCubProjLod from list of existing
+      isotropic vertex texture functions (Khronos Bug 7205).
 
 9 - 2010-12-09 (Jon Leech)
     * Corrected typos where 1D texture functions were specified
