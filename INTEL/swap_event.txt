@@ -21,7 +21,7 @@ Status
 
 Version
 
-    Last Modified Date: January 20, 2010
+    Last Modified Date: May 3, 2011
 
 Number
 
@@ -121,14 +121,14 @@ GLX Protocol
 	    1				unused
 	    2		CARD16		sequence number
 	    2		CARD16		event_type
-			0x8024		GLX_EXCHANGE_COMPLETE_INTEL
-			0x8025		GLX_COPY_COMPLETE_INTEL
-			0x8026		GLX_FLIP_COMPLETE_INTEL
+			0x8180		GLX_EXCHANGE_COMPLETE_INTEL
+			0x8181		GLX_COPY_COMPLETE_INTEL
+			0x8182		GLX_FLIP_COMPLETE_INTEL
+	    2		CARD16		unused
 	    4		GLX_DRAWABLE    drawable
             8           CARD64		UST
             8           CARD64		MSC
             4           CARD32		SBC
-	    2		CARD16		unused
 
 Errors
 
@@ -178,3 +178,9 @@ Revision History
 
     Version 6, 2010/1/20 - Update extension number and publish to the
     Registry.
+
+    Version 7, 2011/5/3 - Update GLX protocol with correct enums and correct
+    location of padding.  GLX protocol requires that CARD32 (and larger) be
+    4-byte aligned.  Previously the drawable (and all later fields) were only
+    2-byte aligned.  Most compilers would generally add padding in the correct
+    place anyway. (idr)

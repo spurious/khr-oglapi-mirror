@@ -26,8 +26,8 @@ Status
 
 Version
 
-    Last Modified Date:         12/18/2009
-    Revision:                   9
+    Last Modified Date:         2011/06/03
+    Revision:                   10
 
 Number
 
@@ -149,7 +149,9 @@ Additions to Chapter 5 of the OpenGL 3.2 Specification (Special Functions)
     within a BeginQuery / EndQuery block where the <target> is TIME_ELAPSED
     and it does not affect the result of that query object. The error
     INVALID_OPERATION is generated if the <id> is already in use within a
-    BeginQuery/EndQuery block.
+    BeginQuery/EndQuery block.  QueryCounter fails and an INVALID_OPERATION 
+    error is generated if <id> is not a name returned from a previous call to
+    GenQueries, or if such a name has since been deleted with DeleteQueries.
 
     The current time of the GL may be queried with GetIntegerv or
     GetInteger64v with a <value> TIMESTAMP. This will return the GL time
@@ -246,7 +248,23 @@ Interactions with NV_present_video and NV_video_capture
     The GL timer recorded by this extension is the same timer as that used
     by the NV_present_video and NV_video_capture extensions. This allows
     the timer to be used with any of these extensions interchangeably.
-   
+
+Interactions with the Compatibility Profile
+
+    In the compatibility profile, query objects support application-provided
+    names. Thus in the description of QueryCounter, the following text is
+    removed:
+
+    "QueryCounter fails and an INVALID_OPERATION error is generated if
+    <id> is not a name returned from a previous call to GenQueries, 
+    or if such a name has since been deleted with DeleteQueries."
+
+    and replaced with the following:
+
+    "If QueryCounter is called with <id> which is an unused query object
+    name, the name is marked as used and associated with a new query object
+    of the type specified by <target>."
+
 Errors
 
     The error INVALID_ENUM is generated if BeginQuery or EndQuery is called
@@ -262,6 +280,10 @@ Errors
     
     The error INVALID_OPERATION is generated if QueryCounter is called
     on a query object that is already in use inside a BeginQuery/EndQuery.
+
+    The error INVALID_OPERATION is generated if QueryCounter is called
+    where <id> is not a name returned from a previous call to GenQueries,
+    or if such a name has since been deleted with DeleteQueries. (core-only)
 
     The error INVALID_OPERATION is generated if GetQueryObjecti64v or
     GetQueryObjectui64v is called where <id> is not the name of a query
@@ -539,6 +561,9 @@ Revision History
 
     Rev.  Date          Author    Changes
     ----  ------------  --------  -------------------------------------------
+    10    June 3, 2011  dkoch     Add INVALID_OPERATION error when calling
+                                  QueryCounter with a non-generated <id> in
+                                  the core profile (Khronos internal bug 7662).
      9    Dec 18, 2009  pdaniell  Remove ambiguous language about "interuptions
                                   to the GL". Rename CURRENT_TIME to TIMERSTAMP.
      
