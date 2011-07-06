@@ -32,8 +32,8 @@ Status
 
 Version
 
-    Last Modified Date:  9 August 2010
-    Version:             21
+    Last Modified Date:  6 June 2011
+    Version:             22
 
 Number
 
@@ -95,7 +95,9 @@ Overview
     This extension introduces the program pipeline object that serves as
     a container for the program bound to any particular rendering stage.
     It can be bound, unbound, and rebound to simply save and restore the
-    complete shader stage to program object bindings.
+    complete shader stage to program object bindings.  Like framebuffer
+    and vertex array objects, program pipeline objects are "container"
+    objects that are not shared between contexts.
 
     To bind a program object to a specific shader stage or set of
     stages, UseProgramStages is used.  The VERTEX_SHADER_BIT,
@@ -1133,6 +1135,15 @@ ation (State and State Requests)
     for that object. If <pipeline> is a program pipeline object, the
     returned info log will either be an empty string or it will contain
     information about the last validation attempt for that object.
+
+
+Additions to Appendix D of the OpenGL 4.0 Compatibility Profile Specific-
+ation (Shared Objects and Multiple Contexts)
+
+    (modify third paragraph, p. 533, making program pipeline objects
+    non-shared) Framebuffer, query, vertex array, and program pipeline 
+    objects are not shared.
+
 
 Additions to the AGL/GLX/WGL Specifications
 
@@ -2299,11 +2310,21 @@ Issues
         A shader using location layout qualifiers without an appropriate
         #extension or #version directive will fail to compile.
 
+    30. Can program pipeline objects be shared between contexts?
+
+        RESOLVED:  No.  Like framebuffer and vertex array objects (added by
+        OpenGL 3.0), they are considered "container" objects to which other
+        shareable objects can be attached.
+
 
 Revision History
 
     Rev.    Date       Author    Changes
     ----  -----------  --------  ---------------------------------------------
+    22    6 Jun 2011   pbrown    Treat program pipeline objects as non-shared
+                                 container objects, like framebuffer and
+                                 vertex array objects (bug 7713).
+
     21    9 Aug 2010   pbrown    Expand ProgramUniform* function prototypes
                                  to individual entries for tools parsing
                                  extension specs.  Add missing "*" characters 
