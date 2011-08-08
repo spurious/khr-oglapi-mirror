@@ -143,9 +143,9 @@ Extension Numbers
 396		NVIDIA
 397-398		AMD
 399-400		NVIDIA
-401             AMD
-402             Apple
-403             NVIDIA
+401		AMD
+402		Apple
+403		NVIDIA
 
 GLU Enumerants
 ==============
@@ -322,6 +322,11 @@ OpenGL Single Opcodes (16 Bits)
        147     159  OpenGL 1.2 core
        160     160  ARB_texture_compression
        161     166  ARB_occlusion_query
+       167     178  ARB_shader_objects
+       179     181  ARB_vertex_shader
+       182     183  EXT_gpu_shader4
+       184     185  NV_vertex_program4
+       186     194  ARB_vertex_buffer_object
 
 OpenGL Rendering Opcodes (16 Bits)
 ==================================
@@ -339,6 +344,12 @@ OpenGL Rendering Opcodes (16 Bits)
        233	    ARB_draw_buffers
        234	    ARB_color_buffer_float
        235     237  ARB_framebuffer_object
+       238     264  ARB_shader_object
+       265	    ARB_vertex_shader
+       266     268  ARB_geometry_shader4
+       269     277  EXT_gpu_shader4
+       278     289  NV_vertex_program4
+       290     301  ARB_vertex_buffer_object
   1008-1023 Reserved to IBM (unknown usage)
   1024-1039 Reserved to HP (originally Compaq) (unknown usage)
   1040-2047 Unused
@@ -417,6 +428,7 @@ GLX Enumerateds (32 Bits)
       0x22    0x28  GLX_EXT_visual_info (attribute names)
 0x2070-0x209F Reserved to ARB (shared with WGL)
     0x2090  0x2094  GLX_ARB_create_context
+    0x2095	    GL_ARB_vertex_buffer_object
 0x20A0-0x219F Reserved to NVIDIA (shared with WGL)
     (many NV and EXT extensions, see glxenum.spec)
 0x8000-0x800F Reserved to EXT (0x800E-0x800F unused)
