@@ -25,7 +25,7 @@ Status
 
 Version
 
-    Version 11, July 7, 2010
+    Version 12, July 22, 2011
 
 Number
 
@@ -261,8 +261,9 @@ Additions to Chapter 3 of the OpenGL 3.2 Specification (Compatibility Profile) (
     BindSampler fails and an INVALID_OPERATION error is generated if
     <sampler> is not zero or a name returned from a previous call to
     GenSamplers, or if such a name has since been deleted with
-    DeleteSamplers. Furthermore, an INVALID_VALUE error is generated if
-    <unit> is greater than MAX_TEXTURE_IMAGE_UNITS-1.
+    DeleteSamplers. An INVALID_VALUE error is generated if <unit> is
+    greater than or equal to the value of
+    MAX_COMBINED_TEXTURE_IMAGE_UNITS.
 
     If state is present in a sampler object bound to a texture unit that
     would have been rejected by a call to TexParameter for the texture
@@ -530,6 +531,10 @@ Revision History
 
     Rev.    Date      Author    Changes
     ----  --------    --------  -----------------------------------------
+    12    07/22/2011  Jon Leech Fix valid <unit> values to be based
+                                on MAX_COMBINED_TEXTURE_IMAGE_UNITS
+                                instead of MAX_TEXTURE_IMAGE_UNITS (bug
+                                6406).
     11    07/07/2010  Jon Leech Do not allow sampler bindings and sampler
                                 object state to be pushed and popped, by
                                 modifying all new state table entries to

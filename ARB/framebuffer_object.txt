@@ -56,8 +56,8 @@ Status
 
 Version
 
-    Last Modified Date: July 21, 2010
-    Revision: #32
+    Last Modified Date: July 22, 2011
+    Revision: #33
 
 Number
 
@@ -1821,9 +1821,8 @@ Operations and the Framebuffer)
     draw framebuffer is greater than zero, no copy is performed and an
     INVALID_OPERATION error is generated if the dimensions of the source
     and destination rectangles provided to BlitFramebuffer are not
-    identical, if the formats of the read and draw framebuffers are
-    not identical, or if the values of SAMPLES for the read and draw
-    buffers are not identical.
+    identical, or if the formats of the read and draw framebuffers are
+    not identical.
 
 
     Add a new section "Framebuffer Objects" after section 4.3:
@@ -4536,3 +4535,6 @@ Revision History
     #32 July 21, 2010: Daniel Koch
         - Add issue 10 clarifying that ARB fbos cannot be shared.
 
+    #33 July 22, 2011: Jon Leech
+        - Remove error which disallowed non-multisample <-> sample blits
+          (bug 7367).

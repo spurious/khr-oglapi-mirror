@@ -9,6 +9,7 @@ Name Strings
 Contact
 
     Eric Werness, NVIDIA Corporation (ewerness 'at' nvidia.com)
+    Piers Daniell, NVIDIA Corporation (pdaniell 'at' nvidia.com)
 
 Contributors
 
@@ -30,8 +31,8 @@ Status
 
 Version
 
-    Last Modified Date:         12/07/2009
-    NVIDIA Revision:            3
+    Last Modified Date:         January 20, 2011
+    NVIDIA Revision:            7
 
 Number
 
@@ -98,8 +99,8 @@ Additions to Chapter 3 of the OpenGL 3.2 Specification (Rasterization)
         ==========================              ====================  ========
         COMPRESSED_RGBA_BPTC_UNORM_ARB          RGBA                  Specific
         COMPRESSED_SRGB_ALPHA_BPTC_UNORM_ARB    RGBA                  Specific
-        COMPRESSED_RGB_BPTC_SIGNED_FLOAT_ARB    RGBA                  Specific
-        COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT_ARB  RGBA                  Specific
+        COMPRESSED_RGB_BPTC_SIGNED_FLOAT_ARB    RGB                   Specific
+        COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT_ARB  RGB                   Specific
 
     
     Modify Section 3.9.2, Alternate Texture Image Specification Commands
@@ -276,7 +277,7 @@ Errors
 New State
 
     In the "Textures" state table, increment the TEXTURE_INTERNAL_FORMAT
-    subscript for Z by 2 in the "Type" row.
+    subscript for Z by 4 in the "Type" row.
 
 New Implementation Dependent State
 
@@ -334,11 +335,11 @@ Appendix
 
     All further decoding is driven by the values derived from the mode listed
     in Table.M below. The fields in the block are always in the same order for
-    all modes. Starting at the lowest bit after the mode and going up, these
-    fields are: partition number, rotation, index selection, color, alpha,
-    per-endpoint P-bit, shared P-bit, primary indices, and secondary
-    indices. The number of bits to be read in each field is determined
-    directly from the table.
+    all modes. Starting at the lowest bit after the mode and going up from LSB
+    to MSB in byte stream order, these fields are: partition number, rotation,
+    index selection, color, alpha, per-endpoint P-bit, shared P-bit, primary
+    indices, and secondary indices. The number of bits to be read in each
+    field is determined directly from the table.
 
     Each block can be divided into between 1 and 3 groups of pixels with
     independent compression parameters called subsets. A texel in a block with
@@ -840,23 +841,56 @@ Issues
        RESOLVED: Decompressor will never generate them. Compressor should
        flush to max half float.
 
-       UNRESOLVED: Where to put in the spec what the compressor "should" do?
+     (7) Does this spec require bit-exact decompression?
 
-     (7) The MS spec is really anal about being bit-exact. Do we want to
-         follow suit?
+       RESOLVED: Yes.
      
-       UNRESOLVED: It's not too hard to do, but doesn't quite seem like the
-       traditional GL way. I've put most of the bit-exactness language in.
+     (8) Does the data format depend on the endianness of the system?
 
-     (8) Endianness? 
+       RESOLVED: No. The data is interpeted as an endian-independent
+       byte stream.
 
-       UNRESOLVED - confirm what the hardware does. Should just be bytes in
-       memory address order.
+     (9) What should be the internal format of the floating-point BPTC format?
+
+       RESOLVED:  The format has three components, with the alpha component
+       mapped to 1.0, just like RGB textures.  So we should call it RGB.
+
+       In the originally ratified version of this extension (and all versions
+       prior to January 20, 2011), such textures were treated as having a base
+       internal format of RGBA, where the alpha component was not present in
+       the texture and instead is just set to the constant 1.0.  Some
+       implementations of this extension may also use a base internal format
+       of RGBA.
+
+       There are very few places where there is a difference between an RGB
+       texture and an RGBA texture where alpha is always 1.0.  Two known
+       differences:
+
+        * A compressed "RGB" texture could be used for the generic
+          COMPRESSED_RGB format, but an "RGBA" texture should not be.
+          However, it seems unlikely that implementations would choose the
+          floating-point BPTC format as its generic COMPRESSED_RGB format.
+
+        * Using fixed-function fragment shading in the compatibility profile,
+          a texture environment mode of REPLACE would leave alpha unmodified
+          for RGB base formats but would replace the fragment alpha with the
+          texture alpha (constant 1.0 here) for RGBA base formats.
 
 Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  --------------------------------------------
+     7    01/20/11  pbrown    Change the base internal format of the floating-
+                              point BPTC formats from "RGBA" to "RGB" (bug
+                              7231).
+
+     6    01/19/11  Jon Leech Fix state table modification for
+                              TEXTURE_INTERNAL_FORMAT (Bug 7239).
+
+     5    05/20/10  ewerness  Finalize some UNRESOLVED issues
+
+     4    04/09/10  pdaniell  Modify for inclusion into OpenGL 4.1.
+
      3    12/07/09  pdaniell  ARBify.
 
      2    10/13/09  ewerness  Fix errors in the anchor index tables caused
