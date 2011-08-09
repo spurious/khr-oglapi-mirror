@@ -31,8 +31,8 @@ Status
 
 Version
 
-    Last Modified Date:         01/18/2011
-    Revision:                   8
+    Last Modified Date:         08/08/2011
+    Revision:                   9
 
 Number
 
@@ -128,7 +128,7 @@ New Procedures and Functions
                                            intptr offset);
 
     (note:  VertexArrayVertexAttribLOffsetEXT is provided only if
-    EXT_direct_state_access_memory is supported.)
+    EXT_direct_state_access is supported.)
 
 New Tokens
 
@@ -588,6 +588,9 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     9    08/08/11  pbrown    Fix typo in EXT_direct_state_access extension
+                              name (bug 7704).
+
      8    01/18/11  Jon Leech Make description of component data types
                               match the commands specifying them
                               (Bug 7235).
