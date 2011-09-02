@@ -146,6 +146,11 @@ Extension Numbers
 401		AMD
 402		Apple
 403		NVIDIA
+404-405		AMD
+406-407		NVIDIA
+408		AMD
+409		Apple
+410		NVIDIA
 
 GLU Enumerants
 ==============
