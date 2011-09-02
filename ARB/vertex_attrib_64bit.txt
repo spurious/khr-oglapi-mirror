@@ -31,7 +31,7 @@ Status
 
 Version
 
-    Last Modified Date:         08/08/2011
+    Last Modified Date:         August 1, 2011
     Revision:                   9
 
 Number
@@ -58,6 +58,9 @@ Dependencies
     This extension interacts with NV_gpu_shader5.
 
     This extension interacts with NV_vertex_attrib_integer_64bit.
+
+    This extension interacts with ARB_explicit_attrib_location,
+    ARB_separate_shader_objects, OpenGL 3.3, and OpenGL 4.1.
 
 Overview
 
@@ -128,7 +131,7 @@ New Procedures and Functions
                                            intptr offset);
 
     (note:  VertexArrayVertexAttribLOffsetEXT is provided only if
-    EXT_direct_state_access is supported.)
+    EXT_direct_state_access_memory is supported.)
 
 New Tokens
 
@@ -316,6 +319,23 @@ Additions to Chapter 2 of the OpenGL 3.2 (Compatibility Profile) Specification
       Table X.1:  Scalar and vector vertex attribute types and VertexAttrib*
       commands used to set the values of the corresponding generic attribute.
 
+    When an attribute variable is declared as a mat2, mat3x2, mat4x2, its
+    matrix columns are taken from the (x, y) components of generic attributes
+    <i> and <i>+1 (mat2, dmat2), from attributes <i> through <i>+2 (mat3x2),
+    or from attributes <i> through <i>+3 (mat4x2). When an attribute variable
+    is declared as a mat2x3, mat3 or mat4x3, its matrix columns are taken from
+    the (x, y, z) components of generic attributes i and <i>+1 (mat2x3), from
+    attributes <i> through <i>+2 (mat3), or from attributes i through <i>+3
+    (mat4x3). When an attribute variable is declared as a mat2x4, mat3x4 or
+    mat4, its matrix columns are taken from the (x, y, z, w) components of
+    generic attributes <i> and <i>+1 (mat2x4), from attributes <i> through
+    <i>+2 (mat3x4), or from attributes <i> through <i>+3 (mat4).  When an
+    attribute variable is declared as a double-precision matrix (dmat2, dmat3,
+    dmat4, dmat2x3, dmat2x4, dmat3x2, dmat3x4, dmat4x2, dmat4x3), its matrix
+    columns are taken from the same generic attributes as the equivalent
+    single-precision matrix type, with values specified using the
+    VertexAttribL* or VertexAttribLPointer commands.
+
     For the 64-bit double precision types listed in Table X.1, no default
     attribute values are provided if the values of the vertex attribute variable
     are specified with fewer components than required for the attribute
@@ -328,6 +348,10 @@ Additions to Chapter 2 of the OpenGL 3.2 (Compatibility Profile) Specification
     the purposes of this comparison, attribute variables of the type dvec3,
     dvec4, dmat2x3, dmat2x4, dmat3, dmat3x4, dmat4x3, and dmat4 may count as
     consuming twice as many attributes as equivalent single-precision types.
+    While these types use the same number of generic attributes as their
+    single-precision equivalents, implementations are permitted to consume two
+    single-precision vectors of internal storage for each three- or
+    four-component double-precision vector.
 
     (extend the list of types in the first paragraph, p. 88)
     ... UNSIGNED_INT_VEC3, UNSIGNED_INT_VEC4, DOUBLE, DOUBLE_VEC2,
@@ -471,6 +495,34 @@ Dependencies on NV_vertex_attrib_integer_64bit
     NV_vertex_buffer_unified_memory extension to be used with 64-bit
     components, integer or floating-point.
 
+Dependencies on ARB_explicit_attrib_location, ARB_separate_shader_objects,
+OpenGL 3.3, and OpenGL 4.1
+
+    If ARB_explicit_attrib_location (or OpenGL 3.3) is supported, vertex
+    shader input variables (including ones with double-precision components)
+    can select associated generic attributes with an explicit location layout
+    qualifier in lieu of calling BindAttribLocation.  If
+    ARB_separate_shader_objects (or OpenGL 4.1) is supported, the layout
+    location qualifier introduced by this extension is extended to apply to
+    inputs for non-vertex shaders and outputs for non-fragment shaders.  As
+    this extension requires ARB_gpu_shader_fp64 (or OpenGL 4.0), such inputs
+    and outputs can have double-precision component types.
+
+    When these extensions are supported, there are special rules for the
+    number of locations consumed by "dvec3" and "dvec4" types, which require
+    more storage than is available in a four-component single-precision
+    vector.  The rules are:
+
+      * dvec3/dvec4 vertex inputs consume one location (generic vertex
+        attribute), but can count as two vectors for the purposes of
+        determining if the vertex shader consumes too many inputs
+
+      * dvec3/dvec4 inputs and outputs for other stages consume two locations
+
+    The relevant spec edits (modifying language introduced by
+    ARB_explicit_attrib_location) can be found in the
+    ARB_separate_shader_objects extension.
+
 Errors
 
     For all VertexAttrib* commands, the error INVALID_VALUE is generated if
@@ -503,7 +555,7 @@ Issues
         extension interact with the existing vertex attribute functions that
         support doubles?
 
-      UNRESOLVED:  While it is possible for fixed-function pipeline
+      RESOLVED:  While it is possible for fixed-function pipeline
       implementations to operate directly on doubles, most (if not all) such
       implementations simply convert doubles to floats.  The OpenGL Shading
       Language has not supported double-precision types to date, so all
@@ -527,15 +579,25 @@ Issues
         vectors with double-precision components?  How do we support these
         with vertex arrays?
 
-      RESOLVED:  Double-precision attributes may end up consuming twice as
-      many 'slots' as their single precision counterparts.  Counting rules are
-      spelled out in this document.  The actual allocation of these slots is
-      virtualized by the driver and at the API level, they appear as
-      attributes of any other type would.
+      RESOLVED:  Double-precision attributes may consume twice as much
+      internal storage as their single-precision counterparts.  For the
+      purposes of determining if a vertex shader uses "too many" attribute
+      vectors in LinkProgram, implementations are permitted (but not required)
+      to count "dvec3" and "dvec4" vertex shader inputs as consuming twice as
+      many input vectors as corresponding single-precision types.
+      Implementations are required to count inputs of type "double" and
+      "dvec2" as a single vector, since these types require no more storage
+      than a "vec4".
 
-      Note that implementations are permitted (but not required) to count
-      double-precision vertex shader inputs as consuming no more input vectors
-      than corresponding single-precision types.
+      Note however, that for the purposes of mapping inputs to generic vertex
+      attributes, "dvec3" and "dvec4" inputs are counted as consuming one
+      attribute/location.  For example, if a vertex shader specifies:
+
+        layout(location=4) in dvec4 attribs[4];
+
+      the values for the four elements of "attribs" will be taken from vertex
+      attributes 4-7, though "attribs" may be counted as consuming eight
+      vectors worth of attributes.
 
     (4) Are default values supported for vertex attributes with 64-bit
         components?
@@ -588,8 +650,16 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
-     9    08/08/11  pbrown    Fix typo in EXT_direct_state_access extension
-                              name (bug 7704).
+     9    08/01/11  pbrown    Clarify that "dvec3" and "dvec4" vertex shader
+                              inputs consume only a single "location" for the
+                              purpose of matching inputs to generic vertex
+                              attributes, but may consume two vectors for the
+                              purposes of determining if too many attribute
+                              vectors are used (bug 7809).  Also, add missing
+                              language describing the set of attributes
+                              consumed by matrix vertex attributes (copied
+                              from OpenGL 4.1), with fixes to explicitly
+                              address "dmat*" types.  Fix issue (3) to match.
 
      8    01/18/11  Jon Leech Make description of component data types
                               match the commands specifying them

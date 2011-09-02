@@ -17,8 +17,8 @@ Status
 
 Version
 
-    Last Modified Date:         01/14/2010
-    Revision:                   11
+    Last Modified Date:         August 1, 2011
+    Revision:                   12
 
 Number
 
@@ -33,6 +33,9 @@ Dependencies
     This extension is written against the OpenGL 3.2 (Core Profile)
     specification dated 7/24/2009 and the OpenGL Shading Language 1.50.09
     specification dated 7/24/2009.
+
+    This extension interacts with GL_ARB_separate_shader_objects,
+    GL_ARB_gpu_shader_fp64, OpenGL 4.0, and OpenGL 4.1.
 
 Overview
 
@@ -153,6 +156,29 @@ Dependencies on ARB_blend_func_extended
     example.  Additionally, remove references to BindFragDataLocationIndexed
     and GetFragDataIndex in the API spec language.
 
+Dependencies on ARB_separate_shader_objects, ARB_gpu_shader_fp64, OpenGL 4.0,
+and OpenGL 4.1
+
+    If ARB_separate_shader_objects (or OpenGL 4.1) is supported, the layout
+    location qualifier introduced by this extension is extended to apply to
+    inputs for non-vertex shaders and outputs for non-fragment shaders.  If
+    ARB_gpu_shader_fp64 (or OpenGL 4.0) is supported, such inputs and outputs
+    can have double-precision component types.  
+
+    When these extensions are supported, there are special rules for the
+    number of locations consumed by "dvec3" and "dvec4" types, which require
+    more storage than is available in a four-component single-precision
+    vector.  The rules are:
+
+      * dvec3/dvec4 vertex inputs consume one location (generic vertex
+        attribute), but can count as two vectors for the purposes of
+        determining if the vertex shader consumes too many inputs
+
+      * dvec3/dvec4 inputs and outputs for other stages consume two locations
+
+    The relevant spec edits (modifying language introduced here) can be found
+    in the ARB_separate_shader_objects extension.
+
 GLX protocol
 
     None.
@@ -205,6 +231,9 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50.09
     will establish that the vertex shader input <normal> is copied in from
     vector location number 3.
 
+    If the named vertex shader input has a scalar or vector type, it will
+    consume a single location.
+
     If the named vertex shader input is an array, it will be assigned
     consecutive locations starting with the location specified.  For example,
 
@@ -212,6 +241,17 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50.09
 
     will establish that the vertex shader input <colors> is copied in from
     vector location numbers 6, 7, and 8.
+
+    If the named vertex shader input is an <n>x<m> matrix, it will be assigned
+    multiple locations starting with the location specified.  The number of
+    locations assigned for each matrix will be the same as for an <n>-element
+    array of <m>-component vectors.  For example,
+
+        layout(location = 9) in mat4 transforms[2];
+
+    will establish that input <transforms> is assigned to vector location
+    numbers 9-16, with transforms[0] being assigned to locations 9-12 and
+    transforms[1] being assigned to locations 13-16.
 
     If an input variable with no location assigned in the shader text has a
     location specified through the OpenGL API, the API-assigned location will
@@ -325,6 +365,13 @@ Issues
 
 
 Revision History
+
+    (v12, 2011-08-01, Pat Brown) 
+        Add GLSL spec language explicitly specifying the number of vertex
+        shader input locations consumed by basic scalar/vector types and by
+        basic matrix types (bug 7809).  Also add interactions with
+        ARB_separate_shader_objects and ARB_gpu_shader_fp64, which extend the
+        location mechanism introduced here.
 
     (v11, 2010-01-14, Pat Brown)
         Resolve the behavior of conflicting attribute assignments via shader

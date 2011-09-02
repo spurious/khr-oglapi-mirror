@@ -21,6 +21,7 @@ Contributors
     Greg Roth, NVIDIA
     Jason Green, TransGaming
     John Kessenich, Intel
+    Jon Leech
     Kevin Rogovin 
     Nick Haemel, AMD
     Robert Ohannessian
@@ -32,8 +33,8 @@ Status
 
 Version
 
-    Last Modified Date:  6 June 2011
-    Version:             22
+    Last Modified Date:  1 August 2011
+    Version:             25
 
 Number
 
@@ -61,6 +62,9 @@ Dependencies
     This extension interacts with ARB_tessellation_shader or OpenGL 4.0.
 
     This extension interacts with GL_ARB_gpu_shader_fp64 or OpenGL 4.0.
+
+    This extension interacts with ARB_explicit_attrib_location,
+    ARB_vertex_attrib_64bit, OpenGL 3.3, and OpenGL 4.1.
 
     This extension interacts with the EXT_separate_shader_objects extension.
 
@@ -634,12 +638,49 @@ Specification (OpenGL Operation):
 
     Shader Interface Matching
 
-    When linking a non-separable program object with multiple shader types,
-    the outputs of one stage form an interface with the inputs of the next
-    stage.  These inputs and outputs must typically match in name, type,
-    and qualification.  When both sides of an interface are contained in
-    the same program object, LinkProgram will detect mismatches on an
-    interface and generate link errors.
+    When multiple shader stages are active, the outputs of one stage form an
+    interface with the inputs of the next stage.  At each such interface,
+    shader inputs are matched up against outputs from the previous stage:
+
+      * An output block is considered to match an input block in the
+        subsequent shader if the two blocks have the same block name, and the
+        members of the block match exactly in name, type, qualification, and
+        declaration order.
+
+      * An output variable is considered to match an input variable in the
+        subequent shader if:
+
+        * the two variables match in name, type, and qualification; or
+
+        * the two variables are declared with the same location layout
+          qualifier and match in type and qualification.
+
+    Variables or block members declared as structures are considered to match
+    in type if and only if structure members match in name, type,
+    qualification, and declaration order.  Variables or block members declared
+    as arrays are considered to match in type only if both declarations
+    specify the same element type and array size.  The rules for determining
+    if variables or block members match in qualification are found in the
+    OpenGL Shading Language Specification.
+
+    Tessellation control shader per-vertex output variables and blocks and
+    tessellation control, tessellation evaluation, and geometry shader
+    per-vertex input variables and blocks are required to be declared as
+    arrays, with each element representing input or output values for a single
+    vertex of a multi-vertex primitive.  For the purposes of interface
+    matching, such variables and blocks are treated as though they were not
+    declared as arrays.
+
+    For program objects containing multiple shaders, LinkProgram will check
+    for mismatches on interfaces between shader stages in the program being
+    linked and generate a link error if a mismatch is detected.  A link error
+    will be generated if any statically referenced input variable or block
+    does not have a matching output.  If either shader redeclares the built-in
+    array gl_ClipDistance[] ((compatibility profile only: or gl_TexCoord[])),
+    the array must have the same size in both shaders.  ((compatibility
+    profile only: If either shader redeclares built-in input or output color
+    variables, they must have matching interpolation qualifiers, as described
+    in the OpenGL Shading Language Specification.))
 
     With separable program objects, interfaces between shader stages may
     involve the outputs from one program object and the inputs from a
@@ -652,20 +693,14 @@ Specification (OpenGL Operation):
     between programs occurs, no GL error will be generated, but some or all
     of the inputs on the interface will be undefined.
 
-    On an interface between program objects, the inputs and outputs are
+    At an interface between program objects, the set of inputs and outputs are
     considered to match exactly if and only if:
 
       * The built-in input and output blocks used on the interface
         ("gl_PerVertex" or "gl_PerFragment") match, as described below.
 
-      * For each user-defined input block declared, there is a matching
-        output block in the previous shader.  Two blocks are considered to
-        match if they have the same name, and the members of the block
-        match exactly in name, type, qualification, and declaration order.
-
-      * For every user-declared input variable declared, there is an output
-        variable declared in the previous shader matching exactly in name,
-        type, and qualification.
+      * Every declared input block or variable must have a matching output, as
+        described above.
 
       * There are no output blocks or user-defined output variables
         declared without a matching input block or variable declaration.
@@ -683,15 +718,27 @@ Specification (OpenGL Operation):
     exactly when input and output location qualifiers (sections 4.3.8.1 and
     4.3.8.2 of the GLSL Specification) are used.  When using location
     qualifiers, any input with an input location qualifier will be
-    well-defined as long as the other program writes to an output with the
-    same location qualifier, data type, and qualification.  Also, an input
-    will be well-defined if the other program writes to an output matching
-    the input in everything but data type as long as the output data type  
-    has the same basic component type and more components.  The names of 
-    variables need not match when matching by location.  For the purposes 
-    of interface matching, an input with a location qualifier is considered 
-    to match a corresponding output only if that output has an identical 
-    location qualifier.
+    well-defined as long as the other program writes to a matching output, as
+    described above.  The names of variables need not match when matching by
+    location.
+
+    Additionally, scalar and vector inputs with location layout qualifiers
+    will be well-defined if there is a corresponding output satisfying all of
+    the following conditions:
+
+      * the input and output match exactly in qualification, including in the
+        location layout qualifier;
+
+      * the output is a vector with the same basic component type and has more
+        components than the input; and
+
+      * the common component type of the input and output is "int", "uint", or
+        "float" (scalars and vectors with "double" component type are
+        excluded).
+
+    In this case, the components of the input will be taken from the first
+    components of the matching output, and the extra components of the output
+    will be ignored.
 
     To use any built-in input or output in the gl_PerVertex and
     gl_PerFragment blocks in separable program objects, shader code must
@@ -1099,6 +1146,9 @@ ation (State and State Requests)
        If <pname> is TESS_EVALUATION_SHADER, the name of the current
     program object for the tessellation evaluations shader type of the
     program pipeline object is returned.
+       If <pname> is VALIDATE_STATUS, the validation status of the
+    program pipeline object, as determined by ValidateProgramPipeline
+    (see section 2.14.8) is returned.
        If <pname> is INFO_LOG_LENGTH, the length of the info log,
     including a null terminator, is returned. If there is no info log,
     zero is returned."
@@ -1162,6 +1212,24 @@ Additions to the OpenGL Shading Language Specification, Version 4.00.8
 
       #define GL_ARB_separate_shader_objects 1
 
+ -- Section 4.3 "Storage Qualifiers" (page 32):
+
+    Add to the end of the section:
+
+    When comparing an output from one shader stage to an input of a second
+    shader stage, the input and output are considered to match only if
+    compatible storage qualifiers are used.  An output declared with "out",
+    "centroid out", "sample out", or "patch out" matches an input only if the
+    input is declared with "in", "centroid in", "sample in", or "patch in",
+    respectively.  Additionally, an output will only match an input with
+    identical interpolation qualifiers.
+
+    [[ Note:  If the GLSL specification is updated to break out "centroid",
+       "sample", and "patch" as separate auxillary qualifiers instead of
+       tightly coupling with "in" and "out" as in GLSL 4.00, this language
+       should be rewritten to require that these auxillary qualifiers match
+       (and that "in" match "out", of course). ]]
+
  -- Section 4.3.4 "Inputs" (page 36):
 
     Add to the end of the section:
@@ -1186,14 +1254,20 @@ Additions to the OpenGL Shading Language Specification, Version 4.00.8
             location = integer-constant
 
     Only one argument is accepted. For example,
+
         layout(location = 3) in vec4 normal;
 
-    establishes that the shader input <normal> is assigned to vector
-    location number 3.
+    establishes that the shader input <normal> is assigned to location number
+    3.  For vertex shader inputs, the location specifies the number of the
+    generic vertex attribute from which input values are taken.  For inputs of
+    all other shader types, the location specifies a vector number that can be
+    used to match against outputs from a previous shader stage, even if that 
+    shader is in a different program object.
 
-    If the declared input is of type "dvec3" and "dvec4", it will consume two
-    consecutive locations.  Inputs of type "double" and "dvec2" will consume
-    only a single location.
+    If the declared input has a scalar or vector type, it will consume a
+    single location, except for non-vertex inputs of type "dvec3" and "dvec4",
+    which will consume two consecutive locations.  Inputs of type "double" and
+    "dvec2" will consume only a single location in all shaders.
 
     If the declared input is an array of size <n> and each element takes up
     <m> locations, it will be assigned <m>*<n> consecutive locations starting
@@ -1215,11 +1289,25 @@ Additions to the OpenGL Shading Language Specification, Version 4.00.8
     numbers 9-16, with transforms[0] being assigned to locations 9-12 and
     transforms[1] being assigned to locations 13-16.
 
-    Location layout qualifiers may be used on structures, but not on
-    individual members.  Structure members are assigned consecutive 
-    locations starting with the location specified for the structure.  
-    Locations will be assigned to structure members according to the order
-    of declaration.
+    If the declared input is a structure, its members will be assigned
+    consecutive locations in the order of declaration, with the first member
+    assigned the location specified for the structure.  The number of
+    locations consumed by a structure member is determined by applying the
+    rules above recursively as though the structure member were declared as
+    an input variable of the same type.  For example,
+
+        layout(location = 3) struct S {
+           vec3 a;
+           mat2 b;
+           vec4 c[2];
+        } s;
+
+    will assign location 3 to "s.a", locations 4 and 5 to the two column
+    vectors of "s.b", and locations 6 and 7 to "s.c".
+
+    Location layout qualifiers may be used on input variables declared as
+    structures, but not on individual members.  Location layout qualifiers may
+    not be used on input blocks or input block members.
 
     The number of input locations available to a shader is limited.  For
     vertex shaders, the limit is the advertised number of vertex attributes.
@@ -1241,6 +1329,10 @@ Additions to the OpenGL Shading Language Specification, Version 4.00.8
     location.  For all shader types, a program will fail to link if explicit
     location assignments leave the linker unable to find space for other
     variables without explicit assignments.
+
+    For the purposes of determining if a non-vertex input matches an output
+    from a previous shader stage, the location layout qualifier (if any) must
+    match.
 
  -- Section 4.3.8.2 "Output Layout Qualifiers" (page 48)
 
@@ -1275,9 +1367,16 @@ Additions to the OpenGL Shading Language Specification, Version 4.00.8
     to fragment color 3 as the second (index one) input to the blend
     equation.
 
-    If the declared output is of type "dvec3" and "dvec4", it will consume two
-    consecutive locations.  Outputs of type "double" and "dvec2" will consume
-    only a single location.
+    For fragment shader outputs, the location and index specify the color
+    output number and index receiving the values of the output.  For outputs
+    of all other shader types, the location specifies a vector number that can
+    be used to match against inputs in a subsequent shader stage, even if that
+    shader is in a different program object.
+
+    If the declared output has a scalar or vector type, it will consume a
+    single location, except for outputs of type "dvec3" and "dvec4", which
+    will consume two consecutive locations.  Outputs of type "double" and
+    "dvec2" will consume only a single location in all shaders.
 
     If the declared output is an array, it will be assigned consecutive
     locations starting with the location specified.  For example,
@@ -1292,11 +1391,16 @@ Additions to the OpenGL Shading Language Specification, Version 4.00.8
     specified.  The number of locations assigned will be the same as for an
     <n>-element array of <m>-component vectors.
 
-    Location layout qualifiers may be used on structures, but not on
-    individual members.  Structure members are assigned consecutive 
-    locations starting with the location specified for the structure.  
-    Locations will be assigned to structure members according to the order
-    of declaration.
+    If the declared output is a structure, its members will be assigned
+    consecutive locations in the order of declaration, with the first member
+    assigned the location specified for the structure.  The number of
+    locations consumed by a structure member is determined by applying the
+    rules above recursively as though the structure member were declared as
+    an output variable of the same type.
+
+    Location layout qualifiers may be used on output variables declared as
+    structures, but not on individual members.  Location layout qualifiers may
+    not be used on output blocks or output block members.
 
     The number of output locations available to a shader is limited.  For
     fragment shaders, the limit is the advertised number of draw buffers.  For
@@ -1315,6 +1419,28 @@ Additions to the OpenGL Shading Language Specification, Version 4.00.8
     program will fail to link if explicit location assignments leave the
     linker unable to find space for other variables without explicit
     assignments.
+
+    For the purposes of determining if a non-fragment output matches an input
+    from a subsequent shader stage, the location layout qualifier (if any)
+    must match.
+
+ -- Section 4.5.2, "Precision Qualifiers" (page 53)
+
+    (add new paragraph to the end of the section) For the purposes of
+    determining if an output from one shader stage matches an input of the
+    next stage, the precision qualifier need not match.
+
+ -- Section 4.6.1, "The Invariant Qualifier" (page 55)
+
+    (add new paragraph to the end of the section) For the purposes of
+    determining if an output from one shader stage matches an input of the
+    next stage, the "invariant" qualifier need not match.
+
+ -- Section 4.7, "The Precise Qualifier" (page 56)
+
+    (add new paragraph to the end of the section) For the purposes of
+    determining if an output from one shader stage matches an input of the
+    next stage, the "precise" qualifier need not match.
 
 
 GLX Protocol
@@ -1480,8 +1606,8 @@ shader4, and/or OpenGL version 3.2
 Dependencies on ARB_tessellation_shader and OpenGL 4.0
 
     If ARB_tessellation_shader and OpenGL 4.0 are not supported by the
-    implementation, ignore references to tessellation shaders and
-    generate an INVALID_ENUM error when UseProgramStages is called
+    implementation, ignore references to tessellation control and evaluation
+    shaders and generate an INVALID_ENUM error when UseProgramStages is called
     with TESS_CONTROL_SHADER_BIT or TESS_EVALUTAION_SHADER_BIT is set in
     <stages>.
 
@@ -1489,7 +1615,32 @@ Dependencies on ARB_gpu_shader_fp64 and OpenGL 4.0
 
     If ARB_gpu_shader_fp64 and OpenGL 4.0 are not supported by the
     implementation, ignore references to double sized uniforms including
-    ProgramUniform* calls with a 'd' suffix.
+    ProgramUniform* calls with a 'd' suffix.  Additionally, references to
+    double-precision GLSL variable types should be removed.
+
+Dependencies on ARB_explicit_attrib_location, ARB_vertex_attrib_64bit, OpenGL
+3.3, and OpenGL 4.1
+
+    If ARB_explicit_attrib_location (or OpenGL 3.3) is supported, vertex
+    shader input variables (including ones with double-precision components)
+    can select associated generic attributes with an explicit location layout
+    qualifier in lieu of calling BindAttribLocation.  If
+    ARB_vertex_attrib_64bit (or OpenGL 4.1) is supported, vertex shader inputs
+    can use types with double-precision components.
+
+    When these extensions are supported, there are special rules for the
+    number of locations consumed by "dvec3" and "dvec4" types, which require
+    more storage than is available in a four-component single-precision
+    vector.  The rules are:
+
+      * dvec3/dvec4 vertex inputs consume one location (generic vertex
+        attribute), but can count as two vectors for the purposes of
+        determining if the vertex shader consumes too many inputs
+
+      * dvec3/dvec4 inputs and outputs for other stages consume two locations
+
+    The relevant spec edits (modifying language introduced by
+    ARB_explicit_attrib_location) can be found in this extension.
 
 Dependencies on EXT_separate_shader_objects
 
@@ -1555,8 +1706,7 @@ related assembly extensions
 
 New State
 
-    Remove CURRENT_PROGRAM from table 6.45 (Program Object State) and
-    append these rows:
+    Add to Table 6.45 (Program Object State):
 
     Get Value            Type  Get Command           Initial Value  Description               Sec      Attribute
     -------------------  ----  --------------------  -------------  ------------------------  ------   ---------
@@ -1575,6 +1725,8 @@ New State
     TESS_EVALUATION_SHADER Z+  GetProgramPipelineiv  0              Name of current tessell-  2.20.2   -
                                                                     ation evaluation shader
                                                                     program object
+    VALIDATE_STATUS        B   GetProgramPipelineiv  FALSE          Validate status of        2.14.8   -
+                                                                    program pipeline object
     PROGRAM_PIPELINE_-     Z+  GetIntegerv           0              Current program pipeline  2.14.PPO - 
     BINDING                                                         object binding
                                                     
@@ -1676,17 +1828,30 @@ Issues
     4.  How do the glUniform* commands determine what program object
         to query?
 
-        RESOLVED:  This extension introduces the active program specified
-        by glActiveShaderProgram (similar to the active texture selector
-        specified by glActiveTexture) to specify the selector used by
-        glUniform* commands.
+        RESOLVED:  In a program pipeline object, this extension provides
+        separate program binding points for each stage, as well as an "active"
+        program specified by glActiveShaderProgram.  When glUniform is called
+        when a program pipeline object is active, the active program specifies
+        the program used by glUniform* commands.  This active program is
+        simply a selector and doesn't actually control any rendering
+        operation.
 
-        This active program is simply a selector and doesn't actually
-        control any rendering operation.
+        The active program can be queried with glGetProgramPipelineiv with a
+        <pname> of GL_ACTIVE_PROGRAM.
 
-        The active program can be queried with glGetIntegerv with
-        the GL_ACTIVE_PROGRAM token which is an alias for
-        GL_CURRENT_PROGRAM.
+        When a non-zero program is passed to UseProgram, any subsequent
+        uniform updates will affect that program, ignoring the active program
+        in any bound pipeline object.  For example:
+
+          glUseProgram(0);
+          glBindProgramPipeline(1);
+          glActiveProgram(1, 2);
+          glUniform1f(0, 3.0);          // affects program 2
+          glUseProgram(3);
+          glUniform1f(0, 3.0);          // affects program 3
+          glUseProgram(0);
+          glUniform1f(0, 3.0);          // affects program 2
+
 
         As an alternative to setting the GL_ACTIVE_PROGRAM selector
         with glActiveShaderProgram, applications are instead encouraged
@@ -1874,12 +2039,12 @@ Issues
 
             attribute vec4 gl_VertexAttrib[];
 
-        How would these attributes map to the other built-in attributes?
-        That would depend on the implementation.  As with ARB_vertex_program,
-        some implementations could choose to alias such generate vertex attributes
-        with conventional vertex attributes (color, fog coord, etc.) or
-        an implementation could treat the generic attributes as disjoint
-        from the conventional vertex attributes.
+        How would these attributes map to the other built-in attributes?  That
+        would depend on the implementation.  As with ARB_vertex_program, some
+        implementations could choose to alias such generate vertex attributes
+        with conventional vertex attributes (color, fog coord, etc.) or an
+        implementation could treat the generic attributes as disjoint from the
+        conventional vertex attributes.
 
         If this is unsatisfactory, the solution is to avoid using
         glCreateShaderProgram and instead use the traditional GLSL
@@ -1909,31 +2074,31 @@ Issues
           BindProgramPipeline(ppo);
           const GLuint shader = glCreateShader(GL_VERTEX_SHADER);
           if (shader) {
-              const GLint len = (GLint) strlen(aboveShaderString);
-              glShaderSource(shader, 1, &aboveShaderString, &len);
-              glCompileShader(shader);
-              const uint program = glCreateProgram();
-              if (program) {
-                  GLint compiled = FALSE;
-                  glGetShaderiv(shader, COMPILE_STATUS, &compiled);
-                  if (compiled) {
-                      glAttachShader(program, shader);
+            const GLint len = (GLint) strlen(aboveShaderString);
+            glShaderSource(shader, 1, &aboveShaderString, &len);
+            glCompileShader(shader);
+            const uint program = glCreateProgram();
+            if (program) {
+              GLint compiled = FALSE;
+              glGetShaderiv(shader, COMPILE_STATUS, &compiled);
+              if (compiled) {
+                glAttachShader(program, shader);
 
-                      // Crucial code that glCreateShaderProgram doesn't do
-                      glBindAttribLocation(program, 5, "attribA");
-                      glBindAttribLocation(program, 7, "attribB");
+                // Crucial code that glCreateShaderProgram doesn't do
+                glBindAttribLocation(program, 5, "attribA");
+                glBindAttribLocation(program, 7, "attribB");
 
-                      glLinkProgram(program);
-                      glDetachShader(program, shader);
+                glLinkProgram(program);
+                glDetachShader(program, shader);
 
-                      // Show this program can actually be used as a vertex shader
-                      glUseProgramStages(GL_VERTEX_SHADER, program);
-                  }
+                // Show this program can actually be used as a vertex shader
+                glUseProgramStages(GL_VERTEX_SHADER, program);
               }
-              glDeleteShader(shader);
-              return program;
+            }
+            glDeleteShader(shader);
+            return program;
           } else {
-              return 0;
+            return 0;
           }
 
         Optionally, the glDetachShader and glDeleteShader commands could
@@ -1982,31 +2147,31 @@ Issues
           BindProgramPipeline(ppo);
           const GLuint shader = glCreateShader(GL_FRAGMENT_SHADER);
           if (shader) {
-              const GLint len = (GLint) strlen(aboveShaderString);
-              glShaderSource(shader, 1, &aboveShaderString, &len);
-              glCompileShader(shader);
-              const uint program = glCreateProgram();
-              if (program) {
-                  GLint compiled = FALSE;
-                  glGetShaderiv(shader, COMPILE_STATUS, &compiled);
-                  if (compiled) {
-                      glAttachShader(program, shader);
+            const GLint len = (GLint) strlen(aboveShaderString);
+            glShaderSource(shader, 1, &aboveShaderString, &len);
+            glCompileShader(shader);
+            const uint program = glCreateProgram();
+            if (program) {
+              GLint compiled = FALSE;
+              glGetShaderiv(shader, COMPILE_STATUS, &compiled);
+              if (compiled) {
+                glAttachShader(program, shader);
 
-                      // Crucial code that glCreateShaderProgram doesn't do
-                      glBindFragDataLocation(program, 0, "bufferA");
-                      glBindFragDataLocation(program, 1, "bufferB");
+                // Crucial code that glCreateShaderProgram doesn't do
+                glBindFragDataLocation(program, 0, "bufferA");
+                glBindFragDataLocation(program, 1, "bufferB");
 
-                      glLinkProgram(program);
-                      glDetachShader(program, shader);
+                glLinkProgram(program);
+                glDetachShader(program, shader);
 
-                      // Show this program can actually be used as a fragment shader
-                      glUseProgramStages(GL_FRAGMENT_SHADER, program);
-                  }
+                // Show this program can actually be used as a fragment shader
+                glUseProgramStages(GL_FRAGMENT_SHADER, program);
               }
-              glDeleteShader(shader);
-              return program;
+            }
+            glDeleteShader(shader);
+            return program;
           } else {
-              return 0;
+            return 0;
           }
 
         Optionally, the glDetachShader and glDeleteShader could be
@@ -2249,14 +2414,14 @@ Issues
         to match between stages.  In EXT_separate_shader_objects, there was
         no requirement that the set of built-in outputs written by one
         stage had to match the inputs read by another stage.
-        Implementations supporting EXT_separate_shader_objects are likely
-        to provide logically separate locations for shader built-ins.
 
-        !!! Do implementations of the EXT extension have to provide
-            dedicated locations for built-ins all the time, or just for
-            special "EXT"-style compiles?  The API doesn't provide any sort
-            of special flag to indicate EXT-style usage, so there's no good
-            hook there.
+        Implementations supporting EXT_separate_shader_objects are likely to
+        provide logically separate locations for all shader built-ins.  That
+        extension didn't provide for undefined values when the set of
+        built-ins used on one side of the interface didn't exactly match those
+        on that other side, so implementations were required to assign
+        matching locations even if texture coordinates or colors were used as
+        outputs in one program but not inputs in another.
 
     28. This extension requires shaders to redeclare gl_PerVertex and
         gl_PerFragment to use certain important built-ins.  However, GLSL
@@ -2316,11 +2481,178 @@ Issues
         OpenGL 3.0), they are considered "container" objects to which other
         shareable objects can be attached.
 
+    31. How does one figure out how many locations are consumed by an input or
+        output?
+
+        RESOLVED:  Basic scalar and single-precision vector types are
+        considered to consume one (vector) location.  Double-precision scalar
+        and vector types consume either one or two locations, as discussed
+        further below.  An array with <n> elements, each consuming <m>
+        locations, will consume <n>*<m> locations.  Matrix types are treated
+        as arrays of two to four column vectors.  Locations are assigned in
+        structure types by assigning consecutive locations member-by-member
+        according to the member declaration order.
+
+    31. How many locations are consumed by shader inputs and outputs with
+        double-precision types?
+
+        RESOLVED:  For inputs and outputs passed between shader stages, values
+        of type "double" and "dvec2" consume a single location.  Values of
+        type "dvec3" and "dvec4" require more storage than a single-precision
+        four-component vector, and thus consume two locations.
+
+        For vertex shader inputs, each location is associated with a generic
+        vertex attribute.  Since each such attribute in the API can hold a
+        full "dvec4" if specified with VertexAttribL* or VertexAttribLPointer,
+        values of type "double", "dvec2", "dvec3", and "dvec4" consume only a
+        single location (generic vertex attribute).  However, for the purposes
+        of determining if a vertex shader uses "too many" attribute vectors in
+        LinkProgram, vertex shader inputs of types "dvec3" and "dvec4" can be
+        counted as consuming two vector attributes.  For example, if a vertex
+        shader specifies:
+
+          layout(location=4) in dvec4 attribs[4];
+
+        the values for the four elements of "attribs" will be taken from
+        vertex attributes 4-7, though "attribs" may be counted as consuming
+        eight vectors worth of attributes.
+
+        Arrays or matrix types with double-precision components are treated as
+        comprising 
+
+    33. Are location layout qualifiers allowed on block declarations?  On
+        block member declarations?
+
+        RESOLVED:  Location layout qualifiers are not allowed on either block
+        or block member declarations in this extension.  One implication of
+        this behavior is that in input/output interface between programs, the
+        sets of declared inputs and outputs must match exactly, since
+        interface blocks can not be matched by location.  Future extensions
+        may consider relaxing either or both restrictions.
+
+    34. Should we ever allow inputs and outputs to match if they are of
+        different type?
+
+        RESOLVED:  The location system in this extension is expressed in units
+        of four-component vectors.  Because of this common numeric location,
+        we allow outputs with a vector type to be fed to inputs with a scalar
+        or smaller vector type as long as they have the same location and
+        basic component type.  For example, if a vertex shader includes:
+
+          layout(location = 4) out vec4 vsout;
+
+        and a fragment shader includes:
+
+          layout(location = 4) in vec2 fsin;
+
+        the two components of <fsin> will be obtained by interpolating the x
+        and y components of <vsout>.  The z and w components of <vsout> will
+        be ignored.
+
+        We do not permit this behavior for double-precision vectors, because
+        large types (dvec3, dvec4) consume two locations while smaller types
+        (double, dvec2) consume only one.  Allowing this behavior would be 
+        problematic for arrays.  For example, in a vertex shader output 
+        declared as:
+
+          layout(location = 4) out dvec4 vsout[2];
+
+        "vsout[1]" would be assigned locations 6 and 7, while in a fragment
+        shader input declared as
+
+          layout(location = 4) in dvec2 fsin[2];
+
+        "fsin[1]" would be assigned location 5.
+
+    35. What are the rules for determining if inputs and outputs match by
+        qualification?
+
+        RESOLVED:  In order for an input in one shader stage to be considered
+        to match an output in another, some of the qualifiers must match but
+        others need not match.  In particular:
+
+          * The base storage qualifier ("in" and "out") across an interface
+            will naturally not match -- one side uses "in", the other uses
+            "out".
+
+          * Auxilliary storage qualifiers ("centroid", "sample", and "patch")
+            and interpolation qualifiers ("flat", "smooth", "noperspective")
+            must match.
+
+          * The location layout qualifier, if specified, must match.
+
+          * Layout qualifiers specific to one shader type (e.g., "stream" for
+            geometry shader outputs) need not match.
+
+          * Precision qualifiers have no effect in OpenGL and need not match.
+
+          * The qualifiers "invariant" and "precise" affect only how outputs
+            are computed within a shader stage and need not match between
+            stages.
+
+    36. How does the behavior of input/output interface matching differ
+        between separable programs and non-separable programs?
+
+        RESOLVED:  The rules for matching individual variables or block
+        members between stages are identical for separable and non-separable
+        programs, with one exception -- matching variables of different type
+        with the same location, as discussed in issue 34, applies only to
+        separable programs.
+
+        However, the ability to enforce matching requirements differs between
+        program types.  In non-separable programs, both sides of an interface
+        are contained in the same linked program.  In this case, if the linker
+        detects a mismatch, it will generate a link error.  
+
+        For separable programs, the two sides of an interface may be in
+        different programs, so the linker will be unable to detect a mismatch.
+        In these cases, applications are responsible for ensuring matching
+        inputs/outputs are used on either side of the interface.  Input
+        variables are undefined when mismatches occur.  Matching can be done
+        across the entire interface by ensuring that the exact same set of
+        declarations is used on both sides of the interface.  Alternately,
+        matching can be done variable-by-variable by using identical types and
+        matching location layout qualifiers.
 
 Revision History
 
     Rev.    Date       Author    Changes
-    ----  -----------  --------  ---------------------------------------------
+    ----  -----------  --------- ---------------------------------------------
+    25    1 Aug 2011   pbrown    More clearly specify interface matching rules
+                                 for shader inputs and outputs, for cases
+                                 where both sides of an interface are found in
+                                 the same program and where they are in
+                                 different programs (bug 7030).  Add
+                                 dependencies with several ARB extensions and
+                                 core version.  Add several new spec issues
+                                 related to shader interface matching.
+
+                                 Add GLSL spec language describing what
+                                 qualifiers must match for inputs/outputs to
+                                 be considered to match in qualification.  Add
+                                 clarifications on the number of locations
+                                 consumed by different types of shader
+                                 inputs/outputs.  Specify that vertex shader
+                                 inputs of type "dvec3" and "dvec4" consume a
+                                 single location for the purposes of matching
+                                 with generic vertex attributes in the API
+                                 (bug 7809).  More clearly specify that
+                                 location layout qualifiers are not allowed on
+                                 blocks and block members.
+
+    24    25 Jul 2011  pbrown    Remove the language erroneously deleting
+                                 CURRENT_PROGRAM.  In the EXT extension, this
+                                 token was aliased to ACTIVE_PROGRAM_EXT, and
+                                 was used to indicate the last program set by
+                                 either ActiveProgramEXT or UseProgram.  In
+                                 the ARB extension, the SSO active programs
+                                 are now program pipeline object state and
+                                 CURRENT_PROGRAM should still be used to query
+                                 the last program set by UseProgram (bug 7822).
+
+    23    25 Jul 2011  Jon Leech Add VALIDATE_STATUS to state tables and
+                                 GetProgramPipelineiv description (bug 7748).
+
     22    6 Jun 2011   pbrown    Treat program pipeline objects as non-shared
                                  container objects, like framebuffer and
                                  vertex array objects (bug 7713).
