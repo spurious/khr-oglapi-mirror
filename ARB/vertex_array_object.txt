@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Data: 08/07/2008
-    Author revision:    8
+    Last Modified Data: 09/21/2011
+    Author revision:    10
 
 Number
 
@@ -113,9 +113,10 @@ Additions to Chapter 2 of the OpenGL 2.1 Specification (OpenGL Operation)
     array is not a name returned from a previous call to
     GenVertexArrays, or if such a name has since been deleted with
     DeleteVertexArrays. An INVALID_OPERATION error is generated
-    if VertexAttribPointer or VertexAttribIPointer is called while a
-    non-zero vertex array object is bound and zero is bound to the
-    ARRAY_BUFFER buffer object binding point[fn].
+    if any of the *Pointer commands specifying the location and
+    organization of vertex data are called while a non-zero vertex array
+    object is bound, zero is bound to the ARRAY_BUFFER buffer object,
+    and the pointer is not NULL[fn].
 	[fn: This error makes it impossible to create a vertex array
               object containing client array pointers.]
 
@@ -344,3 +345,7 @@ Revision History
       8   08/07/2008  Jon Leech Remove ARB suffixes.
 
       9   08/20/2008  Jon Leech Cleanup formatting errors.
+
+      10  09/21/2011  Jon Leech Clarify that all *Pointer commands generate
+                                errors when attempting to specify client
+                                array pointers in a VAO (Bug 3696).
