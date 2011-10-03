@@ -56,8 +56,8 @@ Status
 
 Version
 
-    Last Modified Date: July 22, 2011
-    Revision: #33
+    Last Modified Date: October 2, 2011
+    Revision: #34
 
 Number
 
@@ -2769,153 +2769,6 @@ Requests)
     TEXTURE_DEPTH_SIZE, and TEXTURE_STENCIL_SIZE return the actual
     resolutions of the stored image array components..."
 
-    Add to section 6.1.3, Enumerated Queries:
-
-        In the list of state query functions, add:
-
-        "void GetFramebufferAttachmentParameteriv(enum target,
-                                                  enum attachment,
-                                                  enum pname,
-                                                  int *params);
-
-        <target> must be DRAW_FRAMEBUFFER, READ_FRAMEBUFFER or
-        FRAMEBUFFER.  FRAMEBUFFER is equivalent to
-        DRAW_FRAMEBUFFER.
-
-        If the default framebuffer is bound to <target>, then
-        <attachment> must be one of FRONT_LEFT, FRONT_RIGHT, BACK_LEFT,
-        BACK_RIGHT, AUXi, DEPTH_BUFFER, or STENCIL_BUFFER, identifying a
-        color buffer, the depth buffer, or the stencil buffer, and
-        <pname> may be FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE or
-        FRAMEBUFFER_ATTACHMENT_OBJECT_NAME.
-
-        If a framebuffer object is bound to <target>, then <attachment>
-        must be one of the attachment points of the framebuffer listed
-        in table 1.nnn and <pname> may be one of
-        FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE,
-        FRAMEBUFFER_ATTACHMENT_OBJECT_NAME,
-        FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL,
-        FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE, or
-        FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER.
-
-        If <attachment> is DEPTH_STENCIL_ATTACHMENT, and different
-        objects are bound to the depth and stencil attachment points of
-        <target>, the query will fail and generate an INVALID_OPERATION
-        error. If the same object is bound to both attachment points,
-        information about that object will be returned.
-
-        In either case, <pname> may also be one of
-        FRAMEBUFFER_ATTACHMENT_RED_SIZE,
-        FRAMEBUFFER_ATTACHMENT_GREEN_SIZE,
-        FRAMEBUFFER_ATTACHMENT_BLUE_SIZE,
-        FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE,
-        FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE,
-        FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE,
-        FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE, or
-        FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING.
-
-        Upon successful return from
-        GetFramebufferAttachmentParameteriv, if <pname> is
-        FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE, then param will contain
-        one of NONE, FRAMEBUFFER_DEFAULT, TEXTURE, or
-        RENDERBUFFER, identifying the type of object which contains
-        the attached image.
-
-        If <pname> is FRAMEBUFFER_ATTACHMENT_RED_SIZE,
-        FRAMEBUFFER_ATTACHMENT_GREEN_SIZE,
-        FRAMEBUFFER_ATTACHMENT_BLUE_SIZE,
-        FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE,
-        FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE, or
-        FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE, then <param> will
-        contain the number of bits in the corresponding red, green,
-        blue, alpha, depth, or stencil component of the specified
-        <attachment>. Zero is returned if the requested component is not
-        present in <attachment>. If <pname> is
-        FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE, <param> will contain
-        the format of components of the specified attachment,
-        one of FLOAT, INT, UNSIGNED_INT, UNSIGNED_NORMALIZED or INDEX for
-        floating-point, signed integer, unsigned integer, unsigned 
-        fixed-point, or index components respectively. Only color buffers 
-        may have index or integer components. If <pname> is
-        FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING, <param> will contain
-        the encoding of components of the specified attachment, one of
-        LINEAR or SRGB for linear or sRGB-encoded components,
-        respectively. Only color buffer components may be sRGB-encoded;
-        such components are treated as described in sections 4.1.8 
-        "Blending" and 4.1.X "sRGB Conversion" (as modified by 
-        ARB_framebuffer_sRGB). For the default framebuffer, color encoding 
-        is determined by the implementation. For framebuffer objects, 
-        components are sRGB-encoded if the internal format of a color 
-        attachment is one of the color-renderable SRGB formats described 
-        in section 3.8.15 "sRGB Texture Color Conversion".
-
-            If the value of FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is
-            RENDERBUFFER, then
-
-                If <pname> is FRAMEBUFFER_ATTACHMENT_OBJECT_NAME,
-                <params> will contain the name of the renderbuffer
-                object which contains the attached image.
-
-                Otherwise, an INVALID_ENUM error is generated.
-
-            If the value of FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is
-            TEXTURE, then
-
-                If <pname> is FRAMEBUFFER_ATTACHMENT_OBJECT_NAME,
-                then <params> will contain the name of the texture
-                object which contains the attached image.
-
-                If <pname> is FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL,
-                then <params> will contain the mipmap level of the
-                texture object which contains the attached image.
-
-                If <pname> is
-                FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE and the
-                texture object named
-                FRAMEBUFFER_ATTACHMENT_OBJECT_NAME is a cube map
-                texture, then <params> will contain the cube map face of
-                the cubemap texture object which contains the attached
-                image.  Otherwise <params> will contain the value zero.
-
-                If <pname> is
-                FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER and the
-                texture object named
-                FRAMEBUFFER_ATTACHMENT_OBJECT_NAME is a
-                3-dimensional texture, then <params> will contain the
-                layer of the 2D image of the 3D texture object which
-                contains the attached image.  Otherwise <params> will
-                contain the value zero.
-
-            Otherwise, an INVALID_ENUM error is generated."
-
-
-        void GetRenderbufferParameteriv(enum target, enum pname,
-                                        int* params);
-
-        <target> must be RENDERBUFFER.  <pname> must be one of
-        the symbolic values in table 8.nnn.
-        If the renderbuffer currently bound to <target> is zero,
-        then an INVALID_OPERATION error is generated.
-
-        Upon successful return from GetRenderbufferParameteriv,
-        if <pname> is RENDERBUFFER_WIDTH, RENDERBUFFER_HEIGHT,
-        RENDERBUFFER_INTERNAL_FORMAT, or RENDERBUFFER_SAMPLES,
-        then <params> will contain the width in pixels, height in 
-        pixels, internal format, or number of samples, 
-        respectively, of the image of the renderbuffer currently
-        bound to <target>.
-
-        If <pname> is RENDERBUFFER_RED_SIZE,
-        RENDERBUFFER_GREEN_SIZE, RENDERBUFFER_BLUE_SIZE,
-        RENDERBUFFER_ALPHA_SIZE, RENDERBUFFER_DEPTH_SIZE, or
-        RENDERBUFFER_STENCIL_SIZE, then <params> will contain
-        the actual resolutions, (not the resolutions specified when
-        the image array was defined), for the red, green, blue,
-        alpha depth, or stencil components, respectively, of the
-        image of the renderbuffer currently bound to <target>.
-        
-        Otherwise, an INVALID_ENUM error is generated."
-
     Section 6.1.4 "Texture Queries", in the second paragraph, replace
     the first second and third sentences as follows:
 
@@ -2947,7 +2800,7 @@ Requests)
     After section 6.1.14 and before section 6.1.15 (which should be
     renumbered 6.1.17), add two new sections:
 
-    6.1.15 Framebuffer Object Queries
+   "6.1.15 Framebuffer Object Queries
 
         The command
 
@@ -2958,9 +2811,115 @@ Requests)
         non-zero value that is not the name of an framebuffer object,
         IsFramebuffer return FALSE.
 
+        The command
+
+        void GetFramebufferAttachmentParameteriv(enum target,
+                                                 enum attachment,
+                                                 enum pname,
+                                                 int *params);
+
+        returns information about attachments of a bound framebuffer object.
+        <target> must be DRAW_FRAMEBUFFER, READ_FRAMEBUFFER or FRAMEBUFFER.
+        FRAMEBUFFER is equivalent to DRAW_FRAMEBUFFER.
+
+        If the default framebuffer is bound to <target>, then <attachment>
+        must be one of FRONT_LEFT, FRONT_RIGHT, BACK_LEFT, BACK_RIGHT, or
+        AUXi, identifying a color buffer; DEPTH, identifying the depth
+        buffer; or STENCIL, identifying the stencil buffer.
+
+        If a framebuffer object is bound to <target>, then <attachment> must
+        be one of the attachment points of the framebuffer listed in table
+        1.nnn.
+
+        If <attachment> is DEPTH_STENCIL_ATTACHMENT, and different objects
+        are bound to the depth and stencil attachment points of <target>,
+        the query will fail and generate an INVALID_OPERATION error. If the
+        same object is bound to both attachment points, information about
+        that object will be returned.
+
+        Upon successful return from GetFramebufferAttachmentParameteriv, if
+        <pname> is FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE, then <param> will
+        contain one of NONE, FRAMEBUFFER_DEFAULT, TEXTURE, or RENDERBUFFER,
+        identifying the type of object which contains the attached image.
+        Other values accepted for <pname> depend on the type of object, as
+        described below.
+
+        If the value of FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is
+        NONE, no framebuffer is bound to <target>. In this case
+        querying <pname> FRAMEBUFFER_ATTACHMENT_OBJECT_NAME
+        will return zero, and all other queries will generate an
+        INVALID_OPERATION error. 
+        
+        If the value of FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is not
+        NONE, these queries apply to all other framebuffer types:
+
+          * If <pname> is FRAMEBUFFER_ATTACHMENT_RED_SIZE,
+            FRAMEBUFFER_ATTACHMENT_GREEN_SIZE,
+            FRAMEBUFFER_ATTACHMENT_BLUE_SIZE,
+            FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE,
+            FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE, or
+            FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE, then <param> will contain
+            the number of bits in the corresponding red, green, blue, alpha,
+            depth, or stencil component of the specified <attachment>. Zero
+            is returned if the requested component is not present in
+            <attachment>. 
+
+          * If <pname> is FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE, <param>
+            will contain the format of components of the specified
+            attachment, one of FLOAT, INT, UNSIGNED_INT, UNSIGNED_NORMALIZED
+            or INDEX for floating-point, signed integer, unsigned integer,
+            unsigned fixed-point, or index components respectively. Only
+            color buffers may have index or integer components. 
+
+          * If <pname> is FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING, <param>
+            will contain the encoding of components of the specified
+            attachment, one of LINEAR or SRGB for linear or sRGB-encoded
+            components, respectively. Only color buffer components may be
+            sRGB-encoded; such components are treated as described in
+            sections 4.1.8 "Blending" and 4.1.X "sRGB Conversion" (as
+            modified by ARB_framebuffer_sRGB). For the default framebuffer,
+            color encoding is determined by the implementation. For
+            framebuffer objects, components are sRGB-encoded if the internal
+            format of a color attachment is one of the color-renderable SRGB
+            formats described in section 3.8.15 "sRGB Texture Color
+            Conversion".
+
+        If the value of FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is RENDERBUFFER,
+        then
+
+          * If <pname> is FRAMEBUFFER_ATTACHMENT_OBJECT_NAME, <params> will
+            contain the name of the renderbuffer object which contains the
+            attached image.
+
+        If the value of FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is TEXTURE, then
+
+          * If <pname> is FRAMEBUFFER_ATTACHMENT_OBJECT_NAME, then <params>
+            will contain the name of the texture object which contains the
+            attached image.
+
+          * If <pname> is FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL, then
+            <params> will contain the mipmap level of the texture object
+            which contains the attached image.
+
+          * If <pname> is FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE and
+            the texture object named FRAMEBUFFER_ATTACHMENT_OBJECT_NAME is a
+            cube map texture, then <params> will contain the cube map face
+            of the cubemap texture object which contains the attached image.
+            Otherwise <params> will contain the value zero.
+
+          * If <pname> is FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER and the
+            texture object named FRAMEBUFFER_ATTACHMENT_OBJECT_NAME is a
+            three-dimensional texture, then <params> will contain the layer
+            of the 2D image of the 3D texture object which contains the
+            attached image. Otherwise <params> will contain the value zero.
+
+        Any combinations of framebuffer type and <pname> not described above
+        will generate an INVALID_ENUM error."
+
+
     6.1.16 Renderbuffer Object Queries
 
-        The command
+       "The command
 
             boolean IsRenderbuffer( uint renderbuffer );
 
@@ -2968,6 +2927,33 @@ Requests)
         object.  If <renderbuffer> is zero, or if <renderbuffer> is a
         non-zero value that is not the name of a renderbuffer object,
         IsRenderbuffer return FALSE.
+
+        The command
+
+        void GetRenderbufferParameteriv(enum target, enum pname, 
+                                        int* params);
+
+        returns information about a bound renderbuffer object. <target> must
+        be RENDERBUFFER and <pname> must be one of the symbolic values in
+        table 8.nnn. If the renderbuffer currently bound to <target> is
+        zero, then an INVALID_OPERATION error is generated.
+
+        Upon successful return from GetRenderbufferParameteriv, if <pname>
+        is RENDERBUFFER_WIDTH, RENDERBUFFER_HEIGHT,
+        RENDERBUFFER_INTERNAL_FORMAT, or RENDERBUFFER_SAMPLES, then <params>
+        will contain the width in pixels, height in pixels, internal format,
+        or number of samples, respectively, of the image of the renderbuffer
+        currently bound to <target>.
+
+        If <pname> is RENDERBUFFER_RED_SIZE, RENDERBUFFER_GREEN_SIZE,
+        RENDERBUFFER_BLUE_SIZE, RENDERBUFFER_ALPHA_SIZE,
+        RENDERBUFFER_DEPTH_SIZE, or RENDERBUFFER_STENCIL_SIZE, then <params>
+        will contain the actual resolutions, (not the resolutions specified
+        when the image array was defined), for the red, green, blue, alpha
+        depth, or stencil components, respectively, of the image of the
+        renderbuffer currently bound to <target>.
+        
+        Otherwise, an INVALID_ENUM error is generated."
 
     In section 6.2 "State Tables", add a row to table 6.18 "Textures
     (state per texture image)":
@@ -3701,11 +3687,11 @@ Usage Examples
     #define CHECK_FRAMEBUFFER_STATUS()                            \
       {                                                           \
         GLenum status;                                            \
-        status = glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER); \
+        status = glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER);   \
         switch(status) {                                          \
-          case GL_FRAMEBUFFER_COMPLETE:                       \
+          case GL_FRAMEBUFFER_COMPLETE:                           \
             break;                                                \
-          case GL_FRAMEBUFFER_UNSUPPORTED:                    \
+          case GL_FRAMEBUFFER_UNSUPPORTED:                        \
             /* choose different formats */                        \
             break;                                                \
           default:                                                \
@@ -4538,3 +4524,10 @@ Revision History
     #33 July 22, 2011: Jon Leech
         - Remove error which disallowed non-multisample <-> sample blits
           (bug 7367).
+
+    #34 October 2, 2011: Jon Leech
+        - Bring chapter 6 language changes in sync with the OpenGL 3.0 API
+          specification phrasing, and fix the description of
+          GetFramebufferAttachmentParameteriv to use DEPTH and STENCIL as
+          attachment names, rather than the nonexistent DEPTH_BUFFER and
+          STENCIL_BUFFER tokens (Bug 8102).

@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Data: 09/21/2011
-    Author revision:    10
+    Last Modified Data: 09/22/2011
+    Author revision:    11
 
 Number
 
@@ -77,7 +77,8 @@ Additions to Chapter 2 of the OpenGL 2.1 Specification (OpenGL Operation)
     returns <n> previous unused vertex array object names in <arrays>.  These
     names are marked as used, for the purposes of GenVertexArrays only,
     and are initialized with the state listed in tables 6.6 (except for
-    the CLIENT_ACTIVE_TEXTURE selector state), 6.7 and 6.8.
+    the CLIENT_ACTIVE_TEXTURE selector state), 6.7 and 6.8 (except for the
+    ARRAY_BUFFER_BINDING state).
 
     Vertex array objects are deleted by calling
 
@@ -349,3 +350,5 @@ Revision History
       10  09/21/2011  Jon Leech Clarify that all *Pointer commands generate
                                 errors when attempting to specify client
                                 array pointers in a VAO (Bug 3696).
+      11  09/22/2011  Jon Leech Exclude ARRAY_BUFFER_BINDING from VAO
+                                state (Bug 5659).
