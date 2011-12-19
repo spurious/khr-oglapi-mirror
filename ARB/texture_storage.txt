@@ -8,7 +8,7 @@ Name Strings
 
 Contact
 
-    Bruce Merry, ARM (bruce.merry 'at' arm.com)
+    Bruce Merry (bmerry 'at' gmail.com)
     Ian Romanick, Intel (ian.d.romanick 'at' intel.com)
 
 Contributors
@@ -31,8 +31,8 @@ Status
 
 Version
 
-    Last Modified Date: July 25, 2011
-    Author Revision: 23
+    Last Modified Date: November 10, 2011
+    Author Revision: 24
 
 Number
 
@@ -889,6 +889,9 @@ Issues
     decision.
 
 Revision History
+
+    Revision 24, 2011/11/10 (bmerry)
+      - Updated my contact details
 
     Revision 23, 2011/07/25 (bmerry)
       - Remove dangling references to MultiTexStorage in Errors section

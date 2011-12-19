@@ -31,7 +31,7 @@ Status
 
 Version
 
-    Version 14, January 27, 2011
+    Version 15, October 17, 2011
 
 Number
 
@@ -1139,7 +1139,7 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50
       gvec4 textureGather(gsampler2DArray sampler, vec3 coord[, int comp]);
       gvec4 textureGather(gsamplerCube sampler, vec3 coord[, int comp]);
       gvec4 textureGather(gsamplerCubeArray sampler, vec4 coord[, int comp]);
-      gvec4 textureGather(gsampler2DRect sampler, vec3 coord[, int comp]);
+      gvec4 textureGather(gsampler2DRect sampler, vec2 coord[, int comp]);
 
       vec4 textureGather(sampler2DShadow sampler, vec2 coord, float refZ);
       vec4 textureGather(sampler2DArrayShadow sampler, vec3 coord, float refZ);
@@ -1187,7 +1187,7 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50
                                 ivec2 offset[, int comp]);
       gvec4 textureGatherOffset(gsampler2DArray sampler, vec3 coord, 
                                 ivec2 offset[, int comp]);
-      gvec4 textureGatherOffset(gsampler2DRect sampler, vec3 coord, 
+      gvec4 textureGatherOffset(gsampler2DRect sampler, vec2 coord, 
                                 ivec2 offset[, int comp]);
 
       vec4 textureGatherOffset(sampler2DShadow sampler, vec2 coord, 
@@ -1982,6 +1982,10 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+    15    10/17/11  pbrown    Fix prototypes for textureGather and
+                              textureGatherOffset to use vec2 coordinates for
+                              "2DRect" sampler versions (bug 7964).
+
     14    01/27/11  pbrown    Add further clarification on the interaction
                               of texture gather and incomplete textures (bug
                               7289).
