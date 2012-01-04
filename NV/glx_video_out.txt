@@ -1,10 +1,10 @@
 Name 
 
-    NV_video_output
+    NV_video_out
 
 Name Strings 
 
-    GLX_NV_video_output
+    GLX_NV_video_out
 
 Contact 
 
