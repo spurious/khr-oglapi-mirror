@@ -25,7 +25,7 @@ Status
 
 Version
 
-    Last Modified Date: Sep 28, 2009
+    Last Modified Date: Jul 8, 2011
     Author Revision: 24
 
 Number
@@ -470,12 +470,14 @@ Operations and the Frame Buffer)
     4.4 as they are transferred from the capture device's raw buffers to
     the bound capture objects.
 
-                         |Y'i|   
-      Output =  clamp( M |Cbi| +  Offset )
-                         |Cri|
-                         |Ai |
+                         |a|   
+      Output =  clamp( M |b| +  Offset )
+                         |c|
+                         |d|
 
-      Figure 4.4, Video capture color conversion pipeline.
+      Figure 4.4, Video capture color conversion pipeline. When the stream
+        is in YUVA color space: a = Yi, b=Ui, c=Vi and d = Ai. When in
+        RGBA color space, a = Gi, b=Bi, c=Ri and d = Ai.
 
     "<M> and <Offset> are the color conversion matrix and color
     conversion offset for the video capture stream, respectively, and
@@ -1403,7 +1405,7 @@ Usage Examples:
                                         video_out_texture);
 
         // Start the capture process
-        BeginVideoCaptureNV(0);
+        BeginVideoCaptureNV(1);
 
         // Loop capturing data
         while (...) {
@@ -1411,7 +1413,7 @@ Usage Examples:
             uint sequence_num;
             
             // Capture the video to a buffer object
-            VideoCaptureNV(0, &sequence_num, &timestamp);
+            VideoCaptureNV(1, &sequence_num, &timestamp);
 
             // Pull stream 0's video data back to local memory
             BindBufferARB(VIDEO_BUFFER_NV, video_out_buffer);
@@ -1419,7 +1421,7 @@ Usage Examples:
                                 someMallocMem1);
 
             // Present stream 1's video data using NV_present_video
-            PresentFrameKeyedNV(0, 0, 0, 0, GL_FRAME_NV,
+            PresentFrameKeyedNV(1, 0, 0, 0, GL_FRAME_NV,
                                 GL_TEXTURE_2D, video_out_texture, 0,
                                 GL_NONE, 0, 0);
 
@@ -1428,7 +1430,7 @@ Usage Examples:
         }
 
         // Pause/Stop capturing.
-        EndVideoCaptureNV(0);
+        EndVideoCaptureNV(1);
 
 Issues
 
@@ -1530,6 +1532,9 @@ Issues
 
 
 Revision History
+    Fifth external draft: 2011/7/8
+      -Fixed video slots used in second usage example
+
     Fourth external draft: 2009/9/28
       -Added "New Types" section
 

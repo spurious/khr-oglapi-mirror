@@ -28,8 +28,8 @@ Status
 
 Version
 
-    Last Modified Date: February 20, 2009
-    Author Revision: 7
+    Last Modified Date: July 8, 2011
+    Author Revision: 8
     $Date$ $Revision$
 
 Number
@@ -437,16 +437,16 @@ Additions to the WGL Specification
     are no valid attributes so <piAttribList> must be either NULL or an
     empty list.  To release a video device without binding another
     device to the same slot, call wglBindVideoDeviceNV with
-    <hVideoDevice> set to INVALID_HANDLE_VALUE.  The bound video output
-    device will be enabled before wglBindVideoDeviceNV returns.  It will
-    display black until the first image is presented on it.  The
-    previously bound video device, if any, will also be deactivated 
-    before wglBindVIdeoDeviceNV resturns.  Video slot 0 is reserved for
-    the GL.  If wglBindVideoDeviceNV is called with <uVideoSlot> less
-    than 1 or greater than the maximum number of video slots supported
-    by the current context, if <hVideoDevice> does not refer to a valid
-    video output device, or if there is no current context, FALSE will 
-    be returned.  A return value of TRUE indicates a video device has
+    <hVideoDevice> set to NULL.  The bound video output device will be
+    enabled before wglBindVideoDeviceNV returns.  It will display black
+    until the first image is presented on it.  The previously bound
+    video device, if any, will also be deactivated before
+    wglBindVIdeoDeviceNV resturns.  Video slot 0 is reserved for the GL.
+    If wglBindVideoDeviceNV is called with <uVideoSlot> less than 1 or
+    greater than the maximum number of video slots supported by the
+    current context, if <hVideoDevice> does not refer to a valid video
+    output device, or if there is no current context, FALSE will be
+    returned.  A return value of TRUE indicates a video device has
     successfully been bound to the video slot.
 
 
@@ -920,6 +920,10 @@ Issues
         satisfy the line choosing rules as they are specified currently.
 
 Revision History
+
+    Revision 8, 2011/7/8
+        -Fix wglBindVideoDeviceNV specification to match implemented
+         behavior.
 
     Revision 7, 2009/2/20
         -Remove unused VideoParameterivNV command.
