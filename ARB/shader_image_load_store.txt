@@ -29,8 +29,8 @@ Status
 
 Version
 
-    Last Modified Date:         August 4, 2011
-    Revision:                   30
+    Last Modified Date:         January 18, 2012
+    Revision:                   31
 
 Number
 
@@ -1057,7 +1057,7 @@ New State
 
     Get Value               Type    Get Command     Initial Value  Description               Sec     Attribute
     ---------------------   -----   -----------     -------------  ------------------------  -----   ---------
-    IMAGE_FORMAT_           2*xZ+   GetTexParam-    see 3.9.x      compatibility rules for   3.9.X   texture
+    IMAGE_FORMAT_           Z_2     GetTexParam-    see 3.9.x      compatibility rules for   3.9.X   texture
       COMPATIBILITY_TYPE              eteriv                       texture use with image
                                                                    units
 
@@ -2317,6 +2317,8 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------------
+    31    01/18/12  Jon Leech State table fix for
+                              IMAGE_FORMAT_COMPATIBILITY_TYPE (Bug 8430).
     30    08/04/11  pbrown    Remove imageAtomicIncWrap() and 
                               imageAtomicDecWrap() functions from the ARB
                               extension (bug 7182).   Rename the <index>

@@ -31,8 +31,8 @@ Status
 
 Version
 
-    Last Modified Date: November 10, 2011
-    Author Revision: 24
+    Last Modified Date: January 19, 2012
+    Author Revision: 25
 
 Number
 
@@ -159,6 +159,8 @@ Additions to Chapter 3 of the OpenGL 3.2 Core Profile Specification
       initial state.
     - If <width>, <height>, <depth> or <levels> is less than 1, the
       error INVALID_VALUE is generated.
+    - The pixel unpack buffer should be considered to be zero i.e.,
+      the image contents are unspecified.
     - Since no pixel data are provided, the <format> and <type> values
       used in the pseudo-code are irrelevant; they can be considered to
       be any values that are legal to use with <internalformat>.
@@ -889,6 +891,9 @@ Issues
     decision.
 
 Revision History
+
+    Revision 25, 2012/01/19 (bmerry)
+      - Clarify that the pixel unpack buffer has no effect.
 
     Revision 24, 2011/11/10 (bmerry)
       - Updated my contact details
