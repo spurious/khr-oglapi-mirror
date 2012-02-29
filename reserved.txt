@@ -332,6 +332,7 @@ OpenGL Single Opcodes (16 Bits)
        182     183  EXT_gpu_shader4
        184     185  NV_vertex_program4
        186     194  ARB_vertex_buffer_object
+       195     202  OpenGL 2.0 core
 
 OpenGL Rendering Opcodes (16 Bits)
 ==================================
@@ -355,6 +356,8 @@ OpenGL Rendering Opcodes (16 Bits)
        269     277  EXT_gpu_shader4
        278     289  NV_vertex_program4
        290     301  ARB_vertex_buffer_object
+       302     304  ARB_stencil_two_side
+       305     310  OpenGL 2.1 core
   1008-1023 Reserved to IBM (unknown usage)
   1024-1039 Reserved to HP (originally Compaq) (unknown usage)
   1040-2047 Unused
