@@ -26,8 +26,8 @@ Status
 
 Version
 
-    Last Modified Date:  July 8, 2008
-    Author Revision: 4
+    Last Modified Date:  April 8, 2011
+    Author Revision: 5
 
 Number
 
@@ -129,11 +129,11 @@ Additions to Chapter 2 of the OpenGL 2.1 Specification
     Add a new section "2.15.4.2 Shader Inputs" before "Position
     Invariance"
 
-    Besides having access to vertex attributes and uniform variables,
-    vertex shaders can access the read-only built-in variable 
-    gl_InstanceIDARB. The variable gl_InstanceIDARB holds the integer index of
-    the current primitive in an instanced draw call.  See also section
-    7.1 of the OpenGL Shading Language Specification.
+    Besides having access to vertex attributes and uniform variables, vertex
+    shaders can access the read-only built-in variable gl_InstanceIDARB or
+    gl_InstanceID. The variables gl_InstanceIDARB and gl_InstanceID hold the
+    integer index of the current primitive in an instanced draw call.  See
+    also section 7.1 of the OpenGL Shading Language Specification.
 
 Additions to Chapter 5 of the OpenGL 2.1 Specification
 (Special Functions)
@@ -146,13 +146,6 @@ Dependencies on NV_vertex_program4
 
     If NV_vertex_program4 is not supported, all references to
     vertex.instance are deleted.
-
-Dependencies on EXT_gpu_shader4 and OpenGL 3.0
-
-    If EXT_gpu_shader4 or OpenGL 3.0 is not supported, all references to
-    gl_InstanceIDARB are deleted.  Note that if EXT_gpu_shader4 is 
-    available, the gl_InstanceIDARB and gl_InstanceID values are the
-    same.
 
 Errors
 
@@ -177,17 +170,19 @@ Modifications to The OpenGL Shading Language Specification, Version 1.10.59
 
     Change Section 7.1 "Vertex Shader Special Variables"
 
-    Add the following definition to the list of built-in variable definitions:
+    Add the following definitions to the list of built-in variable definitions:
 
-          int gl_InstanceIDARB // read-only
+          int gl_InstanceIDARB; // read-only
+          int gl_InstanceID;    // read-only
 
     Add the following paragraph at the end of the section:
 
-    The variable gl_InstanceIDARB is available as a read-only variable 
-    from within vertex shaders and holds holds the integer index of the
-    current primitive in an instanced draw call (DrawArraysInstancedARB,
-    DrawElementsInstancedARB). If the current primitive does not come from an
-    instanced draw call, the value of gl_InstanceIDARB is zero.
+    The variables gl_InstanceIDARB and gl_InstanceID are available as a
+    read-only variables from within vertex shaders and hold the integer index
+    of the current primitive in an instanced draw call
+    (DrawArraysInstancedARB, DrawElementsInstancedARB). If the current
+    primitive does not come from an instanced draw call, the values of
+    gl_InstanceIDARB and gl_InstanceID are zero.
 
 
 Issues
@@ -196,10 +191,13 @@ Issues
       provided by the core OpenGL 3.0 (similarly to how it was done with
       EXT_gpu_shader4)?
       
-        Resolved: The instanceID and other language changes should be 
-        provided by this extension and properly decorated with the ARB
-        suffix.  It appears that the EXT_gpu_shader4 incorrectly 
-        neglected to specify the suffix EXT suffix for gl_InstanceID.
+        Resolved: Provide both instanceID and instanceIDARB.  The original
+        intention was that instanceID and other language changes should be
+        provided by this extension and properly decorated with the ARB suffix.
+        However, many vendors shipped implementations that supported both, and
+        some applications came to depend on this out-of-spec behavior.  It
+        appears that the EXT_gpu_shader4 incorrectly neglected to specify the
+        suffix EXT suffix for gl_InstanceID.
 
   (2) Should MultiDrawArrays and MultiDrawElements affect the value of
       instanceID?
@@ -216,6 +214,12 @@ Issues
 
 Revision History
 
+    #5 April 8, 2011, Ian Romanick
+        - Fix typo "holds holds"
+        - Make both gl_InstanceID and gl_InstanceIDARB available to reflect
+          what vendors actually ship.
+        - Existence of gl_InstanceID and gl_InstanceIDARB do not depend on
+          OpenGL 3.0 or GL_EXT_gpu_shader4.
     #4 July 8, 2008, jhelferty
         - corrected dependency typo
         - expanded Overview
