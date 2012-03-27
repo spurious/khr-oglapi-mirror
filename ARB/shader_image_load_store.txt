@@ -29,8 +29,8 @@ Status
 
 Version
 
-    Last Modified Date:         January 18, 2012
-    Revision:                   31
+    Last Modified Date:         March 6, 2012
+    Revision:                   32
 
 Number
 
@@ -1492,8 +1492,8 @@ Modifications to the OpenGL Shading Language Specification, Version 1.50
       const int gl_MaxTessControlImageUniforms = 0;
       const int gl_MaxTessEvaluationImageUniforms = 0;
       const int gl_MaxGeometryImageUniforms = 0;
-      const int gl_MaxFragmentImageUniforms = 0;
-      const int gl_MaxCombinedImageUniforms = 0;
+      const int gl_MaxFragmentImageUniforms = 8;
+      const int gl_MaxCombinedImageUniforms = 8;
 
 
     (Insert a new numbered section at the end of Chapter 8, Built-in
@@ -2317,8 +2317,14 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------------
+    32    03/06/12  pbrown    Fix the minimum values for GLSL built-ins
+                              gl_Max{Fragment,Combined}ImageUniforms to 8
+                              to match the minimums for the API specification
+                              (bug 8673).
+
     31    01/18/12  Jon Leech State table fix for
                               IMAGE_FORMAT_COMPATIBILITY_TYPE (Bug 8430).
+
     30    08/04/11  pbrown    Remove imageAtomicIncWrap() and 
                               imageAtomicDecWrap() functions from the ARB
                               extension (bug 7182).   Rename the <index>
