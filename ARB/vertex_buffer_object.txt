@@ -1720,7 +1720,6 @@ GLX Protocol
             4           0               reply length
             4           BOOL32          return value
             20                          unused
-            1           1               reply
 
         GetBufferSubDataARB
             1           CARD8           opcode (X assigned)
@@ -1731,7 +1730,7 @@ GLX Protocol
             8           CARD64          size
             4           ENUM            target
           =>
-            1           1               Reply
+            1           1               reply
             1           1               unused
             2           CARD16          sequence number
             4           m               reply length, m = (n + p) / 4
@@ -1749,7 +1748,7 @@ GLX Protocol
             4           ENUM            target
             4           ENUM            pname
           =>
-            1           1               Reply
+            1           1               reply
             1           1               unused
             2           CARD16          sequence number
             4           m               reply length, m = (n == 1 ? 0 : n)
@@ -1766,7 +1765,7 @@ GLX Protocol
             16                          unused
             4*n         LISTofCARD32    params
 
-            Note that n may be 0, indicating that a GL error occured.
+            Note that n may be 0, indicating that a GL error occurred.
 
         GetElementRange
             1           CARD8           opcode (X assigned)
@@ -1811,7 +1810,7 @@ GLX Protocol
             16                          unused
             n*8         LISTofCARD64    params
 
-            Note that n may be 0, indicating that a GL error occured.
+            Note that n may be 0, indicating that a GL error occurred.
 
          MapBuffer
             1           CARD8           opcode (X assigned)
@@ -2112,6 +2111,8 @@ Usage Examples
 
     Revision  Date         Author  Changes
     --------  -----------  ------  ---------------------------------------
+    0.99.7    18-Jan-2012  mgodse  Fixed typos.
+
     0.99.6    25-Oct-2010  jrj     Fixed 'context tag' location in
                                    GetBufferSubDataARB GLX protocol.
 
