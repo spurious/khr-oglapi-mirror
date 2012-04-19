@@ -24,7 +24,7 @@ Status
 
 Version
 
-    Version 9, 2009/11/19
+    Version 10, 2012/03/28
 
 Number
 
@@ -333,12 +333,11 @@ Additions to the GLX 1.4 Specification
 
     with
 
-   "If both <draw> and <read> are None, and the OpenGL version supported
-    by <ctx> is less than 3.0, BadMatch is generated; if the OpenGL
-    version is 3.0 or greater, the context is made current without a
-    default framebuffer. The meaning of this is defined in chapter 4 of
-    the OpenGL 3.0 Specification. If <ctx> is NULL and <draw> and <read>
-    are not None, BadMatch is generated."
+   "If either <draw> or <read> are not a valid GLX drawable, a
+    GLXBadDrawable error is generated, unless <draw> and <read> are both
+    None and the OpenGL version supported by <ctx> is 3.0 or greater. In
+    this case the context is made current without a default framebuffer,
+    as defined in chapter 4 of the OpenGL 3.0 Specification."
 
     Replace the text
 
@@ -351,7 +350,14 @@ Additions to the GLX 1.4 Specification
     with
 
    "To release the current context without assigning a new one, set
-    <ctx> to NULL and set <draw> and <read> to None."
+    <ctx> to NULL and set <draw> and <read> to None. A BadMatch
+    error will be generated under any of the following conditions:
+
+      * <ctx> is NULL, and either or both of <draw> and <read> are not
+	None.
+      * <ctx> is not NULL, and exactly one of <draw> or <read> is None.
+      * <ctx> is not NULL, both <draw> or <read> are None, and the
+	OpenGL version supported by <ctx> is less than 3.0."
 
     After the sentence
 
@@ -615,3 +621,7 @@ Revision History
 
     Version 9, 2009/11/19 - Clarify that BEC in the BadProfile protocol
     represents the base error code for the GLX extension.
+
+    Version 10, 2012/03/28 - Clarify error conditions when
+    glXMakeContextCurrent is called with a valid context and exactly one
+    None drawable.

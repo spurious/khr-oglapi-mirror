@@ -32,8 +32,8 @@ Status
 
 Version
 
-    Last Modified Date:  July 22, 2010
-    Version:             14
+    Last Modified Date:  April 10, 2010
+    Version:             15
 
 Number
 
@@ -583,7 +583,7 @@ Errors
     GetnUniformivARB, GetnUniformuivARB and GetnUniformdvARB share all the
     errors of their unsized buffer query counterparts with the addition
     that INVALID_OPERATION is generated if the buffer size required to
-    fill all the requested data is less than <bufSize>.
+    fill all the requested data is greater than <bufSize>.
 
 New State
 
@@ -891,6 +891,9 @@ Revision History
 
     Rev.    Date       Author     Changes
     ----  ------------ ---------  ----------------------------------------
+     15   10 Apr 2012  Jon Leech  Fix description of INVALID_OPERATION
+                                  error to be when required data size is
+                                  *greater* than bufSize, not *less*.
      14   22 Jul 2010  Jon Leech  Require resets to be delivered to all
                                   contexts which share objects. Expand on
                                   recommended recovery behavior in Issues 8
