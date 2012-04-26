@@ -31,7 +31,7 @@ Status
 
 Version
 
-    Version 15, October 17, 2011
+    Version 16, March 30, 2012
 
 Number
 
@@ -1347,7 +1347,7 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50
     Multiple vertex streams are supported only if the output primitive type is
     declared to be "points".  A program will fail to link if it contains a
     geometry shader calling EmitStreamVertex() or EndStreamPrimitive() if its
-    input primitive type is not "points".
+    output primitive type is not "points".
 
 
     Modify Section 9, Shading Language Grammar, p. 92
@@ -1982,6 +1982,11 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+    16    03/30/12  pbrown    Fix typo in language restricting the use of
+                              EmitStreamVertex()/EndStreamPrimitive() to 
+                              programs with an output primitive type of 
+                              points, not an input type of points (bug 8371).
+
     15    10/17/11  pbrown    Fix prototypes for textureGather and
                               textureGatherOffset to use vec2 coordinates for
                               "2DRect" sampler versions (bug 7964).

@@ -26,8 +26,8 @@ Status
 
 Version
 
-    Last Modified Date:         2011/06/03
-    Revision:                   10
+    Last Modified Date:         2012/04/13
+    Revision:                   11
 
 Number
 
@@ -137,29 +137,40 @@ Additions to Chapter 5 of the OpenGL 3.2 Specification (Special Functions)
     required, that implementations handle this overflow case by saturating at
     2^n - 1.
     
-    When the command
+    A timer query object is created with the command
 
          void QueryCounter(uint id, enum target);
 
-    is called with <target> TIMESTAMP, the GL records the current time into
+    <target> must be TIMESTAMP. If <id> is an unused query object name, the
+    name is marked as used and associated with a new query object of type
+    TIMESTAMP. Otherwise <id> must be the name of an existing query object
+    of that type.
+    
+    When QueryCounter is called, the GL records the current time into
     the corresponding query object. The time is recorded after all previous
     commands on the GL client and server state and the framebuffer have been
     fully realized. When the time is recorded, the query result for that
     object is marked available. QueryCounter timer queries can be used
     within a BeginQuery / EndQuery block where the <target> is TIME_ELAPSED
-    and it does not affect the result of that query object. The error
-    INVALID_OPERATION is generated if the <id> is already in use within a
-    BeginQuery/EndQuery block.  QueryCounter fails and an INVALID_OPERATION 
-    error is generated if <id> is not a name returned from a previous call to
-    GenQueries, or if such a name has since been deleted with DeleteQueries.
+    and it does not affect the result of that query object. 
 
-    The current time of the GL may be queried with GetIntegerv or
-    GetInteger64v with a <value> TIMESTAMP. This will return the GL time
-    after all previous commands have reached the GL server but have not yet
-    necessarily executed. By using a combination of this synchronous get
-    command and the asynchronous timestamp query object target, applications
-    can measure the latency between when commands reach the GL server and
-    when they are realized in the framebuffer.
+** core profile only
+    QueryCounter fails and an INVALID\_OPERATION error is generated if <id>
+    is not a name returned from a previous call to GenQueries, or if such a
+    name has since been deleted with DeleteQueries.
+** end core profile only
+    
+    If <id> is already in use within a BeginQuery / EndQuery block, or if
+    <id> is the name of an existing query object whose type does not match
+    <target>, an INVALID_OPERATION error is generated.
+
+    The current time of the GL may be queried by calling GetIntegerv or
+    GetInteger64v with the symbolic constant TIMESTAMP. This will return the
+    GL time after all previous commands have reached the GL server but have
+    not yet necessarily executed. By using a combination of this synchronous
+    get command and the asynchronous timestamp query object target,
+    applications can measure the latency between when commands reach the GL
+    server and when they are realized in the framebuffer.
 
 Additions to Chapter 6 of the OpenGL 2.0 Specification (State and State
 Requests)
@@ -252,18 +263,9 @@ Interactions with NV_present_video and NV_video_capture
 Interactions with the Compatibility Profile
 
     In the compatibility profile, query objects support application-provided
-    names. Thus in the description of QueryCounter, the following text is
-    removed:
-
-    "QueryCounter fails and an INVALID_OPERATION error is generated if
-    <id> is not a name returned from a previous call to GenQueries, 
-    or if such a name has since been deleted with DeleteQueries."
-
-    and replaced with the following:
-
-    "If QueryCounter is called with <id> which is an unused query object
-    name, the name is marked as used and associated with a new query object
-    of the type specified by <target>."
+    names, and the language requiring an error is <id> is not a name
+    returned from GenQueries is removed. This is noted in the body text
+    above.
 
 Errors
 
@@ -276,14 +278,18 @@ Errors
     TIME_ELAPSED or TIMESTAMP.
     
     The error INVALID_ENUM is generated if QueryCounter is called where
-    <target> is not TIMERSTAMP.
+    <target> is not TIMESTAMP.
     
     The error INVALID_OPERATION is generated if QueryCounter is called
     on a query object that is already in use inside a BeginQuery/EndQuery.
 
+    The error INVALID_OPERATION is generated if QueryCounter is called on
+    a query object whose type is not TIMESTAMP.
+
+    (in the core profile only)
     The error INVALID_OPERATION is generated if QueryCounter is called
     where <id> is not a name returned from a previous call to GenQueries,
-    or if such a name has since been deleted with DeleteQueries. (core-only)
+    or if such a name has since been deleted with DeleteQueries. 
 
     The error INVALID_OPERATION is generated if GetQueryObjecti64v or
     GetQueryObjectui64v is called where <id> is not the name of a query
@@ -549,26 +555,41 @@ Issues
    (11) Can the GL implementation use different clocks to implement the
         TIME_ELAPSED and TIMESTAMP queries?
 
-   RESOLVED: Yes, the implemenation can use different internal clocks to
-   implement TIME_ELAPSED and TIMESTAMP. If different clocks are
-   used it is possible there is a slight discrepancy when comparing queries
-   made from TIME_ELAPSED and TIMESTAMP; they may have slight
-   differences when both are used to measure the same sequence. However, this
-   is unlikely to affect real applications since comparing the two queries is
-   not expected to be useful.
+    RESOLVED: Yes, the implementation can use different internal clocks to
+    implement TIME_ELAPSED and TIMESTAMP. If different clocks are
+    used it is possible there is a slight discrepancy when comparing queries
+    made from TIME_ELAPSED and TIMESTAMP; they may have slight
+    differences when both are used to measure the same sequence. However, this
+    is unlikely to affect real applications since comparing the two queries is
+    not expected to be useful.
+
+   (12) Why do BeginQuery and QueryCounter have the same arguments in the
+        opposite order?
+
+    RESOLVED: Due to an unfortunate oversight, which cannot be fixed at
+    this point.
+
 
 Revision History
 
     Rev.  Date          Author    Changes
     ----  ------------  --------  -------------------------------------------
+    11    Apr 13, 2012  Jon Leech Clean up error language, add error for 
+                                  query objects which are not of type
+                                  TIMESTAMP, and add issue 12 (Khronos
+                                  internal bug 7662)
+
     10    June 3, 2011  dkoch     Add INVALID_OPERATION error when calling
                                   QueryCounter with a non-generated <id> in
                                   the core profile (Khronos internal bug 7662).
+
      9    Dec 18, 2009  pdaniell  Remove ambiguous language about "interuptions
-                                  to the GL". Rename CURRENT_TIME to TIMERSTAMP.
+                                  to the GL". Rename CURRENT_TIME to TIMESTAMP.
      
      8    Dec 10, 2009  Jon Leech Improve description of QueryCounter command.
+
      7    Dec 10, 2009  Jon Leech Replace non-ASCII punctuation.
+
      6    Dec 07, 2009  pdaniell  Remove ARB suffix from new tokens for core.
 
      5    Oct 29, 2009  pdaniell  TIMESTAMP_ARB renamed to CURRENT_TIME_ARB.

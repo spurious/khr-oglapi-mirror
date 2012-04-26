@@ -24,8 +24,8 @@ Status
 
 Version
 
-    Last Modified Date:         August 4, 2010
-    Revision:                   5
+    Last Modified Date:         April 13, 2012
+    Revision:                   6
 
 Number
 
@@ -88,6 +88,10 @@ New Tokens
         MEDIUM_INT                                      0x8DF4
         HIGH_INT                                        0x8DF5
 
+    Accepted by the <format> parameter of most commands taking sized
+    internal formats:
+
+        RGB565                                           0x8D62
 
 Additions to Chapter 2 of the OpenGL 4.0 Specification (OpenGL Operation)
 
@@ -254,6 +258,21 @@ Additions to Chapter 2 of the OpenGL 4.0 Specification (OpenGL Operation)
     ...
 
 Additions to Chapter 3 of the OpenGL 4.0 Specification (Rasterization)
+
+    Section 3.9.3 (Texture Image Specification)
+
+    Add to the list of required texture and renderbuffer color formats on
+    page 262, on the same line as R11F_G11F_B10F:
+
+    - RGB565
+
+    Add to Table 3.17 (Correspondance of sized ...) on page 265, following
+    the row for format RGB5:
+    
+    Sized Internal Format  Base Internal Format  R bits  G bits  B bits  A bits  Shared bits
+    ---------------------  --------------------  ------  ------  ------  ------  -----------
+    RGB565                 RGB                    5      6       5
+
 
     Section 3.12.1, p. 323 (Shader Variables)
 
@@ -727,10 +746,27 @@ Issues
     immediate mode VertexAttrib calls to promote internal consistency
     with other desktop features is less important.
 
+    (12) Should RGB565 be added to the extension?
+
+    RESOLVED: Yes. The initial version of this extension did not include it,
+    as did OpenGL 4.1, which included functionality from this extension.
+    This was an oversight. RGB565 was added to the required format list in
+    the initial release of the OpenGL 4.2 spec, but it was not added to the
+    table of sized internal color formats. However, RGB565
+    compatibility is important to ES2 compatibility.
+
+    The ARB discussed this situation in February 2012 and agreed to revise
+    the extension spec and OpenGL 4.2 spec to fully support RGB565. While
+    some drivers may not support RGB565, we believe they will add support
+    quickly.
+
 Revision History
 
     Rev.    Date      Author    Changes
     ----  ----------  --------  -----------------------------------------
+    6     04/13/2012  Jon Leech Add RGB565 to required texture & renderbuffer
+                                formats and to the table of sized internal
+                                formats (Bug 8530).
     5     08/04/2010  Jon Leech Add SHADER_BINARY_FORMATS to new tokens
                                 section.
     4     05/26/2010  Jon Leech Add missing tokens, make language more
@@ -741,4 +777,3 @@ Revision History
                                 adjust page/section numbers and text to 4.0
     2     05/19/2010  groth     respond to bmerry's feedback
     1     12/28/2009  jbolz     Internal revisions.
-                                                                                                following changes.

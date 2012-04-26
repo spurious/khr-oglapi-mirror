@@ -30,8 +30,8 @@ Status
 
 Version
 
-    Last Modified Date: August 5, 2011
-    Author Revision: 29
+    Last Modified Date: April 12, 2012
+    Author Revision: 30
     $Date$ $Revision$
 
 Number
@@ -476,6 +476,29 @@ Atomic Counter Access
 Additions to Chapter 6 of the OpenGL 4.1 (Core Profile) Specification
 (State and State Requests)
 
+Add to the end of section 6.1.8 (Buffer Object Queries) 
+
+    To query which buffer objects are bound to the array of transform
+    feedback binding points and will be used when transform feedback is
+    active, call GetIntegeri\_v with <param> set to
+    TRANSFORM_FEEDBACK_BUFFER_BINDING. <index> must be in the range zero to
+    the value of MAX_TRANSFORM_FEEDBACK_BUFFERS minus one. The name of the
+    buffer object bound to <index> is returned in <values>. If no buffer
+    object is bound for <index>, zero is returned in <values>. The error
+    INVALID_VALUE is generated if <index> is greater than or equal to the
+    value of MAX_TRANSFORM_FEEDBACK_BUFFERS.
+    
+    To query the starting offset or size of the range of each buffer object
+    binding used for transform feedback, call GetInteger64i_v with <param>
+    set to TRANSFORM_FEEDBACK_BUFFER_START or TRANSFORM_FEEDBACK_BUFFER_SIZE
+    respectively. <index> must be in the range 0 to the value of
+    MAX_TRANSFORM_FEEDBACK_BUFFERS minus one. If the parameter (starting
+    offset or size) was not specified when the buffer object was bound (e.g.
+    if bound with BindBufferBase), or if no buffer object is bound to
+    <index>, zero is returned. The error INVALID_VALUE is generated if
+    <index> is greater than or equal to the value of
+    MAX_TRANSFORM_FEEDBACK_BUFFERS}.
+
 Add to Section 6.1.12, immediately before the description of IsProgramPipeline
 (p. 335)
 
@@ -540,32 +563,32 @@ Add new table, labeled "Program Object State (cont.)" after Table 6.36, p. 377
                                                                       counter buffers used
                                                                       by a program
     ATOMIC_COUNTER_BUFFER_BINDING     nxZ+  GetActiveAtomic- -        Binding point associated   2.11.7
-                                            CounterBuffer-            with an active atomic
-                                            Bindingsiv                counter buffer
+                                            CounterBufferiv           with an active atomic
+                                                                      counter buffer
     ATOMIC_COUNTER_BUFFER_DATA_SIZE   nxZ+  GetActiveAtomic- -        Minimum size required by   2.11.7
-                                            CounterBuffer-            an active atomic counter
-                                            Bindingsiv                buffer
+                                            CounterBufferiv           an active atomic counter
+                                                                      buffer
     ATOMIC_COUNTER_BUFFER_ACTIVE_     nxZ+  GetActiveAtomic- -        Number of active atomic    2.11.7
-      ATOMIC_COUNTERS                       CounterBuffer-            counters in an active
-                                            Bindingsiv                atomic counter buffer
+      ATOMIC_COUNTERS                       CounterBufferiv           counters in an active
+                                                                      atomic counter buffer
     ATOMIC_COUNTER_BUFFER_ACTIVE_    mxnxZ+ GetActiveAtomic- -        List of active atomic      2.11.7
-      ATOMIC_COUNTER_INDICES                CounterBuffer-            counters in an active
-                                            Bindingsiv                atomic counter buffer
+      ATOMIC_COUNTER_INDICES                CounterBufferiv           counters in an active
+                                                                      atomic counter buffer
     ATOMIC_COUNTER_BUFFER_            nxB   GetActiveAtomic- FALSE    Active atomic counter      2.11.7
-      REFERENCED_BY_VERTEX                  CounterBuffer-            buffer has a counter used
-      SHADER                                Bindingsiv                by vertex shaders
+      REFERENCED_BY_VERTEX                  CounterBufferiv           buffer has a counter used
+      SHADER                                                          by vertex shaders
     ATOMIC_COUNTER_BUFFER_            nxB   GetActiveAtomic- FALSE    Active atomic counter      2.11.7
-      REFERENCED_BY_TESS_CONTROL            CounterBuffer-            buffer has a counter used
-      SHADER                                Bindingsiv                by tess. control shaders
+      REFERENCED_BY_TESS_CONTROL            CounterBufferiv           buffer has a counter used
+      SHADER                                                          by tess. control shaders
     ATOMIC_COUNTER_BUFFER_            nxB   GetActiveAtomic- FALSE    Active atomic counter      2.11.7
-      REFERENCED_BY_TESS_EVALUTION          CounterBuffer-            buffer has a counter used
-      SHADER                                Bindingsiv                by tess. evaluation shaders
+      REFERENCED_BY_TESS_EVALUTION          CounterBufferiv           buffer has a counter used
+      SHADER                                                          by tess. evaluation shaders
     ATOMIC_COUNTER_BUFFER_            nxB   GetActiveAtomic- FALSE    Active atomic counter      2.11.7
-      REFERENCED_BY_GEOMETRY                CounterBuffer-            buffer has a counter used
-      SHADER                                Bindingsiv                by geometry shaders
+      REFERENCED_BY_GEOMETRY                CounterBufferiv           buffer has a counter used
+      SHADER                                                          by geometry shaders
     ATOMIC_COUNTER_BUFFER_            nxB   GetActiveAtomic- FALSE    Active atomic counter      2.11.7
-      REFERENCED_BY_FRAGMENT                CounterBuffer-            buffer has a counter used
-      SHADER                                Bindingsiv                by fragment shaders
+      REFERENCED_BY_FRAGMENT                CounterBufferiv           buffer has a counter used
+      SHADER                                                          by fragment shaders
     UNIFORM_ATOMIC_COUNTER_BUFFER_    nxZ+  GetActive-       -        Active atomic counter      2.11.7
       INDEX                                 Uniformsiv                buffer associated with an
                                                                       active uniform
@@ -1301,3 +1324,7 @@ Revision History
     Revision 29, Jon Leech, 2011-08-05
       - Change minimum MAX_ATOMIC_COUNTER_BUFFER_SIZE value to 32 (bug
         7855).
+    Revision 30, Jon Leech, 2012-04-12
+      - Add description of atomic buffer object binding queries in section
+        6.1.8. Correct typo for GetAtomicCounterBufferiv in state table
+        entries.
