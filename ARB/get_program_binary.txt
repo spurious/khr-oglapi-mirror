@@ -19,6 +19,7 @@ Contributors
     Jeff Bolz
     Jeremy Sandmel
     Joey Blankenship
+    Jon Leech
     Mark Callow
     Pat Brown
     Robert Simpson
@@ -37,8 +38,8 @@ Status
 
 Version
     
-    Last Modified Date: 19 July, 2010
-    Revision: #6
+    Last Modified Date: June 14, 2012
+    Revision: #7
 
 Number
 
@@ -122,8 +123,13 @@ Additions to Chapter 2 of the OpenGL 3.2 Specification (OpenGL Operation)
         void ProgramParameteri(uint program, enum pname, int value)
 
     <pname> identifies which parameter to set for <program>. <value> holds the
-    value being set.  Legal values for <pname> and <value> are discussed in
-    section 2.14.3.  
+    value being set.  
+
+    If <pname> is PROGRAM_BINARY_RETRIEVABLE_HINT, <value> must be TRUE or
+    FALSE, and indicates whether a program binary is likely to be retrieved
+    later, as described for ProgramBinary in section 2.14.3. This hint will
+    not take effect until the next time LinkProgram or ProgramBinary has
+    been called successfully.
 
     Add section 2.14.3, Program Binaries
 
@@ -157,17 +163,17 @@ Additions to Chapter 2 of the OpenGL 3.2 Specification (OpenGL Operation)
     shaders as a portable initial format.  <binaryFormat> and <binary> must be
     those returned by a previous call to GetProgramBinary, and <length> must
     be the length of the program binary as returned by GetProgramBinary or
-    GetProgramiv with <pname> PROGRAM_BINARY_LENGTH.  The program binary
-    will fail, setting the LINK_STATUS of <program> to FALSE, if these
-    conditions are not met.
+    GetProgramiv with <pname> PROGRAM_BINARY_LENGTH. Loading the program
+    binary will fail, setting the LINK_STATUS of <program> to FALSE, if
+    these conditions are not met.
 
-    A program <binary> may also fail if the implementation determines that
-    there has been a change in hardware or software configuration from when the
-    program binary was produced such as having been compiled with an
-    incompatible or outdated version of the compiler. In this case the
+    Loading a program binary may also fail if the implementation determines
+    that there has been a change in hardware or software configuration from
+    when the program binary was produced such as having been compiled with
+    an incompatible or outdated version of the compiler. In this case the
     application should fall back to providing the original OpenGL Shading
-    Language source shaders, and perhaps again retrieve the program binary for
-    future use.
+    Language source shaders, and perhaps again retrieve the program binary
+    for future use.
 
     A program object's program binary is replaced by calls to LinkProgram or
     ProgramBinary. Where linking success or failure is concerned,
@@ -186,12 +192,12 @@ Additions to Chapter 2 of the OpenGL 3.2 Specification (OpenGL Operation)
     assignments that were in effect when the program was linked before saving
     are restored when ProgramBinary is called.
     
-    If ProgramBinary failed, any information about a previous link or load of
-    that program object is lost.  Thus, a failed load does not restore the old
-    state of <program>. The failure does not alter other program state not
-    affected by linking such as the attached shaders, and the vertex attribute
-    and fragment data location bindings as set by BindAttribLocation and
-    BindFragDataLocation.
+    If ProgramBinary fails to load a binary, no error is generated, but any
+    information about a previous link or load of that program object is
+    lost. Thus, a failed load does not restore the old state of <program>.
+    The failure does not alter other program state not affected by linking
+    such as the attached shaders, and the vertex attribute and fragment data
+    location bindings as set by BindAttribLocation and BindFragDataLocation.
 
     Queries of values NUM_PROGRAM_BINARY_FORMATS and PROGRAM_BINARY_FORMATS
     return the number of program binary formats and the list of program binary
@@ -201,18 +207,21 @@ Additions to Chapter 2 of the OpenGL 3.2 Specification (OpenGL Operation)
     Any program binary retrieved using GetProgramBinary and submitted using
     ProgramBinary under the same configuration must be successful. Any
     programs loaded successfully by ProgramBinary must be run properly with
-    any legal GL state vector. If a GL implementation needs to recompile or
-    otherwise modify program executables based on GL state outside the
-    program, GetProgramBinary is required to save enough information to allow
-    such recompilation. To indicate that a program binary is likely to be
-    retrieved, ProgramParameteri should be called with <pname> set to
-    PROGRAM_BINARY_RETRIEVABLE_HINT and <value> set to GL_TRUE. This setting
-    will not be in effect until the next time LinkProgram or ProgramBinary has
-    been called successfully. Additionally, GetProgramBinary calls may be
-    deferred until after using the program with all non-program state vectors
-    that it is likely to encounter. Such deferral may allow implementations
-    to save additional information in the program binary that would minimize
-    recompilation in future uses of the program binary."
+    any legal GL state vector. 
+
+    If a GL implementation needs to recompile or otherwise modify program
+    executables based on GL state outside the program, GetProgramBinary is
+    required to save enough information to allow such recompilation. 
+
+    To indicate that a program binary is likely to be retrieved,
+    ProgramParameteri should be called with <pname>
+    PROGRAM_BINARY_RETRIEVABLE_HINT and <value> TRUE. This setting will not
+    be in effect until the next time LinkProgram or ProgramBinary has been
+    called successfully. Additionally, GetProgramBinary calls may be
+    deferred until after using the program with all non-program state
+    vectors that it is likely to encounter. Such deferral may allow
+    implementations to save additional information in the program binary
+    that would minimize recompilation in future uses of the program binary."
 
     Modify Section 2.14.8, Required State
 
@@ -238,10 +247,20 @@ GLX Protocol
 
 Errors
 
-    INVALID_OPERATION error is generated if GetProgramBinary is called when
-    the program object, <program>, does not contain a valid program binary as
-    reflected by its LINK_STATUS state, or if <bufSize> is not big enough to
-    contain the entire program binary.
+    An INVALID_VALUE error is generated if the <program> argument to
+    GetProgramBinary, ProgramBinary, or ProgramParameteri is not the name of
+    a program object previously created with CreateProgram.
+
+    An INVALID_ENUM error is generated if the <pname> argument to
+    ProgramParameteri is not PROGRAM_BINARY_RETRIEVABLE_HINT.
+
+    An INVALID_VALUE error is generated if the <value> argument to
+    ProgramParameteri is not TRUE or FALSE.
+
+    An INVALID_OPERATION error is generated if GetProgramBinary is called
+    when the program object, <program>, does not contain a valid program
+    binary as reflected by its LINK_STATUS state, or if <bufSize> is not big
+    enough to contain the entire program binary.
 
 New State
 
@@ -498,6 +517,9 @@ Issues
     being saved such that when it is loaded again a recompile can be avoided.
 
 Revision History
+    07 06/14/2012 Clean up descriptions of "failed binary", add errors,
+                  and move HINT description back to ProgramParameteri.
+
     06 07/19/2010 Fixed a teenie typo with OES left on ProgramBinaryOES in
                   issue #3.
 
