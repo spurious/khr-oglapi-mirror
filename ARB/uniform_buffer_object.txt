@@ -37,8 +37,8 @@ Status
 
 Version
 
-    Last Modified Date:     01/27/2011
-    Author revision:        64
+    Last Modified Date:     2011/06/28
+    Author revision:        65
 
 Number
 
@@ -938,16 +938,23 @@ Additions to Chapter 2 - OpenGL Operation
     generated if <index> is greater than or equal to the value of
     MAX_UNIFORM_BUFFER_BINDINGS.
 
-    For BindBufferRange, <offset> specifies a starting offset into the buffer
-    object <buffer>, and <size> specifies the amount of data that can be read
-    from the buffer object while used as the storage for a uniform block. Both
-    <offset> and <size> are in basic machine units. The error INVALID_VALUE is
-    generated if the value of <size> is less than or equal to zero, if
-    <offset> + <size> is greater than the value of BUFFER_SIZE, or if <offset>
-    is not a multiple of the implementation-dependent required alignment
-    (UNIFORM_BUFFER_OFFSET_ALIGNMENT). BindBufferBase is
-    equivalent to calling BindBufferRange with <offset> zero and <size> equal
-    to the size of <buffer>.
+    For BindBufferRange, <offset> specifies a starting offset into the
+    buffer object <buffer>, and <size> specifies the amount of data that can
+    be read from the buffer object while used as the storage for a uniform
+    block. Both <offset> and <size> are in basic machine units. An
+    INVALID_VALUE error is generated if <size> is less than or equal to zero
+    or if <offset> is not a multiple of the implementation-dependent
+    required alignment (the value of UNIFORM_BUFFER_OFFSET_ALIGNMENT).
+
+    BindBufferBase binds the entire buffer, even when the size of the buffer
+    is changed after the binding is established. It is equivalent to calling
+    BindBufferRange with <offset> zero, while <size> is determined by the
+    size of the bound buffer at the time the binding is used.
+
+    Regardless of the size specified with BindBufferRange, or indirectly
+    with BindBufferBase, the GL will never read or write beyond the end of a
+    bound buffer. This may result in visibly different behavior when a
+    buffer overflow would otherwise result.
 
     Each of a program's active uniform blocks has a corresponding uniform buffer
     object binding point. This binding point can be assigned by calling:
@@ -1038,6 +1045,7 @@ Additions to Chapter 6 - State and State Requests
     <target>.
 
     6.1.13 Buffer Object Queries, p. 260
+
     Add after description of GetBufferPointerv:
 
     To query which buffer objects are bound to the array of uniform
@@ -1049,13 +1057,13 @@ Additions to Chapter 6 - State and State Requests
     <values>. If no buffer object is bound for <index>, zero is 
     returned in <values>.
 
-    To query the starting offset or size of the range of each buffer
-    object binding used for uniform buffers, call GetIntegeri_v with
-    <param> set to UNIFORM_BUFFER_START or UNIFORM_BUFFER_SIZE
-    respectively. <index> must be in the range zero to the value of
-    MAX_UNIFORM_BUFFER_BINDINGS - 1. If the parameter (starting
-    offset or size) was not specified when the buffer object was bound,
-    or if no buffer object is bound to <index>, zero is returned.
+    To query the starting offset or size of the range of each buffer object
+    binding used for uniform buffers, call GetIntegeri_v with <param> set to
+    UNIFORM_BUFFER_START or UNIFORM_BUFFER_SIZE respectively. <index> must
+    be in the range zero to the value of MAX_UNIFORM_BUFFER_BINDINGS - 1. If
+    the parameter (starting offset or size) was not specified when the
+    buffer object was bound (e.g. if bound with BindBufferBase), or if no
+    buffer object is bound to <index>, zero is returned.
 
     6.1.14 Shader and Program Queries
     Pg 261, continuation of paragraph defining "GetProgramiv"
@@ -2426,9 +2434,8 @@ Issues
         For GL 2.0/3.0, this should be resolved with the following
         precedents:
         
-        BindUniformBlock should follow the precedent of BindBufferRange
-        and BindBufferOffset which does not get included in display
-        lists
+        BindUniformBlock should follow the precedent of BindBufferRange,
+        which does not get included in display lists.
 
         UniformBlockBinding should follow the precedent of glUniform (for
         setting samplers) which *does* get included in display lists.
@@ -2447,9 +2454,9 @@ Issues
         So this basically means that only BindUniformBlock is excluded,
         (since all queries are already excluded), however see issue (55).
         
-        Since we use the BindBufferOffset/BindBufferRange API introduced
-        by OpenGL 3.0, and those routines are already excluded, there's
-        no additions to the display list exclusion list needed.
+        Since we use the BindBufferRange API introduced by OpenGL 3.0, and
+        those routines are already excluded, there's no additions to the
+        display list exclusion list needed.
 
 
     (34) What should the syntax of uniform block demarcation be ?
@@ -3364,6 +3371,17 @@ Issues
 
 
 Revision History
+
+    (v65, 2012-06-28, jon)
+        - Remove INVALID_VALUE error for BindBufferRange when specifying a
+          range beyond the current end of buffer. Define BindBufferBase as
+          specifying a range as large as the actual buffer size at time of
+          use, and return zero when querying the buffer size as a sentinel
+          value for the buffer size indicating this behavior. Specify that
+          the GL will never read from or write to beyond the end of a bound
+          buffer (Bugs 7318 and 7329, matching OpenGL 4.2 core spec
+          behavior). Remove dangling references to nonexistent
+          BindBufferOffset.
 
     (v64, 2011-01-27, jon)
         - Change return value for start/size queries when no buffer

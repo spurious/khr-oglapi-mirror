@@ -18,8 +18,8 @@ Status
 
 Version
 
-    Last Modified Date: August 7, 2008
-    Author Revision: 3
+    Last Modified Date: June 22, 2012
+    Author Revision: 4
 
 Number
 
@@ -73,19 +73,19 @@ Issues
     (1) Why don't the new tokens and entry points in this extension have
        "ARB" suffixes like other ARB extensions?
 
-	RESOLVED: Unlike a normal ARB extension, this is a strict subset
-	of functionality already approved in OpenGL 3.0. This extension
-	exists only to support that functionality on older hardware that
-	cannot implement a full OpenGL 3.0 driver. Since there are no
-	possible behavior changes between the ARB extension and core
-	features, source code compatibility is improved by not using
-	suffixes on the extension.
+        RESOLVED: Unlike a normal ARB extension, this is a strict subset
+        of functionality already approved in OpenGL 3.0. This extension
+        exists only to support that functionality on older hardware that
+        cannot implement a full OpenGL 3.0 driver. Since there are no
+        possible behavior changes between the ARB extension and core
+        features, source code compatibility is improved by not using
+        suffixes on the extension.
 
 
 New Procedures and Functions
 
     void *MapBufferRange( enum target, intptr offset, sizeiptr length,
-	bitfield access );
+        bitfield access );
 
     void FlushMappedBufferRange( enum target, intptr offset, sizeiptr length );
 
@@ -94,12 +94,12 @@ New Tokens
 
     Accepted by the <access> parameter of MapBufferRange:
 
-	MAP_READ_BIT		    0x0001
-	MAP_WRITE_BIT		    0x0002
-	MAP_INVALIDATE_RANGE_BIT    0x0004
-	MAP_INVALIDATE_BUFFER_BIT   0x0008
-	MAP_FLUSH_EXPLICIT_BIT	    0x0010
-	MAP_UNSYNCHRONIZED_BIT	    0x0020
+        MAP_READ_BIT                0x0001
+        MAP_WRITE_BIT               0x0002
+        MAP_INVALIDATE_RANGE_BIT    0x0004
+        MAP_INVALIDATE_BUFFER_BIT   0x0008
+        MAP_FLUSH_EXPLICIT_BIT      0x0010
+        MAP_UNSYNCHRONIZED_BIT      0x0020
 
 
 Additions to Chapter 2 of the OpenGL 2.1 Specification (Buffer Objects)
@@ -107,10 +107,10 @@ Additions to Chapter 2 of the OpenGL 2.1 Specification (Buffer Objects)
     Add to the end of Section 2.9 (p. 38):
 
     All or part of the data store of a buffer object may be mapped into the
-    client’s address space by calling
+    client's address space by calling
 
-	void *MapBufferRange( enum target, intptr offset, sizeiptr length,
-	    bitfield access );
+        void *MapBufferRange( enum target, intptr offset, sizeiptr length,
+            bitfield access );
 
     with <target> set to one of ARRAY_BUFFER, ELEMENT_ARRAY_BUFFER,
     PIXEL_UNPACK_BUFFER, PIXEL_PACK_BUFFER, TEXTURE_BUFFER_EXT, or
@@ -167,6 +167,22 @@ Additions to Chapter 2 of the OpenGL 2.1 Specification (Buffer Objects)
     previous and any subsequent operations is undefined. This flag may not be
     used in combination with MAP_READ_BIT.
 
+    MapBufferRange sets buffer object state values as shown in table 2.mbr.
+
+    Name                Value
+    ----                -----
+    BUFFER_ACCESS       Depends on <access>[1]
+    BUFFER_MAPPED       TRUE
+    BUFFER_MAP_POINTER  pointer to the data store
+    BUFFER_MAP_OFFSET   <offset>
+    BUFFER_MAP_LENGTH   <length>
+    ---------------------------------------------
+    Table 2.mbr: Buffer object state set by MapBufferRange.
+        [1] BUFFER_ACCESS is set to READ_ONLY, WRITE_ONLY, or READ_WRITE if
+        <access> & (MAP_READ_BIT|MAP_WRITE_BIT) is respectively
+        MAP_READ_BIT, MAP_WRITE_BIT, or MAP_READ_BIT|MAP_WRITE_BIT.
+
+
     Errors
 
     If an error occurs, MapBufferRange returns a NULL pointer.
@@ -179,7 +195,7 @@ Additions to Chapter 2 of the OpenGL 2.1 Specification (Buffer Objects)
     - The buffer is already in a mapped state.
     - Neither MAP_READ_BIT nor MAP_WRITE_BIT is set.
     - MAP_READ_BIT is set and any of MAP_INVALIDATE_RANGE_BIT,
-    MAP_INVALIDATE_BUFFER_BIT, or MAP_UNSYNCHRONIZED_BIT is set.
+      MAP_INVALIDATE_BUFFER_BIT, or MAP_UNSYNCHRONIZED_BIT is set.
     - MAP_FLUSH_EXPLICIT_BIT is set and MAP_WRITE_BIT is not set.
 
     No GL error is generated if memory outside the mapped range is modified or
@@ -190,7 +206,7 @@ Additions to Chapter 2 of the OpenGL 2.1 Specification (Buffer Objects)
     If a buffer is mapped with the MAP_FLUSH_EXPLICIT_BIT flag, modifications
     to the mapped range may be indicated by calling
 
-	void FlushMappedBufferRange( enum target, intptr offset, sizeiptr length );
+        void FlushMappedBufferRange( enum target, intptr offset, sizeiptr length );
 
     with <target> set to one of ARRAY_BUFFER, ELEMENT_ARRAY_BUFFER,
     PIXEL_UNPACK_BUFFER, PIXEL_PACK_BUFFER, TEXTURE_BUFFER_EXT, or
@@ -234,8 +250,8 @@ New Implementation Dependent State
 
 Usage Examples
 
-	/* bind and initialize a buffer object */
-    int		    size = 65536;
+        /* bind and initialize a buffer object */
+    int             size = 65536;
     glBindBufferARB ( 1, GL_ARRAY_BUFFER_ARB );
     glBufferDataARB ( GL_ARRAY_BUFFER_ARB, size, NULL, GL_DYNAMIC_DRAW_ARB );
 
@@ -284,10 +300,10 @@ Usage Examples
      */
     void *ptr = glMapBufferRange( GL_ARRAY_BUFFER_ARB, 0, 32768, MAP_WRITE_BIT | MAP_INVALIDATE_RANGE_BIT | MAP_FLUSH_EXPLICIT_BIT );
 
-    memset( ptr, 0x00, 8192 );			/* write zeroes to first 8KB of range */
+    memset( ptr, 0x00, 8192 );                  /* write zeroes to first 8KB of range */
     FlushMappedBufferRange( GL_ARRAY_BUFFER_ARB, 0, 8192 );
 
-    memset( ((char*)ptr)+24576, 0xFF, 8192 );	/* write FF's to last 8KB of range */
+    memset( ((char*)ptr)+24576, 0xFF, 8192 );   /* write FF's to last 8KB of range */
     FlushMappedBufferRange( GL_ARRAY_BUFFER_ARB, 24576, 8192 );
 
 
@@ -300,8 +316,10 @@ Usage Examples
 
 Revision History
 
-    Rev.     Date      Author	Changes
-    ----  ----------  --------	----------------------------------------------
-      1   06/03/2008	 rcb	Initial version with sample code.
-      2   07/07/2008	 rcb	Various edits to match GL3 core spec.
-      3   08/07/2008   jleech	Remove ARB suffixes.
+    Rev.     Date      Author   Changes
+    ----  ----------  --------  ----------------------------------------------
+      1   06/03/2008     rcb    Initial version with sample code.
+      2   07/07/2008     rcb    Various edits to match GL3 core spec.
+      3   08/07/2008   jleech   Remove ARB suffixes.
+      4   06/22/2012   jleech   Define how buffer object state is affected
+                                by MapBufferRange. 

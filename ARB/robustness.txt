@@ -32,8 +32,8 @@ Status
 
 Version
 
-    Last Modified Date:  April 10, 2010
-    Version:             15
+    Last Modified Date:  June 25, 2012
+    Version:             16
 
 Number
 
@@ -43,6 +43,11 @@ Dependencies
 
     This extension is written against the OpenGL 3.2 Compatibility
     Profile Specification but can apply to OpenGL 1.1 and up.
+
+    This specification interacts with the ARB_imaging subset of the OpenGL
+    3.2 Compatibility Profile.
+
+    This specification interacts with the OpenGL 3.2 Core Profile.
 
     This specification interacts with EXT_direct_state_access.
 
@@ -596,6 +601,22 @@ New Implementation Dependent State
 
     None
 
+Dependencies on the ARB_imaging subset
+
+    If the ARB_imaging subset of the OpenGL 3.2 Compatibility Profile is not
+    supported, the commands GetnColorTableARB, GetnConvolutionFilterARB,
+    GetnHistogramARB, GetnMap*ARB, GetnMinmaxARB, GetnPixelMap*ARB, and
+    GetnSeparableFilterARB defined by this extension are not supported, and
+    all references to them should be ignored.
+
+Dependencies on OpenGL 3.2 (Core Profile)
+
+    If only the core profile of OpenGL 3.2 is supported, the commands
+    GetnColorTableARB, GetnConvolutionFilterARB, GetnHistogramARB,
+    GetnMap*ARB, GetnMinmaxARB, GetnPixelMap*ARB, GetnPolygonStippleARB, and
+    GetnSeparableFilterARB defined by this extension are not supported, and
+    all references to them should be ignored.
+
 Issues
 
     1.  Does robust buffer access affect vertex pulling from vertex
@@ -891,6 +912,8 @@ Revision History
 
     Rev.    Date       Author     Changes
     ----  ------------ ---------  ----------------------------------------
+     16   25 Jun 2012  Jon Leech  Add interactions with ARB_imaging and 
+                                  core profile.
      15   10 Apr 2012  Jon Leech  Fix description of INVALID_OPERATION
                                   error to be when required data size is
                                   *greater* than bufSize, not *less*.

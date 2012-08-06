@@ -29,8 +29,8 @@ Status
 
 Version
 
-    Last Modified Date:         07/25/2010
-    Author Revision:            17
+    Last Modified Date:         06/25/2012
+    Author Revision:            18
 
 Number
 
@@ -92,12 +92,12 @@ New Procedures and Functions
     void GetFloati_v(enum target, uint index, float *data);
     void GetDoublei_v(enum target, uint index, double *data);
 
-    void GetIntegerIndexedivEXT(enum target, uint index, int * v);
+    void GetIntegerIndexedvEXT(enum target, uint index, int * v);
     void EnableIndexedEXT(enum target, uint index);
     void DisableIndexedEXT(enum target, uint index);
     boolean IsEnabledIndexedEXT(enum target, uint index);
 
-    Note that GetIntegerIndexedivEXT, EnableIndexedEXT, DisableIndexedEXT and
+    Note that GetIntegerIndexedvEXT, EnableIndexedEXT, DisableIndexedEXT and
     IsEnabledIndexedEXT are introduced by other OpenGL extensions such as
     EXT_draw_buffers2. If this extension is implemented against an earlier
     version of OpenGL that does not support GetIntegeri_v and so on, the
@@ -767,6 +767,8 @@ Revision History
 
     Rev.    Date      Author    Changes
     ----  --------    --------  -----------------------------------------
+    18    06/25/2012  Jon Leech Fixed GetIntegerIndexedivEXT ->
+                                GetIntegerIndexedvEXT typo (Bug 6694).
     17    07/25/2010  Jon Leech Fix typo in ViewportArrayv pseudocode
                                 (Bug 6682).
     16    07/19/2010  Jon Leech Add GetDoublei_v entry point and change

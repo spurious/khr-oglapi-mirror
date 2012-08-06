@@ -30,9 +30,8 @@ Status
 
 Version
 
-    Last Modified Date: April 12, 2012
-    Author Revision: 30
-    $Date$ $Revision$
+    Last Modified Date: July 30, 2012
+    Author Revision: 31
 
 Number
 
@@ -421,7 +420,7 @@ Add new unnumbered subsections at the end of the section, p. 90
     in offsets between each pair of elements in the array in basic machine
     units is referred to as the array stride, and is constant across the
     entire array.  The stride can be queried by calling GetIntegerv with
-    a <pname> of ATOMIC_COUNTER_ARRAY_STRIDE after a program is linked.
+    a <pname> of UNIFORM_ARRAY_STRIDE after a program is linked.
 
     Atomic Counter Buffer Bindings
 
@@ -1328,3 +1327,6 @@ Revision History
       - Add description of atomic buffer object binding queries in section
         6.1.8. Correct typo for GetAtomicCounterBufferiv in state table
         entries.
+    Revision 31, Jon Leech, 2012-07-30
+      - Correct typo ATOMIC_COUNTER_ARRAY_STRIDE -> UNIFORM_ARRAY_STRIDE
+        (bug 9346).
