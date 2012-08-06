@@ -100,7 +100,7 @@ Modify the paragraph to read:
 
     "If the texture image has a base internal format of DEPTH_STENCIL, then
     the stencil index texture component is ignored by default. The texture
-    value <T> does not include a stencil index component, but includes
+    value <T> does not include a stencil index component, but includes
     only the depth component. In order to access the stencil index texture
     component the DEPTH_STENCIL_TEXTURE_MODE texture parameter should be
     set to STENCIL_INDEX. When this mode is set the depth component is ignored
