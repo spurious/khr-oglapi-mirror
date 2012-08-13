@@ -22,12 +22,12 @@ Status
 
 Version
 
-    Last Modified Date:         05/07/2012
-    Revision:                   2
+    Last Modified Date: August 13, 2012
+    Revision: 3
 
 Number
 
-    ARB Extension #142
+    ARB Extension #124
 
 Dependencies
 
@@ -531,5 +531,6 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+      3   08/13/12  Jon Leech Renumbered from #142 to #124
       2   05/07/12  dgkoch    Added class names to Table 3.X.2
       1             jbolz     Internal revisions.

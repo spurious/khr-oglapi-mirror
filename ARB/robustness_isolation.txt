@@ -26,12 +26,12 @@ Status
 
 Version
 
-    Last Modified Date:  April 24, 2012
-    Version:             2
+    Last Modified Date: August 13, 2012
+    Revision: 3
 
 Number
 
-    ARB Extension #144
+    ARB Extension #126
 
 Dependencies
 
@@ -130,5 +130,6 @@ Revision History
 
     Rev.    Date       Author     Changes
     ----  ------------ ---------  ----------------------------------------
-      1   17 Aug 2011  kbr        Initial version
+      3   08/13/12     Jon Leech  Renumbered from #144 to #126
       2   24 Apr 2012  kbr        Indicated that isolation is opt-in mechanism based on feedback from Bill Licea-Kane
+      1   17 Aug 2011  kbr        Initial version
