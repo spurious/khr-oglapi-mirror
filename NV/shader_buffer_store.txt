@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Date:         04/13/2010
-    NVIDIA Revision:            4
+    Last Modified Date:         August 13, 2012
+    NVIDIA Revision:            5
 
 Number
 
@@ -44,6 +44,9 @@ Dependencies
     This extension interacts with NV_gpu_shader5.
 
     This extension interacts with NV_gpu_program5.
+
+    This extension interacts with GLSL 4.30, ARB_shader_storage_buffer_object, 
+    and ARB_compute_shader.
 
 Overview
 
@@ -437,6 +440,42 @@ Dependencies on NV_gpu_program5
     provided by EXT_shader_image_load_store.
 
 
+Dependencies on GLSL 4.30, ARB_shader_storage_buffer_object, and
+ARB_compute_shader
+
+    If GLSL 4.30 is supported, add the following atomic memory functions to
+    section 8.11 (Atomic Memory Functions) of the GLSL 4.30 specification:
+
+      uint atomicIncWrap(inout uint mem, uint wrap);
+      uint atomicDecWrap(inout uint mem, uint wrap);
+
+    with the following documentation
+
+      atomicIncWrap() computes the new value written to <mem> by adding one to
+      the contents of <mem>, and then forcing the result to zero if and only
+      if the incremented value is greater than or equal to <wrap>.  This
+      function supports only 32-bit unsigned integer operands.
+
+      atomicDecWrap() computes the new value written to <mem> by subtracting
+      one from the contents of <mem>, and then forcing the result to <wrap>-1
+      if the original value read from <mem> was either zero or greater than
+      <wrap>.  This function supports only 32-bit unsigned integer operands.
+
+    Additionally, add the following functions to the section:
+
+      uint64_t atomicAdd(inout uint64_t mem, uint data);
+      uint64_t atomicExchange(inout uint64_t mem, uint data);
+      uint64_t atomicCompSwap(inout uint64_t mem, uint64_t compare, 
+                              uint64_t data);
+
+    If ARB_shader_storage_buffer_object or ARB_compute_shader are supported,
+    make similar edits to the functions documented in the
+    ARB_shader_storage_buffer object extension.
+
+    These functions are available if and only if GL_NV_gpu_shader5 is enabled
+    via the "#extension" directive.
+
+
 Errors
 
     None
@@ -515,6 +554,11 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     5    08/13/12  pbrown    Add interaction with OpenGL 4.3 (and related ARB
+                              extensions) supporting atomic{Inc,Dec}Wrap and 
+                              64-bit unsigned integer atomics to shared and
+                              shader storage buffer memory. 
+
      4    04/13/10  pbrown    Remove the floating-point version of atomicAdd(). 
 
      3    03/23/10  pbrown    Minor cleanups to the dependency sections.

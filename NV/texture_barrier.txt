@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Date:         September 9, 2009
-    NVIDIA Revision:            2
+    Last Modified Date:         April 8,2011
+    NVIDIA Revision:            3
 
 Number
 
@@ -100,6 +100,16 @@ New Implementation Dependent State
 
     None.
 
+GLX Protocol
+
+    The following rendering command is sent to the server as
+    a glXRender request:
+
+    TextureBarrierNV
+
+        2      4               rendering command length
+        2      4348            rendering command opcode
+
 Issues
 
     (1) What algorithms can take advantage of TextureBarrierNV?
@@ -153,3 +163,4 @@ Revision History
     ----  --------  --------  -----------------------------------------
      1              jbolz     Initial revision.
      2              mjk       Assign number.
+     3              srahman   Add glx protocol specification.

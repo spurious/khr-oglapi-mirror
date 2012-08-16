@@ -4,7 +4,7 @@ Name
 
 Name Strings
 
-    None (implied by NV_GPU_program4)
+    None (implied by NV_gpu_program4)
 
 Contact
 
@@ -17,8 +17,8 @@ Status
 
 Version
 
-    Last Modified Date:         10/02/2007
-    NVIDIA Revision:            8
+    Last Modified Date:         03/09/2011
+    NVIDIA Revision:            9
 
 Number
 
@@ -33,6 +33,8 @@ Dependencies
     This extension is written against the OpenGL 2.0 specification.
 
     NV_transform_feedback affects this extension.
+
+    OpenGL 3.0 affects this extension.
 
 Overview
 
@@ -63,13 +65,13 @@ New Procedures and Functions
     void BindBufferOffsetNV(enum target, uint index, uint buffer,
                             intptr offset);
     void BindBufferBaseNV(enum target, uint index, uint buffer);
-    void ProgramBufferParametersfvNV(enum target, uint buffer, uint index,
+    void ProgramBufferParametersfvNV(enum target, uint bindingIndex, uint wordIndex,
                                      sizei count, const float *params);
-    void ProgramBufferParametersIivNV(enum target, uint buffer, uint index, 
+    void ProgramBufferParametersIivNV(enum target, uint bindingIndex, uint wordIndex, 
                                       sizei count, const int *params);
-    void ProgramBufferParametersIuivNV(enum target, uint buffer, uint index, 
+    void ProgramBufferParametersIuivNV(enum target, uint bindingIndex, uint wordIndex, 
                                        sizei count, const uint *params);
-    void GetIntegerIndexedvEXT(enum value, uint index, boolean *data);
+    void GetIntegerIndexedvEXT(enum value, uint index, int *data);
 
 New Tokens
 
@@ -101,7 +103,7 @@ Additions to Chapter 2 of the OpenGL 2.0 Specification (OpenGL Operation)
     to the name zero, which indicates that no valid binding is present.
 
     A program parameter binding is associated with a buffer object using
-    BindBufferOffset with a <target> of VERTEX_PROGRAM_PARAMETER_BUFFER_NV,
+    BindBufferOffsetNV with a <target> of VERTEX_PROGRAM_PARAMETER_BUFFER_NV,
     GEOMETRY_PROGRAM_PARAMETER_BUFFER_NV, or
     FRAGMENT_PROGRAM_PARAMETER_BUFFER_NV and <index> corresponding to the
     number of the desired binding point. The error INVALID_VALUE is generated
@@ -149,18 +151,18 @@ Additions to Chapter 2 of the OpenGL 2.0 Specification (OpenGL Operation)
 
     The commands
 
-      void ProgramBufferParametersfvNV(enum target, uint buffer, uint index,
+      void ProgramBufferParametersfvNV(enum target, uint bindingIndex, uint wordIndex,
                                        sizei count, const float *params);
-      void ProgramBufferParametersIivNV(enum target, uint buffer, uint index, 
+      void ProgramBufferParametersIivNV(enum target, uint bindingIndex, uint wordIndex, 
                                         sizei count, const int *params);
-      void ProgramBufferParametersIuivNV(enum target, uint buffer, uint index, 
+      void ProgramBufferParametersIuivNV(enum target, uint bindingIndex, uint wordIndex, 
                                         sizei count, const uint *params);
 
-    update words <index> through <index>+<count>-1 in the buffer object bound
-    to the binding point numbered <buffer> for the program target <target>.
+    update words <wordIndex> through <wordIndex>+<count>-1 in the buffer object bound
+    to the binding point numbered <bindingIndex> for the program target <target>.
     The new data is referenced by <params>.  The error INVALID_OPERATION is
     generated if no buffer object is bound to the binding point numbered
-    <buffer>.  The error INVALID_VALUE is generated if <index>+<count> is
+    <bindingIndex>.  The error INVALID_VALUE is generated if <wordIndex>+<count> is
     greater than either the number of words in the buffer object or the
     maximum parameter buffer size MAX_PROGRAM_PARAMETER_BUFFER_SIZE_NV.  These
     functions perform an operation functionally equivalent to calling
@@ -189,12 +191,19 @@ State Requests)
     to place the returned data.
 
         void GetIntegerIndexedvEXT(enum target, uint index,
-                                   boolean *data);
+                                   int *data);
 
     are used to query indexed state.  <target> is the name of the indexed
     state and <index> is the index of the particular element being queried.
     <data> is a pointer to a scalar or array of the indicated type in which to
     place the returned data.
+
+    When <target> is one of VERTEX_PROGRAM_PARAMETER_BUFFER_NV,
+    GEOMETRY_PROGRAM_PARAMETER_BUFFER_NV, or
+    FRAGMENT_PROGRAM_PARAMETER_BUFFER_NV, the <index> is a buffer
+    binding index; the error INVALID_VALUE is generated if <index>
+    is greater or equal to the implementation-dependent value of
+    MAX_PROGRAM_PARAMETER_BUFFER_BINDINGS.
 
 Additions to the AGL/GLX/WGL Specifications
 
@@ -209,6 +218,11 @@ Dependencies on NV_transform_feedback
     Both NV_transform_feedback and this extension define the behavior of
     BindBuffer{Range, Offset, Base}NV. Both definitions should be functionally
     identical.
+
+Dependencies on OpenGL 3.0
+
+    GetIntegeri_v accepts the same target parameters GetIntegerIndexedvEXT
+    and the two queries return identical results.
 
 Errors
 
@@ -231,14 +245,20 @@ Errors
 
     The error INVALID_OPERATION is generated by ProgramBufferParametersfvNV,
     ProgramBufferParametersIivNV, or ProgramBufferParametersIuivNV if no
-    buffer object is bound to the binding point numbered <buffer> for program
+    buffer object is bound to the binding point numbered <bindingIndex> for program
     target <target>.
 
     The error INVALID_VALUE is generated by ProgramBufferParametersfvNV,
     ProgramBufferParametersIivNV, or ProgramBufferParametersIuivNV if the sum
-    of <index> and <count> is greater than either the number of words in the
-    buffer object boudn to <buffer> or the maximum parameter buffer size
+    of <wordIndex> and <count> is greater than either the number of words in the
+    buffer object bound to <bindingIndex> or the maximum parameter buffer size
     MAX_PROGRAM_PARAMETER_BUFFER_SIZE_NV.
+
+    The error INVALID_VALUE is generated by GetIntegerIndexedvEXT
+    when <target> is one of VERTEX_PROGRAM_PARAMETER_BUFFER_NV,
+    GEOMETRY_PROGRAM_PARAMETER_BUFFER_NV, or
+    FRAGMENT_PROGRAM_PARAMETER_BUFFER_NV, and the <index> is greater
+    than or equal to MAX_PROGRAM_PARAMETER_BUFFER_BINDINGS.
 
 New State
 
@@ -297,7 +317,7 @@ Issues
       referred to using a buffer binding statement which is dereferenced in
       the instructions.  In the rest of the APIs, an array of internal binding
       points is provided, which are dereferenced using the index parameter of
-      BindBufferBase and associated functions.
+      BindBufferBaseNV and associated functions.
 
     (3) Should program parameter buffer bindings be provided per-target (i.e.,
         environment parameters), per-program (i.e., local parameters), or some
@@ -356,7 +376,7 @@ Issues
 
     (10) Do we need GetProgramBufferParameter functions?
 
-      UNRESOLVED: Probably not - they aren't perf critical and offer no
+      UNRESOLVED: Probably not - they aren't performance critical and offer no
       functionality beyond getting the buffer object data any of the standard
       ways.
 
@@ -366,10 +386,29 @@ Issues
       RESOLVED: Undefined - likely just a raw bit cast between whatever
       internal representations are used by the GL.
 
+    (12) What's the differece between the "GLuint buffer"
+         in BindBuffer*NV commands and the "GLuint bindingIndex"
+         in ProgramBufferParameter*NV commands?
+
+      RESOLVED: The "GLuint buffer" parameter is a buffer object name
+      created with glBindBuffer or glGenBuffers.
+
+      The "GLuint bindingIndex" parameter is an unsigned index into the target's
+      array of buffer bindings.
+
+      The index used by GetIntegerIndexvEXT for NV_parameter_buffer_object
+      query tokens is an index into the query token's array of buffer
+      bindings (similar to bindingIndex).
+
 Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     9    03/09/11  mjk       Fix glGetIntegerIndexedvEXT prototype
+                              Note about glGetIntegeri_v
+                              Rename buffer and index parameters and
+                              add Issue #12 to clarify the API
+
      8    10/02/08  mjk       Fix New Tokens to note glGetIntegerv works
                               for *_PROGRAM_PARAMETER_NV (matching the table);
                               NVIDIA drivers before 180.00 fail to implement

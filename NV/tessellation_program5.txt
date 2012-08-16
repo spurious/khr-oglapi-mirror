@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Date:         03/22/2010
-    NVIDIA Revision:            2
+    Last Modified Date:         12/19/2011
+    NVIDIA Revision:            3
 
 Number
 
@@ -810,18 +810,23 @@ Additions to Chapter 2 of the OpenGL 1.5 Specification (OpenGL Operation)
     identified input or output patch.  <n> must be less than four.  The "y",
     "z", and "w" components are always undefined.  This suffix is available
     only with the prefixes "primitive", "primitive.in", and "primitive.out".
+    For tessellation control programs, this suffix is available only with
+    "primitive.out".
 
     If an attribute binding suffix matches "tessinner[n]", the "x" component
     is filled with the per-patch inner tessellation level numbered <n> of the
     identified input or output patch.  <n> must be less than two.  The "y",
     "z", and "w" components are always undefined.  This suffix is available
     only with the prefixes "primitive", "primitive.in", and "primitive.out".
+    For tessellation control programs, this suffix is available only with
+    "primitive.out".
 
     If an attribute binding suffix matches "patch.attrib[n]", the "x", "y",
     "z", and "w" components are filled with the corresponding components of
     the per-patch generic attribute numbered <n> of the identified input or
     output patch.  This suffix is available only with the prefixes
-    "primitive", "primitive.in", and "primitive.out".
+    "primitive", "primitive.in", and "primitive.out".  For tessellation
+    control programs, this suffix is available only with "primitive.out".
 
     If an attribute binding suffix matches "tessouter[n..o]",
     "tessinner[n..o]", or "patch.attrib[n..o]", a sequence of 1+<o>-<n> outer
@@ -934,7 +939,7 @@ Additions to Chapter 2 of the OpenGL 1.5 Specification (OpenGL Operation)
     In addition to per-vertex attribute bindings, a set of per-patch result
     bindings are available to tessellation control programs, as described in
     Table X.6.  These bindings are not available to tessellation evaluation
-    shaders.
+    programs.
 
       Binding                        Components  Description
       -----------------------------  ----------  ----------------------------
@@ -960,12 +965,6 @@ Additions to Chapter 2 of the OpenGL 1.5 Specification (OpenGL Operation)
     the "x", "y", "z", and "w" components of the result variable set the "x",
     "y", "z", and "w" components of the per-patch generic attribute numbered
     <n> for the output patch.
-
-    If a result variable binding matches "result.tessouter", updates to the
-    "x" and "y" components set the two inner tessellation levels used by the
-    tessellation primitive generator to control primitive subdivision.  The
-    binding "result.tessinner" is not available to tessellation evaluation
-    shaders.
 
     If a result variable binding matches "result.patch.tessouter[n..o]",
     "result.patch.tessinner[n..o]", or "result.patch.attrib[n..o]", a sequence
@@ -1467,6 +1466,13 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     3    12/19/11  pbrown    Clarify that "primitive.tessouter[n]",
+                              "primitive.tessinner[n]", and "primitive.
+                              patch.attrib[n]" are not available on the input
+                              patch for tessellation control programs.  Remove
+                              stray language referring to a non-existent
+                              vector tessellation level.
+
      2    03/22/10  pbrown    Rename references to ARB_tessellation_shader
                               (formerly EXT).  Minor other cleanups, including
                               the issues section.

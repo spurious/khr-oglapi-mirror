@@ -14,10 +14,12 @@ Status
 
     Released in NVIDIA Driver Release 275.33 (June 2011).
 
+    Substantially optimized in NVIDIA Driver Release 301.42 (May 2012).
+
 Version
 
-    Last Modified Date:  August 26, 2011
-    Version:             2
+    Last Modified Date:  July 27, 2012
+    Version:             5
 
 Number
 
@@ -270,7 +272,7 @@ Overview
         const unsigned char *word = "OpenGL";
         const GLsizei wordLen = (GLsizei)strlen(word);
         const GLfloat emScale = 2048;  // match TrueType convention
-        GLuint templatePathObject = ~0;  // Non-existant path object
+        GLuint templatePathObject = ~0;  // Non-existent path object
         glPathGlyphsNV(glyphBase,
                        GL_SYSTEM_FONT_NAME_NV, "Helvetica", GL_BOLD_BIT_NV,
                        wordLen, GL_UNSIGNED_BYTE, word,
@@ -475,7 +477,7 @@ New Procedures and Functions
     PATH STENCILING
 
         void PathStencilFuncNV(enum func, int ref, uint mask);
-        void PathStencilDepthOffsetNV(float factor, int units);
+        void PathStencilDepthOffsetNV(float factor, float units);
 
         void StencilFillPathNV(uint path,
                                enum fillMode, uint mask);
@@ -724,7 +726,7 @@ New Tokens
         TRANSPOSE_AFFINE_2D_NV                          see above
         TRANSPOSE_AFFINE_3D_NV                          see above
 
-    Accepted by the <type> or <pathNameType> parameter of CallLists,
+    Accepted by the <type> or <pathNameType> parameter of
     StencilFillPathInstancedNV, StencilStrokePathInstancedNV,
     CoverFillPathInstancedNV, CoverStrokePathInstancedNV,
     GetPathMetricsNV, and GetPathSpacingNV:
@@ -821,22 +823,22 @@ New Tokens
         GLYPH_VERTICAL_BEARING_X_BIT_NV                 0x20
         GLYPH_VERTICAL_BEARING_Y_BIT_NV                 0x40
         GLYPH_VERTICAL_BEARING_ADVANCE_BIT_NV           0x80
-        GLYPH_HAS_KERNING_NV                            0x100
+        GLYPH_HAS_KERNING_BIT_NV                        0x100
 
         // per-font face metrics
-        FONT_X_MIN_BOUNDS_NV                            0x00010000
-        FONT_Y_MIN_BOUNDS_NV                            0x00020000
-        FONT_X_MAX_BOUNDS_NV                            0x00040000
-        FONT_Y_MAX_BOUNDS_NV                            0x00080000
-        FONT_UNITS_PER_EM_NV                            0x00100000
-        FONT_ASCENDER_NV                                0x00200000
-        FONT_DESCENDER_NV                               0x00400000
-        FONT_HEIGHT_NV                                  0x00800000
-        FONT_MAX_ADVANCE_WIDTH_NV                       0x01000000
-        FONT_MAX_ADVANCE_HEIGHT_NV                      0x02000000
-        FONT_UNDERLINE_POSITION_NV                      0x04000000
-        FONT_UNDERLINE_THICKNESS_NV                     0x08000000
-        FONT_HAS_KERNING_NV                             0x10000000
+        FONT_X_MIN_BOUNDS_BIT_NV                        0x00010000
+        FONT_Y_MIN_BOUNDS_BIT_NV                        0x00020000
+        FONT_X_MAX_BOUNDS_BIT_NV                        0x00040000
+        FONT_Y_MAX_BOUNDS_BIT_NV                        0x00080000
+        FONT_UNITS_PER_EM_BIT_NV                        0x00100000
+        FONT_ASCENDER_BIT_NV                            0x00200000
+        FONT_DESCENDER_BIT_NV                           0x00400000
+        FONT_HEIGHT_BIT_NV                              0x00800000
+        FONT_MAX_ADVANCE_WIDTH_BIT_NV                   0x01000000
+        FONT_MAX_ADVANCE_HEIGHT_BIT_NV                  0x02000000
+        FONT_UNDERLINE_POSITION_BIT_NV                  0x04000000
+        FONT_UNDERLINE_THICKNESS_BIT_NV                 0x08000000
+        FONT_HAS_KERNING_BIT_NV                         0x10000000
 
     Accepted by the <pathListMode> parameter of GetPathSpacingNV:
 
@@ -2330,9 +2332,9 @@ Additions to Chapter 5 of the OpenGL 3.2 (unabridged) Specification
     if the /emScale/ parameter equals zero, treat /emScale/ as if it was
     identical to the font's units per Em such that /s/ is exactly 1.0.
     Each glyph's outline are also scaled by /s/.  The metric values /not/
-    scaled by /s/ are GLYPH_HAS_KERNING_NV, FONT_UNITS_PER_EM_NV, and
-    FONT_HAS_KERNING_NV (since these metric values are not specified in
-    font units).
+    scaled by /s/ are GLYPH_HAS_KERNING_BIT_NV, FONT_UNITS_PER_EM_BIT_NV,
+    and FONT_HAS_KERNING_BIT_NV (since these metric values are not
+    specified in font units).
 
     When unknown or missing character codes in a font face are specified
     and the /handleMissingGlyph/ parameter is USE_MISSING_GLYPHS_NV,
@@ -2855,7 +2857,7 @@ Additions to Chapter 5 of the OpenGL 3.2 (unabridged) Specification
 
     The command
 
-        void PathStencilDepthOffsetNV(float factor, int units);
+        void PathStencilDepthOffsetNV(float factor, float units);
 
     configures the depth offset factor and units state (see section 3.6.4)
     to be used by the StencilFillPathNV and StencilStrokePathNV commands
@@ -2933,8 +2935,12 @@ Additions to Chapter 5 of the OpenGL 3.2 (unabridged) Specification
 
     The value of /n/ for the modulo /n/ arithmetic used by COUNT_UP_NV
     and COUNT_DOWN_NV is the effective /mask/+1.  The error INVALID_VALUE
-    is generated if /fillMode/ is COUNT_UP_NV or COUNT_DOWN_NV and
-    the effective /mask/+1 is not an integer power of two.
+    is generated if the specified /fillMode/ is COUNT_UP_NV or
+    COUNT_DOWN_NV and the specfied /mask/+1 is not an integer power
+    of two.  If the /fillMode/ is PATH_FILL_MODE_NV; the path object's
+    counting mode parameter is COUNT_UP_NV or COUNT_DOWN_NV; and the
+    effective mask+1 value is not an integer power of two, treat the
+    mask as zero (effectively meaning no stencil bits will be modified).
 
     ACCESSIBLE SAMPLES WITH RESPECT TO A TRANSFORMED PATH
 
@@ -3191,7 +3197,7 @@ Additions to Chapter 5 of the OpenGL 3.2 (unabridged) Specification
     the stencil test operates normally and as configured; the expectation
     is the stencil test will be used to discard samples not determined
     "covered" by a prior StencilStrokePathNV command.  As with CoverFillPathNV,
-    the depth function, if DEPTH_TEST is eanbled, uses the function specified
+    the depth function, if DEPTH_TEST is enabled, uses the function specified
     by PathCoverDepthFuncNV.
 
     /coverMode/ must be one of CONVEX_HULL_NV, BOUNDING_BOX_NV, or
@@ -3624,10 +3630,12 @@ Additions to Chapter 5 of the OpenGL 3.2 (unabridged) Specification
           GetDoublev(MODELVIEW_MATRIX, m);  // save matrix
           v = applyTransformType(transformType, v);
           uint pathName;
-          bool stopEarly = getPathName(pathNameType, paths, pathBase, pathName);
-          if (stopEarly)
-            return;
-          StencilFillPathNV(pathName, fillMode, mask);
+          bool ok = getPathName(pathNameType, paths, pathBase, pathName);
+          if (!ok)
+            return;  // stop early
+          if (IsPathNV(pathName)) {
+            StencilFillPathNV(pathName, fillMode, mask);
+          }
           MatrixLoaddEXT(MODELVIEW, m);  // restore matrix
         }
 
@@ -3689,8 +3697,8 @@ Additions to Chapter 5 of the OpenGL 3.2 (unabridged) Specification
           return v;
         }
         
-        int getPathName(enum pathNameType, const void *&paths,
-                        uint pathBase, uint &pathName)
+        bool getPathName(enum pathNameType, const void *&paths,
+                         uint pathBase, uint &pathName)
         {
           switch (pathNameType) {
           case BYTE:
@@ -3698,112 +3706,134 @@ Additions to Chapter 5 of the OpenGL 3.2 (unabridged) Specification
               const byte *p = (const byte*)paths;
               pathName = pathBase + p[0];
               paths = p+1;
-              return 1;
+              return true;
             }
           case UNSIGNED_BYTE:
             {
               const ubyte *p = (const ubyte*)paths;
               pathName = pathBase + p[0];
               paths = p+1;
-              return 1;
+              return true;
             }
           case SHORT:
             {
               const short *p = (const short*)paths;
               pathName = pathBase + p[0];
               paths = p+1;
-              return 1;
+              return true;
             }
           case UNSIGNED_SHORT:
             {
               const ushort *p = (const ushort*)paths;
               pathName = pathBase + p[0];
               paths = p+1;
-              return 1;
+              return true;
             }
           case INT:
             {
               const int *p = (const int*)paths;
               pathName = pathBase + p[0];
               paths = p+1;
-              return 1;
+              return true;
             }
           case UNSIGNED_INT:
             {
               const uint *p = (const uint*)paths;
               pathName = pathBase + p[0];
               paths = p+1;
-              return 1;
+              return true;
             }
           case FLOAT:
             {
               const float *p = (const float*)paths;
               pathName = pathBase + p[0];
               paths = p+1;
-              return 1;
+              return true;
             }
           case 2_BYTES:
             {
               const ubyte *p = (const ubyte*)paths;
               pathName = pathBase + (p[0]<<8 | p[1]);
               paths = p+2;
-              return 1;
+              return true;
             }
           case 3_BYTES:
             {
               const ubyte *p = (const ubyte*)paths;
               pathName = pathBase + (p[0]<<16 | p[1]<<8 | p[0]);
               paths = p+3;
-              return 1;
+              return true;
             }
           case 4_BYTES:
             {
               const ubyte *p = (const ubyte*)paths;
               pathName = pathBase + (p[0]<<24 | p[1]<<16 | p[2]<<8 | p[3]);
               paths = p+4;
-              return 1;
+              return true;
             }
           case UTF8_NV:
             {
               const ubyte *p = (const ubyte*)paths;
               ubyte c0 = p[0];
               if ((c0 & 0x80) == 0x00) {
+                // Zero continuation (0 to 127)
                 pathName = pathBase + c0;
                 p += 1;
               } else {
                 ubyte c1 = p[1];
+                if ((c1 & 0xC0) != 0x80) {
+                  // Stop processing the UTF byte sequence early.
+                  return false;
+                }
                 if ((c0 & 0xE0) == 0xC0) {
-                  if ((c1 & 0x3F) >= 0x2) {
-                    pathName = pathBase + ((c1 & 0x3F) | (c0 & 0x1F) << 6);
-                  } else {
-                    // Skip overlong encoding: start of a 2-byte sequence,
-                    // but code point <= 127.
-                    // Stop processing the UTF byte sequence early.
-                    return 0;
+                  // One contination (128 to 2047)
+                  pathName = pathBase + ((c1 & 0x3F) | (c0 & 0x1F) << 6);
+                  if (pathName < 128) {
+                    return false;
                   }
                   p += 2;
                 } else {
                   ubyte c2 = p[2];
+                  if ((c2 & 0xC0) != 0x80) {
+                    // Stop processing the UTF byte sequence early.
+                    return false;
+                  }
                   if ((c0 & 0xF0) == 0xE0) {
+                    // Two continuation (2048 to 55295 and 57344 to 65535)
                     pathName = pathBase + ((c2 & 0x3F) | (c1 & 0x3F) << 6 |
                                            (c0 & 0xF) << 12);
+                    if ((pathName >= 55296) && (pathName <= 57343)) {
+                      // Stop processing the UTF byte sequence early.
+                      return false;
+                    }
+                    if (pathName < 2048) {
+                      return false;
+                    }
                     p += 3;
                   } else {
                     ubyte c3 = p[3];
+                    if ((c3 & 0xC0) != 0x80) {
+                      // Stop processing the UTF byte sequence early.
+                      return false;
+                    }
                     if ((c0 & 0xF8) == 0xF0) {
+                      // Three continuation (65536 to 1114111)
                       pathName = pathBase + ((c3 & 0x3F) | (c2 & 0x3F) << 6 |
                                              (c1 & 0x3F) << 12 | (c0 & 0x7) << 18);
+                      if (pathName < 65536 && pathName > 1114111) {
+                        return false;
+                      }
                       p += 4;
                     } else {
                       // Skip invalid or restricted encodings.
                       // Stop processing the UTF byte sequence early.
-                      return 0;
+                      return false;
                     }
                   }
                 }
               }
               paths = p;
-              return 1;
+              return true;
             }
           case UTF16_NV:
             {
@@ -3815,9 +3845,6 @@ Additions to Chapter 5 of the OpenGL 3.2 (unabridged) Specification
                   p += 1;
               } else {
                 if ((s0 >= 0xDB00) && (s0 <= 0xDBFF)) {
-                  // Stop processing the UTF byte sequence early.
-                  return 0;
-                } else {
                   ushort s1 = p[1];
                   if ((s1 >= 0xDC00) && (s1 <= 0xDFFF)) {
                     pathName = pathBase + (((s0 & 0x3FF) << 10 |
@@ -3825,12 +3852,14 @@ Additions to Chapter 5 of the OpenGL 3.2 (unabridged) Specification
                     p += 2;
                   } else {
                     // Stop processing the UTF byte sequence early.
-                    return 0;
+                    return false;
                   }
+                } else {
+                  return false;
                 }
               }
               paths = p;
-              return 1;
+              return true;
             }
           default:  // generate INVALID_ENUM
           }
@@ -3854,10 +3883,12 @@ Additions to Chapter 5 of the OpenGL 3.2 (unabridged) Specification
           GetDoublev(MODELVIEW_MATRIX, m);  // save matrix
           v = applyTransformType(transformType, v);
           uint pathName;
-          bool stopEarly = getPathName(pathNameType, paths, pathBase, pathName);
-          if (stopEarly)
-            return;
-          StencilStrokePathNV(pathName, reference, mask);
+          bool ok = getPathName(pathNameType, paths, pathBase, pathName);
+          if (!ok)
+            return;  // stop early
+          if (IsPathNV(pathName)) {
+            StencilStrokePathNV(pathName, reference, mask);
+          }
           MatrixLoaddEXT(MODELVIEW, m);  // restore matrix
         }
 
@@ -3890,11 +3921,13 @@ Additions to Chapter 5 of the OpenGL 3.2 (unabridged) Specification
             GetDoublev(MODELVIEW_MATRIX, m);  // save matrix
             v = applyTransformType(transformType, v);
             uint pathName;
-            bool stopEarly = getPathName(pathNameType, paths, pathBase, pathName);
-            if (stopEarly)
-              return;
-            << set fragment shader instance ID to i >>
-            CoverFillPathNV(pathName, cover);
+            bool ok = getPathName(pathNameType, paths, pathBase, pathName);
+            if (!ok)
+              return;  // stop early
+            if (IsPathNV(pathName)) {
+              << set fragment shader instance ID to i >>
+              CoverFillPathNV(pathName, cover);
+            }
             MatrixLoaddEXT(MODELVIEW, m);  // restore matrix
           }
         }
@@ -3916,9 +3949,9 @@ Additions to Chapter 5 of the OpenGL 3.2 (unabridged) Specification
           const float *v = transformValues;
           for (int i = 0; i<numPaths; i++) {
             uint pathName;
-            bool stopEarly = getPathName(pathNameType, paths, pathBase, pathName);
-            if (stopEarly)
-              return;
+            bool ok = getPathName(pathNameType, paths, pathBase, pathName);
+            if (!ok)
+              return;  // stop early
             if (IsPathNV(pathName)) {
               GetPathParameterfvNV(pathName, boundingBoxType, bounds);
               switch (transformType) {
@@ -4052,11 +4085,13 @@ Additions to Chapter 5 of the OpenGL 3.2 (unabridged) Specification
             GetDoublev(MODELVIEW_MATRIX, m);  // save matrix
             v = applyTransformType(transformType, v);
             uint pathName;
-            bool stopEarly = getPathName(pathNameType, paths, pathBase, pathName);
-            if (stopEarly)
-              return;
-            << set fragment shader instance ID to i >>
-            CoverStrokePathNV(pathName, cover);
+            bool ok = getPathName(pathNameType, paths, pathBase, pathName);
+            if (!ok)
+              return;  // stop early
+            if (IsPathNV(pathName)) {
+              << set fragment shader instance ID to i >>
+              CoverStrokePathNV(pathName, cover);
+            }
             MatrixLoaddEXT(MODELVIEW, m);  // restore matrix
           }
         }
@@ -4065,90 +4100,6 @@ Additions to Chapter 5 of the OpenGL 3.2 (unabridged) Specification
     getPathName, and renderBoundingBox defined above.
 
  -- Section 5.4 "Display Lists"
-
-    Update the paragraph specifying CallLists:
-
-    After the discussion of 2_BYTES, 3_BYTES, and 4_BYTES, but before
-    the statement "If n=0, CallLists does nothing." insert:
-
-    "Further /type/ may be either UTF8_NV or UTF16_NV, indicating the array
-    is a variable-length 8-bit Unicode Transformation Format (UTF-8) encoding or
-    16-bit Unicode Transformation Format (UTF-16) encoding.  In the case of
-    the UTF-8 token (UTF8_NV), each integer offset is constructed
-    according to the following algorithm where listBase the value
-    specified by ListBase (discussed next):
-
-        const ubyte *p = (const ubyte *)lists;
-        for (int i=0; i<n; i++) {
-          ubyte c0 = p[0];
-          if ((c0 & 0x80) == 0x00) {
-            uint list = c0;
-            CallList(list + listBase);
-            p += 1;
-          } else {
-            ubyte c1 = p[1];
-            if ((c0 & 0xE0) == 0xC0) {
-              if ((c1 & 0x3F) >= 0x2) {
-                uint list = (c1 & 0x3F) | (c0 & 0x1F) << 6;
-                CallList(list + listBase);
-              } else {
-                // Skip overlong encoding: start of a 2-byte sequence,
-                // but code point <= 127.
-                // Stop processing the UTF byte sequence early.
-                break;
-              }
-              p += 2;
-            } else {
-              ubyte c2 = p[2];
-              if ((c0 & 0xF0) == 0xE0) {
-                uint list = (c2 & 0x3F) | (c1 & 0x3F) << 6 | (c0 & 0xF) << 12;
-                CallList(list + listBase);
-                p += 3;
-              } else {
-                ubyte c3 = p[3];
-                if ((c0 & 0xF8) == 0xF0) {
-                  uint list = (c3 & 0x3F) | (c2 & 0x3F) << 6 |
-                              (c1 & 0x3F) << 12 | (c0 & 0x7) << 18;
-                  CallList(list + listBase);
-                  p += 4;
-                } else {
-                  // Skip invalid or restricted encodings.
-                  // Stop processing the UTF byte sequence early.
-                  break;
-                }
-              }
-            }
-          }
-        }
-
-    In the case of the UTF-16 token (UTF16_NV), each integer offset is
-    constructed according to the following algorithm:
-
-        const ushort *p = (const ushort *)lists;
-        for (int i=0; i<n; i++) {
-          ushort s0 = p[0];
-          if ((s0 < 0xDB00) || (s0 > 0xDFFF)) {
-              uint list = s0;
-              CallList(list + listBase);
-              p += 1;
-          } else {
-            if ((s0 >= 0xDB00) && (s0 <= 0xDBFF)) {
-              // Stop processing the UTF byte sequence early.
-              break;
-            } else {
-              ushort s1 = p[1];
-              if ((s1 >= 0xDC00) && (s1 <= 0xDFFF))
-                uint list = ((s0 & 0x3FF) << 10 |
-                             (s1 & 0x3FF)) + 0x10000;
-                CallList(list + listBase);
-                p += 2;
-              } else {
-                // Stop processing the UTF byte sequence early.
-                break;
-              }
-            }
-          }
-        }
 
     Add to the list of commands not compiled into display lists:
 
@@ -4389,7 +4340,7 @@ State Requests)
         GLYPH_VERTICAL_BEARING_X_BIT_NV          vBearingX   5           Left side bearing for vertical layout
         GLYPH_VERTICAL_BEARING_Y_BIT_NV          vBearingY   6           Top side bearing for vertical layout
         GLYPH_VERTICAL_BEARING_ADVANCE_BIT_NV    vAdvance    7           Advance height for vertical layout
-        GLYPH_HAS_KERNING_NV                     -           8           True if glyph has a kerning table.
+        GLYPH_HAS_KERNING_BIT_NV                 -           8           True if glyph has a kerning table.
 
     Table 6.perFontFaceMetrics
 
@@ -4397,40 +4348,40 @@ State Requests)
                                                  from LSB  
         Bit field name                           in bitmask  Description (units in path space)
         ---------------------------------------  ----------  ---------------------------------------------------
-        FONT_X_MIN_BOUNDS_NV                     16          Horizontal minimum (left-most) of the font bounding
+        FONT_X_MIN_BOUNDS_BIT_NV                 16          Horizontal minimum (left-most) of the font bounding
                                                              box.  The font bounding box (this metric and the
                                                              next 3) is large enough to contain any glyph from
                                                              the font face.
-        FONT_Y_MIN_BOUNDS_NV                     17          Vertical minimum (bottom-most) of the font bounding
+        FONT_Y_MIN_BOUNDS_BIT_NV                 17          Vertical minimum (bottom-most) of the font bounding
                                                              box.
-        FONT_X_MAX_BOUNDS_NV                     18          Horizontal maximum (right-most) of the font
+        FONT_X_MAX_BOUNDS_BIT_NV                 18          Horizontal maximum (right-most) of the font
                                                              bounding box.
-        FONT_Y_MAX_BOUNDS_NV                     19          Vertical maximum (top-most) of the font bounding
+        FONT_Y_MAX_BOUNDS_BIT_NV                 19          Vertical maximum (top-most) of the font bounding
                                                              box.
-        FONT_UNITS_PER_EM_NV                     20          Number of units in path space (font units) per
+        FONT_UNITS_PER_EM_BIT_NV                 20          Number of units in path space (font units) per
                                                              Em square for this font face.  This is typically
                                                              2048 for TrueType fonts, and 1000 for PostScript
                                                              fonts.
-        FONT_ASCENDER_NV                         21          Typographic ascender of the font face.  For font
+        FONT_ASCENDER_BIT_NV                     21          Typographic ascender of the font face.  For font
                                                              formats not supplying this information, this value
                                                              is the same as FONT_Y_MAX_BOUNDS_NV.
-        FONT_DESCENDER_NV                        22          Typographic descender of the font face (always a
+        FONT_DESCENDER_BIT_NV                    22          Typographic descender of the font face (always a
                                                              positive value).  For font formats not supplying
                                                              this information, this value is the same as
                                                              FONT_Y_MIN_BOUNDS_NV.
-        FONT_HEIGHT_NV                           23          Vertical distance between two consecutive baselines
+        FONT_HEIGHT_BIT_NV                       23          Vertical distance between two consecutive baselines
                                                              in the font face (always a positive value).
-        FONT_MAX_ADVANCE_WIDTH_NV                24          Maximal advance width for all glyphs in this font
+        FONT_MAX_ADVANCE_WIDTH_BIT_NV            24          Maximal advance width for all glyphs in this font
                                                              face.  (Intended to make word wrapping computations
                                                              easier.)
-        FONT_MAX_ADVANCE_HEIGHT_NV               25          Maximal advance height for all glyphs in this
+        FONT_MAX_ADVANCE_HEIGHT_BIT_NV           25          Maximal advance height for all glyphs in this
                                                              font face for vertical layout.  For font formats
                                                              not supplying this information, this value is the
                                                              same as FONT_HEIGHT_NV.
-        FONT_UNDERLINE_POSITION_NV               26          Position of the underline line for this font face.
+        FONT_UNDERLINE_POSITION_BIT_NV           26          Position of the underline line for this font face.
                                                              This position is the center of the underling stem.
-        FONT_UNDERLINE_THICKNESS_NV              27          Thickness of the underline of this font face.
-        FONT_HAS_KERNING_NV                      28          True if font face provides a kerning table
+        FONT_UNDERLINE_THICKNESS_BIT_NV          27          Thickness of the underline of this font face.
+        FONT_HAS_KERNING_BIT_NV                  28          True if font face provides a kerning table
     
     consulted by the GetPathSpacingNV command discussed in Section 6.X.6
     ("Querying Spacing Information").
@@ -4499,14 +4450,14 @@ State Requests)
         float returnX = 0,
               returnY = 0;
         uint firstPath;
-        bool stopEarly = getPathName(pathNameType, paths, pathBase, firstPath);
-        if (stopEarly)
-          return;
+        bool ok = getPathName(pathNameType, paths, pathBase, firstPath);
+        if (!ok)
+          return;  // stop early
         for (int i = 0; i<numPaths-1; i++) {
           uint secondPath;
-          bool stopEarly = getPathName(pathNameType, paths, pathBase, secondPath);
-          if (stopEarly)
-            return;
+          bool ok = getPathName(pathNameType, paths, pathBase, secondPath);
+          if (!ok)
+            return;  // stop early
           if (transformType == TRANSLATE_X_NV) {
             returnedSpacing[i] = returnX;
           } else {
@@ -4882,42 +4833,42 @@ New State
                                                                                        for vertical layout
     GLYPH_VERTICAL_BEARING_ADVANCE_BIT_NV    R        GetPathMetricsNV  see 5.X.1.3    path's glyph advance width        6.X.3         - 
                                                                                        for vertical layout
-    GLYPH_HAS_KERNING_NV                     B        GetPathMetricsNV  see 5.X.1.3    whether or not glyph has kerning  6.X.3         -
+    GLYPH_HAS_KERNING_BIT_NV                 B        GetPathMetricsNV  see 5.X.1.3    whether or not glyph has kerning  6.X.3         -
                                                                                        table
 
  -- NEW table 6.W, "Path Font Metrics (state per path object though identical for glyphs from the same font face)" following Table 6.Z
 
-    Get Value                    Type     Get Command       Initial Value  Description                              Section       Attribute
-    ---------------------------  -------  ----------------  -------------  ---------------------------------------  ------------  ---------
-    FONT_X_MIN_BOUNDS_NV         R        GetPathMetricsNV  see 5.X.1.3    path's horizontal minimum (left-most)    6.X.3         -
-                                                                           of the font bounding box
-    FONT_Y_MIN_BOUNDS_NV         R        GetPathMetricsNV  see 5.X.1.3    path's vertical minimum (bottom-most)    6.X.3         - 
-                                                                           of the font bounding box
-    FONT_X_MAX_BOUNDS_NV         R        GetPathMetricsNV  see 5.X.1.3    path's horizontal maximum (right-most)   6.X.3         - 
-                                                                           of the font bounding box
-    FONT_Y_MAX_BOUNDS_NV         R        GetPathMetricsNV  see 5.X.1.3    path's vertical maximum (top-most)       6.X.3         - 
-                                                                           of the font bounding box
-    FONT_UNITS_PER_EM_NV         R        GetPathMetricsNV  see 5.X.1.3    path's number of units in path space     6.X.3         - 
-                                                                           (font units) per Em square for font
-                                                                           face
-    FONT_ASCENDER_NV             R        GetPathMetricsNV  see 5.X.1.3    path's typographical ascender (in font   6.X.3         - 
-                                                                           units) of the font face
-    FONT_DESCENDER_NV            R        GetPathMetricsNV  see 5.X.1.3    path's typographical descender (in font  6.X.3         - 
-                                                                           units) of the font face
-    FONT_HEIGHT_NV               R+       GetPathMetricsNV  see 5.X.1.3    path's font face vertical distance       6.X.3         - 
-                                                                           between two consecutive baselines
-                                                                           (in font units)
-    FONT_MAX_ADVANCE_WIDTH_NV    R        GetPathMetricsNV  see 5.X.1.3    path's maximal advance width (in font    6.X.3         - 
-                                                                           units) for all glyphs in font face
-    FONT_MAX_ADVANCE_HEIGHT_NV   R        GetPathMetricsNV  see 5.X.1.3    path's maximal advance height (in font   6.X.3         - 
-                                                                           units) for all glyphs in font face
-                                                                           for vertical layout
-    FONT_UNDERLINE_POSITION_NV   R        GetPathMetricsNV  see 5.X.1.3    path's position (in font units) of the   6.X.3         - 
-                                                                           center of underline line for font face
-    FONT_UNDERLINE_THICKNESS_NV  R        GetPathMetricsNV  see 5.X.1.3    thickness (in font units) of the         6.X.3         -
-                                                                           underline for font face
-    FONT_HAS_KERNING_NV          B        GetPathMetricsNV  see 5.X.1.3    whether or not glyph has kerning         6.X.3         -
-                                                                           table
+    Get Value                        Type     Get Command       Initial Value  Description                              Section       Attribute
+    -------------------------------  -------  ----------------  -------------  ---------------------------------------  ------------  ---------
+    FONT_X_MIN_BOUNDS_BIT_NV         R        GetPathMetricsNV  see 5.X.1.3    path's horizontal minimum (left-most)    6.X.3         -
+                                                                               of the font bounding box
+    FONT_Y_MIN_BOUNDS_BIT_NV         R        GetPathMetricsNV  see 5.X.1.3    path's vertical minimum (bottom-most)    6.X.3         - 
+                                                                               of the font bounding box
+    FONT_X_MAX_BOUNDS_BIT_NV         R        GetPathMetricsNV  see 5.X.1.3    path's horizontal maximum (right-most)   6.X.3         - 
+                                                                               of the font bounding box
+    FONT_Y_MAX_BOUNDS_BIT_NV         R        GetPathMetricsNV  see 5.X.1.3    path's vertical maximum (top-most)       6.X.3         - 
+                                                                               of the font bounding box
+    FONT_UNITS_PER_EM_BIT_NV         R        GetPathMetricsNV  see 5.X.1.3    path's number of units in path space     6.X.3         - 
+                                                                               (font units) per Em square for font
+                                                                               face
+    FONT_ASCENDER_BIT_NV             R        GetPathMetricsNV  see 5.X.1.3    path's typographical ascender (in font   6.X.3         - 
+                                                                               units) of the font face
+    FONT_DESCENDER_BIT_NV            R        GetPathMetricsNV  see 5.X.1.3    path's typographical descender (in font  6.X.3         - 
+                                                                               units) of the font face
+    FONT_HEIGHT_BIT_NV               R+       GetPathMetricsNV  see 5.X.1.3    path's font face vertical distance       6.X.3         - 
+                                                                               between two consecutive baselines
+                                                                               (in font units)
+    FONT_MAX_ADVANCE_WIDTH_BIT_NV    R        GetPathMetricsNV  see 5.X.1.3    path's maximal advance width (in font    6.X.3         - 
+                                                                               units) for all glyphs in font face
+    FONT_MAX_ADVANCE_HEIGHT_BIT_NV   R        GetPathMetricsNV  see 5.X.1.3    path's maximal advance height (in font   6.X.3         - 
+                                                                               units) for all glyphs in font face
+                                                                               for vertical layout
+    FONT_UNDERLINE_POSITION_BIT_NV   R        GetPathMetricsNV  see 5.X.1.3    path's position (in font units) of the   6.X.3         - 
+                                                                               center of underline line for font face
+    FONT_UNDERLINE_THICKNESS_BIT_NV  R        GetPathMetricsNV  see 5.X.1.3    thickness (in font units) of the         6.X.3         -
+                                                                               underline for font face
+    FONT_HAS_KERNING_BIT_NV          B        GetPathMetricsNV  see 5.X.1.3    whether or not glyph has kerning         6.X.3         -
+                                                                               table
 
 New Implementation Dependent State
 
@@ -6194,9 +6145,6 @@ Issues
 
         RESOLVED:  Yes.
 
-        glCallLists should also be extended to take UTF type data.
-        This allows complex Unicode text to be rendered by glCallLists.
-
     64. What order should the arguments be listed when a array of
         path objects with typed elements and a base are specified?
 
@@ -6824,7 +6772,7 @@ Issues
 
         However the GL_STANDARD_FONT_NAME_NV usage would still be
         guaranteed.  The GL_STANDARD_FONT_NAME_NV usage by providing
-        the required set of pre-compiled font outlines builtin into the
+        the required set of pre-compiled font outlines built-in into the
         driver directly (using IP unencumbered font outlines such as
         the DejaVu fonts).
 
@@ -7030,7 +6978,7 @@ Issues
         Are 2D offsets really used?  2D offsets seem like an unnecessary
         complication when they are unlikely to be common.
 
-        XXX Need to study this situation furter.
+        XXX Need to study this situation further.
 
         If 99.99% of fonts never use 2D offsets, it is annoying to have
         them for the ultra minority that might.  Not sure what the real
@@ -7099,7 +7047,7 @@ Issues
            glPathTexGen(GL_TEXTURE_0+i, GL_NONE, 0/*components*/, NULL);
 
         The coeffs array could be an arbitrary pointer because it will
-        ont be dereferenced if the genMode is GL_NONE, but NULL is a
+        only be dereferenced if the genMode is GL_NONE, but NULL is a
         suitable value to document this fact.
 
         Querying the respective coefficients after path color or texture
@@ -7157,7 +7105,7 @@ Issues
         respecified for every path object corresponding to a range of
         glyphs for rendering stroked glyphs.  If the emScale for a glyph
         is 2048 (typical of TrueType fonts), then 1.0 is too thin to be a
-        discernable stroke width.  A value such as 10% of the em scale (so
+        discernable stroke width.  A value such as 10% of the Em scale (so
         10% of 2048 would be 20.48) is likely to be a more useful value.
 
         Similarly, GL_ROUND_NV or GL_BEVEL_NV are better join styles
@@ -7200,7 +7148,7 @@ Issues
 
         Perform the following initialization:
 
-            // Conventional intiailization for depth testing and using path rendering
+            // Conventional initialization for depth testing and using path rendering
             glEnable(GL_DEPTH_TEST);
             glStencilFunc(GL_NOT_EQUAL, 0, 0xFF);
             glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);
@@ -7321,7 +7269,7 @@ Issues
         The section includes some restrictions.  The "ucache" operator
         is optional but must be the first operator in a user path.
         The "setbbox" operator is required.  The next operator must be an
-        "absolute positining operator (moveto, arc, or arcn)."
+        "absolute positioning operator (moveto, arc, or arcn)."
 
         The grammar in 5.X.1.2.2 (PostScript Path Grammar) does not
         enforce these restrictions.  In particular, the operators can
@@ -7379,7 +7327,7 @@ Issues
         GL_RESTART_PATH_NV command, you make sure the result is consistent
         with drawing the path sequences independently.
 
-        Specifically, /sp/, /cp/ and /pep/ are re-initlaized to (0,0) when
+        Specifically, /sp/, /cp/ and /pep/ are re-initialized to (0,0) when
         a GL_RESTART_PATH_NV path command is encountered.
         
         Additionally, this restart also has the effect of causing
@@ -7396,8 +7344,89 @@ Issues
         to GL_MOVE_TO_RESETS_NV, GL_RESTART_PATH_NV (as with any command
         that updates /sp/) will reset the dash offset.
 
+   127. Why does glPathStencilDepthOffsetNV take a GLfloat second
+        parameter instead of GLint like glPolygonOffset?
+
+        RESOLVED:  This was an implementation mistake; the specification
+        has been changed to GLfloat now to match the implementation.
+        
+        The driver has shipped with the second parameter being a GLfloat
+        for almost a year.  As a practical matter, having the parameter
+        be a GLfloat rather than GLuint is of little consequence.
+
+        In all specification versions, the state table indicated the
+        GL_PATH_STENCIL_DEPTH_OFFSET_UNITS_NV was a real (R) value rather
+        than integer.
+
+   128. How does the "stencil" and "cover" steps operate on a multisample
+        framebuffer when the GL_MULTISAMPLE enabled is disabled?
+
+        RESOLVED:  The "stencil" step respects the disabled GL_MULTISAMPLE
+        enable and rendered aliased stencil coverage.
+        
+        When MULTISAMPLE is disabled, "stencil" step coverage
+        determinations are made at the pixel center.  (This will result
+        in an aliased appearance for the determined path coverage so
+        stenciling and covering paths with GL_MULTISAMPLE disabled isn't
+        recommended.)
+
+        All the (non-masked) stencil samples for the pixel are considered
+        covered or not based on the pixel center's coverage determination.
+        For example, if MULTISAMPLE is disabled for a multisample
+        buffer and the pixel center is determined covered during
+        glStencilFillPathNV or glStencilStrokePathNV (or instanced
+        versions), all the samples are updated (INCR/DECR/INVERT for
+        filling or REPLACE for stroking).
+
+        "non-masked" means that the glSampleMaskIndexedNV state applies.
+
+        The "cover" step also respects the disabled GL_MULTISAMPLE enable.
+
+        To maintain rendering invariances in order to guarantee
+        conservative covering, both the "stencil" and "cover" step should
+        be rendered with the same GL_MULTISAMPLE enable state.
+
+   129. What happens when a command or query takes a sequence of path object
+        names and a named path object does not exist?
+
+        RESOLVED:  The non-existant path is "skipped" in instanced
+        commands such as glStencilFillPathInstancedNV (and the transform
+        for the particular path name is skipped over).  Notice the
+        pseudo-code for these instanced path commands uses glIsPathNV
+        to test if each path name exists.
+        
+        Queries cannot simply ignore the invalid name as they return
+        information.  glGetPathSpacingNV treats the non-existant name as
+        having zero space.  glGetPathMetricRangeNV and GetPathMetricsNV
+        return metric values of -1 for the metrics of non-existant
+        path objects (as also occurs if the path object lacks metrics
+        information).
+
+        No GL error is generated due to a non-existant path name.
+
+        (Early implementation prior to NVIDIA's OpenGL 4.3 implementation
+        might crash or generate a GL_INVALID_OPERATION error.
+        The behavior was a bug.)
+
+   130. Should glCallLists be extended to take the GL_UTF8_NV and
+        GL_UTF16_NV date types?
+
+        RESOLVED: No.  That might make sense in another extension since it
+        would allow complex Unicode text to be rendered by glCallLists.
+
+        (An early version of this specification did call for supporting
+        UTF sequences for glCallLists, but that behavior was never
+        implemented and is now purged from the specification.)
+
 Revision History
 
     Rev.    Date    Author     Changes
     ----  -------- ---------  ----------------------------------------
       2   08/26/11 mjk        Initial version
+      3   05/31/12 mjk        Fix glPathStencilDepthOffsetNV to accept
+                              a GLfloat second parameter; add _BIT to the
+                              FONT_*_NV metric token names
+      4   07/06/12 mjk        Issue #128
+      5   07/27/12 mjk        Fix getPathName return value sense;
+                              Issue #129 and #130; UTF-8 and UTF-16
+                              decoding fixes.

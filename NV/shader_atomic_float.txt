@@ -22,8 +22,8 @@ Status
 
 Version
 
-    Last Modified Date:         November 21, 2011
-    NVIDIA Revision:            1
+    Last Modified Date:         August 13, 2012
+    NVIDIA Revision:            2
 
 Number
 
@@ -46,6 +46,9 @@ Dependencies
 
     This extension interacts with EXT_shader_image_load_store and
     NV_gpu_program5.
+
+    This extension interacts with GLSL 4.30, ARB_shader_storage_buffer_object,
+    and ARB_compute_shader.
 
 Overview
 
@@ -186,6 +189,22 @@ Dependencies on EXT_shader_image_load_store and NV_gpu_program5
        ...
        EXCH      U32, S32, F32   exchange memory with operand
 
+Dependencies on GLSL 4.30, ARB_shader_storage_buffer_object, and
+ARB_compute_shader
+
+    If GLSL 4.30 is supported, add the following atomic memory functions to
+    section 8.11 (Atomic Memory Functions) of the GLSL 4.30 specification:
+
+      float atomicAdd(inout float mem, float data);
+      float atomicExchange(inout float mem, float data);
+
+    If ARB_shader_storage_buffer_object or ARB_compute_shader are supported,
+    make similar edits to the functions documented in the
+    ARB_shader_storage_buffer object extension.
+
+    These functions are available if and only if GL_NV_shader_atomic_float is
+    enabled via the "#extension" directive.
+
 Errors
 
     None.
@@ -216,4 +235,8 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     2    08/13/12  pbrown    Add interaction with OpenGL 4.3 (and related ARB
+                              extensions) supporting floating-point atomics
+                              to shared and shader storage buffer memory.
+
      1              pbrown    Internal revisions.

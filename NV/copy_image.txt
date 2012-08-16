@@ -22,6 +22,7 @@ Contributors
     Aaron Plattner, NVIDIA Corporation (aplattner 'at' nvidia.com)
     Thomas Volk, NVIDIA Corporation (tvolk 'at' nvidia.com)
     Eric Werness, NVIDIA Corporation (ewerness 'at' nvidia.com)
+    Shazia Rahman, NVIDIA Corporation (srahman 'at' nvidia.com)
 
 Status
 
@@ -29,8 +30,8 @@ Status
 
 Version
 
-    Last Modified Date:         09/16/2009
-    NVIDIA revision:            3
+    Last Modified Date:         8/7/2012
+    NVIDIA revision:            5
 
 Number
 
@@ -203,7 +204,7 @@ GLX Protocol
 
     One new GLX protocol command is added.
 
-    CopyImageSubDataNV
+    glXCopyImageSubDataNV
         1       CARD8           opcode (X assigned)
         1       16              GLX opcode (glXVendorPrivate)
         2       20              request length
@@ -217,6 +218,28 @@ GLX Protocol
         4       INT32           src_y
         4       INT32           src_z
         4       GLX_CONTEXT     dst_context
+        4       CARD32          dst_name
+        4       ENUM            dst_target
+        4       INT32           dst_level
+        4       INT32           dst_x
+        4       INT32           dst_y
+        4       INT32           dst_z
+        4       INT32           width
+        4       INT32           height
+        4       INT32           depth
+
+    The following rendering command is sent to the server as a part of
+    glXRender request:
+
+    CopyImageSubDataNV
+        2       64              rendering command length
+        2       4291            rendering command opcode
+        4       CARD32          src_name
+        4       ENUM            src_target
+        4       INT32           src_level
+        4       INT32           src_x
+        4       INT32           src_y
+        4       INT32           src_z
         4       CARD32          dst_name
         4       ENUM            dst_target
         4       INT32           dst_level
@@ -338,3 +361,7 @@ Revision History
      1              gold      Internal revisions.
      2    09/09/09  mjk       Assign number
      3    09/16/09  Jon Leech Fix hDstRC->hSrcRC in prototype.
+     4    10/13/11  srahman   Added protocol for the GL command.
+     5    08/07/12  pbrown    Fix the GLX protocol section to clarify that
+                              the first set of protocol is for
+                              glXCopyImageSubDataNV and not the GL command.
