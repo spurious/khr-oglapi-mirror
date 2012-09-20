@@ -38,8 +38,8 @@ Status
         
 Version
     
-    Last Modified Date: July 31, 2012
-    Author Revision: 6
+    Last Modified Date: September 18, 2012
+    Author Revision: 9
 
 Number
 
@@ -200,7 +200,7 @@ New Procedures and Functions
     void PushDebugGroup(enum source, uint id, sizei length, 
         const char * message);
 
-    void PopDebugGroup();
+    void PopDebugGroup(void);
 
     void ObjectLabel(enum identifier, uint name, sizei length, 
         const char *label);
@@ -309,9 +309,14 @@ New Tokens
         BUFFER                                           0x82E0
         SHADER                                           0x82E1
         PROGRAM                                          0x82E2
+        VERTEX_ARRAY
         QUERY                                            0x82E3
         PROGRAM_PIPELINE                                 0x82E4
+        TRANSFORM_FEEDBACK
         SAMPLER                                          0x82E6
+        TEXTURE
+        RENDERBUFFER
+        FRAMEBUFFER
       [[ Compatibility Profile ]] 
         DISPLAY_LIST                                     0x82E7
       [[ End Profile-Specific Language ]]
@@ -590,15 +595,14 @@ Additions to Chapter 5 of the OpenGL 4.2 Specification
     considering the set of all messages, and filtering out messages based on 
     the following ways:
     
-        - If <source> is not DONT_CARE, then all messages whose source does 
-          not match <source> will not be referenced.
-          
-        - If <type> is not DONT_CARE, then all messages whose type does not 
-          match <type> will not be referenced.
-          
-        - If <severity> is not DONT_CARE, then all messages whose severity 
-          level does not match <severity> will not be referenced.
-          
+        - If <source>, <type>, or <severity> is DONT_CARE, the messages from
+          all sources, of all types, or of all severities are referenced
+          respectively.
+
+        - When values other than DONT_CARE are specified, all messages whose
+          source, type, or severity match the specified <source>, <type>, or
+          <severity> respectively will be referenced.
+
         - If <count> is greater than zero, then <ids> is an array of <count> 
           message IDs for the specified combination of <source> and <type>. In 
           this case, if <source> or <type> is DONT_CARE, or <severity> is not 
@@ -1510,6 +1514,19 @@ Issues
     
 
 Revision History
+
+    Revision 9, 2019/09/18 (pbrown)
+      - Add a "void" function argument list for PopDebugGroup().  The GLEW 
+        library needs this to properly parse the extension spec file.
+
+    Revision 8, 2012/09/16 (Jon Leech)
+      - Add existing tokens allowed for ObjectLabel identifiers to "New
+        Tokens" section, without enum values since they aren't actually new
+        (Bug 9506).
+
+    Revision 7, 2012/09/12 (Jon Leech)
+      - Clarify description of DebugMessageControl parameters to avoid
+        triple negatives (Bug 9392).
 
     Revision 6, 2012/07/31 (criccio)
       - ObjectLabel generates an INVALID_VALUE error if <name> 

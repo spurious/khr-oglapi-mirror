@@ -25,8 +25,8 @@ Status
 
 Version
 
-    Last Modified Date:         May 30, 2012
-    Revision:                   6
+    Last Modified Date:         September 16, 2012
+    Revision:                   7
 
 Number
 
@@ -218,6 +218,23 @@ Specification (Rasterization)
     
     "The specific RGTC, BPTC, ETC2 and EAC formats are described in Appendix C."
     
+Additions to Chapter 4 of the OpenGL 4.2 (Compatibility Profile)
+Specification (Per-Fragment Operations and the Framebuffer)
+
+    Add to section 4.4.2 in the unnumbered "Required Renderbuffer Formats"
+    subsection, following the paragraph starting "Implementations are
+    required to support..."
+
+    "Implementations are also required to support STENCIL_INDEX8."
+
+    Modify section 4.4.2 in the unnumbered "Required Framebuffer Formats"
+    subsection, changing the third sentence to read
+    
+   "The depth attachment may be in any of the required depth or combined
+    depth+stencil formats described in those sections, and the stencil
+    attachment may be in any of the required stencil or combined
+    depth+stencil formats."
+
 Additions to Appendix C of the OpenGL 4.20.6 Specification (Compressed Texture
 Image Formats)
 
@@ -373,6 +390,9 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------------
+    7     09/16/12  Jon Leech Add language to chapter 4 requiring
+                              STENCIL_INDEX8 support (Bug 9418).
+
     6     05/30/12  Jon Leech Add language specifying how the two types of
                               primitive restart enable interact and that the
                               fixed index form only applies to

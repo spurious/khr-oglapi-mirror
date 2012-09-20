@@ -37,8 +37,8 @@ Status
 
 Version
 
-    Last Modified Date:     2011/06/28
-    Author revision:        65
+    Last Modified Date:     2011/09/17
+    Author revision:        66
 
 Number
 
@@ -1652,7 +1652,7 @@ Sample Code
         //since we know it's in the std140 layout
         glBufferData(GL_UNIFORM_BUFFER, 80, colors, GL_DYNAMIC_DRAW);
         //With a non-standard layout, we'd use BufferSubData for each uniform.
-        glBufferSubData(GL_UNIFORM_BUFFER_EXT, offset, singleSize, &colors[8]);
+        glBufferSubData(GL_UNIFORM_BUFFER, offset, singleSize, &colors[8]);
         //the teapot winds backwards
         glFrontFace(GL_CW);
         glutSolidTeapot(1.33);
@@ -3371,6 +3371,10 @@ Issues
 
 
 Revision History
+
+    (v66, 2012-09-17, jon)
+        - Remove _EXT suffix from GL_UNIFORM_BUFFER_EXT in sample code (Bug
+          7948).
 
     (v65, 2012-06-28, jon)
         - Remove INVALID_VALUE error for BindBufferRange when specifying a
