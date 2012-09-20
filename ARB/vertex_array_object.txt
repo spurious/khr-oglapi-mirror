@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Data: 09/22/2011
-    Author revision:    11
+    Last Modified Data: September 19, 2012
+    Author revision:    12
 
 Number
 
@@ -74,35 +74,34 @@ Additions to Chapter 2 of the OpenGL 2.1 Specification (OpenGL Operation)
 
         void GenVertexArrays(sizei n, uint *arrays);
 
-    returns <n> previous unused vertex array object names in <arrays>.  These
-    names are marked as used, for the purposes of GenVertexArrays only,
-    and are initialized with the state listed in tables 6.6 (except for
-    the CLIENT_ACTIVE_TEXTURE selector state), 6.7 and 6.8 (except for the
-    ARRAY_BUFFER_BINDING state).
+    returns <n> previous unused vertex array object names in <arrays>. These
+    names are marked as used, for the purposes of GenVertexArrays only, but
+    they acquire array state only when they are first bound.
 
     Vertex array objects are deleted by calling
 
         void DeleteVertexArrays(sizei n, const uint *arrays);
 
-    <arrays> contains <n> names of vertex array objects to be deleted.  Once a
-    vertex array object is deleted it has no contents and its name becomes unused.
-    If a vertex array object that is currently bound is deleted, the binding
-    for that object reverts to zero and the default vertex array becomes
-    current.  Unused names in <arrays> are silently ignored, as is the value
-    zero.
+    <arrays> contains <n> names of vertex array objects to be deleted. Once
+    a vertex array object is deleted it has no contents and its name is
+    again unused. If a vertex array object that is currently bound is
+    deleted, the binding for that object reverts to zero and the default
+    vertex array becomes current. Unused names in <arrays> are silently
+    ignored, as is the value zero.
 
-    A vertex array object can be made part of the current rendering state with
-    the command
+    A vertex array object is created by binding a name returned by
+    GenVertexArrays with the command
 
         void BindVertexArray(uint array);
 
     <array> is the vertex array object name. The resulting vertex array
-    object is a new state vector, comprising all the state values listed
-    in tables 6.6 (except for the CLIENT_ACTIVE_TEXTURE selector state),
-    6.7, and 6.8. BindVertexArray may also be used to bind an existing
-    vertex array object. If the bind is successful no change is made to
-    the state of the bound vertex array object, and any previous binding
-    is broken.
+    object is a new state vector, comprising all the state values listed in
+    tables 6.6 (except for the CLIENT_ACTIVE_TEXTURE selector state), 6.7,
+    and 6.8 (except for the ARRAY_BUFFER_BINDING state).
+
+    BindVertexArray may also be used to bind an existing vertex array
+    object. If the bind is successful no change is made to the state of the
+    bound vertex array object, and any previous binding is broken.
 
     The currently bound vertex array object is used for all commands
     which modify vertex array state, such as VertexAttribPointer and
@@ -111,14 +110,15 @@ Additions to Chapter 2 of the OpenGL 2.1 Specification (OpenGL Operation)
     array state (see chapter 6).
 
     BindVertexArray fails and an INVALID_OPERATION error is generated if
-    array is not a name returned from a previous call to
+    array is not zero or a name returned from a previous call to
     GenVertexArrays, or if such a name has since been deleted with
-    DeleteVertexArrays. An INVALID_OPERATION error is generated
-    if any of the *Pointer commands specifying the location and
-    organization of vertex data are called while a non-zero vertex array
-    object is bound, zero is bound to the ARRAY_BUFFER buffer object,
-    and the pointer is not NULL[fn].
-	[fn: This error makes it impossible to create a vertex array
+    DeleteVertexArrays.
+
+    An INVALID_OPERATION error is generated if any of the *Pointer commands
+    specifying the location and organization of vertex data are called while
+    a non-zero vertex array object is bound, zero is bound to the
+    ARRAY_BUFFER buffer object, and the pointer is not NULL[fn].
+        [fn: This error makes it impossible to create a vertex array
               object containing client array pointers.]
 
 Additions to Chapter 3 of the OpenGL 2.1 Specification (Rasterization)
@@ -167,11 +167,10 @@ Additions to Chapter 6 of the OpenGL 2.1 Specification (Querying GL State)
 
         boolean IsVertexArray(uint array);
 
-    returns TRUE if <array> is the name of a vertex array object previously
-    returned by GenVertexArrays. If <array> is zero, or a non-zero value
-    that is not the name of a vertex array object, IsVertexArray returns
-    FALSE. No error is generated is <array> is not a valid vertex array
-    object name.
+    returns TRUE if <array> is the name of a vertex array object. If <array>
+    is zero, or a non-zero value that is not the name of a vertex array
+    object, IsVertexArray returns FALSE. No error is generated is <array> is
+    not a valid vertex array object name.
 
     Modify Section 6.1.14, Shader and Program Queries, p. 260
 
@@ -352,3 +351,5 @@ Revision History
                                 array pointers in a VAO (Bug 3696).
       11  09/22/2011  Jon Leech Exclude ARRAY_BUFFER_BINDING from VAO
                                 state (Bug 5659).
+      12  09/19/2012  Jon Leech Language tweaks for consistency with
+                                OpenGL 3.1 specification (Bug 4306).
