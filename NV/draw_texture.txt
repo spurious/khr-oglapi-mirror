@@ -16,13 +16,12 @@ Contact
 
 Status
 
-    DRAFT SPECIFICATION
-    NVIDIA CONFIDENTIAL - DO NOT DISTRIBUTE
+    Complete
 
 Version
 
-    Last Modified Date:         TBD
-    NVIDIA Revision:            1
+    Last Modified Date:         9/19/2012
+    NVIDIA Revision:            2
 
 Number
 
