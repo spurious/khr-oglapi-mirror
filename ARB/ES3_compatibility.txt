@@ -25,8 +25,8 @@ Status
 
 Version
 
-    Last Modified Date:         September 16, 2012
-    Revision:                   7
+    Last Modified Date:         November 10, 2012
+    Revision:                   8
 
 Number
 
@@ -34,8 +34,8 @@ Number
 
 Dependencies
 
-    OpenGL 3.3, ARB_ES2_compatibility and ARB_invalidate_subdata are
-    required.
+    OpenGL 3.3, ARB_ES2_compatibility, ARB_invalidate_subdata, and
+    ARB_texture_storage are required.
     
     The ETC2 and EAC texture compression formats added to OpenGL-ES 3.0
     OES_compressed_ETC2_RGB8_texture,
@@ -92,6 +92,11 @@ New Tokens
         
         MAX_ELEMENT_INDEX                                0x8D6B
         
+    Accepted by the <pname> parameters of GetTexParameterfv and 
+    GetTexParameteriv:
+
+        TEXTURE_IMMUTABLE_LEVELS                         0x82DF
+
 Additions to Chapter 2 of the OpenGL 4.2 (Compatibility Profile)
 Specification (OpenGL Operation)
 
@@ -159,6 +164,22 @@ Specification (OpenGL Operation)
     or if <id> is the name of a query currently in progress, the error
     INVALID_OPERATION is generated."
     
+    Modify subsection 3.10.15 (Texture State and Proxy State):
+    
+    Modify the end of the first paragraph on page 345
+    
+    "... The value of TEXTURE_IMMUTABLE_FORMAT is FALSE. The value of
+    TEXTURE_IMMUTABLE_LEVELS is 0. The values of DEPTH_TEXTURE_MODE,
+    TEXTURE_COMPARE_MODE, and TEXTURE_COMPARE_FUNC are LUMINANCE,
+    NONE, and LEQUAL respectively. ..."
+    
+    Modify subsection 3.10.16 (Immutable-Format Texture Images):
+    
+    Modify the second to last bullet on page 347
+    
+    "If the command is successful, TEXTURE_IMMUTABLE_FORMAT becomes
+    TRUE and TEXTURE_IMMUTABLE_LEVELS becomes <levels>."
+
     Modify Section 4.1.7 (Occlusion Queries) to add
     ANY_SAMPLES_PASSED_CONSERVATIVE as another <target> option:
     
@@ -181,6 +202,13 @@ Specification (OpenGL Operation)
     samples-boolean state of FALSE or TRUE is written to the corresponding
     query object as the query result value, and the query result for that
     object is marked as available."
+    
+    Modify the list of allowed <value> parameters to GetTexParameter* in
+    section 6.1.3 on page 478:
+    
+    "<value> must be IMAGE_FORMAT_COMPATIBILITY_TYPE,
+    TEXTURE_IMMUTABLE_FORMAT, TEXTURE_IMMUTABLE_LEVELS, TEXTURE_RESIDENT,
+    or one of the symbolic values in table 3.22"
     
     Modify the first paragraph of Section 6.1.13 (Asynchronous Queries) as
     follows:
@@ -321,13 +349,26 @@ Errors
 
 New State
 
-    None
+    (add to table 6.13, p. 520 (Vertex Array Data (not in Vertex Array Objects)))
+
+                                                        Initial                          
+    Get Value                     Type  Get Command     Value     Description               Sec.    Attribute
+    ------------------------      ----  --------------- -------   ----------------------    -----   ------------
+    PRIMITIVE_RESTART_FIXED_INDEX  B    IsEnabled       FALSE     Primitive restart with    2.8     vertex-array
+                                                                  fixed index enable                
+
+    (add to table 6.24, p. 531 (Textures (state per texture object)))
+
+                                                        Initial   
+    Get Value                     Type  Get Command     Value     Description               Sec.    Attribute
+    ------------------------      ----  --------------- -------   ------------------------  ------- ---------
+    TEXTURE_IMMUTABLE_LEVELS       Z+   GetTexParameter 0         storage number of levels  3.10.15 texture
 
 New Implementation Dependent State
-
-    Get Value               Type  Get Command     Value     Description                  Sec.
-    ------------------      ----  -----------     --------- ---------------------------  ------
-    MAX_ELEMENT_INDEX        Z+   GetInteger64v   2^32 - 1  Maximum element index        2.6
+                                  
+    Get Value                     Type  Get Command     Value     Description               Sec.
+    -----------------             ----  -------------   --------  ---------------------     ----
+    MAX_ELEMENT_INDEX              Z+   GetInteger64v   2^32 - 1  Maximum element index     2.6
 
 Issues
 
@@ -390,6 +431,12 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------------
+    8     11/10/12  pdaniell  Add the missing token TEXTURE_IMMUTABLE_LEVELS
+                              from ARB_texture_view, which is in ES 3.0, and
+                              add language describing its behavior; add
+                              PRIMITIVE_RESTART_FIXED_INDEX to state tables
+                              (Bug 9559).
+
     7     09/16/12  Jon Leech Add language to chapter 4 requiring
                               STENCIL_INDEX8 support (Bug 9418).
 

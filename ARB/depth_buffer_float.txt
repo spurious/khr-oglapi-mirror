@@ -20,8 +20,8 @@ Status
 
 Version
 
-    Last Modified Date:         August 8, 2008
-    Revision:                   6
+    Last Modified Date:         October 18, 2012
+    Revision:                   7
 
 Number
 
@@ -234,10 +234,13 @@ Additions to Chapter 3 of the OpenGL 2.0 Specification (Rasterization)
     Modify Section 3.8.14 (Texture Comparison Modes), p. 185
 
     (modify second paragraph of "Depth Texture Comparison Mode," p.
-    188) Let D_t be the depth texture value, and R be the interpolated 
-    texture coordinate.  If the texture's internal format indicates a 
-    depth texture, then D_t and R are clamped to [0, 1]. The effective
-    texture value L_t, I_t, or A_t is computed as follows:
+    188)
+
+    Let D_t be the depth texture value, and R be the interpolated
+    texture coordinate. If the texture's internal format indicates a
+    fixed-point depth texture, then D_t and R are clamped to [0, 1];
+    otherwise no clamping is performed. The effective texture value L_t,
+    I_t, or A_t is computed as follows:
 
 
     Modify Section 3.11.2 (Shader Execution), p. 194
@@ -515,6 +518,12 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     7    10/18/12  Jon Leech Restrict [0,1] clamp of D_t and R to
+                              only occur for fixed-point depth textures,
+                              matching actual driver behavior and the
+                              original intent of NV_depth_buffer_float
+                              (Bug 7975).
+
      6    08/08/08  Jon Leech Remove DEPTH_BUFFER_FLOAT_MODE query,
                               update issue 3 accordingly, and
                               change dependency from EXT to
@@ -527,8 +536,8 @@ Revision History
      3    07/11/08  Jon Leech Change NV enum values due to incompatible
                               clamping behavior.
 
-     2	  06/30/08  jsandmel  Trivial conversion to ARB_depth_buffer_float
+     2    06/30/08  jsandmel  Trivial conversion to ARB_depth_buffer_float
      
-     1	  06/05/08  pboudier  Forked from NV_depth_buffer_float. Restore
-			      clamping to [0,1] and remove 'd' entry
-			      points. Change suffix from NV to EXT.
+     1    06/05/08  pboudier  Forked from NV_depth_buffer_float. Restore
+                              clamping to [0,1] and remove 'd' entry
+                              points. Change suffix from NV to EXT.

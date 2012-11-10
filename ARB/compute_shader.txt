@@ -24,8 +24,8 @@ Status
 
 Version
 
-    Last Modified Date: July 1, 2012
-    Revision: 24
+    Last Modified Date: October 23, 2012
+    Revision: 25
 
 Number
 
@@ -704,6 +704,26 @@ Additions to Chapter 8 of the OpenGL Shading Language Specification, Version
     Variables" (for tessellation control shaders) and Section 4.3.6 "Shared
     Variables" (for compute shaders).
 
+    Replace the third paragraph with the following:
+
+    For tessellation control shaders, the barrier() function may only be
+    placed inside the function main() of the tessellation control shader and
+    may not be called within any control flow. Barriers are also disallowed
+    after a return statement in the function main(). Any such misplaced
+    barriers result in a compile-time error.
+
+    For compute shaders, the barrier() function may be placed within flow
+    control, but that flow control must be uniform flow control. That is, all
+    the controlling expressions that lead to execution of the barrier must be
+    dynamically uniform expressions. This ensures that if any shader
+    invocation enters a conditional statement, then all invocations will enter
+    it. While compilers are encouraged to give warnings if they can detect
+    this might not happen, compilers cannot completely determine this. Hence,
+    it is the author's responsibility to ensure barrier() only exists inside
+    uniform flow control. Otherwise, some shader invocations will stall
+    indefinitely, waiting for a barrier that is never reached by other
+    invocations.
+
     Modify the table of memory control functions on p.160,
 
     +-----------------------------------+----------------------------------------------------------------------------------------+
@@ -1145,6 +1165,12 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+    25    10/23/12  pbrown    Remove the restriction forbidding the use of 
+                              barrier() inside potentially divergent flow 
+                              control.  Instead, we will allow barrier() to
+                              be executed anywhere, but specify undefined 
+                              results (including hangs or program termination) 
+                              if the flow control is divergent (bug 9367).
     24    07/01/12  Jon Leech Fix typo (bug 8984).
     23    06/28/12  johnk     Remove two other references to "thread", add
                               "Only available in compute shaders" to the table
