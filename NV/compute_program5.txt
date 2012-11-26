@@ -16,8 +16,8 @@ Status
 
 Version
 
-    Last Modified Date:         06/19/2012
-    NVIDIA Revision:            1
+    Last Modified Date:         10/23/2012
+    NVIDIA Revision:            2
 
 Number
 
@@ -521,10 +521,26 @@ Additions to Chapter 2 of the OpenGL 4.2 (Compatibility Profile) Specification
     all invocations have executed the BAR instruction, processing continues
     with the instruction following the BAR instruction.
 
-    The BAR instruction is not allowed in arbitrary locations in a program.  A
-    program will fail to load if it includes a BAR instruction inside a
-    IF/ELSE/ENDIF block, inside a REP/ENDREP block, or inside any subroutine
-    block other than the one labeled "main".
+    There is no compile-time restriction on the locations in a program where
+    BAR is allowed.  However, BAR instructions are not allowed in divergent
+    flow control; if any compute shader invocation in the work group executes
+    the BAR instruction, all compute shaders invocations must execute the
+    instruction.  Results of executing a BAR instruction are undefined and can
+    result in application hangs and/or program termination if the instruction
+    is issued:
+
+      * inside any IF/ELSE/ENDIF block where the results of the condition
+        evaluated by the IF instruction are not identical across the work
+        group;
+
+      * inside any iteration of REP/ENDREP block where at least one invocation
+        in the work group has skipped to the next iteration using the CONT
+        instruction, exited the loop using a BRK or RET instruction, or exited
+        the loop due to having completed the requested number of loop
+        iterations; or
+
+      * inside any subroutine (including main) where at least one invocation
+        in the work group has exited the subroutine using the RET instruction.
 
     BAR has no operands and generates no result.
 
@@ -658,4 +674,11 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  --------------------------------------------
+     2    10/23/12  pbrown    Remove the restriction forbidding the use of BAR
+                              inside potentially divergent flow control.
+                              Instead, we will allow BAR to be executed
+                              anywhere, but specify undefined results
+                              (including hangs or program termination) if the
+                              flow control is divergent (bug 9367).
+
      1              pbrown    Internal spec development.
