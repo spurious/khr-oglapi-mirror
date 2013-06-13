@@ -1,0 +1,4 @@
+/* Header file version number, required by OpenGL ABI for Linux */
+/* glext.h last updated $Date: 2013-06-13 02:52:31 -0700 (Thu, 13 Jun 2013) $ */
+/* Current version at http://www.opengl.org/registry/ */
+#define GL_GLEXT_VERSION 87
