@@ -27,10 +27,6 @@ THESE FILES MUST REMAIN SYNCHRONIZED WITH THE REGISTRY FILES ABOVE.
     glxext.spec     - GLX extension functions in extension order
     wglext.spec     - WGL extension functions in extension order
 
-Scripts used to construct extension interface headers:
-
-    glextenum.pl    - Convert enum.spec files into C headers
-    glexttemplate.pl- Convert gl.spec files into C headers
-    glext.pl	    - Assumble enumerants and functions into combined header
+Other stuff:
 
     {gl,glx,wgl}.tm - Typemaps converting from specfile to C types
