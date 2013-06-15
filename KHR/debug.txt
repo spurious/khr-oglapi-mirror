@@ -274,7 +274,7 @@ New Tokens
     Tokens accepted or provided by the <source> parameters of
     DebugMessageControl, DebugMessageInsert and DEBUGPROC, and the <sources>
     parameter of GetDebugMessageLog (some commands restrict <source> to a
-    subset of these parameters; see the specification body for details).
+    subset of these parameters; see the specification body for details):
         
         DEBUG_SOURCE_API                                 0x8246
         DEBUG_SOURCE_WINDOW_SYSTEM                       0x8247
