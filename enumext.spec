@@ -5,7 +5,7 @@
 
 # enumext.spec - list of GL enumerants for glext.h header
 #
-# $Revision: 21963 $ on $Date: 2013-06-13 02:52:31 -0700 (Thu, 13 Jun 2013) $
+# $Revision: 22136 $ on $Date: 2013-06-24 04:04:33 -0700 (Mon, 24 Jun 2013) $
 
 # This is derived from the deprecated GL enumerant registry (enum.spec).
 #
@@ -38,15 +38,15 @@ passthru: /* AttribMask */
 passthru: /* Boolean */
 	FALSE						= 0		# Boolean
 	TRUE						= 1		# Boolean
-passthru: /* BeginMode */
-	POINTS						= 0x0000	# BeginMode
-	LINES						= 0x0001	# BeginMode
-	LINE_LOOP					= 0x0002	# BeginMode
-	LINE_STRIP					= 0x0003	# BeginMode
-	TRIANGLES					= 0x0004	# BeginMode
-	TRIANGLE_STRIP					= 0x0005	# BeginMode
-	TRIANGLE_FAN					= 0x0006	# BeginMode
-	QUADS						= 0x0007	# BeginMode
+passthru: /* PrimitiveType */
+	POINTS						= 0x0000	# PrimitiveType
+	LINES						= 0x0001	# PrimitiveType
+	LINE_LOOP					= 0x0002	# PrimitiveType
+	LINE_STRIP					= 0x0003	# PrimitiveType
+	TRIANGLES					= 0x0004	# PrimitiveType
+	TRIANGLE_STRIP					= 0x0005	# PrimitiveType
+	TRIANGLE_FAN					= 0x0006	# PrimitiveType
+	QUADS						= 0x0007	# PrimitiveType
 passthru: /* AlphaFunction */
 	NEVER						= 0x0200	# AlphaFunction
 	LESS						= 0x0201	# AlphaFunction
@@ -286,9 +286,9 @@ passthru: /* ClientAttribMask */
 	CLIENT_PIXEL_STORE_BIT				= 0x00000001	# ClientAttribMask
 	CLIENT_VERTEX_ARRAY_BIT				= 0x00000002	# ClientAttribMask
 	CLIENT_ALL_ATTRIB_BITS				= 0xFFFFFFFF	# ClientAttribMask
-passthru: /* BeginMode */
-	QUAD_STRIP					= 0x0008	# BeginMode
-	POLYGON						= 0x0009	# BeginMode
+passthru: /* PrimitiveType */
+	QUAD_STRIP					= 0x0008	# PrimitiveType
+	POLYGON						= 0x0009	# PrimitiveType
 passthru: /* AccumOp */
 	ACCUM						= 0x0100	# AccumOp
 	LOAD						= 0x0101	# AccumOp

@@ -7,7 +7,7 @@
 # registry.  It is no longer maintained or used for current header file
 # generation.
 
-# $Revision: 21963 $ on $Date: 2013-06-13 02:52:31 -0700 (Thu, 13 Jun 2013) $
+# $Revision: 22136 $ on $Date: 2013-06-24 04:04:33 -0700 (Mon, 24 Jun 2013) $
 
 Extensions define:
 	VERSION_1_1					= 1
@@ -278,7 +278,7 @@ Boolean enum:
 
 ###############################################################################
 
-BeginMode enum:
+PrimitiveType enum:
 	POINTS						= 0x0000
 	LINES						= 0x0001
 	LINE_LOOP					= 0x0002
@@ -314,7 +314,7 @@ ARB_tessellation_shader enum:
 NV_gpu_shader5 enum:
 	use ARB_tessellation_shader	    PATCHES
 
-# BeginMode_future_use: 0x000F
+# PrimitiveType_future_use: 0x000F
 
 ###############################################################################
 
@@ -1612,27 +1612,6 @@ EXT_discard_framebuffer enum: (OpenGL ES only)
 ###############################################################################
 
 PixelFormat enum:
-	COLOR_INDEX					= 0x1900
-	STENCIL_INDEX					= 0x1901
-	DEPTH_COMPONENT					= 0x1902
-	RED						= 0x1903
-	GREEN						= 0x1904
-	BLUE						= 0x1905
-	ALPHA						= 0x1906
-	RGB						= 0x1907
-	RGBA						= 0x1908
-	LUMINANCE					= 0x1909
-	LUMINANCE_ALPHA					= 0x190A
-	use EXT_abgr ABGR_EXT
-	use EXT_cmyka CMYK_EXT
-	use EXT_cmyka CMYKA_EXT
-	use SGIX_icc_texture R5_G6_B5_ICC_SGIX
-	use SGIX_icc_texture R5_G6_B5_A8_ICC_SGIX
-	use SGIX_icc_texture ALPHA16_ICC_SGIX
-	use SGIX_icc_texture LUMINANCE16_ICC_SGIX
-	use SGIX_icc_texture LUMINANCE16_ALPHA8_ICC_SGIX
-	use SGIX_ycrcb YCRCB_422_SGIX
-	use SGIX_ycrcb YCRCB_444_SGIX
 
 OES_depth_texture enum: (OpenGL ES only)
 #	use DataType UNSIGNED_SHORT

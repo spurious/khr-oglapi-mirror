@@ -12,7 +12,7 @@
 # This document is licensed under the SGI Free Software B License Version
 # 2.0. For details, see http://oss.sgi.com/projects/FreeB/ .
 #
-# $Revision: 21963 $ on $Date: 2013-06-13 02:52:31 -0700 (Thu, 13 Jun 2013) $
+# $Revision: 22136 $ on $Date: 2013-06-24 04:04:33 -0700 (Mon, 24 Jun 2013) $
 
 required-props:
 # Description of a parameter
@@ -889,7 +889,7 @@ ListBase(base)
 
 Begin(mode)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	category	VERSION_1_0		   # old: drawing
 	profile		compatibility
 	version		1.0
@@ -3812,7 +3812,7 @@ Translatef(x, y, z)
 
 DrawArrays(mode, first, count)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		first		Int32 in value
 	param		count		SizeI in value
 	category	VERSION_1_1
@@ -3824,7 +3824,7 @@ DrawArrays(mode, first, count)
 
 DrawElements(mode, count, type, indices)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		count		SizeI in value
 	param		type		DrawElementsType in value
 	param		indices		Void in array [COMPSIZE(count/type)]
@@ -4219,7 +4219,7 @@ BlendEquation(mode)
 
 DrawRangeElements(mode, start, end, count, type, indices)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		start		UInt32 in value
 	param		end		UInt32 in value
 	param		count		SizeI in value
@@ -5423,7 +5423,7 @@ BlendFuncSeparate(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha)
 # first and count are really 'in'
 MultiDrawArrays(mode, first, count, drawcount)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		first		Int32 in array [COMPSIZE(count)]
 	param		count		SizeI in array [COMPSIZE(drawcount)]
 	param		drawcount	SizeI in value
@@ -5434,7 +5434,7 @@ MultiDrawArrays(mode, first, count, drawcount)
 
 MultiDrawElements(mode, count, type, indices, drawcount)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		count		SizeI in array [COMPSIZE(drawcount)]
 	param		type		DrawElementsType in value
 	param		indices		ConstVoidPointer in array [COMPSIZE(drawcount)]
@@ -8131,7 +8131,7 @@ passthru: /* ARB_vertex_array_object */
 
 DrawArraysInstanced(mode, first, count, instancecount)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		first		Int32 in value
 	param		count		SizeI in value
 	param		instancecount	SizeI in value
@@ -8145,7 +8145,7 @@ DrawArraysInstanced(mode, first, count, instancecount)
 
 DrawElementsInstanced(mode, count, type, indices, instancecount)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		count		SizeI in value
 	param		type		DrawElementsType in value
 	param		indices		Void in array [COMPSIZE(count/type)]
@@ -11079,7 +11079,7 @@ newcategory: ARB_depth_buffer_float
 
 DrawArraysInstancedARB(mode, first, count, primcount)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		first		Int32 in value
 	param		count		SizeI in value
 	param		primcount	SizeI in value
@@ -11094,7 +11094,7 @@ DrawArraysInstancedARB(mode, first, count, primcount)
 
 DrawElementsInstancedARB(mode, count, type, indices, primcount)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		count		SizeI in value
 	param		type		DrawElementsType in value
 	param		indices		Void in array [COMPSIZE(count/type)]
@@ -17561,7 +17561,7 @@ ColorPointerEXT(size, type, stride, count, pointer)
 
 DrawArraysEXT(mode, first, count)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		first		Int32 in value
 	param		count		SizeI in value
 	category	EXT_vertex_array
@@ -18932,7 +18932,7 @@ newcategory: HP_texture_lighting
 # Spec entries to be written
 DrawRangeElementsEXT(mode, start, end, count, type, indices)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		start		UInt32 in value
 	param		end		UInt32 in value
 	param		count		SizeI in value
@@ -19522,7 +19522,7 @@ TextureNormalEXT(mode)
 # first and count are really 'in'
 MultiDrawArraysEXT(mode, first, count, primcount)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		first		Int32 in array [COMPSIZE(primcount)]
 	param		count		SizeI in array [COMPSIZE(primcount)]
 	param		primcount	SizeI in value
@@ -19533,7 +19533,7 @@ MultiDrawArraysEXT(mode, first, count, primcount)
 
 MultiDrawElementsEXT(mode, count, type, indices, primcount)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		count		SizeI in array [COMPSIZE(primcount)]
 	param		type		DrawElementsType in value
 	param		indices		VoidPointer in array [COMPSIZE(primcount)]
@@ -21255,7 +21255,7 @@ newcategory: IBM_cull_vertex
 
 MultiModeDrawArraysIBM(mode, first, count, primcount, modestride)
 	return		void
-	param		mode		BeginMode in array [COMPSIZE(primcount)]
+	param		mode		PrimitiveType in array [COMPSIZE(primcount)]
 	param		first		Int32 in array [COMPSIZE(primcount)]
 	param		count		SizeI in array [COMPSIZE(primcount)]
 	param		primcount	SizeI in value
@@ -21268,7 +21268,7 @@ MultiModeDrawArraysIBM(mode, first, count, primcount, modestride)
 
 MultiModeDrawElementsIBM(mode, count, type, indices, primcount, modestride)
 	return		void
-	param		mode		BeginMode in array [COMPSIZE(primcount)]
+	param		mode		PrimitiveType in array [COMPSIZE(primcount)]
 	param		count		SizeI in array [COMPSIZE(primcount)]
 	param		type		DrawElementsType in value
 	param		indices		ConstVoidPointer in array [COMPSIZE(primcount)]
@@ -24347,7 +24347,7 @@ ElementPointerATI(type, pointer)
 
 DrawElementArrayATI(mode, count)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		count		SizeI in value
 	category	ATI_element_array
 	dlflags		handcode
@@ -24357,7 +24357,7 @@ DrawElementArrayATI(mode, count)
 
 DrawRangeElementArrayATI(mode, start, end, count)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		start		UInt32 in value
 	param		end		UInt32 in value
 	param		count		SizeI in value
@@ -24376,7 +24376,7 @@ DrawRangeElementArrayATI(mode, start, end, count)
 
 DrawMeshArraysSUN(mode, first, count, width)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		first		Int32 in value
 	param		count		SizeI in value
 	param		width		SizeI in value
@@ -24609,7 +24609,7 @@ ElementPointerAPPLE(type, pointer)
 
 DrawElementArrayAPPLE(mode, first, count)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		first		Int32 in value
 	param		count		SizeI in value
 	category	APPLE_element_array
@@ -24621,7 +24621,7 @@ DrawElementArrayAPPLE(mode, first, count)
 
 DrawRangeElementArrayAPPLE(mode, start, end, first, count)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		start		UInt32 in value
 	param		end		UInt32 in value
 	param		first		Int32 in value
@@ -24635,7 +24635,7 @@ DrawRangeElementArrayAPPLE(mode, start, end, first, count)
 
 MultiDrawElementArrayAPPLE(mode, first, count, primcount)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		first		Int32 in array [primcount]
 	param		count		SizeI in array [primcount]
 	param		primcount	SizeI in value
@@ -24648,7 +24648,7 @@ MultiDrawElementArrayAPPLE(mode, first, count, primcount)
 
 MultiDrawRangeElementArrayAPPLE(mode, start, end, first, count, primcount)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		start		UInt32 in value
 	param		end		UInt32 in value
 	param		first		Int32 in array [primcount]
@@ -28603,7 +28603,7 @@ Uniform4uivEXT(location, count, value)
 
 DrawArraysInstancedEXT(mode, start, count, primcount)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		start		Int32 in value
 	param		count		SizeI in value
 	param		primcount	SizeI in value
@@ -28618,7 +28618,7 @@ DrawArraysInstancedEXT(mode, start, count, primcount)
 
 DrawElementsInstancedEXT(mode, count, type, indices, primcount)
 	return		void
-	param		mode		BeginMode in value
+	param		mode		PrimitiveType in value
 	param		count		SizeI in value
 	param		type		DrawElementsType in value
 	param		indices		Void in array [COMPSIZE(count/type)]
