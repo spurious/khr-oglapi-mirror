@@ -32136,7 +32136,7 @@ ProgramUniform2dvEXT(program, location, count, value)
 	param		program		UInt32 in value
 	param		location	Int32 in value
 	param		count		SizeI in value
-	param		value		Float64 in array [count]
+	param		value		Float64 in array [count*2]
 	category	EXT_direct_state_access
 	subcategory	ARB_gpu_shader_fp64
 	version		1.2
@@ -32150,7 +32150,7 @@ ProgramUniform3dvEXT(program, location, count, value)
 	param		program		UInt32 in value
 	param		location	Int32 in value
 	param		count		SizeI in value
-	param		value		Float64 in array [count]
+	param		value		Float64 in array [count*3]
 	category	EXT_direct_state_access
 	subcategory	ARB_gpu_shader_fp64
 	version		1.2
@@ -32164,7 +32164,7 @@ ProgramUniform4dvEXT(program, location, count, value)
 	param		program		UInt32 in value
 	param		location	Int32 in value
 	param		count		SizeI in value
-	param		value		Float64 in array [count]
+	param		value		Float64 in array [count*4]
 	category	EXT_direct_state_access
 	subcategory	ARB_gpu_shader_fp64
 	version		1.2
@@ -32179,7 +32179,7 @@ ProgramUniformMatrix2dvEXT(program, location, count, transpose, value)
 	param		location	Int32 in value
 	param		count		SizeI in value
 	param		transpose	Boolean in value
-	param		value		Float64 in array [count]
+	param		value		Float64 in array [count*4]
 	category	EXT_direct_state_access
 	subcategory	ARB_gpu_shader_fp64
 	version		1.2
@@ -32194,7 +32194,7 @@ ProgramUniformMatrix3dvEXT(program, location, count, transpose, value)
 	param		location	Int32 in value
 	param		count		SizeI in value
 	param		transpose	Boolean in value
-	param		value		Float64 in array [count]
+	param		value		Float64 in array [count*9]
 	category	EXT_direct_state_access
 	subcategory	ARB_gpu_shader_fp64
 	version		1.2
@@ -32209,7 +32209,7 @@ ProgramUniformMatrix4dvEXT(program, location, count, transpose, value)
 	param		location	Int32 in value
 	param		count		SizeI in value
 	param		transpose	Boolean in value
-	param		value		Float64 in array [count]
+	param		value		Float64 in array [count*16]
 	category	EXT_direct_state_access
 	subcategory	ARB_gpu_shader_fp64
 	version		1.2
@@ -32224,7 +32224,7 @@ ProgramUniformMatrix2x3dvEXT(program, location, count, transpose, value)
 	param		location	Int32 in value
 	param		count		SizeI in value
 	param		transpose	Boolean in value
-	param		value		Float64 in array [count]
+	param		value		Float64 in array [count*6]
 	category	EXT_direct_state_access
 	subcategory	ARB_gpu_shader_fp64
 	version		1.2
@@ -32239,7 +32239,7 @@ ProgramUniformMatrix2x4dvEXT(program, location, count, transpose, value)
 	param		location	Int32 in value
 	param		count		SizeI in value
 	param		transpose	Boolean in value
-	param		value		Float64 in array [count]
+	param		value		Float64 in array [count*8]
 	category	EXT_direct_state_access
 	subcategory	ARB_gpu_shader_fp64
 	version		1.2
@@ -32254,7 +32254,7 @@ ProgramUniformMatrix3x2dvEXT(program, location, count, transpose, value)
 	param		location	Int32 in value
 	param		count		SizeI in value
 	param		transpose	Boolean in value
-	param		value		Float64 in array [count]
+	param		value		Float64 in array [count*6]
 	category	EXT_direct_state_access
 	subcategory	ARB_gpu_shader_fp64
 	version		1.2
@@ -32269,7 +32269,7 @@ ProgramUniformMatrix3x4dvEXT(program, location, count, transpose, value)
 	param		location	Int32 in value
 	param		count		SizeI in value
 	param		transpose	Boolean in value
-	param		value		Float64 in array [count]
+	param		value		Float64 in array [count*12]
 	category	EXT_direct_state_access
 	subcategory	ARB_gpu_shader_fp64
 	version		1.2
@@ -32284,7 +32284,7 @@ ProgramUniformMatrix4x2dvEXT(program, location, count, transpose, value)
 	param		location	Int32 in value
 	param		count		SizeI in value
 	param		transpose	Boolean in value
-	param		value		Float64 in array [count]
+	param		value		Float64 in array [count*8]
 	category	EXT_direct_state_access
 	subcategory	ARB_gpu_shader_fp64
 	version		1.2
@@ -32299,7 +32299,7 @@ ProgramUniformMatrix4x3dvEXT(program, location, count, transpose, value)
 	param		location	Int32 in value
 	param		count		SizeI in value
 	param		transpose	Boolean in value
-	param		value		Float64 in array [count]
+	param		value		Float64 in array [count*12]
 	category	EXT_direct_state_access
 	subcategory	ARB_gpu_shader_fp64
 	version		1.2
