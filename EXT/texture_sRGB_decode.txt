@@ -18,7 +18,8 @@ Contributors
     Jeff Bolz, NVIDIA
     Dan Omachi, Apple Inc
     Jason Green, TransGaming
-    Daniel Koch, TransGaming
+    Daniel Koch, NVIDIA
+    Mathias Heyer, NVIDIA    
 
 Contact
 
@@ -26,23 +27,30 @@ Contact
 
 Status
 
-    Shipping on OX X 10.7
+    Shipping on OS X 10.7
 
 Version
 
-    Date: August 22, 2011
-    Revision: 0.87
+    Date: August 14, 2013
+    Revision: 0.89
 
 Number
 
-    402
+    OpenGL Extension #402
+    OpenGL ES Extension #152
 
 Dependencies
 
-    OpenGL 2.1 or EXT_texture_sRGB required.
+    OpenGL 2.1 or EXT_texture_sRGB requried for OpenGL
+
+    OpenGL ES 3.0 or EXT_sRGB are required for OpenGL ES
     
     OpenGL 3.0 or later interacts with this extension.
 
+    OpenGL ES 2.0 interacts with this extension.
+
+    OpenGL ES 3.0 interacts with this extension.
+    
     ARB_sampler_objects interacts with this extension.
 
     ARB_framebuffer_object interacts with this extension.
@@ -52,6 +60,16 @@ Dependencies
     EXT_texture_compression_s3tc interacts with this extension.
 
     EXT_texture_integer interacts with this extension.
+    
+    EXT_sRGB interacts with this extension.
+    
+    NV_sRGB_formats interacts with this extension.
+    
+    NV_generate_mipmap_sRGB interacts with this extension.
+
+    KHR_texture_compression_astc_ldr interacts with this extension.
+
+    ETC2 texure compression formats interact with this extension.
 
     This extension is written against the OpenGL 2.1 (December 1, 2006)
     specification.
@@ -124,7 +142,7 @@ Additions to Chapter 3 of the 2.1 Specification (Rasterization)
     ----                       ----       -------------     ------------
     TEXTURE_SRGB_DECODE_EXT    enum        DECODE_EXT       DECODE_EXT, SKIP_DECODE_EXT
     
--- Section 3.8.8, Texture Minification
+-- OpenGL: Section 3.8.8, Texture Minification
 
     Add to the end of the "Automatic Mipmap Generation" subsection:
 
@@ -155,7 +173,7 @@ Additions to Chapter 3 of the 2.1 Specification (Rasterization)
     SKIP_DECODE_EXT, the sRGB decode and encode steps are skipped during
     mipmap generation.
 
--- Section 3.8.15, sRGB Color Decoding
+-- OpenGL:  Section 3.8.15, sRGB Color Decoding
 
     (section was previously titled sRGB Color Conversion)
 
@@ -195,6 +213,18 @@ Additions to Chapter 3 of the 2.1 Specification (Rasterization)
     is returned without decoding. The TEXTURE_SRGB_DECODE_EXT
     parameter state is ignored for any texture with an internal format
     not explicitly listed above, as no decoding needs to be done.
+    
+--- OpenGL ES 3.0: Section 3.8.16, sRGB Texture Color Conversion
+--- OpenGL ES 2.0: Section 3.7.14, sRGB Texture Color Conversion
+
+    Add to the end of the paragraph:
+    "The conversion of sRGB color space components to linear color space
+     will only be performed if the TEXTURE_SRGB_DECODE_EXT parameter
+     is DECODE_EXT. If the TEXTURE_SRGB_DECODE_EXT parameter is
+     SKIP_DECODE_EXT, the value is returned without decoding.
+     The TEXTURE_SRGB_DECODE_EXT parameter state is ignored for any
+     texture with an internal format not explicitly listed above,
+     as no decoding needs to be done."
     
 Dependencies on ARB_sampler_objects or OpenGL 3.3 or later
 
@@ -240,6 +270,43 @@ Dependencies on OpenGL 3.0
     If OpenGL 3.0 or later is NOT supported, delete references
     to TexParameterIiv, TexParameterIuiv, GetTexParameterIiv,
     and GetTexParameterIuiv.
+    
+Interactions with OpenGL ES
+
+    If OpenGL ES 3.0 is NOT supported, delete references
+    to TexParameterIiv, TexParameterIuiv, GetTexParameterIiv,
+    and GetTexParameterIuiv, GetTexParameterfv, GetTexParameteriv.
+    
+    If OpenGL ES 3.0 or NV_generate_mipmap_sRGB is supported,
+    TEXTURE_SRGB_DECODE_EXT will control the linearization of sRGB 
+    texture levels while generating the mipmap levels. The section
+    "Automatic Mipmap Generation" applies to glGenerateMipmap instead.
+    
+    If neither OpenGL ES 3.0 nor NV_sampler_objects is supported,
+    delete all references to SamplerParameter* and GetSamplerParameter*.
+
+    If NV_sampler_objects is supported, substitue the ARB_sampler_objects
+    references with corresponding commands of NV_sampler_objects.
+
+Interactions with KHR_texture_compression_astc_ldr
+
+    If KHR_texture_compression_astc_ldr is supported, the 
+    TEXTURE_SRGB_DECODE_EXT texture and/or sampler parameter affects the
+    COMPRESSED_SRGB8_ALPHA8_ASTC_*_KHR formats as described in the Section
+    3.8.16 edits.
+
+Interactions with ETC2 compressed texture formats
+
+    If the ETC2 texture compression formats (part of OpenGL ES 3.0 and OpenGL 
+    4.3) are supported, the TEXTURE_SRGB_DECODE_EXT texture and/or sampler 
+    parameter affects the COMPRESSED_SRGB8_*ETC2* formats as described in the
+    Section 3.8.16 edits.
+
+Interactions with NV_sRGB_formats
+
+    If NV_sRGB_formats is supported, the TEXTURE_SRGB_DECODE_EXT texture and/or
+    sampler parameter affects the new SRGB and SLUMINANCE formats as described 
+    in the Section 3.7.14 edits.
 
 Errors
 
@@ -558,6 +625,8 @@ Revision History
 
         Rev.    Date    Author    Changes
         ----  --------  --------  -------------------------------------
+        0.89  08/14/13  dkoch     Add interactions with ASTC/ETC2/NV_sRGB_formats
+        0.88  07/24/13  mheyer    Add OpenGL ES interactions
         0.87  08/22/11  mjk       correction to issue #8 from Jason
         0.86  08/22/11  mjk       corrections from Daniel + more interactions
         0.85  08/13/11  mjk       corrections to issues from Jason and Henri
