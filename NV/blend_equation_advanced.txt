@@ -23,14 +23,22 @@ Status
     NV_blend_equation_advanced is released in NVIDIA Driver Release
     326.xx (June 2013).
 
+NVIDIA Implementation Details
+
+    Older versions of this extension specification and early shipping
+    implementations supported the COLORDODGE_NV and COLORBURN_NV equations
+    without the special case discussed in issue (34). This should be fixed for
+    newer driver releases.
+
 Version
 
-    Last Modified Date:         August 19, 2013
-    NVIDIA Revision:            3
+    Last Modified Date:         October 16, 2013
+    NVIDIA Revision:            4
 
 Number
 
     OpenGL Extension #433
+    OpenGL ES Extension #163
 
 Dependencies
 
@@ -391,13 +399,15 @@ Operations and the Frame Buffer)
 
       COLORDODGE_NV             (X,Y,Z)  = (1,1,1)
                                 f(Cs,Cd) =
-                                  min(1,Cd/(1-Cs)), if Cs < 1
-                                  1, if Cs >= 1
+                                  0, if Cd <= 0
+                                  min(1,Cd/(1-Cs)), if Cd > 0 and Cs < 1
+                                  1, if Cd > 0 and Cs >= 1
 
       COLORBURN_NV              (X,Y,Z)  = (1,1,1)
                                 f(Cs,Cd) =
-                                  1 - min(1,(1-Cd)/Cs), if Cs > 0
-                                  0, if Cs <= 0
+                                  1, if Cd >= 1
+                                  1 - min(1,(1-Cd)/Cs), if Cd < 1 and Cs > 0
+                                  0, if Cd < 1 and Cs <= 0
 
       HARDLIGHT_NV              (X,Y,Z)  = (1,1,1)
                                 f(Cs,Cd) = 2*Cs*Cd, if Cs <= 0.5
@@ -1528,13 +1538,103 @@ Issues
       equations.  See the "Rendering Feedback Loops" section (p. 316 in the
       OpenGL 4.1 Compatibility Profile specification) for more information.
 
+    (34) How should the blend equations COLORDODGE_NV and COLORBURN_NV be
+         expressed mathematically?
+
+      RESOLVED:  We changed the definition of these equations after the
+      NV_blend_equation_advanced spec was originally published, as discussed
+      below.  These changes add new special cases to the COLORDODGE_NV and
+      COLORBURN_NV equations that are found in newer compositing standard
+      specifications and in a number of implementations of old and new
+      standards.  We believe that the omission of the special case in other
+      older specifications is a bug.  We have no plans to add new blend
+      equation tokens to support "equivalent" modes without the new special
+      case.
+
+      Note, however, that older versions of this extension and older NVIDIA
+      drivers implementing it will lack these special cases.  A driver update
+      may be required to get the new behavior.
+      
+      There is some disagreement in different published specifications about
+      how these two blend equations should be handled.  At the time this
+      extension was initially developed, all specifications we found that
+      specified blending equations mathematically (see issue 28) were written
+      the same way.  Since then, we discovered that newer working drafts of
+      the W3C Compositing and Blending Level 1 specification (for CSS and SVG)
+      express "color-burn" as follows (translated to our nomenclature):
+
+        if (Cd == 1)            // their Cb (backdrop) is our Cd (destination)
+          f(Cs,Cd) = 1          // their B() is our f()
+        else if (Cs == 0)
+          f(Cs,Cd) = 0
+        else
+          f(Cs,Cd) = 1 - min(1, (1-Cd)/Cs)
+
+      http://www.w3.org/TR/2013/WD-compositing-1-20131010/
+        #blendingcolorburn
+
+      Earlier versions of the same W3C specification, an older SVG compositing
+      draft specification, the Adobe PDF specification (and the ISO 32000-1
+      standard), and the KHR_advanced_blending extension to OpenVG all specify
+      the following equation without the initial special case:
+
+        if (Cs == 0)
+          f(Cs,Cd) = 0
+        else
+          f(Cs,Cd) = 1 - min(1, (1-Cd)/Cs)
+
+        http://www.w3.org/TR/2012/WD-compositing-20120816/
+          #blendingcolorburn
+        http://www.w3.org/TR/2011/WD-SVGCompositing-20110315/
+        http://www.adobe.com/content/dam/Adobe/en/devnet/acrobat/
+          pdfs/pdf_reference_1-7.pdf
+        http://www.khronos.org/registry/vg/extensions/KHR/
+          advanced_blending.txt
+
+      The author's understanding is that multiple shipping implementations of
+      these blending modes implement the special case for "Cd==1" above,
+      including various Adobe products and the open-source Ghostscript
+      project.
+
+      We believe that the extra special case in this specification is
+      consistent with the physical model of color burning.  Burning is
+      described in
+
+        http://en.wikipedia.org/wiki/Dodging_and_burning
+
+      as making a print with normal exposure, and then adding additional
+      exposure to darken the overall image.  In the general equation:
+
+        1 - min(1, (1-Cd)/Cs)
+
+      Cs operates as a sort of fudge factor where a value of 1.0 implies no
+      additional exposure time and 0.0 implies arbitrarily long additional
+      exposure time, where the initial amount of exposure (1-Cd) is multiplied
+      by 1/Cs and then clamped to maximum exposure by the min() operation.
+      The Cd==1 special case here implies that we get zero exposure in the
+      initial print, since 1-Cd==0.  No amount of extra exposure time will
+      generate any additional exposure.  This would imply that the final
+      result should have zero exposure and thus a final f() value of 1.  This
+      matches the initial special case.  Without that special case, we would
+      hit the second special case if Cs==0 (infinite exposure time), which
+      would yield an incorrect final value of 0 (full exposure).
+
+      A similar issue applies to COLORDODGE_NV, where some specifications
+      include a special case for Cb==0 while others do not.  We have added a
+      special case there as well.
+
 Revision History
     
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+     4    10/16/13  pbrown    Modify the definition of COLORDODGE_NV and
+                              COLORBURN_NV to match de facto standard
+                              implemenations and new CSS/SVG compositing
+                              spec; add issue (34).
+
      3    08/19/13  pbrown    Fix typos in the OpenGL ES 2.0 and 3.0
                               interactions sections.
 
-     2    07/25/13  mjk       Add W3C CSS compositing reference
+     2    07/25/13  mjk       Add W3C CSS compositing reference.
 
      1              pbrown    Internal revisions.
