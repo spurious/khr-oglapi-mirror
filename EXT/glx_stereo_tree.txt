@@ -226,20 +226,20 @@ Issues
     2)  Should the events and queries added here work on non-
         redirected window trees, or the root window as well?
 
-        PROPOSED RESOLUTION: No.  Implementations may not need to
-        track such information for these types of windows, so it would
-        add burden with no apparent benefit to applications.
-        Consequently, the queries will always return False and no
-        events will be generated for these windows.
+        RESOLVED: No.  Implementations may not need to track such
+        information for these types of windows, so it would add burden
+        with no apparent benefit to applications.  Consequently, the
+        queries will always return False and no events will be
+        generated for these windows.
 
     3)  Should a GLX extension event or a generic event be used for
         the new stereo notification mechanism?
 
-        PROPOSED RESOLUTION: A generic event should be used.  Adding
-        extension events to existing extensions has been shown to be
-        problematic when updated servers are mixed with older clients,
-        and modern X server implementations are running out of
-        extension event slots.
+        RESOLVED: A generic event should be used.  Adding extension
+        events to existing extensions has been shown to be problematic
+        when updated servers are mixed with older clients, and modern
+        X server implementations are running out of extension event
+        slots.
 
 Version History
 
