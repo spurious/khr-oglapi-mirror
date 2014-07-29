@@ -28,7 +28,7 @@ Version
 
 Number
 
-     NOT YET ASSIGNED
+     OpenGL Extension #455
 
 Dependencies
 
