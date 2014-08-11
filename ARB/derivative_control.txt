@@ -17,11 +17,6 @@ Contributors
 Notice
 
     Copyright (c) 2014 The Khronos Group Inc. Copyright terms at
-    http://www.khronos.org/registry/speccopyright.html
-
-Notice
-
-    Copyright (c) 2014 The Khronos Group Inc. Copyright terms at
         http://www.khronos.org/registry/speccopyright.html
 
 Status
