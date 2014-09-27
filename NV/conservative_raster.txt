@@ -55,7 +55,7 @@ Overview
 
 New Procedures and Functions
 
-        SubpixelPrecisionBiasNV(uint xbits, uint ybits);
+        void SubpixelPrecisionBiasNV(uint xbits, uint ybits);
 
 New Tokens
 
