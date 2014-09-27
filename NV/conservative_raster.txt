@@ -4,7 +4,7 @@ Name
 
 Name Strings
 
-    NV_conservative_raster
+    GL_NV_conservative_raster
 
 Contact
 
@@ -20,8 +20,8 @@ Status
 
 Version
 
-    Last Modified Date:         September 12, 2014
-    Revision:                   1
+    Last Modified Date:         September 26, 2014
+    Revision:                   2
 
 Number
 
@@ -55,7 +55,7 @@ Overview
 
 New Procedures and Functions
 
-        void SubpixelPrecisionBiasNV(uint xbits, uint ybits);
+    void SubpixelPrecisionBiasNV(uint xbits, uint ybits);
 
 New Tokens
 
@@ -85,7 +85,7 @@ Additions to Chapter 13 of the OpenGL 4.3 (Compatibility Profile) Specification
     SUBPIXEL_BITS and programmable values of SUBPIXEL_PRECISION_BIAS_{X,Y}-
     _BITS_NV. These values may be set with the command
 
-        SubpixelPrecisionBiasNV(uint xbits, uint ybits);
+        void SubpixelPrecisionBiasNV(uint xbits, uint ybits);
 
     When these values are non-zero, the invariance requirement of section 14.2 
     may not apply because the subpixel precision may not be the same at all 
@@ -224,6 +224,9 @@ Issues
     RESOLVED: The DrawTextureNV command rasterizes conservatively.
 
 Revision History
+
+    Revision 2, 2014/09/26 (Jon Leech)
+      - Add missing return type to function 
 
     Revision 1
     - Internal revisions.
