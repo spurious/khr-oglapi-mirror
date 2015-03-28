@@ -22,17 +22,26 @@ Status
 
 Version
 
-    Last Modified Date:         December 14, 2014
-    Revision:                   1
+    Last Modified Date:         March 27, 2015
+    Revision:                   2
 
 Number
 
     OpenGL Extension #476
+    OpenGL ES Extension #237
 
 Dependencies
 
     This extension is written against the OpenGL 4.3 specification
     (Compatibility Profile).
+
+    This extension interacts with the OpenGL ES 3.1 (March 17, 2014)
+    specification.
+
+    If implemented in OpenGL ES, NV_viewport_array, EXT_geometry_shader
+    and EXT_shader_io_blocks are required.
+
+    This extension interacts with EXT_tessellation_shader.
 
     This extension interacts with NV_geometry_shader_passthrough.
 
@@ -360,6 +369,19 @@ Errors
 
     None.
 
+Interactions with OpenGL ES 3.1
+
+    Unless functionality similar to ARB_provoking_vertex is supported, remove
+    references to PROVOKING_VERTEX and ProvokingVertex().  Also remove
+    reference to 'vertex color clamping'.  The modifications to Line Stippling
+    don't apply.
+
+Interactions with EXT_tessellation_shader
+
+    If implemented on OpenGL ES and EXT_tessellation_shader is not supported,
+    remove all language referring to the tesselation control and tessellation
+    evaluation pipeline stages.
+
 Interactions with NV_geometry_shader_passthrough
 
     If NV_geometry_shader_passthrough is supported, the NV_gpu_program4 and
@@ -511,5 +533,8 @@ Issues
 
 Revision History
 
+    Revision 2, 2015/03/27
+      - Add ES interactions
+
     Revision 1
-    - Internal revisions.
+      - Internal revisions.

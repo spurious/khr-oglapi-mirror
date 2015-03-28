@@ -4,8 +4,8 @@ Name
 
 Name Strings
 
-    NV_framebuffer_mixed_samples
-    EXT_raster_multisample
+    GL_NV_framebuffer_mixed_samples
+    GL_EXT_raster_multisample
 
 Contact
 
@@ -22,17 +22,19 @@ Status
 
 Version
 
-    Last Modified Date:         September 16, 2014
-    Revision:                   1
+    Last Modified Date:         March 27, 2015
+    Revision:                   2
 
 Number
 
     OpenGL Extension #469
+    OpenGL ES Extension #231
 
 Dependencies
 
     This extension is written against the OpenGL 4.3
-    (Compatibility Profile).
+    (Compatibility Profile) and OpenGL ES 3.0.3 (December 18, 2013)
+    specification.
 
     This extension is written as a superset of EXT_raster_multisample, since
     so many of the edits overlap each other and it is not expected for an
@@ -42,6 +44,14 @@ Dependencies
     This extension interacts with NV_fragment_coverage_to_color.
 
     This extension interacts with EXT_depth_bounds_test.
+
+    This extension interacts with OES_sample_shading
+
+    This extension interacts with OES_sample_variables
+
+    This extension interacts with NV_framebuffer_multisample
+
+    This extension interacts with the OpenGL ES 3.1 specification.
 
 Overview
 
@@ -592,6 +602,47 @@ Modifications to the OpenGL Shading Language Specification, Version 4.30
     implementation.
 
 
+Interactions with OpenGL ES 3.0
+
+    For OpenGL ES, remove references to images, bitmaps and GetDoublev.
+    Disregard references to POINT_SMOOTH, LINE_SMOOTH and POLYGON_SMOOTH.
+
+    Omit changes to Section 14.8.0.1 (Bitmap Multisample Rasterization).
+    Also, omit changes to Section 18.1.3 (Pixel Rectangle Multisample
+    Rasterization) and Section 18.3 (Copying Pixels).
+
+    Since OpenGL ES does not support enabling/disabling MULTISAMPLE
+    rasterization via MULTISAMPLE, read all occurrences of MULTISAMPLE
+    as if it was enabled.
+
+
+Interactions with OpenGL ES 3.1
+
+    If this extension is implemented on OpenGL ES and OpenGL ES 3.1 is
+    not supported, remove any language referring to TEXTURE_SAMPLES.
+
+
+Dependencies on NV_framebuffer_multisample
+
+    If this extension is implemented on OpenGL ES and NV_framebuffer_multisample
+    is not supported, disregard changes to glBlitFramebuffer where the
+    number of samples in the draw framebuffer is greater than one.
+
+
+Dependencies on OES_sample_shading
+
+    If this extension is implemented on OpenGL ES and  if
+    OES_sample_shading is not supported, omit changes to Section 3.3.1
+    (Sample Shading).
+
+
+Dependencies on OES_sample_variables
+
+    If this extension is implemented on OpenGL ES and  if
+    OES_sample_variables is not supported, omit changes to Section 3.9.2
+    (Shader Inputs; Shader Outputs).
+
+
 Dependencies on EXT_depth_bounds_test
 
     If EXT_depth_bounds_test is not supported, remove the error check when
@@ -715,6 +766,9 @@ Issues
 
 Revision History
 
+    Revision 2, 2015/03/27
+      - Add ES interactions
+
     Revision 1
-    - Internal revisions.
+      - Internal revisions.
 

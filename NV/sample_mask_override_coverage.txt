@@ -4,7 +4,7 @@ Name
 
 Name Strings
 
-    NV_sample_mask_override_coverage
+    GL_NV_sample_mask_override_coverage
 
 Contact
 
@@ -21,12 +21,13 @@ Status
 
 Version
 
-    Last Modified Date:         September 16, 2014
-    Revision:                   1
+    Last Modified Date:         March 27, 2015
+    Revision:                   2
 
 Number
 
     OpenGL Extension #473
+    OpenGL ES Extension #236
 
 Dependencies
 
@@ -39,6 +40,10 @@ Dependencies
     This extension interacts with NV_framebuffer_mixed_samples.
 
     This extension interacts with NV_fragment_program4.
+
+    This extension interacts with the OpenGL ES 3.0 and 3.1 specifications.
+
+    If implemented in OpenGL ES 3.0 or 3.1, OES_sample_variables is required.
 
 Overview
 
@@ -194,6 +199,32 @@ Dependencies on NV_fragment_program4
     in Section 15.2.3 Shader Outputs.
 
 
+Interactions with OpenGL ES 3.0 and 3.1
+
+    Modify paragraph 2 of Shader Outputs from "where <s> is the maximum number
+    of color samples supported by the implementation" to "where <s> is the
+    value of MAX_SAMPLES, the maximum number of..."
+
+    Remove any references to implicit sizing of the gl_SampleMask array, and
+    modify the example for "Fragment Shader Outputs" to have an explicit array
+    size:
+
+        layout(override_coverage) out int gl_SampleMask[(gl_MaxSamples+31)/32];
+
+    Modify OpenGL ES Shading Language 3.00 Specification, section 3.8
+    "Identifiers:"
+    
+        Replace the second paragraph with the following:
+
+        Identifiers starting with "gl_" are reserved for use by OpenGL ES, and
+        may not be declared in a shader as either a variable or a function;
+        this results in a compile-time error. However, as noted in the
+        specification, there are some cases where previously declared variables
+        can be redeclared, and predeclared "gl_" names are allowed to be
+        redeclared in a shader only for these specific purposes. More
+        generally, it is a compile-time error to redeclare a variable,
+        including those starting "gl_".
+
 Errors
 
     None.
@@ -217,7 +248,16 @@ Issues
     fragment. Each of these passes may only override the coverage for samples
     owned by that pass, other bits in the sample mask are ignored.
 
+    (3) For OpenGL ES, should we allow implicit sizing of the gl_SampleMask
+    array when it's redeclared?
+
+    RESOLVED: No. OpenGL ES convention is to explicitly size arrays. See issues
+    4 and 5 of OES_sample_variables.
+
 Revision History
 
+    Revision 2, 2015/03/27
+      - Add ES interactions
+
     Revision 1
-    - Internal revisions.
+      - Internal revisions.

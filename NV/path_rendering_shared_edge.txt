@@ -21,17 +21,18 @@ Status
 
 Version
 
-    Last Modified Date:  September 16, 2014
-    Version:             1
+    Last Modified Date:  March 27, 2015
+    Version:             2
 
 Number
 
     OpenGL Extension #471
+    OpenGL ES Extension #234
 
 Dependencies
 
     This extension is written against the OpenGL 4.3 (Compatibility)
-    Specification but can apply to OpenGL 1.1 and up.
+    Specification but can apply to OpenGL 1.1 and OpenGL ES 2.0 and up.
 
     This extension requires NV_path_rendering.
 
@@ -199,5 +200,8 @@ Issues
 
 Revision History
 
+    Revision 2, 2015/03/27
+      - Add ES interactions
+
     Revision 1
-    - Internal revisions.
+      - Internal revisions.

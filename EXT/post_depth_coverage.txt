@@ -4,7 +4,7 @@ Name
 
 Name Strings
 
-    EXT_post_depth_coverage
+    GL_EXT_post_depth_coverage
 
 Contact
 
@@ -23,12 +23,13 @@ Status
 
 Version
 
-    Last Modified Date:         September 12, 2014
-    Revision:                   1
+    Last Modified Date:         March 27, 2015
+    Revision:                   2
 
 Number
 
     OpenGL Extension #461
+    OpenGL ES Extension #225
 
 Dependencies
 
@@ -39,6 +40,11 @@ Dependencies
     Shading Language Specification.
 
     This extension interacts with NV_fragment_program4.
+
+    This extension interacts with OpenGL ES 3.1
+
+    If implemented in OpenGL ES 3.1, OES_sample_variables (providing
+    gl_SampleMaskIn) is required.
 
 Overview
 
@@ -165,6 +171,27 @@ Dependencies on NV_fragment_program4
     NV_early_fragment_tests option, it will fail to compile.
 
 
+Interactions with OpenGL ES 3.1
+
+    If OpenGL ES 3.1 is supported, edits similar to those above are applied to
+    OpenGL ES 3.1 and GLSL ES 3.10 specifications.
+
+    Modify the edits under "Fragment Shader Inputs" as follows:
+
+    Add the following to the paragraph discussing behavior when
+    "early_fragment_tests" is enabled to reflect a pre-existing error not
+    shared with GLSL 4.30:
+
+      It is an error to statically write to gl_FragDepth in the fragment
+      shader.
+
+    Change the paragraph beginning "Only one fragment shader (compilation unit)
+    need declare..." to the following, since GLSL ES 3.10 does not support
+    linking multiple shaders of the same type:
+
+      If a fragment shader declares "post_depth_coverage" and doesn't declare
+      "early_fragment_tests", a link-time error will occur.
+
 Errors
 
     None.
@@ -185,6 +212,9 @@ Issues
     are sampled inside the path would be nice.
 
 Revision History
+
+    Revision 2, 2015/03/27
+      - Add ES interactions
 
     Revision 1, September 12, 2014 (jbolz, pbrown, jhelferty)
 

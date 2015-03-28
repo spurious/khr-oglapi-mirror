@@ -4,7 +4,7 @@ Name
 
 Name Strings
 
-    NV_sample_locations
+    GL_NV_sample_locations
 
 Contact
 
@@ -21,17 +21,20 @@ Status
 
 Version
 
-    Last Modified Date:         September 16, 2014
-    Revision:                   1
+    Last Modified Date:         March 27, 2015
+    Revision:                   2
 
 Number
 
     OpenGL Extension #472
+    OpenGL ES Extension #235
 
 Dependencies
 
     This extension is written against the OpenGL 4.3 specification
     (Compatibility Profile).
+
+    This extension interacts with OpenGL ES 3.1.
 
 Overview
 
@@ -330,6 +333,11 @@ Errors
     sample location framebuffer parameters to be set on the default
     framebuffer).
 
+Interactions with OpenGL ES 3.1
+
+    If implemented in OpenGL ES 3.1, remove references to GetDoublev,
+    DrawPixels, CopyPixels and GetTexImage.
+
 Issues
 
     (1) Why is SAMPLE_LOCATION_NV added?
@@ -387,5 +395,8 @@ Issues
 
 Revision History
 
+    Revision 2, 2015/03/27
+      - Add ES interactions
+
     Revision 1
-    - Internal revisions.
+      - Internal revisions.

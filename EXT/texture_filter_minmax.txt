@@ -24,12 +24,13 @@ Status
 
 Version
 
-    Last Modified Date:         September 12, 2014
-    NVIDIA Revision:            1
+    Last Modified Date:         March 27, 2015
+    Revision:                   2
 
 Number
 
     OpenGL Extension #464
+    OpenGL ES Extension #227
 
 Dependencies
 
@@ -41,6 +42,14 @@ Dependencies
     This extension interacts with EXT_texture_filter_anisotropic.
 
     This extension interacts with EXT_direct_state_access.
+
+    This extension interacts with OpenGL ES 3.1 (June 4, 2014).
+
+    When implemented for OpenGL ES 3.1, this extension interacts with
+    EXT_texture_border_clamp.
+
+    When implemented for OpenGL ES 3.1, this extension interacts with
+    OES_texture_stencil8.
 
 Overview
 
@@ -248,6 +257,51 @@ Dependencies on EXT_direct_state_access
         MultiTexParameter{i f}{v}EXEXTT, MultiTexParameterI{u}ivEXT,
         GetMultiTexParameter{i f}vEXT, and GetMultiTexParameterI{u}ivEXT
 
+Interactions with EXT_texture_border_clamp
+
+    References to each of the following functions should be decorated with the
+    EXT suffix:
+
+        SamplerParameterI{u}iv, GetSamplerParameterI{u}iv,
+        TexParameterI{u}iv, and GetTexParameterI{u}iv
+
+    If EXT_texture_border_clamp is not supported, all references to the above
+    functions should be removed.
+
+Interactions with OpenGL ES 3.1
+
+    Ignore any earlier changes to the "Texture Completeness" section.
+
+    In section 8.16 "Texture Completeness", Modify the last three bullets:
+
+      * The effective internal format specified for the texture arrays is a
+        sized internal color format that is not texture-filterable (see table
+        8.13), the texture reduction mode is WEIGHTED_AVERAGE_EXT, and either
+        the magnification filter is not NEAREST or the minification filter is
+        neither NEAREST nor NEAREST_MIPMAP_NEAREST.
+
+      * The effective internal format specified for the texture arrays is a
+        sized internal depth or depth and stencil format (see table 8.14), the
+        value of TEXTURE_COMPARE_MODE is NONE, the texture reduction mode is
+        WEIGHTED_AVERAGE_EXT, and either the magnification filter is not
+        NEAREST or the minification filter is neither NEAREST nor
+        NEAREST_MIPMAP_NEAREST.
+
+      * The internal format of the texture is DEPTH_STENCIL, the value of
+        DEPTH_STENCIL_TEXTURE_MODE for the texture is STENCIL_INDEX, the
+        texture reduction mode is WEIGHTED_AVERAGE_EXT, and either the
+        magnification filter or the minification filter is not NEAREST.
+
+Interactions with OES_texture_stencil8
+
+    Modify 3.8.13 "Texture Completeness" to change the bullet added by
+    OES_texture_stencil8 to the list of reasons a texture would be complete:
+
+      * The internal format of the texture is STENCIL_INDEX, the
+        TEXTURE_REDUCTION_MODE_EXT parameter is WEIGHTED_AVERAGE_EXT, and
+        either the magnification filter is not NEAREST or the minification
+        filter is neither NEAREST nor NEAREST_MIPMAP_NEAREST.
+
 Issues
 
     (1) What should this extension be called?
@@ -308,6 +362,9 @@ Issues
       RESOLVED:  Yes.
 
 Revision History
+
+    Revision 2, 2015/03/27
+      - Add ES interactions
 
     Revision 1
       - Internal revisions.

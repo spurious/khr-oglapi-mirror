@@ -4,7 +4,7 @@ Name
 
 Name Strings
 
-    NV_fragment_coverage_to_color
+    GL_NV_fragment_coverage_to_color
 
 Contact
 
@@ -25,12 +25,13 @@ Status
 
 Version
 
-    Last Modified Date:         September 12, 2014
-    Revision:                   1
+    Last Modified Date:         March 27, 2015
+    Revision:                   2
 
 Number
 
     OpenGL Extension #467
+    OpenGL ES Extension #229
 
 Dependencies
 
@@ -41,6 +42,11 @@ Dependencies
 
     This extension interacts with EXT_raster_multisample and 
     NV_framebuffer_mixed_samples.
+
+    This extension interacts with OpenGL ES 3.1.
+
+    When implemented for OpenGL ES 3.1, this extension interacts with
+    OES_sample_shading.
 
 Overview
 
@@ -161,6 +167,18 @@ Dependencies on EXT_raster_multisample and NV_framebuffer_mixed_samples
     color samples, then each color sample receives the full coverage mask of
     the fragment.
 
+Interactions with OpenGL ES 3.1
+
+    If OES_sample_shading is present, change all references to SAMPLE_SHADING
+    to SAMPLE_SHADING_OES. Otherwise, ignore all references to SAMPLE_SHADING.
+
+    Ignore all references to GetDoublev.
+
+    In new section titled "Fragment Coverage to Color", remove the last
+    sentence from the paragraph beginning "If the buffer that the coverage
+    value will be written to...", which refers to writing a single color value
+    to multiple color buffers.
+
 Issues
 
     1) If coverage information is written to a color buffer with multiple
@@ -207,5 +225,8 @@ Issues
 
 Revision History
 
+    Revision 2, 2015/03/27
+      - Add ES interactions
+
     Revision 1
-    - Internal revisions.
+      - Internal revisions.

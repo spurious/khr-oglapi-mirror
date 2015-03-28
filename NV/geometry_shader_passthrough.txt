@@ -23,12 +23,13 @@ Status
 
 Version
 
-    Last Modified Date:         September 16, 2014
-    NVIDIA Revision:            1
+    Last Modified Date:         March 27, 2015
+    NVIDIA Revision:            2
 
 Number
 
     OpenGL Extension #470
+    OpenGL ES Extension #233
 
 Dependencies
 
@@ -37,6 +38,9 @@ Dependencies
 
     This extension is written against the OpenGL Shading Language
     Specification, version 4.30, revision 8.
+
+    OpenGL ES 3.1 and EXT_geometry_shader are required for an
+    implementation in OpenGL ES.
 
     This extension interacts with OpenGL 4.4 and ARB_enhanced_layouts.
 
@@ -285,6 +289,13 @@ New Implementation Dependent State
 
     None.
 
+
+Interactions with OpenGL ES 3.1
+
+    Unless made available by functionality similiar to ARB_transform_feedback3
+    and ARB_gpu_shader5, remove references to EmitStreamVertex() and
+    EndStreamPrimitive(), the "stream = N" layout qualifier as well as
+    the notion of multiple transform feedback streams.
 
 Dependencies on OpenGL 4.4 and ARB_enhanced_layouts
 
@@ -774,6 +785,9 @@ Issues
       be dropped.
 
 Revision History
+
+    Revision 2, 2015/03/27
+      - Add ES interactions
 
     Revision 1
       - Internal revisions.

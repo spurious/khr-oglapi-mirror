@@ -21,31 +21,43 @@ Status
 
 Version
 
-    Last Modified Date:         September 16, 2014
-    NVIDIA Revision:            1
+    Last Modified Date:         March 27, 2015
+    NVIDIA Revision:            2
 
 Number
 
     OpenGL Extension #468
+    OpenGL ES Extension #230
 
 Dependencies
 
     This extension is written against the OpenGL 4.3
-    (Compatibility Profile, dated February 14, 2013).
+    (Compatibility Profile, dated February 14, 2013), and the
+    OpenGL ES 3.1.0 (dated March 17, 2014) Specification
 
     This extension is written against the OpenGL Shading Language
-    Specification (version 4.30, revision 8).
+    Specification (version 4.30, revision 8) and the OpenGL ES Shading
+    Language Specification (version 3.10, revision 2).
 
-    OpenGL 4.3 and GLSL 4.30 are required.
+    OpenGL 4.3 and GLSL 4.30 are required in an OpenGL implementation
+    OpenGL ES 3.1 and GLSL ES 3.10 are required in an OpenGL ES implementation
 
     This extension interacts with NV_shader_buffer_load and
     NV_shader_buffer_store.
 
     This extension interacts with NV_gpu_program4 and NV_gpu_program5.
 
+    This extension interacts with EXT_tessellation_shader.
+
+    This extension interacts with OES_sample_shading
+
+    This extension interacts with OES_shader_multisample_interpolation
+
+    This extension interacts with OES_shader_image_atomic
+
 Overview
 
-    In unextended OpenGL 4.3, applications may produce a
+    In unextended OpenGL 4.3 or OpenGL ES 3.1, applications may produce a
     large number of fragment shader invocations that perform loads and
     stores to memory using image uniforms, atomic counter uniforms,
     buffer variables, or pointers. The order in which loads and stores
@@ -255,6 +267,39 @@ New State
 New Implementation Dependent State
 
     None.
+
+Interactions with OpenGL ES 3.1
+
+    Disabling multisample rasterization is not available on OpenGL ES;
+    it is always enabled.
+
+
+Dependencies on EXT_tessellation_shader
+
+     If this extension is implemented on OpenGL ES and EXT_tessellation_shader
+     is not supported, remove language referring to tessellation of patch
+     primitives.
+
+
+Dependencies on OES_sample_shading
+
+     If this extension is implemented on OpenGL ES and OES_sample_shading
+     is not supported, remove references to per-sample shading via
+     MinSampleShading[OES]()
+
+
+Dependencies on OES_shader_image_atomic
+
+    If this extension is implemented on OpenGL ES and OES_shader_image_atomic
+    is not supported, disregard language referring to atomic memory operations.
+
+
+Dependencies on OES_shader_multisample_interpolation
+
+   If this extension is implemented on OpenGL ES and OES_shader_-
+   multisample_interpolation is not supported, ignore language
+   about the "sample" auxilliary storage qualifier.
+
 
 Dependencies on NV_shader_buffer_load and NV_shader_buffer_store
 
@@ -498,6 +543,9 @@ Issues
       enter a critical section more than once).
 
 Revision History
+
+    Revision 2, 2015/03/27
+      - Add ES interactions
 
     Revision 1
       - Internal revisions
