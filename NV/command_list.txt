@@ -25,8 +25,8 @@ Status
 
 Version
 
-    Last Modified Date: January 5, 2015
-    Revision: 1
+    Last Modified Date: April 16, 2015
+    Revision: 2
 
 Number
 
@@ -103,7 +103,7 @@ New Procedures and Functions
     boolean IsCommandListNV(uint list);
     
     void ListDrawCommandsStatesClientNV(uint list, uint segment, const void** indirects, 
-                                        const size_t* sizes, const uint* states, const uint* fbos, uint count);
+                                        const sizei* sizes, const uint* states, const uint* fbos, uint count);
     
     void CommandListSegmentsNV(uint list, uint segments);
     void CompileCommandListNV(uint list);
@@ -727,7 +727,7 @@ Add a new section 10.X.4 (Command Lists)
     be executed. The following command can be enqueued:
 
         void ListDrawCommandsStatesClientNV(uint list, uint segment, const void** indirects, 
-                                              const size_t* sizes, const uint* states, const uint* fbos,
+                                              const sizei* sizes, const uint* states, const uint* fbos,
                                               uint count);
 
     A list has multiple segments and each segment enqueues an ordered list of 
@@ -1058,6 +1058,9 @@ Revision History
 
     Rev.    Date      Author    Changes
     ----  --------    --------  -----------------------------------------
+     2    2015/04/16  ckubisch  Fix size_t -> GLsizei in
+                                ListDrawCommandsStatesClientNV <sizes>
+                                parameter (public bug 1329).
      1                pboudier  concept
                       jbolz     base spec
                       ckubisch  detailed spec
