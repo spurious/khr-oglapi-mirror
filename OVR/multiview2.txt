@@ -23,7 +23,7 @@ Status
 
 Version
 
-    Last Modified Date:  Feb 11, 2015
+    Last Modified Date:  Mar 18, 2015
     Author Revision: 0.4
 
 Number
@@ -42,7 +42,7 @@ Overview
  
 	This extension relaxes the restriction in OVR_multiview that only gl_Position
 	can depend on ViewID in the vertex shader.  With this change, view-dependent
-	outputs like relection vectors and similar are allowed.
+	outputs like reflection vectors and similar are allowed.
 
 New Tokens
 
