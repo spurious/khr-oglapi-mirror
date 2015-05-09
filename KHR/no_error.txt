@@ -22,6 +22,11 @@ Contact
 
     Maurice Ribble (mribble 'at' qti.qualcomm.com)
 
+Notice
+
+    Copyright (c) 2012-2014 The Khronos Group Inc. Copyright terms at
+        http://www.khronos.org/registry/speccopyright.html
+
 Status
 
     Complete.
@@ -33,7 +38,7 @@ Version
 
 Number
 
-    OpenGL Extension #480
+    ARB Extension #175
     OpenGL ES Extension #243
 
 Dependencies
