@@ -18,6 +18,7 @@ Contributors
     Corentin Wallez, NVIDIA
     Markus Tavenrath, NVIDIA
     Mark Kilgard, NVIDIA
+    Joseph Emmons, NVIDIA
 
 Status
 
@@ -25,8 +26,8 @@ Status
 
 Version
 
-    Last Modified Date: April 16, 2015
-    Revision: 2
+    Last Modified Date: June 18, 2015
+    Revision: 4
 
 Number
 
@@ -45,6 +46,8 @@ Dependencies
     This extension interacts with NV_bindless_texture and ARB_bindless_texture
     
     This extension interacts with NV_shader_buffer_load
+    
+    This extension interacts with ARB_shader_draw_parameters
     
     The extension is written against the OpenGL 4.4 Specification, 
     Compatibility Profile.
@@ -268,7 +271,7 @@ Add a new subsection 10.X.2 (Drawing with Commands)
 
     These commands accept arrays of buffer addresses (either an array of 
     offsets <indirects> into a buffer named by <buffer>, or an array of GPU 
-    addresses <indirects>), an array of command lengths in <sizes>. 
+    addresses <indirects>), and an array of sequence lengths in <sizes>. 
     All arrays have <count> entries.
     INVALID_ENUM is generated if <mode> is not an accepted value.
     INVALID_OPERATION is generated if a geometry shader is active and <mode> is 
@@ -528,7 +531,7 @@ Add a new subsection 10.X.2 (Drawing with Commands)
             case ATTRIBUTE_ADDRESS_COMMAND_NV:
               {
                 AttributeAddressCommandNV* cmd = (AttributeAddressCommandNV*)current;
-                BufferAddressRangeNV(VERTEX_ATTRIB_ARRAY_ADDRESS_NV, 0, uint64(cmd->addressLo) | (uint64(cmd->addressHi)<<32), 0x7FFFFFFF);
+                BufferAddressRangeNV(VERTEX_ATTRIB_ARRAY_ADDRESS_NV, cmd->index, uint64(cmd->addressLo) | (uint64(cmd->addressHi)<<32), 0x7FFFFFFF);
               }
               break;
             case UNIFORM_ADDRESS_COMMAND_NV:
@@ -640,7 +643,7 @@ Add a new subsection 10.X.3 (Drawing with Commands and State Objects)
 
     These commands accept arrays of buffer addresses (either an array of 
     offsets <indirects> into a buffer named by <buffer>, or an array of GPU 
-    addresses <indirects>), an array of command lengths in <sizes>, and an 
+    addresses <indirects>), an array of sequence lengths in <sizes>, and an 
     array of state object names in <states>, of which all names must be non-zero.
     Frame buffer object names are stored in <fbos> and can
     be either zero or non-zero. All arrays have <count> entries.
@@ -719,9 +722,10 @@ Add a new section 10.X.4 (Command Lists)
 
         void CommandListSegmentsNV(uint list, uint segments);
 
-    indicates that <list> will have <segments> ordered sequences of commands 
-    that it enqueues. This must be called before any commands are enqueued. In 
-    the initial state, a command list has a single segment.
+    indicates that <list> will have <segments> number of segments, each
+    of which is a list of command sequences that it enqueues. This must be
+    called before any commands are enqueued. In the initial state, a command 
+    list has a single segment.
 
     A command list's initial state allows it to enqueue commands, but not to 
     be executed. The following command can be enqueued:
@@ -731,8 +735,11 @@ Add a new section 10.X.4 (Command Lists)
                                               uint count);
 
     A list has multiple segments and each segment enqueues an ordered list of 
-    commands. This command enqueues the equivalent of the DrawCommandsStatesClientNV 
-    commands into the list indicated by <list> on the segment indicated by <segment>. 
+    command sequences. This command enqueues the equivalent of the DrawCommandsStatesNV 
+    commands into the list indicated by <list> on the segment indicated by <segment> 
+    except that the sequence data is copied from the sequences pointed to by the <indirects> 
+    pointer. The <indirects> pointer should point to a list of size <count> of pointers, 
+    each of which should point to a command sequence. 
 
     The pre-validated state from <states> is saved into the command list, rather 
     than a reference to the state object (i.e. the state objects or fbos could be 
@@ -851,6 +858,13 @@ Interactions with ARB_robust_buffer_access_behavior
     do not provide the required buffer ranges for robust buffer
     access. Therefore draw calls executed under this type of 
     buffer setup will not respect the robust buffer access rules.
+    
+Interactions with ARB_shader_draw_parameters
+
+    The drawing operations performed through this extension will not support
+    setting of the built-in GLSL values that were added by 
+    ARB_shader_draw_parameters (gl_BaseInstanceARB, gl_BaseVertexARB, gl_DrawIDARB).
+    Accessing these variables will result in undefined values.
 
 Additions to the AGL/GLX/WGL Specifications
 
@@ -1058,9 +1072,9 @@ Revision History
 
     Rev.    Date      Author    Changes
     ----  --------    --------  -----------------------------------------
-     2    2015/04/16  ckubisch  Fix size_t -> GLsizei in
-                                ListDrawCommandsStatesClientNV <sizes>
-                                parameter (public bug 1329).
+     4    6/18/2015   ckubisch  Add missing interaction with ARB_shader_draw_parameters
+     3    5/27/2015   jemmons   Multiple minor fixes and clarifications
+     2    4/16/2015   pboudier  Fix incorrect type (size_t is now sizei) in ListDrawCommandsStatesClientNV
      1                pboudier  concept
                       jbolz     base spec
                       ckubisch  detailed spec
