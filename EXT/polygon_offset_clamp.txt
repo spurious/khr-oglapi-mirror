@@ -27,7 +27,7 @@ Version
 Number
 
     OpenGL Extension #460
-    OpenGL ES Extension #TBD
+    OpenGL ES Extension #252
 
 Dependencies
 
