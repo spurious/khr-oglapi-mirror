@@ -13,6 +13,8 @@ Contact
 Contributors
 
     Jeff Bolz, NVIDIA Corporation
+    Mathias Heyer, NVIDIA Corporation
+    Daniel Koch, NVIDIA Corporation
 
 Status
 
@@ -20,26 +22,45 @@ Status
 
 Version
 
-    Last Modified Date:         September 12, 2014
-    NVIDIA Revision:            1
+    Last Modified Date:         April 19, 2016
+    NVIDIA Revision:            3
 
 Number
 
     OpenGL Extension #463
+    OpenGL ES Extension #259
 
 Dependencies
 
     This extension is written against the OpenGL 4.4 Specification
-    (Compatibility Profile), dated July 21, 2013
+    (Compatibility Profile), dated July 21, 2013.
 
     This extension is written against the OpenGL Shading Language
     Specification, version 4.40, revision 6.
 
-    This extension requires and extends ARB_sparse_texture.
+    When implemented in OpenGL, this extension requires and extends
+    ARB_sparse_texture.
+
+    When implemented in OpenGL ES, this extension requires and extends
+    EXT_sparse_texture.
 
     This extension interacts trivially with EXT_depth_bounds_test.
 
     This extension interacts with NV_gpu_program4 and NV_gpu_program5.
+
+    This extension interacts with OpenGL ES 3.1 (dated October 29th 2014).
+
+    This extension interacts with OpenGL ES Shading Language 3.1 (revision 3).
+
+    This extension interacts with EXT_gpu_shader5 and OES_gpu_shader5.
+
+    This extension interacts with EXT_texture_norm16.
+
+    This extension interacts with EXT_texture_cube_map_array and
+    OES_texture_cube_map_array.
+
+    This extension interacts with OES_texture_storage_multisample_2D_array.
+
 
 Overview
 
@@ -62,7 +83,7 @@ Overview
         were filled with zeroes; previously, the values returned by reads were
         undefined.
 
-      * Standard implementation-independent virtual page sizes for internal 
+      * Standard implementation-independent virtual page sizes for internal
         formats required to be supported with sparse textures. These standard
         sizes can be requested by leaving VIRTUAL_PAGE_SIZE_INDEX_ARB at its
         initial value (0).
@@ -128,10 +149,10 @@ Modifications to the OpenGL 4.4 Specification (Compatibility Profile)
     [REMOVED LANGUAGE] An INVALID_VALUE error is generated if
     TEXTURE_SPARSE_ARB is TRUE and <width>, <height> or <depth> is is not an
     integer multiple of the page size in the corresponding dimension.
-    
+
     (remove the error language beginning with "If the value of
      SPARSE_TEXTURE_FULL_ARRAY_CUBE_MIPMAPS_ARB is FALSE", and replace with
-     the following) 
+     the following)
 
     In older extensions supporting sparse textures, the constant
     SPARSE_TEXTURE_FULL_ARRAY_CUBE_MIPMAPS_ARB was provided to advertise
@@ -204,7 +225,7 @@ Modifications to the OpenGL 4.4 Specification (Compatibility Profile)
       RGBA32F              64 x 64 x 1     16 x 16 x 16
       RGBA32I
       RGBA32UI
-      
+
       Table 8.X, Standard Virtual Page Sizes for Sparse Textures
 
 
@@ -338,7 +359,7 @@ Modifications to the OpenGL Shading Language Specification, Version 4.40
                            out float texel);
       int sparseTextureEXT(gsampler2DRect sampler, vec2 P,
                            out gvec4 texel);
-      int sparseTextureEXT(sampler2DRectShadow sampler, vec3 P, 
+      int sparseTextureEXT(sampler2DRectShadow sampler, vec3 P,
                            out float texel);
       int sparseTextureEXT(samplerCubeArrayShadow sampler, vec4 P,
                            float compare, out float texel);
@@ -363,21 +384,21 @@ Modifications to the OpenGL Shading Language Specification, Version 4.40
                                 float lodClamp, out gvec4 texel
                                 [, float bias]);
       int sparseTextureClampEXT(sampler2DShadow sampler, vec3 P,
-                                float lodClamp, out float texel 
+                                float lodClamp, out float texel
                                 [, float bias]);
       int sparseTextureClampEXT(samplerCubeShadow sampler, vec4 P,
                                 float lodClamp, out float texel
                                 [, float bias]);
-      int sparseTextureClampEXT(gsampler2DArray sampler, vec3 P, 
+      int sparseTextureClampEXT(gsampler2DArray sampler, vec3 P,
                                 float lodClamp, out gvec4 texel
                                 [, float bias]);
-      int sparseTextureClampEXT(gsamplerCubeArray sampler, vec4 P, 
+      int sparseTextureClampEXT(gsamplerCubeArray sampler, vec4 P,
                                 float lodClamp, out gvec4 texel
                                 [, float bias]);
       int sparseTextureClampEXT(sampler2DArrayShadow sampler, vec4 P,
                                 float lodClamp, out float texel);
       int sparseTextureClampEXT(samplerCubeArrayShadow sampler, vec4 P,
-                                float compare, float lodClamp, 
+                                float compare, float lodClamp,
                                 out float texel);
 
     Description:
@@ -413,7 +434,7 @@ Modifications to the OpenGL Shading Language Specification, Version 4.40
                             float lodClamp [, float bias]);
       float textureClampEXT(sampler1DArrayShadow sampler, vec3 P,
                             float lodClamp [, float bias]);
-      float textureClampEXT(sampler2DArrayShadow sampler, vec4 P, 
+      float textureClampEXT(sampler2DArrayShadow sampler, vec4 P,
                             float lodClamp);
       float textureClampEXT(samplerCubeArrayShadow sampler, vec4 P,
                             float compare, float lodClamp);
@@ -447,26 +468,26 @@ Modifications to the OpenGL Shading Language Specification, Version 4.40
     the out parameter <texel>.
 
     --
-    
+
     Syntax:
 
-      int sparseTextureOffsetEXT(gsampler2D sampler, vec2 P, 
+      int sparseTextureOffsetEXT(gsampler2D sampler, vec2 P,
                                  ivec2 offset, out gvec4 texel
                                  [, float bias]);
-      int sparseTextureOffsetEXT(gsampler3D sampler, vec3 P, 
+      int sparseTextureOffsetEXT(gsampler3D sampler, vec3 P,
                                  ivec3 offset, out gvec4 texel
                                  [, float bias]);
-      int sparseTextureOffsetEXT(gsampler2DRect sampler, vec2 P, 
+      int sparseTextureOffsetEXT(gsampler2DRect sampler, vec2 P,
                                  ivec2 offset, out gvec4 texel);
-      int sparseTextureOffsetEXT(sampler2DRectShadow sampler, vec3 P, 
+      int sparseTextureOffsetEXT(sampler2DRectShadow sampler, vec3 P,
                                  ivec2 offset, out float texel);
-      int sparseTextureOffsetEXT(sampler2DShadow sampler, vec3 P, 
+      int sparseTextureOffsetEXT(sampler2DShadow sampler, vec3 P,
                                  ivec2 offset, out float texel
                                  [, float bias]);
-      int sparseTextureOffsetEXT(gsampler2DArray sampler, vec3 P, 
+      int sparseTextureOffsetEXT(gsampler2DArray sampler, vec3 P,
                                  ivec2 offset, out gvec4 texel
                                  [, float bias]);
-      int sparseTextureOffsetEXT(sampler2DArrayShadow sampler, vec4 P, 
+      int sparseTextureOffsetEXT(sampler2DArrayShadow sampler, vec4 P,
                                  ivec2 offset, out float texel);
 
     Description:
@@ -479,19 +500,19 @@ Modifications to the OpenGL Shading Language Specification, Version 4.40
 
     Syntax:
 
-      int sparseTextureOffsetClampEXT(gsampler2D sampler, vec2 P, 
+      int sparseTextureOffsetClampEXT(gsampler2D sampler, vec2 P,
                                       ivec2 offset, float lodClamp,
                                       out gvec4 texel [, float bias]);
-      int sparseTextureOffsetClampEXT(gsampler3D sampler, vec3 P, 
+      int sparseTextureOffsetClampEXT(gsampler3D sampler, vec3 P,
                                       ivec3 offset, float lodClamp,
                                       out gvec4 texel [, float bias]);
-      int sparseTextureOffsetClampEXT(sampler2DShadow sampler, vec3 P, 
+      int sparseTextureOffsetClampEXT(sampler2DShadow sampler, vec3 P,
                                       ivec2 offset, float lodClamp,
                                       out float texel [, float bias]);
-      int sparseTextureOffsetClampEXT(gsampler2DArray sampler, vec3 P, 
+      int sparseTextureOffsetClampEXT(gsampler2DArray sampler, vec3 P,
                                       ivec2 offset, float lodClamp,
                                       out gvec4 texel [, float bias]);
-      int sparseTextureOffsetClampEXT(sampler2DArrayShadow sampler, vec4 P, 
+      int sparseTextureOffsetClampEXT(sampler2DArrayShadow sampler, vec4 P,
                                       ivec2 offset, float lodClamp,
                                       out float texel);
 
@@ -507,23 +528,23 @@ Modifications to the OpenGL Shading Language Specification, Version 4.40
 
     Syntax:
 
-      gvec4 textureOffsetClampEXT(gsampler1D sampler, float P, 
+      gvec4 textureOffsetClampEXT(gsampler1D sampler, float P,
                                   int offset, float lodClamp [, float bias]);
-      gvec4 textureOffsetClampEXT(gsampler2D sampler, vec2 P, 
+      gvec4 textureOffsetClampEXT(gsampler2D sampler, vec2 P,
                                   ivec2 offset, float lodClamp [, float bias]);
-      gvec4 textureOffsetClampEXT(gsampler3D sampler, vec3 P, 
+      gvec4 textureOffsetClampEXT(gsampler3D sampler, vec3 P,
                                   ivec3 offset, float lodClamp [, float bias]);
-      float textureOffsetClampEXT(sampler1DShadow sampler, vec3 P, 
+      float textureOffsetClampEXT(sampler1DShadow sampler, vec3 P,
                                   int offset, float lodClamp [, float bias]);
-      float textureOffsetClampEXT(sampler2DShadow sampler, vec3 P, 
+      float textureOffsetClampEXT(sampler2DShadow sampler, vec3 P,
                                   ivec2 offset, float lodClamp [, float bias]);
-      gvec4 textureOffsetClampEXT(gsampler1DArray sampler, vec2 P, 
+      gvec4 textureOffsetClampEXT(gsampler1DArray sampler, vec2 P,
                                   int offset, float lodClamp [, float bias]);
-      gvec4 textureOffsetClampEXT(gsampler2DArray sampler, vec3 P, 
+      gvec4 textureOffsetClampEXT(gsampler2DArray sampler, vec3 P,
                                   ivec2 offset, float lodClamp [, float bias]);
-      float textureOffsetClampEXT(sampler1DArrayShadow sampler, vec3 P, 
+      float textureOffsetClampEXT(sampler1DArrayShadow sampler, vec3 P,
                                   int offset, float lodClamp [, float bias]);
-      float textureOffsetClampEXT(sampler2DArrayShadow sampler, vec4 P, 
+      float textureOffsetClampEXT(sampler2DArrayShadow sampler, vec4 P,
                                   ivec2 offset, float lodClamp);
 
     Description:
@@ -536,13 +557,13 @@ Modifications to the OpenGL Shading Language Specification, Version 4.40
 
     Syntax:
 
-      int sparseTexelFetchEXT(gsampler2D sampler, ivec2 P, int lod, 
+      int sparseTexelFetchEXT(gsampler2D sampler, ivec2 P, int lod,
                               out gvec4 texel);
-      int sparseTexelFetchEXT(gsampler3D sampler, ivec3 P, int lod, 
+      int sparseTexelFetchEXT(gsampler3D sampler, ivec3 P, int lod,
                               out gvec4 texel);
-      int sparseTexelFetchEXT(gsampler2DRect sampler, ivec2 P, 
+      int sparseTexelFetchEXT(gsampler2DRect sampler, ivec2 P,
                               out gvec4 texel);
-      int sparseTexelFetchEXT(gsampler2DArray sampler, ivec3 P, int lod, 
+      int sparseTexelFetchEXT(gsampler2DArray sampler, ivec3 P, int lod,
                               out gvec4 texel);
       int sparseTexelFetchEXT(gsampler2DMS sampler, ivec2 P, int sample,
                               out gvec4 texel);
@@ -559,13 +580,13 @@ Modifications to the OpenGL Shading Language Specification, Version 4.40
 
     Syntax:
 
-      int sparseTexelFetchOffsetEXT(gsampler2D sampler, ivec2 P, int lod, 
+      int sparseTexelFetchOffsetEXT(gsampler2D sampler, ivec2 P, int lod,
                                     ivec2 offset, out gvec4 texel);
-      int sparseTexelFetchOffsetEXT(gsampler3D sampler, ivec3 P, int lod, 
+      int sparseTexelFetchOffsetEXT(gsampler3D sampler, ivec3 P, int lod,
                                     ivec3 offset, out gvec4 texel);
-      int sparseTexelFetchOffsetEXT(gsampler2DRect sampler, ivec2 P, 
+      int sparseTexelFetchOffsetEXT(gsampler2DRect sampler, ivec2 P,
                                     ivec2 offset, out gvec4 texel);
-      int sparseTexelFetchOffsetEXT(gsampler2DArray sampler, ivec3 P, int lod, 
+      int sparseTexelFetchOffsetEXT(gsampler2DArray sampler, ivec3 P, int lod,
                                     ivec2 offset, out gvec4 texel);
 
     Description:
@@ -584,11 +605,11 @@ Modifications to the OpenGL Shading Language Specification, Version 4.40
       int sparseTextureLodOffsetEXT(gsampler3D sampler, vec3 P,
                                     float lod, ivec3 offset,
                                     out gvec4 texel);
-      int sparseTextureLodOffsetEXT(sampler2DShadow sampler, vec3 P, 
+      int sparseTextureLodOffsetEXT(sampler2DShadow sampler, vec3 P,
                                     float lod, ivec2 offset,
                                     out float texel);
-      int sparseTextureLodOffsetEXT(gsampler2DArray sampler, vec3 P, 
-                                    float lod, ivec2 offset, 
+      int sparseTextureLodOffsetEXT(gsampler2DArray sampler, vec3 P,
+                                    float lod, ivec2 offset,
                                     out gvec4 texel);
 
     Description:
@@ -857,7 +878,7 @@ Modifications to the OpenGL Shading Language Specification, Version 4.40
                                        ivec2 offset, out gvec4 texel
                                        [, int comp]);
       int sparseTextureGatherOffsetEXT(gsampler2DShadow sampler, vec2 P,
-                                       float refZ, ivec2 offset, 
+                                       float refZ, ivec2 offset,
                                        out vec4 texel);
       int sparseTextureGatherOffsetEXT(gsampler2DArrayShadow sampler, vec3 P,
                                        float refZ, ivec2 offset,
@@ -971,6 +992,54 @@ New Implementation Dependent State
 
     None.
 
+Dependencies on OpenGL ES 3.1
+
+    Replace references to ARB_sparse_texture with references to
+    EXT_sparse_texture, in particular functions and enums introduced by
+    EXT_sparse_texture will carry EXT suffixes.
+
+    If implemented on OpenGL ES 3.1, remove all references to 1D and
+    rectangle textures and their respective texture targets (TEXTURE_1D
+    and TEXTURE_RECTANGLE). Also ignore the corresponding sampler
+    built-ins thereof: 'gsampler1D', 'gsampler2DRect' and
+    'gsampler2DRectShadow'. Do not introduce overloads of
+    sparseTexture*EXT, texture*ClampEXT or sparseTexelFetchEXT for these
+    sampler types.
+
+    Do not introduce sparseImageLoadEXT overloads of gimageRect,
+    gimage2D, gimage2DArray, gimage2DMS and gimage2DArrayMS.
+
+Dependencies on EXT_texture_norm16
+
+    If implemented on OpenGL ES 3.1 and EXT_texture_norm16 is not
+    supported ignore all references to R16, RG16, RGBA16, R16_SNORM,
+    RG16_SNORM and RGBA16_SNORM. If EXT_texture_norm16 is supported,
+    these enums are suffixed by _EXT.
+
+Dependencies on EXT_texture_cube_map_array and OES_texture_cube_map_array
+
+    If implemented on OpenGL ES 3.1 and neither EXT_texture_cube_map_array
+    nor OES_texture_cube_map_array is supported, ignore all references to
+    texture sampler types 'gsamplerCubeArray' and 'gsamplerCubeArrayShadow'.
+    Do not introduce overloads of sparseTexture*EXT, texture*ClampEXT or
+    sparseTexelFetchEXT for these sampler types. Remove references to
+    TEXTURE_CUBE_MAP_ARRAY.
+
+Dependencies on OES_texture_storage_multisample_2D_array
+
+    If implemented on OpenGL ES 3.1 and OES_texture_storage_-
+    multisample_2D_array is not supported, ignore all references to
+    texture sampler types 'gsampler2DMS' and 'gsampler2DMSArray'. Do not
+    introduce overloads of sparseTexture*EXT, texture*ClampEXT or
+    sparseTexelFetchEXT for these sampler types. Remove references to
+    TEXTURE_2D_MULTISAMPLE_ARRAY.
+
+Dependencies on EXT_gpu_shader5 and OES_gpu_shader5
+
+    If implemented on OpenGL GLSL ES 3.1 and neither EXT_gpu_shader5 nor
+    OES_gpu_shader5 is supported, do not introduce
+    sparseTextureGatherOffsetsEXT.
+
 Dependencies on EXT_depth_bounds_test
 
     If EXT_depth_bounds_test is not supported, references to the depth bounds
@@ -1022,7 +1091,7 @@ Dependencies on NV_gpu_program4 and NV_gpu_program5
     "SPARSE" modifier specifies that the sparse memory condition code
     described in Section 2.X.3.7 should be updated to reflect whether the
     memory accessed by the instruction was fully populated.
- 
+
     For texture fetch instructions with implicit LOD calcuations (TEX, TXB,
     TXD), the "LODCLAMP" modifier specifies that the instruction includes an
     extra floating-point component indicating a minimum level of detail to be
@@ -1046,7 +1115,7 @@ Dependencies on NV_gpu_program4 and NV_gpu_program5
       components of the test result are loaded from the RESF flag of the
       sparse condition code.  Otherwise, If "0" or "1" is appended ...
 
-    (modify the paragraph about condition code updates) 
+    (modify the paragraph about condition code updates)
 
     A program instruction can also optionally update one of the two general
     condition code registers ...
@@ -1065,7 +1134,7 @@ Dependencies on NV_gpu_program4 and NV_gpu_program5
      <coord2> and removing <lod>)
 
       result_t_vec
-        TextureSample(float_vec coord, float_vec coord2, 
+        TextureSample(float_vec coord, float_vec coord2,
                       float_vec ddx, float_vec ddy, int_vec offset);
 
     (modify the description of <coord> to add <coord2>)
@@ -1136,7 +1205,7 @@ Dependencies on NV_gpu_program4 and NV_gpu_program5
       not supported for the targets SHADOWARRAY2D and SHADOWARRAYCUBE, so the
       first column of "lod" is ignored.
 
-    Modify Section 2.X.8.Z, TXD:  Texture Sample with Partials      
+    Modify Section 2.X.8.Z, TXD:  Texture Sample with Partials
 
     ... The partial derivatives of the texture coordinates with respect to X
     and Y are specified by the second and third floating-point source vectors.
@@ -1270,7 +1339,7 @@ Issues
       care about residency information can still check the status in a single
       (long) line:
 
-        if (!sparseTexelsResidentEXT(sparseTextureEXT(sampler, coords, 
+        if (!sparseTexelsResidentEXT(sparseTextureEXT(sampler, coords,
                                                       texel))
         {
           // do something about the failure
@@ -1463,7 +1532,7 @@ Issues
 
     (17) How do applications get to use the standard page size?
 
-      RESOLVED:  Applications opt in to using standard page sizes by leaving 
+      RESOLVED:  Applications opt in to using standard page sizes by leaving
       VIRTUAL_PAGE_SIZE_INDEX_ARB at its initial value (zero).
 
       In ARB_sparse_texture, there were no standard page sizes.  Applications
@@ -1482,10 +1551,10 @@ Issues
       If an application doesn't bother setting the VIRTUAL_PAGE_SIZE_INDEX_ARB
       texture parameter, the default index of zero will be used and the page
       size will be whatever the implementation chooses for its first page size
-      index.  In the absence of this extension, the application still needs to 
-      call GetInternalFormativ() to determine the page size being used so it 
+      index.  In the absence of this extension, the application still needs to
+      call GetInternalFormativ() to determine the page size being used so it
       can manage texture residency. But in the presence of this extension, page
-      size index 0 will be a standard size and will be the same on all 
+      size index 0 will be a standard size and will be the same on all
       implementations supporting the extension.
 
     (18) Should we support sparse multisample textures?  If so, should we
@@ -1560,3 +1629,7 @@ Revision History
 
     Revision 1
       - Internal revisions
+    Revision 2 - December 18, 2014 - mheyer
+      - added ES 3.1 interactions
+    Revision 3 - April 19, 2016 - dkoch
+      - fix typos, add interactions with OES extensions

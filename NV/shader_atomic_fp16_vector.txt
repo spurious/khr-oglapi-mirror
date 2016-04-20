@@ -13,6 +13,7 @@ Contact
 Contributors
 
     Pat Brown, NVIDIA
+    Mathias Heyer, NVIDIA
 
 Status
 
@@ -20,38 +21,43 @@ Status
 
 Version
 
-    Last Modified Date:         February 11, 2014
-    NVIDIA Revision:            2
+    Last Modified Date:         February 4, 2015
+    NVIDIA Revision:            3
 
 Number
 
     OpenGL Extension #474
+    OpenGL ES Extension #261
 
 Dependencies
 
     This extension is written against the OpenGL 4.3 (Compatibility Profile)
     Specification.
 
-    This extension is written against version 4.30 of the OpenGL Shading 
+    This extension is written against version 4.30 of the OpenGL Shading
     Language Specification.
 
     This extension interacts with NV_shader_buffer_store and NV_gpu_shader5.
-    
-    This extension interacts with NV_gpu_program5, NV_shader_buffer_store, and 
+
+    This extension interacts with NV_gpu_program5, NV_shader_buffer_store, and
     NV_gpu_program5_mem_extended.
 
     This extension requires NV_gpu_shader5.
 
-    This extension interacts with NV_shader_storage_buffer_object. 
+    This extension interacts with NV_shader_storage_buffer_object.
 
-    This extension interacts with NV_compute_program5. 
+    This extension interacts with NV_compute_program5.
+
+    This extension interacts with NV_image_formats.
+
+    This extension interacts with OES_shader_image_atomic.
 
 Overview
 
     This extension provides GLSL built-in functions and assembly opcodes
-    allowing shaders to perform a limited set of atomic read-modify-write 
-    operations to buffer or texture memory with 16-bit floating point vector 
-    surface formats. 
+    allowing shaders to perform a limited set of atomic read-modify-write
+    operations to buffer or texture memory with 16-bit floating point vector
+    surface formats.
 
 New Procedures and Functions
 
@@ -124,9 +130,18 @@ Modifications to the OpenGL Shading Language Specification, Version 4.30
         f16vec2 imageAtomicExchange(IMAGE_PARAMS, f16vec2 data);
         f16vec4 imageAtomicExchange(IMAGE_PARAMS, f16vec4 data);
 
+Dependencies on OES_shader_image_atomic
+
+    If implemented in OpenGL ES and OES_shader_image_atomic is not
+    supported, do not introduce additional imageAtomic* functions.
+
+Dependencies on NV_image_formats
+
+    If implemented in OpenGL ES and NV_image_formats is not
+    supported, remove references to two-component images of format
+    <rg16f>.
 
 Dependencies on NV_shader_buffer_store and NV_gpu_shader5
-
     If NV_shader_buffer_store and NV_gpu_shader5 are supported, the following
     functions should be added to the "Section 8.Y, Shader Memory Functions"
     language in the NV_shader_buffer_store specification:
@@ -142,14 +157,14 @@ Dependencies on NV_shader_buffer_store and NV_gpu_shader5
       f16vec2 atomicExchange(f16vec2 *address, f16vec2 data);
       f16vec4 atomicExchange(f16vec4 *address, f16vec4 data);
 
-Dependencies on NV_gpu_program5, NV_shader_buffer_store, and 
+Dependencies on NV_gpu_program5, NV_shader_buffer_store, and
 NV_gpu_program5_mem_extended
 
-    If NV_gpu_program5 is supported and "OPTION NV_shader_atomic_fp16_vector" 
-    is specified in an assembly program, "F16X2" and "F16X4" should be allowed 
-    as storage modifiers to the ATOM instruction for the atomic operations 
-    "ADD", "MIN", "MAX" and "EXCH". These operate on each of the two or four 
-    fp16 values independently. Atomicity is only guaranteed on a per-component 
+    If NV_gpu_program5 is supported and "OPTION NV_shader_atomic_fp16_vector"
+    is specified in an assembly program, "F16X2" and "F16X4" should be allowed
+    as storage modifiers to the ATOM instruction for the atomic operations
+    "ADD", "MIN", "MAX" and "EXCH". These operate on each of the two or four
+    fp16 values independently. Atomicity is only guaranteed on a per-component
     basis.
 
     (Add to "Section 2.X.6, Program Options" of the NV_gpu_program4 extension,
@@ -157,10 +172,10 @@ NV_gpu_program5_mem_extended
 
       + Floating-Point Vector Atomic Operations (NV_shader_atomic_fp16_vector)
 
-      If a program specifies the "NV_shader_atomic_fp16_vector" option, it may 
-      use the "F16X2" and "F16X4" storage modifiers with the "ATOM" opcodes to 
+      If a program specifies the "NV_shader_atomic_fp16_vector" option, it may
+      use the "F16X2" and "F16X4" storage modifiers with the "ATOM" opcodes to
       perform atomic floating-point add or exchange operations.
-    
+
     (Add to the table in "Section 2.X.8.Z, ATOM" in NV_gpu_program5:)
 
       atomic     storage
@@ -179,10 +194,10 @@ NV_gpu_program5_mem_extended
 Dependencies on EXT_shader_image_load_store and NV_gpu_program5
 
     If EXT_shader_image_load_store and NV_gpu_program5 are supported and
-    "OPTION NV_shader_atomic_fp16_vector" is specified in an assembly program, 
-    "F16X2" and "F16X4" should be allowed as storage modifiers to the ATOMIM 
-    instruction for the atomic operations "ADD", "MIN", "MAX", and "EXCH". 
-    These operate on each of the two or four fp16 values independently. 
+    "OPTION NV_shader_atomic_fp16_vector" is specified in an assembly program,
+    "F16X2" and "F16X4" should be allowed as storage modifiers to the ATOMIM
+    instruction for the atomic operations "ADD", "MIN", "MAX", and "EXCH".
+    These operate on each of the two or four fp16 values independently.
     Atomicity is only guaranteed on a per-component basis.
 
     (Add to the table in "Section 2.X.8.Z, ATOMIM" in the "Dependencies on
@@ -203,15 +218,15 @@ Dependencies on EXT_shader_image_load_store and NV_gpu_program5
 
 Dependencies on NV_compute_program5
 
-    If NV_compute_program5 is supported and "OPTION 
-    NV_shader_atomic_fp16_vector" is specified in an assembly program, "F16X2" 
+    If NV_compute_program5 is supported and "OPTION
+    NV_shader_atomic_fp16_vector" is specified in an assembly program, "F16X2"
     and "F16X4" should be allowed as storage modifiers to the ATOMB instruction
     for the atomic operations "ADD", "MIN", "MAX", and "EXCH". These operate on
-    each of the two or four fp16 values independently. Atomicity is only 
+    each of the two or four fp16 values independently. Atomicity is only
     guaranteed on a per-component basis.
 
     (Add to the table in "Section 2.X.8.Z, ATOMB" in the "Dependencies on
-    NV_gpu_program5" portion of the NV_shader_storage_buffer_object 
+    NV_gpu_program5" portion of the NV_shader_storage_buffer_object
     specification)
 
       atomic     storage
@@ -229,11 +244,11 @@ Dependencies on NV_compute_program5
 
 Dependencies on NV_shader_storage_buffer_object
 
-    If NV_shader_storage_buffer_object is supported and "OPTION 
-    NV_shader_atomic_fp16_vector" is specified in an assembly program, "F16X2" 
+    If NV_shader_storage_buffer_object is supported and "OPTION
+    NV_shader_atomic_fp16_vector" is specified in an assembly program, "F16X2"
     and "F16X4" should be allowed as storage modifiers to the ATOMS instruction
     for the atomic operations "ADD", "MIN", "MAX", and "EXCH". These operate on
-    each of the two or four fp16 values independently. Atomicity is only 
+    each of the two or four fp16 values independently. Atomicity is only
     guaranteed on a per-component basis.
 
     (Add to the table in "Section 2.X.8.Z, ATOMS" in the "Dependencies on
@@ -267,7 +282,7 @@ New Implementation Dependent State
 
 Issues
 
-    (1) Should we allow "partial" atomics to a f16vec2 or f16vec4, only 
+    (1) Should we allow "partial" atomics to a f16vec2 or f16vec4, only
     modifying some of the components?
 
     RESOLVED: No. If an app really cares to do this, they could inject
@@ -276,7 +291,7 @@ Issues
     would work for atomicAdd, atomicMin, and atomicMax, but not for
     atomicExchange.
 
-    (2) Are these vector atomics guaranteed to update all components of the 
+    (2) Are these vector atomics guaranteed to update all components of the
     vector atomically?
 
     RESOLVED:  No.  The spec only guarantees that individual components of a
@@ -298,5 +313,7 @@ Issues
 
 Revision History
 
+    Revision 2
+    - Add OpenGL ES interactions
     Revision 1
     - Internal revisions.

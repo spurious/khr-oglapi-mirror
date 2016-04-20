@@ -19,6 +19,7 @@ Contributors
     Jeff Bolz, NVIDIA
     Piers Daniell, NVIDIA
     Daniel Rakos, AMD
+    Mathias Heyer, NVIDIA
 
 Status
 
@@ -26,12 +27,13 @@ Status
 
 Version
 
-    Last Modified Date:         09/11/2014
-    NVIDIA Revision:            8
+    Last Modified Date:         04/16/2016
+    NVIDIA Revision:            10
 
 Number
 
-    389
+    OpenGL Extension #389
+    OpenGL ES Extension #260
 
 Dependencies
 
@@ -41,9 +43,9 @@ Dependencies
     This extension is written against version 1.50 (revision 09) of the OpenGL
     Shading Language Specification.
 
-    OpenGL 3.2 and GLSL 1.50 are required.
+    If implemented in OpenGL, OpenGL 3.2 and GLSL 1.50 are required.
 
-    ARB_gpu_shader5 is required.
+    If implemented in OpenGL, ARB_gpu_shader5 is required.
 
     This extension interacts with ARB_gpu_shader5.
 
@@ -58,6 +60,18 @@ Dependencies
     This extension interacts with EXT_vertex_attrib_64bit and
     NV_vertex_attrib_integer_64bit.
 
+    This extension interacts with OpenGL ES 3.1 (dated October 29th 2014).
+
+    This extension interacts with OpenGL ES Shading Language 3.1 (revision 3).
+
+    If implemented in OpenGL ES, OpenGL ES 3.1 and GLSL ES 3.10 are required.
+
+    If implemented in OpenGL ES, OES/EXT_gpu_shader5 and EXT_shader_implicit-
+    _conversions are required.
+
+    This extension interacts with OES/EXT_tessellation_shader
+
+    This extension interacts with OES/EXT_geometry_shader
 
 Overview
 
@@ -157,14 +171,14 @@ New Procedures and Functions
 
 
     (All of the following ProgramUniform* functions are supported if and only
-     if EXT_direct_state_access is supported.)
+     if implemented in OpenGL ES or EXT_direct_state_access is supported.)
 
     void ProgramUniform1i64NV(uint program, int location, int64EXT x);
     void ProgramUniform2i64NV(uint program, int location, int64EXT x,
                               int64EXT y);
-    void ProgramUniform3i64NV(uint program, int location, int64EXT x, 
+    void ProgramUniform3i64NV(uint program, int location, int64EXT x,
                               int64EXT y, int64EXT z);
-    void ProgramUniform4i64NV(uint program, int location, int64EXT x, 
+    void ProgramUniform4i64NV(uint program, int location, int64EXT x,
                               int64EXT y, int64EXT z, int64EXT w);
     void ProgramUniform1i64vNV(uint program, int location, sizei count,
                                const int64EXT *value);
@@ -176,11 +190,11 @@ New Procedures and Functions
                                const int64EXT *value);
 
     void ProgramUniform1ui64NV(uint program, int location, uint64EXT x);
-    void ProgramUniform2ui64NV(uint program, int location, uint64EXT x, 
+    void ProgramUniform2ui64NV(uint program, int location, uint64EXT x,
                                uint64EXT y);
-    void ProgramUniform3ui64NV(uint program, int location, uint64EXT x, 
+    void ProgramUniform3ui64NV(uint program, int location, uint64EXT x,
                                uint64EXT y, uint64EXT z);
-    void ProgramUniform4ui64NV(uint program, int location, uint64EXT x, 
+    void ProgramUniform4ui64NV(uint program, int location, uint64EXT x,
                                uint64EXT y, uint64EXT z, uint64EXT w);
     void ProgramUniform1ui64vNV(uint program, int location, sizei count,
                                 const uint64EXT *value);
@@ -188,7 +202,7 @@ New Procedures and Functions
                                 const uint64EXT *value);
     void ProgramUniform3ui64vNV(uint program, int location, sizei count,
                                 const uint64EXT *value);
-    void ProgramUniform4ui64vNV(uint program, int location, sizei count, 
+    void ProgramUniform4ui64vNV(uint program, int location, sizei count,
                                 const uint64EXT *value);
 
 
@@ -233,7 +247,7 @@ New Tokens
     Accepted by the <primitiveMode> parameter of BeginTransformFeedback:
 
         PATCHES
-          
+
 
 
 Additions to Chapter 2 of the OpenGL 3.2 (Compatibility Profile) Specification
@@ -522,7 +536,7 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50
     Modify Section 4.1, Basic Types, p. 18
 
     (add to the basic "Transparent Types" table, p. 18)
-    
+
       Types       Meaning
       --------    ----------------------------------------------------------
       int8_t      an 8-bit signed integer
@@ -609,11 +623,11 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50
 
     Modify Section 4.1.4, Floats, p. 22
 
-    (insert after second paragraph, p. 22) 
+    (insert after second paragraph, p. 22)
 
     Variables of type "float16_t" represent floating-point using exactly 16
     bits and are stored using the 16-bit floating-point representation
-    described in of the OpenGL Specification.  Variables of type "float32_t"
+    described in the OpenGL Specification.  Variables of type "float32_t"
     and "float64_t" represent floating-point with 32 or 64 bits, and are
     equivalent to "float" and "double" types, respectively.
 
@@ -693,7 +707,7 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50
     types, from 8-bit to 16-bit types, or between matrix types.  There are no
     implicit array or structure conversions.
 
-    (add before the final paragraph of the section, p. 27) 
+    (add before the final paragraph of the section, p. 27)
 
     (insert before the final paragraph of the section) When performing
     implicit conversion for binary operators, there may be multiple data types
@@ -710,7 +724,7 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50
     Modify Section 4.3.4, Inputs, p. 31
 
     (modify third paragraph of section, p. 31, allowing explicitly-sized
-    types) ... Vertex shader inputs variables can only signed and unsigned
+    types) ... Vertex shader inputs variables can only be signed and unsigned
     integers, floats, doubles, explicitly-sized integers and floating-point
     values, vectors of any of these types, and matrices.  ...
 
@@ -845,7 +859,7 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50
     Modify Section 6.1, Function Definitions, p. 63
 
     (ARB_gpu_shader5 adds a set of rules for defining whether implicit
-    conversions for one matching funcction definition are better or worse than
+    conversions for one matching function definition are better or worse than
     those for another.  These comparisons are done argument by argument.
     Extend the edits made by ARB_gpu_shader5 to add several new rules for
     comparing implicit conversions for a single argument, corresponding to the
@@ -910,7 +924,7 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50
 
     The input variables gl_TessLevelOuter[] and gl_TessLevelInner[] behave as
     in the identically-named tessellation evaluation shader inputs.
-    
+
 
     Modify Chapter 8, Built-in Functions, p. 81
 
@@ -996,7 +1010,7 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50
 
     Syntax:
 
-      bool anyThreadNV(bool value); 
+      bool anyThreadNV(bool value);
       bool allThreadsNV(bool value);
       bool allThreadsEqualNV(bool value);
 
@@ -1005,7 +1019,7 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50
     where individual execution threads are assigned to thread groups in an
     undefined, implementation-dependent order.  Algorithms may benefit from
     being able to evaluate a composite of boolean values over all active
-    threads in the thread group.  
+    threads in the thread group.
 
     The function anyThreadNV() returns true if and only if <value> is true for
     at least one active thread in the group.  The function allThreadsNV()
@@ -1019,7 +1033,7 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50
     group of threads, the value returned by these functions is largely
     undefined.  However, anyThreadNV() is guaranteed to return true if <value>
     is true, and allThreadsNV() is guaranteed to return false if <value> is
-    false.  
+    false.
 
     Since implementations are generally not required to combine threads into
     groups, simply returning <value> for anyThreadNV() and allThreadsNV() and
@@ -1060,7 +1074,7 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50
     Modify Section 8.7, Texture Lookup Functions, p. 91
 
     (modify text for textureOffset() functions, p. 94, allowing non-constant
-    offsets) 
+    offsets)
 
     Do a texture lookup as in texture but with offset added to the (u,v,w)
     texel coordinates before looking up each texel.  The value <offset> need
@@ -1078,8 +1092,8 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50
     p. 96, textureProjLodOffset, p. 96.)
 
 
-    (modify to the description of the textureGradOffset() functions, p. 97,
-    preserving the restriction on constant offsets) 
+    (modify the description of the textureGradOffset() functions, p. 97,
+    preserving the restriction on constant offsets)
 
     Do a texture lookup with both explicit gradient and offset, as described
     in textureGrad and textureOffset.  For these functions, the offset value
@@ -1089,9 +1103,8 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50
     MAX_PROGRAM_TEXEL_OFFSET, respectively.
 
 
-    (modify to the description of the textureProjGradOffset() functions,
+    (modify the description of the textureProjGradOffset() functions,
     p. 98, preserving the restriction on constant offsets)
-
 
     Do a texture lookup projectively and with explicit gradient as described
     in textureProjGrad, as well as with offset, as described in textureOffset.
@@ -1100,6 +1113,12 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50
     offset values are implementation-dependent and given by
     MIN_PROGRAM_TEXEL_OFFSET and MAX_PROGRAM_TEXEL_OFFSET, respectively.
 
+    (modify the description of the textureGatherOffsets() functions,
+     added in ARB_gpu_shader5, to remove the restriction on constant offsets)
+
+    The textureGatherOffsets() functions operate identically ...
+    selecting the texel T_i0_j0 of that footprint.  The specified values in
+    <offsets> need not be constant.  A limited range of ...
 
     Modify Section 9, Shading Language Grammar, p. 92
 
@@ -1109,6 +1128,246 @@ Modifications to The OpenGL Shading Language Specification, Version 1.50
 GLX Protocol
 
     TBD
+
+Interactions with OpenGL ES 3.1
+
+    If implemented in OpenGL ES, NV_gpu_shader5 acts as a superset
+    of functionality provided by OES_gpu_shader5.
+
+    A shader that enables this extension
+    via an #extension directive also implicitly enables the common
+    capabilities provided by OES_gpu_shader5.
+
+    Replace references to ARB_gpu_shader5 with OES_gpu_shader5 and
+    EXT_shader_implicit_conversions (as appropriate).
+    Replace references to ARB_geometry_shader with OES/EXT_geometry_shader.
+    Replace references to ARB_tessellation_shader with OES/EXT_tessellation_shader.
+
+    Replace references to int64EXT and uint64EXT with int64 and uint64,
+    respectively.
+
+    The specification should be edited as follows to include new
+    ProgramUniform* functions.
+
+    (modify the ProgramUniform* language)
+
+    The following commands:
+
+        ....
+        void ProgramUniform{1,2,3,4}{i64,ui64}NV
+            (uint program int location, T value);
+        void ProgramUniform{1,2,3,4}{i64,ui64}vNV
+            (uint program, int location, const T *value);
+
+    operate identically to the corresponding command where "Program" is
+    deleted from the name (and extension suffixes are dropped or updated
+    appropriately) except, rather than updating the currently active program
+    object, these "Program" commands update the program object named by the
+    <program> parameter.  ...
+
+    Changes to Section 2.6.1 "Begin and End" don't apply.
+
+    Disregard introduction of 64bit -integer or -floating point vertex
+    attribute types.
+
+Interactions with OpenGL ES Shading Language 3.10, revision 3
+
+    If implemented in GLSL ES, NV_gpu_shader5 acts as a superset
+    of functionality provided by OES_gpu_shader5 and
+    EXT_shader_implicit_conversions.
+
+    A shader that enables this extension via an #extension directive
+    also implicitly enables the common capabilities provided by
+    OES_gpu_shader5 and EXT_shader_implicit_conversions.
+
+    Replace references to ARB_tessellation_shader with OES/EXT_tessellation_shader.
+
+    Implicit conversion between GLSL ES types are introduced by
+    EXT_shader_implicit_conversions instead of ARB_gpu_shader5.
+
+    Disregard the notion of 'double' types as vertex shader inputs.
+
+    Section 4.1.7.2 "Images"
+        Remove the third sentence restricts
+        access to arrays of images to constant integral expression.
+
+        This essentially leaves it to the 'dynamically uniform integral
+        expressions' default as OES_gpu_shader5 introduced.
+
+    Modify Section 4.3.9 "Interface Blocks", as modified OES_gpu_shader5
+
+        NV_gpu_shader5 also lifts OES_gpu_shader5 restrictions with
+        regard to indexing into arrays of uniforms blocks and shader
+        storage blocks.
+
+        Change sentence
+        "All indices used to index a shader storage block array must be
+         constant integral expressions. A uniform block array can only
+         be indexed with a dynamically uniform integral expression,
+         otherwise results are undefined." into
+
+        "Arbitrary indices may be used to index a uniform block array;
+         integral constant expressions are not required. If the index
+         used to access an array of uniform blocks is out-of-bounds,
+         the results of the access are undefined."
+
+        Indexing into arrays  of shader storage blocks defaults to
+        'dynamically uniform integral expressions'.
+
+    Changes to Section 4.3.9, p.48 "Interface Blocks"
+
+        Replace the sentence
+        "All indices used to index a shader storage block array must be
+         constant integral expressions. A uniform block array can only
+         be indexed with a dynamically uniform integral expression,
+         otherwise results are undefined."
+        with
+        "Arbitrary indices may be used to index a uniform block array;
+         integral constant expressions are not required. If the index
+         used to access an array of uniform blocks is out-of-bounds, the
+         results of the access are undefined."
+
+    4.4.1.1 "Compute Shader Inputs" change
+
+        "layout-qualifier-id:
+            local_size_x = integer-constant
+            local_size_y = integer-constant
+            local_size_z = integer-constant" into
+
+        "layout-qualifier-id:
+            local_size_x = integer-constant-expression
+            local_size_y = integer-constant-expression
+            local_size_z = integer-constant-expression"
+
+    Section 4.4.1.gs "Geometry Shader Inputs" change
+
+        "<layout-qualifier-id>
+            ...
+            invocations = integer-constant"  into
+
+        "<layout-qualifier-id>
+            ...
+            invocations = integer-constant-expression"
+
+    Section 4.4.2 "Output Layout Qualifiers" change
+
+        "layout-qualifier-id:
+            location = integer-constant" into
+
+        "layout-qualifier-id:
+            location = integer-constant-expression"
+
+    Section 4.4.2.ts "Tessellation Control Outputs" change
+
+        "layout-qualifier-id
+            vertices = integer-constant"  into
+
+        "layout-qualifier-id:
+            vertices = integer-constant-expression"
+
+    Section 4.4.3 "Uniform Variable Layout Qualifiers" change
+
+        "layout-qualifier-id:
+            location = integer-constant" into
+
+        "layout-qualifier-id:
+            location = integer-constant-expression"
+
+    Section 4.4.4 "Uniform and Shader Storage Block Layout Qualifiers" change
+
+        "layout-qualifier-id:
+            ...
+            binding = integer-constant" into
+
+        "layout-qualifier-id:
+            ...
+            binding = integer-constant-expression"
+
+    Section 4.4.5 "Opaque Uniform Layout Qualifiers" change
+
+        "layout-qualifier-id:
+            binding = integer-constant" into
+
+        "layout-qualifier-id:
+            binding = integer-constant-expression"
+
+    Change sentence
+        "A link-time error will result if two shaders in a program
+         specify different integer-constant bindings for the same
+         opaque-uniform name." into
+
+         "A link-time error will result if two shaders in a program
+          specify different bindings for the same opaque-uniform
+          name."
+
+    Section 4.4.6 "Atomic Counter Layout Qualifiers" change
+
+        "layout-qualifier-id:
+            binding = integer-constant
+             offset = integer-constant" into
+
+        "layout-qualifier-id:
+            binding = integer-constant-expression
+             offset = integer-constant-expression"
+
+    Section 4.4.7 "Format Layout Qualifiers" change
+
+        "layout-qualifier-id:
+            ...
+            binding = integer-constant" into
+
+        "layout-qualifier-id:
+            ...
+            binding = integer-constant-expression"
+
+    Section 4.7.3 "Precision Qualifiers"
+
+    After "Literal constants do not have precision qualifiers." add
+    "Neither do explicitly sized types such as int8_t, uint32_t,
+    float16_t etc."
+
+Dependencies on OES_gpu_shader5
+
+    In addition to allowing arbitrary indexing arrays of samplers, this
+    extension also lifts OES_gpu_shader5 restrictions for indexing
+    arrays of images and shader storage blocks. Additionally, it allows
+    usage of 'integer-constant-expressions' for layout qualifiers that
+    formerly took 'integer-constant'.
+
+    In Section 'Overview': change the bullet point
+
+    "* the ability to aggregate samplers into arrays...."
+
+    to
+
+    "* the ability to index into arrays of samplers, uniforms and shader
+       storage blocks with arbitrary expressions, and not require that
+       non-constant indices be uniform across all shader invocations."
+
+    "* the ability to index into arrays of images using dynamically
+       uniform integers."
+
+    "* the ability to use 'integer-constant-expressions' in place of
+       'integer-constant' for layout qualifiers."
+
+Dependencies on OES/EXT_tessellation_shader
+
+    If implemented in GLSL ES and OES/EXT_tessellation_shader is not
+    supported, language introduced by this extension describing
+    processing patches in geometry shaders, transform feedback, and
+    rasterization should be removed.
+
+    If implemented in GLSL ES and OES/EXT_tessellation_shader is supported,
+    it is legal to send patches past the tessellation stage -- the
+    following language from OES/EXT_tessellation_shader is removed:
+
+      Patch primitives are not supported by pipeline stages below the
+      tessellation evaluation shader.
+
+Dependencies on OES/EXT_geometry_shader
+
+    If implemented in GLSL ES and OES/EXT_geometry_shader is not supported,
+    disregard all changes to geometry shader related functionality.
 
 Dependencies on ARB_gpu_shader5
 
@@ -1129,7 +1388,6 @@ Dependencies on ARB_gpu_shader5
     undefined if the indices would diverge if multiple shader invocations are
     run in lockstep.  This extension does not impose the non-divergent
     indexing requirement.
-
 
 Dependencies on ARB_gpu_shader_fp64
 
@@ -1205,7 +1463,7 @@ Dependencies on EXT_direct_state_access
             (uint program int location, T value);
         void ProgramUniform{1,2,3,4}{i64,ui64}vNV
             (uint program, int location, const T *value);
-   
+
     operate identically to the corresponding command where "Program" is
     deleted from the name (and extension suffixes are dropped or updated
     appropriately) except, rather than updating the currently active program
@@ -1224,14 +1482,18 @@ Dependencies on EXT_vertex_attrib_64bit and NV_vertex_attrib_integer_64bit
 
     in the shader text.
 
-    However, this extension is considered to enable 64-bit floating-point and
-    integer inputs.  Including the following code in a vertex shader
+    However, this extension is considered to enable 64-bit
+    floating-point and integer inputs. Provided EXT_vertex_attrib_64bit
+    and NV_vertex_attrib_integer_64bit are supported, including the
+    following code in a vertex shader
 
       #extension GL_NV_gpu_shader5 : enable
 
-    will 64-bit floating-point or integer input variables whose values would
-    be specified using the OpenGL API mechanisms found in the
-    EXT_vertex_attrib_64bit and NV_vertex_attrib_integer_64bit extensions.
+    will enable 64-bit floating-point or integer input variables whose
+    values would be specified using the OpenGL API mechanisms found in
+    the EXT_vertex_attrib_64bit and NV_vertex_attrib_integer_64bit
+    extensions.
+
 
 Errors
 
@@ -1383,8 +1645,7 @@ Issues
          orthogonal?
 
       RESOLVED:  No.  Non-constant offsets are not supported for the existing
-      functions textureGradOffset() and textureProjGradOffset(), or for the
-      new functions textureGatherOffsets() and shadowGatherOffsets().
+      functions textureGradOffset() and textureProjGradOffset().
 
     (12) Should we provide functions like intBitsToFloat() that operate on
          16-bit floating-point values?
@@ -1512,7 +1773,7 @@ Issues
       primitives would also fail.  With variable-size patch primitives, the
       transform feedback stage might first receive a large patch that doesn't
       fit, followed by a smaller patch that could squeeze into the remaining
-      space.  
+      space.
 
       To allow for different types of implementation of this extension without
       requiring special-case handling of this corner case, we've chosen to
@@ -1524,6 +1785,12 @@ Revision History
 
     Rev.    Date    Author    Changes
     ----  --------  --------  -----------------------------------------
+    10    04/16/16  mheyer    Add OpenGL ES interactions (written before
+                              revision 9, but not published)
+
+     9    02/19/16  pbrown    Clarify that non-constant offset vectors are
+                              supported in textureGatherOffsets().
+
      8    09/11/14  pbrown    Fix incorrect implicit conversions, which
                               follow the general pattern of little->big
                               and int->uint->float.  Thanks to Daniel
