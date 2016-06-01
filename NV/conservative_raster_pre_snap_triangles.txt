@@ -28,6 +28,7 @@ Version
 Number
 
     OpenGL Extension #487
+    OpenGL ES Extension #262
 
 Dependencies
 
